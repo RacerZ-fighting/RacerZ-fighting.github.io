@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="案例背景 你的电子数据取证调查结果发现一个国际黑客组织牵涉这宗案件。经深入调查后，调查队伍相信该黑客组织入侵了一个名为Zello的本地网上商店官网，黑客组织也针对另一家网上商店Xeno发动网络攻击，使其系统产生故障。调查期间发现三名男子: 张伟华、冯启礼及罗俊杰疑与该案有关。警方在搜查他们的住宅及公司后扣押了数十台电子设备。请分析电子数据证据并重建入侵痕迹。  Zello服务器部分 Zello服务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="20年美亚杯电子数据取证团队赛复现">
+<meta property="og:url" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/index.html">
+<meta property="og:site_name" content="RacerZ">
+<meta property="og:description" content="案例背景 你的电子数据取证调查结果发现一个国际黑客组织牵涉这宗案件。经深入调查后，调查队伍相信该黑客组织入侵了一个名为Zello的本地网上商店官网，黑客组织也针对另一家网上商店Xeno发动网络攻击，使其系统产生故障。调查期间发现三名男子: 张伟华、冯启礼及罗俊杰疑与该案有关。警方在搜查他们的住宅及公司后扣押了数十台电子设备。请分析电子数据证据并重建入侵痕迹。  Zello服务器部分 Zello服务">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231248213.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231832198.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231909874.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231944860.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021232402246.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021232558694.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021232927566.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021234221579.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021234443398.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235033557.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235139146.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235329704.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235538327.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221022002410170.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221022235705658.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023001434376.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023002425954.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023002822570.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023003306632.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023003655033.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023004101823.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023004410958.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023004548831.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023085144785.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023090316715.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023091206330.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023092417316.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025230945973.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023091802400.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023092955898.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023093634294.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023093924352.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023101115712.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023101232370.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023101257997.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023101955558.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023102202119.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024225334538.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024225831368.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024230518778.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024231318365.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024233438328.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024234428266.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024234909655.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024233714473.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024233535382.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000307654.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000411920.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000611730.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000529028.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025001138703.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002147544.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002421333.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002441441.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002910942.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025003227693.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025003434625.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090335197.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025085208149.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025085242413.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025085546305.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090509368.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090746405.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090907794.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025091021788.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025091752309.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025093047346.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025093131759.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025094116317.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025094855451.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025095048075.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025095239670.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025110607271.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025111853581.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025112032654.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025112059539.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025230458232.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025231556963.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025231650159.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025232018484.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025232146068.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025232303745.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026104611440.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026104853559.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026105146424.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026105553658.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026110722620.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026111314865.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026111726706.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026112149771.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026113612996.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026113844074.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026114012862.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026113344457.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026114258890.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115033991.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115318799.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115455408.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115821944.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026141944686.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026235657663.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026235721702.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026235435748.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027001336539.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027001456685.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027001631824.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027092907707.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027093032413.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027100626549.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027100748587.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027102850267.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027103056933.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027103325668.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027103641734.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027103939391.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027104154898.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027110535923.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027112723380.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027112744289.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027112938052.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027113623033.png">
+<meta property="article:published_time" content="2022-10-26T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-27T03:46:07.178Z">
+<meta property="article:author" content="RacerZ">
+<meta property="article:tag" content="电子数据取证">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231248213.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>20年美亚杯电子数据取证团队赛复现</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/10/20/20%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%A4%8D%E7%8E%B0/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&text=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&is_video=false&description=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=20年美亚杯电子数据取证团队赛复现&body=Check out this article: https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&name=20年美亚杯电子数据取证团队赛复现&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&t=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">案例背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Zello%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">Zello服务器部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">Bob路由器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob%E7%9A%84%E7%AC%94%E8%AE%B0%E6%9C%AC"><span class="toc-number">4.</span> <span class="toc-text">Bob的笔记本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob%E7%9A%84%E6%A1%8C%E4%B8%8A%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-number">5.</span> <span class="toc-text">Bob的桌上计算机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob-iphone"><span class="toc-number">6.</span> <span class="toc-text">Bob iphone</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob%E7%9A%84Samsung"><span class="toc-number">7.</span> <span class="toc-text">Bob的Samsung</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob%E7%9A%84IMAC-%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-number">8.</span> <span class="toc-text">Bob的IMAC 计算机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cole%E6%A1%8C%E4%B8%8A%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-number">9.</span> <span class="toc-text">Cole桌上计算机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cole%E7%9A%84%E6%89%8B%E6%8F%90%E7%94%B5%E8%84%91"><span class="toc-number">10.</span> <span class="toc-text">Cole的手提电脑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cole%E7%9A%84Raspberry-Pi-4"><span class="toc-number">11.</span> <span class="toc-text">Cole的Raspberry Pi 4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cole%E7%9A%84NAS%E8%A3%85%E7%BD%AE"><span class="toc-number">12.</span> <span class="toc-text">Cole的NAS装置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cole%E7%9A%84%E6%89%8B%E6%8F%90%E7%94%B5%E8%AF%9D"><span class="toc-number">13.</span> <span class="toc-text">Cole的手提电话</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daniel-%E7%9A%84%E6%A1%8C%E4%B8%8A%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-number">14.</span> <span class="toc-text">Daniel 的桌上计算机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daniel%E7%9A%84MacBook"><span class="toc-number">15.</span> <span class="toc-text">Daniel的MacBook</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daniel-%E7%9A%84iPhone"><span class="toc-number">16.</span> <span class="toc-text">Daniel 的iPhone</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        20年美亚杯电子数据取证团队赛复现
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">RacerZ</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-10-26T16:00:00.000Z" itemprop="datePublished">2022-10-27</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81/" rel="tag">电子数据取证</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="案例背景"><a href="#案例背景" class="headerlink" title="案例背景"></a>案例背景</h4><blockquote>
+<p>你的电子数据取证调查结果发现一个国际黑客组织牵涉这宗案件。经深入调查后，调查队伍相信该黑客组织入侵了一个名为Zello的本地网上商店官网，黑客组织也针对另一家网上商店Xeno发动网络攻击，使其系统产生故障。调查期间发现三名男子: 张伟华、冯启礼及罗俊杰疑与该案有关。警方在搜查他们的住宅及公司后扣押了数十台电子设备。请分析电子数据证据并重建入侵痕迹。</p>
+</blockquote>
+<h4 id="Zello服务器部分"><a href="#Zello服务器部分" class="headerlink" title="Zello服务器部分"></a>Zello服务器部分</h4><ol>
+<li><p>Zello服务器的哈希值（SHA256）是甚么</p>
+<p><code>30B856EEE5121EDC2F9DC19ACFC8720E443810CBC5B83128EC62F9F4AAEAACC9</code></p>
+</li>
+<li><p>卷组是何时创建的？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lvdisplay</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231248213.png" alt="image-20221021231248213"></p>
+</li>
+<li><p>卷组的名称是甚么？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lvm 的相关概念</span><br><span class="line">pv：physical volume，物理磁盘，比如一整块固态硬盘</span><br><span class="line">vg：volume group，即卷组，比如Windows里的新建卷</span><br><span class="line">lv：logical volume，逻辑磁盘，比如c盘、d盘</span><br></pre></td></tr></table></figure>
+
+<p>同上可知，<code>ubuntu-vg</code></p>
+</li>
+<li><p>物理卷的PV UUID是多少？</p>
+<p>与LVM同理，可利用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pvdisplay</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231832198.png" alt="image-20221021231832198"></p>
+</li>
+<li><p>卷组的VG UUID是甚么？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vgdisplay</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231909874.png" alt="image-20221021231909874"></p>
+</li>
+<li><p>Zello服务器的Linux内核版本是甚么？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231944860.png" alt="image-20221021231944860"></p>
+</li>
+<li><p>Zello服务器的操作系统版本是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021232402246.png" alt="image-20221021232402246"></p>
+</li>
+<li><p>Zello服务器的主机名是甚么？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/hostname</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021232558694.png" alt="image-20221021232558694"></p>
+</li>
+<li><p>Zello服务器的计算器ID是甚么？ </p>
+<p>这里指的是计算机的ID，找半天计算器。。。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/machine-id</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021232927566.png" alt="image-20221021232927566"></p>
+</li>
+<li><p>Zello服务器中使用的wordpress版本是甚么？</p>
+<p>从config中可以逐步找到对应页面<code>/wp-includes/version.php</code></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021234221579.png" alt="image-20221021234221579"> </p>
+</li>
+<li><p>Zello服务器与之同步的主机名是甚么？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/hosts</span><br><span class="line">或者</span><br><span class="line">/etc/ntp.conf</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021234443398.png" alt="image-20221021234443398"></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235033557.png" alt="image-20221021235033557"></p>
+</li>
+<li><p>Zello服务器的时区是甚么？ </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235139146.png" alt="image-20221021235139146"></p>
+</li>
+<li><p>有多少个<strong>本地用户</strong>已登录到Zello服务器？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd</span><br></pre></td></tr></table></figure>
+
+<p> 每行各个字段标识</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235329704.png" alt="image-20221021235329704"></p>
+<p><strong>普通用户有两个特征：一是UID介于500~65535之间；二是shell的起始位置为<code>/bin/bash</code></strong></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235538327.png" alt="image-20221021235538327"></p>
+</li>
+<li><p>植入网络目录（Webdirectory）的网页壳层（Web Shell）的哈希值（MD5）是甚么？</p>
+<p>翻译过来就是找马</p>
+<p>一种思路就是查杀软件直接全扫一遍</p>
+<p>360真是菜，马都查不出</p>
+<p>反正最后可以找到<code>/wp-includes/sales/info/123.php</code></p>
+<p><code>ECFD5B5E56D56C6BBA6E1BAD595BFC0C</code></p>
+</li>
+<li><p>\ var \ www \ html \ wordpress \net \ 2020 \ Login \ index.php有甚么作用</p>
+<p>这波是代码审计，啊也不是，一打开看发现是个大部分html构成的登录页面，本地搭建一下看看</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221022002410170.png" alt="image-20221022002410170"></p>
+<p>这就是个钓鱼网站，可以钓账号密码</p>
+</li>
+<li><p>钓鱼网站伪装成甚么网站？ </p>
+<p>上题即可知，NETFLIX</p>
+</li>
+<li><p>下列哪个IP对Zello服务器进行了蛮力攻击？</p>
+<p>也就是爆破一类，我们看下日志</p>
+<p>日志文件位于<code>/var/log/apache2/</code>目录下，有几个压缩包比较可疑<code>error.log.x.gz</code></p>
+<p>解压后查看，其中<code>203.186.94.68</code>被匹配了1432次，很不正常，第一明显的就是DOS行为</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221022235705658.png" alt="image-20221022235705658"></p>
+</li>
+<li><p>Zello Web服务器的URL是甚么？ </p>
+<p>看hosts ntp.conf或者浏览器历史记录均可</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023001434376.png" alt="image-20221023001434376"></p>
+<p>域名 <code>zello-onlineshop.sytes.net</code></p>
+</li>
+<li><p>LVM2容器的第一个扇区是什么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023002425954.png" alt="image-20221023002425954"></p>
+<p>LVM2指的是分区6，起始扇区为2101248</p>
+</li>
+<li><p>Zello服务器中LVM2容器的大小（以字节为单位）是甚么？</p>
+<p>每块扇区512字节</p>
+<p>也就是31,135,367,168</p>
+</li>
+<li><p>在Zello服务器以及Alice的装置中可以找到甚么共同文件？</p>
+<p>果然跟个人赛中的信息还有关联</p>
+<p>历史记录里翻一番</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023002822570.png" alt="image-20221023002822570"></p>
+<p>R3ZZ.txt</p>
+</li>
+<li><p>2020年8月29日在Xeno服务器中发现的攻击类型是甚么？</p>
+<p>没看到这一天的日志啊，不过翻一番会发现请求方式和url基本一致</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023003306632.png" alt="image-20221023003306632"></p>
+<p>所以是HTTP GET/POST Flood</p>
+</li>
+<li><p>哪个IP地址在日志中条目数量最多？</p>
+<p>14.102.184.0匹配了10000项</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023003655033.png" alt="image-20221023003655033"></p>
+</li>
+<li><p>这个登录次数最多的IP地址，它访问最多的是哪个页面？</p>
+<p>还是查日志匹配文本可以看到</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023004101823.png" alt="image-20221023004101823"></p>
+</li>
+</ol>
+<p>所以是<code>risk.xhtml</code></p>
+<ol start="25">
+<li><p>这个登录次数最多的IP地址来自哪个国家或地区？ </p>
+<p>其实可以之间ip查询的，但是线索应该就是在题目材料中，翻一番</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023004410958.png" alt="image-20221023004410958"></p>
+<p>所以可以知道攻击Xeno服务器的就是罗俊杰</p>
+<p>也对应了报告，原来都是线索</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023004548831.png" alt="image-20221023004548831"></p>
+</li>
+<li><p>这个登录次数最多的IP地址，合共有多少次成功登录?</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023085144785.png" alt="image-20221023085144785"></p>
+</li>
+</ol>
+<p>这个感觉还是定位的不准确</p>
+<ol start="27">
+<li><p>除DDoS之外，还可能涉及其他攻击吗？</p>
+<p>虽然日志给的并不是很详细，但是一般都会爆破一下账号密码</p>
+</li>
+<li><p>从该网站下载了多少数据？</p>
+<p>这也看不出来啥数据传输格式或者data啥的，所以现在还推不出来</p>
+</li>
+</ol>
+<h4 id="Bob路由器"><a href="#Bob路由器" class="headerlink" title="Bob路由器"></a>Bob路由器</h4><ol start="29">
+<li><p>Bob路由器的型号是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023090316715.png" alt="image-20221023090316715"></p>
+</li>
+<li><p>Bob家的IP地址是甚么？</p>
+<p>27.111.174.91</p>
+</li>
+<li><p>使用路由器的装置的Mac地址是甚么-Alice？</p>
+<p>这道题跟底下的引出了个人赛的人物关系，Bob Alice和Cole，其中我们已经知道了Cole是一个Boss</p>
+<p>并且有一份路由器日志可供参考</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023091206330.png" alt="image-20221023091206330"></p>
+<p>Bob的Mac地址为</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023092417316.png" alt="image-20221023092417316"></p>
+<p>所以可以判断BigBoss指的就是Bob</p>
+</li>
+<li><p>使用路由器的装置的Mac地址是甚么-Cole？</p>
+<p>在Cole的桌上计算机对应的MAC</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025230945973.png" alt="image-20221025230945973"></p>
+</li>
+<li><p>谁到访过Bob的家？</p>
+<p>Cole</p>
+</li>
+</ol>
+<p>我们针对上面的题在Bob的其他设备上找答案</p>
+<h4 id="Bob的笔记本"><a href="#Bob的笔记本" class="headerlink" title="Bob的笔记本"></a>Bob的笔记本</h4><p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023091802400.png" alt="image-20221023091802400"></p>
+<ol start="34">
+<li><p>Bob的笔记本计算机的哈希值（SHA-1）是甚么？ </p>
+<p><code>5DF01AC2194A74804DEB0F7332532D39711C5770</code></p>
+</li>
+<li><p>笔记本计算机中安装了甚么电子邮件程序？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023092955898.png" alt="image-20221023092955898"></p>
+</li>
+<li><p>网络钓鱼电子邮件的接收者是储存在甚么文件？ </p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023093634294.png" alt="image-20221023093634294"></p>
+<p>面向选择题去找线索<code>NETFLX.htm.dump</code></p>
+</li>
+<li><p>在Bob的笔记本, 有什么可疑APK及其功能？</p>
+<p>在<code>C:\APK</code>下有一堆APK</p>
+<p> <img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023093924352.png" alt="image-20221023093924352"></p>
+<p>结合第39题可以定位到<code>mytracker.bak</code></p>
+<p>上面可以检查虚拟货币的价格</p>
+</li>
+<li><p>该可疑APK 从什么网站获取资料? </p>
+<p>抓包并没抓到什么可疑流量</p>
+<p>只能暴力搜索关键词</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grep xxx ./mytracker/ -nr</span><br><span class="line"># -r 当指定要查找的是目录而非文件时，必须使用这项参数，否则grep指令将回报信息并停止动作</span><br><span class="line"># -n 在显示符合样式的那一行之前，标示出该行的列数编号</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023101115712.png" alt="image-20221023101115712"></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023101232370.png" alt="image-20221023101232370"></p>
+<p>得到<code>https://rest.coinapi.io/v1/exchangerate</code></p>
+</li>
+<li><p>上述APK中发现的Bitlocker密钥是甚么？</p>
+<p><code>741852963</code></p>
+<p> <img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023101257997.png" alt="image-20221023101257997"></p>
+</li>
+<li><p>网络钓鱼网站的网页寄存的网站地址是甚么？</p>
+<p>Bob的浏览器历史记录中存在该链接</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023101955558.png" alt="image-20221023101955558"></p>
+<p>我们在网站服务器上去验证一下是否存在该钓鱼页面</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023102202119.png" alt="image-20221023102202119"></p>
+</li>
+</ol>
+<h4 id="Bob的桌上计算机"><a href="#Bob的桌上计算机" class="headerlink" title="Bob的桌上计算机"></a>Bob的桌上计算机</h4><p>打开后显示需要输入BitLocker，用之前apk得到的</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024225334538.png" alt="image-20221024225334538"></p>
+<ol start="41">
+<li><p>Bob的桌上计算机的哈希值（SHA-256）是甚么？ </p>
+<p><code>86C740D5FB096A18CC419AF74D7A55389F28D7F8E1CE6FABD17371E66E1C2673</code></p>
+</li>
+<li><p>Bob的桌上计算机的安装时间是几点？(本地时间)</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024225831368.png" alt="image-20221024225831368"></p>
+</li>
+<li><p>Bob桌上计算机内发现的网络钓鱼脚本是甚么？(某些字符被刻意用*遮盖) </p>
+<p>翻一番可以看到一个script目录比较可疑，里面存在<code>inter.zip</code></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024230518778.png" alt="image-20221024230518778"></p>
+<p>我们提取出来分析一波</p>
+<p>大致看了一下，从<code>index.php</code>分析出了主要干的事，获取header中的ip，然后查询对应的国家和访问仿真的时间并记录，其他几个文件里还有收集其他信息的函数，所以可以推断出收集个人数据</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024231318365.png" alt="image-20221024231318365"></p>
+</li>
+</ol>
+<h4 id="Bob-iphone"><a href="#Bob-iphone" class="headerlink" title="Bob iphone"></a>Bob iphone</h4><p>仿真分析的时候遇到了备份密码，在配置文件里面可以找到</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024233438328.png" alt="image-20221024233438328"></p>
+<ol start="44">
+<li><p>在Bob iphone, 与Alice和Cole通讯记录的完整路径是甚么？</p>
+<p>在前面个人赛中，我们能回忆到他们三人的通讯工具是WhatsApp</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024234428266.png" alt="image-20221024234428266"></p>
+<p>这个ZCHATSESSION字段和群组ID有关，我们找一下对应是4</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024234909655.png" alt="image-20221024234909655"></p>
+</li>
+<li><p>Bob的iPhone的苹果ID是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024233714473.png" alt="image-20221024233714473"></p>
+</li>
+<li><p>Bob的iPhone的IMEI是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024233535382.png" alt="image-20221024233535382"></p>
+</li>
+<li><p>Bob iPhone的时区设置是甚么？</p>
+<p>取证软件里又没有，我们暴力搜索一波</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;UTC&quot; ./ -nr</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000307654.png" alt="image-20221025000307654"></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000411920.png" alt="image-20221025000411920"></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000611730.png" alt="image-20221025000611730"></p>
+<p>其实配置文件里也有相关的</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000529028.png" alt="image-20221025000529028"></p>
+</li>
+<li><p>文件“ VIP.txt”的完整路径是甚么？</p>
+<p>在和cole的文件传输记录中找到了vip.txt</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025001138703.png" alt="image-20221025001138703"></p>
+<p>前缀不太好搞<code>Bob/mobile/Containers/Shared/AppGroup/group.net.whatsapp.WhatsApp.shared/Message/Media/85262547937-1600392878@g.us/c/5/c56255d0-a407-4341-afef-7bf5accc52f0.txt</code></p>
+</li>
+<li><p>在Bob iphone, 谁是“ <a href="mailto:&#x38;&#x35;&#x32;&#54;&#x32;&#x35;&#52;&#x37;&#57;&#x33;&#x37;&#x2d;&#x31;&#54;&#48;&#x30;&#x33;&#x39;&#x32;&#x38;&#55;&#x38;&#64;&#103;&#x2e;&#117;&#x73;">&#x38;&#x35;&#x32;&#54;&#x32;&#x35;&#52;&#x37;&#57;&#x33;&#x37;&#x2d;&#x31;&#54;&#48;&#x30;&#x33;&#x39;&#x32;&#x38;&#55;&#x38;&#64;&#103;&#x2e;&#117;&#x73;</a>”的聊天群组中的管理员？</p>
+<p>![image-20221025002017294](20年美亚杯团队赛复现/image-20221025002017294.png</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002147544.png" alt="image-20221025002147544"></p>
+</li>
+</ol>
+<p>Alice有添加成员的操作，所以她是，而且看她的欢迎词就可以知道</p>
+<p>同时数据库里也有相关记录</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002421333.png" alt="image-20221025002421333"></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002441441.png" alt="image-20221025002441441"></p>
+<ol start="50">
+<li><p>“ <a href="mailto:&#56;&#x35;&#x32;&#x36;&#50;&#x35;&#52;&#x37;&#x39;&#x33;&#55;&#x2d;&#x31;&#x36;&#48;&#x30;&#x33;&#x39;&#x32;&#56;&#55;&#56;&#64;&#x67;&#x2e;&#117;&#115;">&#56;&#x35;&#x32;&#x36;&#50;&#x35;&#52;&#x37;&#x39;&#x33;&#55;&#x2d;&#x31;&#x36;&#48;&#x30;&#x33;&#x39;&#x32;&#56;&#55;&#56;&#64;&#x67;&#x2e;&#117;&#115;</a>”聊天群组中有多少个附件？</p>
+<p>细心一些，这几个文件夹下共4个附件，没法只看聊天记录来分析</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002910942.png" alt="image-20221025002910942"> </p>
+</li>
+<li><p>Bob iPhone的Airdrop ID是甚么？</p>
+<p>暴力搜索一波</p>
+<p>没搜到…</p>
+<p>盲猜也是<code>66E7BBDE9F69</code>其他都有可识别的字符串信息，但是没搜到相关的</p>
+</li>
+<li><p>Bob的iPhone的操作系统版本是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025003227693.png" alt="image-20221025003227693"></p>
+</li>
+<li><p>Bob在2020-09-17的1451时访问的连结是甚么？(UTC + 0)</p>
+<p>注意时差回退8小时</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025003434625.png" alt="image-20221025003434625"></p>
+</li>
+</ol>
+<h4 id="Bob的Samsung"><a href="#Bob的Samsung" class="headerlink" title="Bob的Samsung"></a>Bob的Samsung</h4><ol start="54">
+<li><p>Bob的Samsung S2的Android ID是甚么？</p>
+<p>全局搜索</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090335197.png" alt="image-20221025090335197"></p>
+</li>
+<li><p>Bob的Samsung S2的操作系统版本是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025085208149.png" alt="image-20221025085208149"> </p>
+</li>
+<li><p>Bob Samsung S2的时区设置是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025085242413.png" alt="image-20221025085242413"></p>
+</li>
+<li><p>“ bitcoin.PNG”的储存位置是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025085546305.png" alt="image-20221025085546305"></p>
+</li>
+<li><p>bitcoin.PNG的哈希值（SHA-256）是甚么？ </p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090509368.png" alt="image-20221025090509368"></p>
+</li>
+<li><p>Bob的Samsung S2的wifi mac地址是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090746405.png" alt="image-20221025090746405"></p>
+<ol start="60">
+<li><p>“ userdata（ExtX）/ Root / media /Download / APK Testing”中的有多少APK檔？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090907794.png" alt="image-20221025090907794"></p>
+<p>10个</p>
+</li>
+<li><p>Messagesecure.apk的哈希值（SHA-256）是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025091021788.png" alt="image-20221025091021788"></p>
+</li>
+<li><p>私钥已在bitcoin.PNG中加密。私钥是甚么？</p>
+<p>上面这个软件已经在个人赛中出现，图片加密信息。对于解密密钥的话，思路是如果没有直接的线索的话，就把之前得到的所有密码都试一下，这里用的就是Bob桌上计算机的开机密码<code>Aa654321</code></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025091752309.png" alt="image-20221025091752309"></p>
+<p><code>KzZUc6yaEjPd7NgBBRz9yUAf447Ei74K8rwuxoia8paBjzDNNpqG</code></p>
+</li>
+<li><p>apk文件“ flash_chat”的哈希值（SHA-256）是甚么？</p>
+<p>这题出的好突兀啊，得去Alice的手机里找。。。</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025093047346.png" alt="image-20221025093047346"></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025093131759.png" alt="image-20221025093131759"></p>
+</li>
+<li><p>哪个文件包含“ flash_chat”聊天记录？</p>
+<p>这个软件没账号，分析里也没记录，只能一个个找了    </p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025094116317.png" alt="image-20221025094116317"></p>
+</li>
+<li><p>从“ flash_chat”找到的Bob的Windows密码是甚么？(某些字符被刻意用*遮盖)</p>
+<p>仔细翻有好几个密码信息</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025094855451.png" alt="image-20221025094855451"></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025095048075.png" alt="image-20221025095048075"></p>
+</li>
+<li><p>消息的消息号码(Message ID)是甚么？ </p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025095239670.png" alt="image-20221025095239670"></p>
+</li>
+</ol>
+</li>
+<li><p>“ flash_chat”消息ID“aGqBnI5Bxutv24SQvrBL”中的密码是甚么？(某些字符被刻意用*遮盖)</p>
+<p>就是上面图里找到的<code>helloworld</code></p>
+</li>
+</ol>
+<h4 id="Bob的IMAC-计算机"><a href="#Bob的IMAC-计算机" class="headerlink" title="Bob的IMAC 计算机"></a>Bob的IMAC 计算机</h4><ol start="68">
+<li><p>从Bob iMAC 桌面名为Wallet.dat 的档案中可以取得以下那一个比特币地址?(某些字符被刻意用*遮盖)</p>
+<p>md有个开机密码没绕过去，我超绕过去了，就是之前的开机密码<code>Aa654321</code></p>
+<p>真的费劲儿</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025110607271.png" alt="image-20221025110607271"></p>
+<p><code>3KHtnfnLp7P8Vu7EA4uUJzkngnXxGMZWwo</code></p>
+</li>
+<li><p>从Wallet.dat档案中取得的比特币地址，那一个有接收及传送过比特币?(某些字符被刻意用*遮盖)</p>
+<p>去比特币交易网查看交易记录<a target="_blank" rel="noopener" href="https://www.blockchain.com/explorer/assets/btc">https://www.blockchain.com/explorer/assets/btc</a></p>
+<p>上面那个地址没有交易记录，还得再找，又有一个，我们拿去验证一下</p>
+<p><code>3HeQp9c74rqN6ymzGwr9JB7z8CPaX2458w</code></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025111853581.png" alt="image-20221025111853581"></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025112032654.png" alt="image-20221025112032654"></p>
+</li>
+<li><p>以下那一个比特币接收或传送交易的哈希值与上述的比特币地址有直接关系？(某些字符被刻意用*遮盖)</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025112059539.png" alt="image-20221025112059539"></p>
+</li>
+<li><p>上述的比特币交易中所涉及多少比特币？</p>
+<p>由题目69可出 <code>0.01459400 BTC</code></p>
+</li>
+<li><p>Bob iMac数据磁盘的哈希值（SHA-256）是甚么？</p>
+<p><code>F83929D4217939E37A4408FAE745363A4635A18CB0EE2E29771449E86F8BD7E7</code></p>
+</li>
+</ol>
+<h4 id="Cole桌上计算机"><a href="#Cole桌上计算机" class="headerlink" title="Cole桌上计算机"></a>Cole桌上计算机</h4><p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025230458232.png" alt="image-20221025230458232"></p>
+<ol start="73">
+<li><p>Cole桌上计算机的哈希值（SHA-1）是甚么？</p>
+<p><code>0D00A8A853B9001A9FC7BF89D9FBBA790C065CE2</code></p>
+</li>
+<li><p>Cole桌上计算机的用户名是甚么？</p>
+<p>Cole</p>
+</li>
+<li><p>在Cole的桌上计算机中发现了多少潜在的受害者？ </p>
+<p>在<code>vips.txt</code>中可以看到200个潜在受害者</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025231556963.png" alt="image-20221025231556963"></p>
+</li>
+<li><p>潜在受害者的数据被储存在哪里?(某些字符被刻意用*遮盖)</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025231650159.png" alt="image-20221025231650159"></p>
+</li>
+<li><p>预设浏览器何时安装？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025232018484.png" alt="image-20221025232018484"></p>
+</li>
+<li><p>Cole桌上计算机上预设安装了甚么浏览器？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025232146068.png" alt="image-20221025232146068"></p>
+<p>Internet Explorer</p>
+</li>
+<li><p>上述储存浏览记录的默认浏览器,该文件档案的类型是什么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025232303745.png" alt="image-20221025232303745"></p>
+<p>dat</p>
+</li>
+<li><p>入侵Zello的证据文件是甚么？</p>
+<p>结合上下文，从浏览器发起的攻击，我们在个人赛还记得这个是个马</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026104611440.png" alt="image-20221026104611440"></p>
+</li>
+<li><p>受感染网站的网址是什么?</p>
+<p>那必然是<code>http://zello-onlineshop.sytes.net</code></p>
+</li>
+<li><p>Cole桌上计算机上的DDoS勒索字条是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026104853559.png" alt="image-20221026104853559"></p>
+</li>
+</ol>
+<p><code>Ransome Note of **OS.txt</code></p>
+<ol start="83">
+<li><p>在Cole桌上计算机上发现的DDoS勒索字条中，比特币钱包地址是甚么？</p>
+<p><code>1L6fKWpEYvUi8FeG6BnXqfh1joAgmJA1h1</code></p>
+</li>
+</ol>
+<h4 id="Cole的手提电脑"><a href="#Cole的手提电脑" class="headerlink" title="Cole的手提电脑"></a>Cole的手提电脑</h4><p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026105146424.png" alt="image-20221026105146424"></p>
+<ol start="83">
+<li><p>Cole笔记本计算机的哈希值（SHA-1）是甚么？</p>
+<p><code>9CD259C89F2C5E6A2E02CFF13DBD61E423B82EF5</code></p>
+</li>
+<li><p>Cole笔记本计算机有多少个用户帐户？</p>
+<p>3个</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026105553658.png" alt="image-20221026105553658"></p>
+</li>
+<li><p>当前登录用户帐户的用户名是甚么？</p>
+<p>Cole</p>
+</li>
+<li><p>在Cole笔记本的随机存取记忆体中, 是甚么<strong>Windows配置文件</strong>？ </p>
+<p>随机存取记忆体就是对应的RAM，涉及了内存取证的知识了</p>
+<p>速查：<a target="_blank" rel="noopener" href="https://forensics.xidian.edu.cn/wiki/ram/">https://forensics.xidian.edu.cn/wiki/ram/</a></p>
+<p>内存已经帮我们DUMP下来了，我们直接开始分析</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026110722620.png" alt="image-20221026110722620"></p>
+<p>先查系统摘要，硬件架构</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Meiya Cup 2020\Image\Cole\Ram dump from Cole\coleramdump.mem&quot; imageinfo</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026111314865.png" alt="image-20221026111314865"></p>
+<p><code>Win7SP1x64</code></p>
+</li>
+<li><p>用户密码的前5个字符是甚么？</p>
+<p>火眼仿真时直接出，78945</p>
+</li>
+<li><p>计算机中可疑的txt文件的名称是甚么？ </p>
+<p>能找到的txt就这两个</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026111726706.png" alt="image-20221026111726706"></p>
+<p>不过都没找到具体文件，应该是已经被删了，参考前面几个检材选出来</p>
+</li>
+<li><p>可疑txt文件曾经出现在哪个路径？</p>
+<p><code>C:/Users/Cole/Desktop/</code></p>
+</li>
+<li><p>是否有任何证据表明该文件已执行？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026112149771.png" alt="image-20221026112149771"></p>
+</li>
+<li><p>以下哪个与上述可疑txt文件相关的发现是正确的？ </p>
+<p>这个customer.txt同样可疑</p>
+<p>我们先定位vips.txt的时间</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026113612996.png" alt="image-20221026113612996"></p>
+<p>我们可以看到访问用的是notepad</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026113844074.png" alt="image-20221026113844074"></p>
+<p>可以看到几分钟后就访问了customer.txt</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026114012862.png" alt="image-20221026114012862"></p>
+</li>
+<li><p>根据系统时间，Cole在2020-09-18 01:01:08UTC + 0000左右用笔记本计算机做了甚么？</p>
+<p>注意时区，这里是UTC+0，所以还要再往后8小时</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026113344457.png" alt="image-20221026113344457"></p>
+</li>
+</ol>
+<p>他删除了一些文件</p>
+<ol start="93">
+<li><p>FTK Imager.exe的PID是甚么? </p>
+<p>内存取证知识，查看运行时进程号</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Meiya Cup 2020\Image\Cole\Ram dump from Cole\coleramdump.mem&quot; --profile=Win7SP1x64 pslist | grep FTK Imager.exe</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026114258890.png" alt="image-20221026114258890"></p>
+</li>
+</ol>
+<p>2456</p>
+<ol start="94">
+<li><p>FTK Imager.exe的父应用程序是甚么？</p>
+<p>也就是PPID 660</p>
+<p>对应explorer.exe</p>
+</li>
+<li><p>FTK Imager.exe使用甚么DLL？</p>
+<p><code>dlllist: 列出某一进程加载的所有dll文件</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Meiya Cup 2020\Image\Cole\Ram dump from Cole\coleramdump.mem&quot; --profile=Win7SP1x64 -p 2456 dlllist  | findstr sensapi.dll</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115033991.png" alt="image-20221026115033991"></p>
+</li>
+<li><p>MpCmdRun.exe的PID是甚么? </p>
+<p><code>pslist：该插件列举出系统进程，但它不能检测到隐藏或者解链的进程，psscan可以</code></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115318799.png" alt="image-20221026115318799"></p>
+</li>
+</ol>
+<p>1288</p>
+<ol start="97">
+<li><p>以下哪个与MpCmdRun.exe相关的项目是正确？</p>
+<p> <img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115455408.png" alt="image-20221026115455408"></p>
+<p>可以看到由svchost.exe启动的，终止于<code>2020-09-18 01:20:57 UTC+0000</code></p>
+</li>
+<li><p>上次启动后，笔记本计算机连接的外部IP是甚么？</p>
+<p><code>查看当前的网络连接情况可以使用</code>netscan<code>模块，该模块会列出所有实时的网络连接信息，包括使用的协议类型、源地址、目的地址、双方的端口号、连接状态(LISTENING、CLOSED等)</code></p>
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Meiya Cup 2020\Image\Cole\Ram dump from Cole\coleramdump.mem&quot; --profile=Win7SP1x64 netscan</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115821944.png" alt="image-20221026115821944"></p>
+</li>
+</ol>
+<p>可以看到未连接/未连接到任何外部IP</p>
+<ol start="99">
+<li><p>上次启动后，笔记本计算机连接的网络驱动器路径是甚么？ </p>
+<p><strong>未连接/未连接到任何外部IP</strong></p>
+</li>
+<li><p>Cole公司的一位客户有一封电子邮件m*b*@ms**.z**.**.tw，可以在Cole的笔记本计算机中找到此数据吗?（某些字符被故意用*遮盖）</p>
+<p>这个其实在vip.txt中可以找到，但是Cole笔记本中不知道为啥看不到了</p>
+<p>但是可以找到的</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026141944686.png" alt="image-20221026141944686"></p>
+</li>
+<li><p>收到上述电子邮件的客户名称是甚么？</p>
+<p>陈宜</p>
+</li>
+<li><p>属于上述客户的电话号码是甚么？</p>
+<p>626566826</p>
+</li>
+<li><p>上述客户可能居住的区域是甚么？</p>
+<p>TIN SHUI WAI</p>
+</li>
+</ol>
+<h4 id="Cole的Raspberry-Pi-4"><a href="#Cole的Raspberry-Pi-4" class="headerlink" title="Cole的Raspberry Pi 4"></a>Cole的Raspberry Pi 4</h4><ol start="104">
+<li><p>Cole的PI的哈希值（SHA-256）是甚么？</p>
+<p><code>EABC9BECCFA67E825864EBAB7B503EEC293C6209CDC931016D2F1D081F7C0556</code></p>
+</li>
+<li><p>Cole PI 装置的操作系统是甚么？ </p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026235657663.png" alt="image-20221026235657663"></p>
+</li>
+<li><p>操作系统是甚么版本？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026235721702.png" alt="image-20221026235721702"></p>
+</li>
+<li><p>装置的文件系统是甚么？ </p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026235435748.png" alt="image-20221026235435748"></p>
+<p>ext4</p>
+</li>
+<li><p>操作系统的时区是甚么？</p>
+<p>不知道为啥仿真不了，手动查看<code>/etc/timezone</code></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027001336539.png" alt="image-20221027001336539"></p>
+</li>
+<li><p>哪个文件包含儿童色情物品内容？（某些字符被故意用*遮盖）</p>
+<p>这个我们找一下历史记录，发现了一个可疑的文件操作</p>
+<p> <img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027001456685.png" alt="image-20221027001456685"></p>
+<p>去<code>/var</code>目录下看看，3个复制的照片都是</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027001631824.png" alt="image-20221027001631824"></p>
+</li>
+</ol>
+<p>B</p>
+<ol start="110">
+<li><p>Cole PI装置中的儿童色情物品的创建时间是甚么？</p>
+<p>见上图，<code>2020/09/15 17:21</code></p>
+</li>
+</ol>
+<h4 id="Cole的NAS装置"><a href="#Cole的NAS装置" class="headerlink" title="Cole的NAS装置"></a>Cole的NAS装置</h4><p>啥叫NAS？</p>
+<blockquote>
+<p>NAS（Network Attached Storage：网络附属存储）按字面简单说就是连接在网络上，具备资料存储功能的装置，因此也称为“<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E5%AD%98%E5%82%A8%E5%99%A8/9485387?fromModule=lemma_inlink">网络存储器</a>”。它是一种专用数据<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E5%99%A8?fromModule=lemma_inlink">存储服务器</a>。它以数据为中心，将存储设备与服务器彻底分离，集中管理数据，从而释放带宽、提高性能、降低总拥有成本、保护投资。其成本远远低于使用服务器存储，而效率却远远高于后者。</p>
+</blockquote>
+<ol start="111">
+<li><p>Cole NAS的哈希值（SHA-256）是甚么?</p>
+<p><code>5B79890D90B661183F6849469FA2042D103D629A6BC9A4304E39B13C019D2871</code></p>
+</li>
+<li><p>儿童色情数据存放在哪里？</p>
+<p>我们在火眼查看时可以发现分区3中很多内容都没有，需要动态磁盘恢复，利用xways</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027092907707.png" alt="image-20221027092907707"></p>
+<p>Partition 3\cole-shared\media</p>
+</li>
+<li><p>设备中现有多少儿童色情数据？</p>
+<p>从上图可知3个</p>
+</li>
+<li><p>Cole NAS装置中的儿童色情物品的创建时间是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027093032413.png" alt="image-20221027093032413"></p>
+</li>
+</ol>
+<h4 id="Cole的手提电话"><a href="#Cole的手提电话" class="headerlink" title="Cole的手提电话"></a>Cole的手提电话</h4><ol start="115">
+<li><p>在Cole手机, 的用户个人资料是甚么？ </p>
+<p>nmd我说为啥加载不出来镜像，正确的手机bin文件在补充文件里。。。</p>
+<p>算了小爷不做了</p>
+</li>
+</ol>
+<h4 id="Daniel-的桌上计算机"><a href="#Daniel-的桌上计算机" class="headerlink" title="Daniel 的桌上计算机"></a>Daniel 的桌上计算机</h4><p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027100626549.png" alt="image-20221027100626549"></p>
+<ol start="116">
+<li><p>Daniel的桌上计算机的哈希值（SHA-256）是甚么?</p>
+<p><code>07DD40CF28603F421F3A09CD38F1C8AA40A2AC4BFB46ECF8299C38CE6AE44ED5</code></p>
+</li>
+<li><p>该桌上计算机操作系统储存在哪个分区上？</p>
+<p>火眼会误导人，</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027100748587.png" alt="image-20221027100748587"></p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027102850267.png" alt="image-20221027102850267"></p>
+<p>实际在分区2</p>
+</li>
+<li><p>在桌上计算器机中找到Daniel的电子邮件地址是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027103056933.png" alt="image-20221027103056933"></p>
+</li>
+<li><p>该恶意软件感染源是甚么？ </p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027103325668.png" alt="image-20221027103325668"></p>
+<p>一个非官方授权的邮件，可以看到会诱导点击链接</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027103641734.png" alt="image-20221027103641734"></p>
+<p>因此恶意软件的感染源来自一封邮件</p>
+</li>
+<li><p>在Daniel的桌面上发现了甚么恶意软件？(某些字符被刻意用*遮盖)</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027103939391.png" alt="image-20221027103939391"></p>
+<p>桌面上并不存在啥软件，但是<code>Downloads</code>下有这些，我们通过邮件访问链接对应的历史记录来排查</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027104154898.png" alt="image-20221027104154898"></p>
+<p>因此可以确定就是<code>video_viewer_3.1.2.4.zip</code></p>
+</li>
+<li><p>该恶意软件的哈希值（SHA-256）是甚么？</p>
+<p>火眼崩了，分析挂载失败55555</p>
+</li>
+<li><p>该恶意软件的功能是甚么？ </p>
+<p>逆向的同学来搞一下吧，nnd免杀做的挺好</p>
+<p>答案：远程桌面协议</p>
+</li>
+</ol>
+<h4 id="Daniel的MacBook"><a href="#Daniel的MacBook" class="headerlink" title="Daniel的MacBook"></a>Daniel的MacBook</h4><ol start="123">
+<li><p>Daniel的MacBook 计算机的哈希值（SHA-1）是甚么?</p>
+<p><code>C71C21730461FC901FD99F76C3679C3FED0DFAB9</code></p>
+</li>
+<li><p>Daniel的MacBook 计算机中有多少个分区？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027110535923.png" alt="image-20221027110535923"></p>
+<p>2个</p>
+</li>
+</ol>
+<h4 id="Daniel-的iPhone"><a href="#Daniel-的iPhone" class="headerlink" title="Daniel 的iPhone"></a>Daniel 的iPhone</h4><ol start="125">
+<li><p>Daniel的iPhone的操作系统是甚么版本？ </p>
+<p>iphone需要输入备份密码</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027112723380.png" alt="image-20221027112723380"></p>
+</li>
+<li><p>Daniel的iPhone的wifi mac地址是甚么？</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027112744289.png" alt="image-20221027112744289"></p>
+</li>
+<li><p>Daniel的iPhone的IMEI是甚么？ </p>
+<p>证物照片中有</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027112938052.png" alt="image-20221027112938052"></p>
+</li>
+<li><p>iPhone上次连接WIFI的SSID是甚么？ </p>
+<p>这个没办法了，猜不出弱密码就完，密码是1234</p>
+<p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027113623033.png" alt="image-20221027113623033"></p>
+</li>
+<li><p>根据调查结果，以下哪项关于Daniel的选项是正确的？</p>
+<p>因为点击邮件而被种马 所以都不是</p>
+</li>
+</ol>
+<p>​     </p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E4%BE%8B%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">案例背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Zello%E6%9C%8D%E5%8A%A1%E5%99%A8%E9%83%A8%E5%88%86"><span class="toc-number">2.</span> <span class="toc-text">Zello服务器部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="toc-number">3.</span> <span class="toc-text">Bob路由器</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob%E7%9A%84%E7%AC%94%E8%AE%B0%E6%9C%AC"><span class="toc-number">4.</span> <span class="toc-text">Bob的笔记本</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob%E7%9A%84%E6%A1%8C%E4%B8%8A%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-number">5.</span> <span class="toc-text">Bob的桌上计算机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob-iphone"><span class="toc-number">6.</span> <span class="toc-text">Bob iphone</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob%E7%9A%84Samsung"><span class="toc-number">7.</span> <span class="toc-text">Bob的Samsung</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Bob%E7%9A%84IMAC-%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-number">8.</span> <span class="toc-text">Bob的IMAC 计算机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cole%E6%A1%8C%E4%B8%8A%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-number">9.</span> <span class="toc-text">Cole桌上计算机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cole%E7%9A%84%E6%89%8B%E6%8F%90%E7%94%B5%E8%84%91"><span class="toc-number">10.</span> <span class="toc-text">Cole的手提电脑</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cole%E7%9A%84Raspberry-Pi-4"><span class="toc-number">11.</span> <span class="toc-text">Cole的Raspberry Pi 4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cole%E7%9A%84NAS%E8%A3%85%E7%BD%AE"><span class="toc-number">12.</span> <span class="toc-text">Cole的NAS装置</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Cole%E7%9A%84%E6%89%8B%E6%8F%90%E7%94%B5%E8%AF%9D"><span class="toc-number">13.</span> <span class="toc-text">Cole的手提电话</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daniel-%E7%9A%84%E6%A1%8C%E4%B8%8A%E8%AE%A1%E7%AE%97%E6%9C%BA"><span class="toc-number">14.</span> <span class="toc-text">Daniel 的桌上计算机</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daniel%E7%9A%84MacBook"><span class="toc-number">15.</span> <span class="toc-text">Daniel的MacBook</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Daniel-%E7%9A%84iPhone"><span class="toc-number">16.</span> <span class="toc-text">Daniel 的iPhone</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&text=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&is_video=false&description=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=20年美亚杯电子数据取证团队赛复现&body=Check out this article: https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&name=20年美亚杯电子数据取证团队赛复现&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/&t=20年美亚杯电子数据取证团队赛复现"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2022
+    RacerZ
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
