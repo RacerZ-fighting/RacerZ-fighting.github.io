@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="写在前面为了写密码学作业，也为了深入了解RSA的各种攻击思路。通读一下Twenty Years of Attacks on the RSA Cryptosystem这篇paper，记录其中的一些方法思路和作者的论文写作风格，并结合密码挑战赛的题目加以练习。 Factoring Large Integers我们将模数分解称为对RSA的蛮力攻击。尽管分解算法一直在稳步改进，但是当正确使用RSA时，当前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Twenty Years of Attacks on the RSA Cryptosystem">
+<meta property="og:url" content="https://racerz-fighting.github.io/2022/11/05/RSA/index.html">
+<meta property="og:site_name" content="RacerZ">
+<meta property="og:description" content="写在前面为了写密码学作业，也为了深入了解RSA的各种攻击思路。通读一下Twenty Years of Attacks on the RSA Cryptosystem这篇paper，记录其中的一些方法思路和作者的论文写作风格，并结合密码挑战赛的题目加以练习。 Factoring Large Integers我们将模数分解称为对RSA的蛮力攻击。尽管分解算法一直在稳步改进，但是当正确使用RSA时，当前">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221028211019157.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221028223233253.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221031223257524.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221104235154854.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221105201228382.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221105205747397.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221105211942517.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221105213630332.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221105214202851.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221105214823705.png">
+<meta property="article:published_time" content="2022-11-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-11-06T15:44:14.222Z">
+<meta property="article:author" content="RacerZ">
+<meta property="article:tag" content="cryptography">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/11/05/RSA/image-20221028211019157.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Twenty Years of Attacks on the RSA Cryptosystem</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/05/RSA/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/05/RSA/&text=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/05/RSA/&title=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/05/RSA/&is_video=false&description=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Twenty Years of Attacks on the RSA Cryptosystem&body=Check out this article: https://racerz-fighting.github.io/2022/11/05/RSA/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/05/RSA/&title=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/05/RSA/&title=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/05/RSA/&title=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/05/RSA/&title=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/05/RSA/&name=Twenty Years of Attacks on the RSA Cryptosystem&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/05/RSA/&t=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Factoring-Large-Integers"><span class="toc-number">2.</span> <span class="toc-text">Factoring Large Integers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Elementary-Attacks"><span class="toc-number">3.</span> <span class="toc-text">Elementary Attacks</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-Common-Modulus"><span class="toc-number">3.1.</span> <span class="toc-text">1. Common Modulus</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Blinding"><span class="toc-number">4.</span> <span class="toc-text">2.2 Blinding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Low-Private-Exponent"><span class="toc-number">5.</span> <span class="toc-text">3 Low Private Exponent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Low-Public-Exponent"><span class="toc-number">6.</span> <span class="toc-text">Low Public Exponent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-Coppersmith%E2%80%99s-Theorem"><span class="toc-number">7.</span> <span class="toc-text">4.1 Coppersmith’s Theorem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-Hastad%E5%B9%BF%E6%92%AD%E6%94%BB%E5%87%BB"><span class="toc-number">8.</span> <span class="toc-text">4.2 Hastad广播攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-Franklin-Reiter-%E7%9B%B8%E5%85%B3%E6%B6%88%E6%81%AF%E6%94%BB%E5%87%BB"><span class="toc-number">9.</span> <span class="toc-text">4.3 Franklin-Reiter 相关消息攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-Coppersmith-%E7%9F%AD%E5%A1%AB%E5%85%85%E6%94%BB%E5%87%BB"><span class="toc-number">10.</span> <span class="toc-text">4.4 Coppersmith 短填充攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-5-%E9%83%A8%E5%88%86%E5%AF%86%E9%92%A5%E6%B3%84%E6%BC%8F%E6%94%BB%E5%87%BB"><span class="toc-number">11.</span> <span class="toc-text">4.5 部分密钥泄漏攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E6%89%A7%E8%A1%8C%E6%94%BB%E5%87%BB"><span class="toc-number">12.</span> <span class="toc-text">5 执行攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E6%97%B6%E9%97%B4%E6%94%BB%E5%87%BB"><span class="toc-number">13.</span> <span class="toc-text">5.1 时间攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-%E9%9A%8F%E6%9C%BA%E6%95%85%E9%9A%9C"><span class="toc-number">14.</span> <span class="toc-text">5.2 随机故障</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-Bleichenbacher%E2%80%99s-Attack-on-PKCS-1"><span class="toc-number">15.</span> <span class="toc-text">5.3 Bleichenbacher’s Attack on PKCS 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">16.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E6%8C%91%E6%88%98%E8%B5%9B%E9%A2%98%E7%9B%AE%E5%90%8E%E7%BB%AD%E6%96%B9%E6%B3%95"><span class="toc-number">17.</span> <span class="toc-text">密码挑战赛题目后续方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%A0%E6%95%B0%E7%A2%B0%E6%92%9E%E6%94%BB%E5%87%BB-Frame1-18"><span class="toc-number">17.1.</span> <span class="toc-text">因数碰撞攻击 Frame1&#x2F;18</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%B4%B9%E9%A9%AC%E5%88%86%E8%A7%A3%E6%B3%95-Frame-10"><span class="toc-number">17.2.</span> <span class="toc-text">费马分解法 Frame 10</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Pollard-p-1-%E5%88%86%E8%A7%A3%E6%B3%95-Frame-2-6-19"><span class="toc-number">17.3.</span> <span class="toc-text">Pollard p-1 分解法 Frame 2&#x2F;6&#x2F;19</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">18.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Twenty Years of Attacks on the RSA Cryptosystem
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">RacerZ</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-11-04T16:00:00.000Z" itemprop="datePublished">2022-11-05</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/cryptography/" rel="tag">cryptography</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>为了写密码学作业，也为了深入了解RSA的各种攻击思路。通读一下<code>Twenty Years of Attacks on the RSA Cryptosystem</code>这篇paper，记录其中的一些方法思路和作者的论文写作风格，并结合密码挑战赛的题目加以练习。</p>
+<h4 id="Factoring-Large-Integers"><a href="#Factoring-Large-Integers" class="headerlink" title="Factoring Large Integers"></a>Factoring Large Integers</h4><p>我们将模数分解称为对RSA的蛮力攻击。尽管分解算法一直在稳步改进，但是当正确使用RSA时，当前的技术水平仍然远远没有对RSA的安全性构成威胁。分解大整数是计算数学中最美丽的问题之一，但并不是本文的主题。为了完整起见，我们注意到当前最快的因式分解算法<em>General Number Field Sieve</em>，其时间复杂度为<br>$$<br>((c+o(1)n^{1/3}log^{2/3}n)),,,,,,for, some, c&lt;2<br>$$<br>我们的目标是调查对RSA的攻击，这些攻击在不直接分解RSA模数N的情况下解密消息。尽管如此，还是值得去关注一些少见的RSA模数N，可以被轻易分解。例如，如果 $p-1$ 是某个小于 $B$ 的素数因子组成，那么N就可以在小于$B^3$的时间下分解。</p>
+<p>如上所述，如果存在有效的因子分解算法，则RSA是不安全的。然而，这是一个长期存在的问题: “我们是否需要通过分解N来有效的计算 $e^{th}$ 根？是否破解RSA同分解N一样难？”，我们引出下面具体的开放问题：</p>
+<blockquote>
+<p><strong>开放问题1：</strong> 给出整数 $N$ 和 $e$ 满足 $gcd(e, \phi(N))=1$ ，定义函数 $f_{e,N}: Z_N^{<em>} \rightarrow Z_N^{</em>}\ by\ f_{c,N}(x)=x^{1/e}\ mod\ N. $ 是否存在多项式时间复杂度下的算法A，可以计算出N的分解因子，同时能访问一些e的”oracle“ $f_{e,N}(x)$</p>
+</blockquote>
+<p>近来有学者证据指出对于一些小整数 $e$ ，答案是否定的。换句话说，对于小e，可能不存在从因式分解到破坏RSA的多项式时间缩减。他们通过证明在特定模型中，对小整数e问题的肯定答案则将会产生一个有效的因式分解算法，我们知道这将会上升开放问题1到针对RSA的”选择密文攻击”。因此，得出答案是否定的。</p>
+<p>接下来我们将会说明泄漏私钥d和分解整数N是等效的。因此，向任何知道d的方隐藏N的因式分解是没有意义的。</p>
+<blockquote>
+<ul>
+<li>Fact 1: 设 $&lt;N,e&gt;$ 是RSA的一对公钥。给出d，我们就可以有效地分解模数N。相反，给出N的因数，我们也可以恢复d</li>
+<li>由N的因式分解可以得到 $\phi(N)$ 。由于e是已知的，因此可以恢复d。这个证明了反向的论点。我们已知给出d就可以分解整数N。通过d 去计算 $k=de-1$ 通过de的定义我们知道k是 $\phi(N)$ 的倍数。因为 $\phi(N)$ 是偶数， $k=2^tr$ ，这里r是奇数且 $t\geq 1$. 又知对于任意 $g \in Z_N^{<em>}$ ，满足 $g^k=1$ ; 并且，$g^{k/2}$ 是模数N的二次方根。由中国剩余定理可以得到，这样的数有4个解，其中两个是正负1，另外两个是 $\pm x$ ，且 $x$ 满足 $x=1 \ mod\ p$ 且 $ x = -1 \ mod\ q$ . 使用倒数两个数中任意一个，通过计算 $gcd(x-1,N)$ 均可得到N的因式分解。直观的可以得到，如果 $g$ 是在 $Z_N^</em>$ 中随机挑选的，那么至少1/2的概率（基于g的选择），序列 $g^{1/2}, g^{1/4}, \dots, g^{k/2^t} \ mod\ N$ 是其中一个是平方根，且可以计算出N的因式分解。所有序列中的元素均可在 $O(log^3_2N)$ 的时间复杂度下有效计算。</li>
+</ul>
+</blockquote>
+<h4 id="Elementary-Attacks"><a href="#Elementary-Attacks" class="headerlink" title="Elementary Attacks"></a>Elementary Attacks</h4><h5 id="1-Common-Modulus"><a href="#1-Common-Modulus" class="headerlink" title="1. Common Modulus"></a>1. Common Modulus</h5><p>为了避免为每个用户生成一个不同的模数 $N = pq$ ，可能会希望固定N。让所有用户都使用相同的N。可信的官方会给每一用户i提供唯一的 $e_i, d_i $ ，同时用户i会生成一个公钥密码 $&lt;N, e_i&gt;$ 和私钥 $&lt;N, d_i&gt;$</p>
+<p>乍一看，这似乎是可行的: 传送给Alice的密文 $C=M^{e_a} \ mod \ N$ 不能被Bob解密，因为后者没有私钥d。然而，这是不正确的，因此系统是不安全的。根据Fact 1，事实上，Bob可以使用他自己的指数 $e_b, d_b$ 来分解模数N。一旦N被Bob因式分解，其就可以利用Alice的 $e_a$ 恢复私钥 $d_a$. 此观察结果表明，RSA模数不应被多个实体使用。</p>
+<p>数学原理补充参考<a target="_blank" rel="noopener" href="http://blog.tolinchan.xyz/2021/08/31/rsa-1/">http://blog.tolinchan.xyz/2021/08/31/rsa-1/</a></p>
+<p><strong>应用</strong> 密码挑战赛 Frame 4/0</p>
+<p>先看一下帧数据结构</p>
+<p><img src="/2022/11/05/RSA/image-20221028211019157.png" alt="image-20221028211019157"></p>
+<p>明文结构如下</p>
+<p><code>分片明文填充为 512 比特消息后再进行加密，填充规则为高位添加 64 比特标志位，随后加上 32 比特通信序号，再添加若干个 0，最后 64 比特为明文分片字符对应的 ASCII 码</code></p>
+<p>将所有帧中的对应模数、加密指数以及密文分组提取出来，方便后续计算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">21</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;/Users/racerz/Desktop/密码学/待解决的问题/密码挑战赛赛题三/data/Frame<span class="subst">&#123;i&#125;</span>&quot;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = f.read()</span><br><span class="line">        N.append(data[:<span class="number">256</span>])</span><br><span class="line">        e.append(data[<span class="number">256</span>:<span class="number">512</span>])</span><br><span class="line">        c.append(data[<span class="number">512</span>:<span class="number">768</span>])</span><br><span class="line"><span class="built_in">print</span>(N)</span><br></pre></td></tr></table></figure>
+
+<p>共模攻击的利用条件是两个密文加密时使用相同的模数，且加密相同明文</p>
+<p>我们先寻找有无公共模数</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def find():</span><br><span class="line">    index1 = 0</span><br><span class="line">    index2 = 0</span><br><span class="line">    for i in range(21):</span><br><span class="line">        for j in range(i+1, 21):</span><br><span class="line">            if N[i] == N[j]:</span><br><span class="line">                print(str((i, j)))</span><br></pre></td></tr></table></figure>
+
+<p>然后利用公共模数攻击    </p>
+<p>PS：对于扩展欧几里得算法递归式思路，如图所示<a target="_blank" rel="noopener" href="https://www.cnblogs.com/fusiwei/p/11775503.html">https://www.cnblogs.com/fusiwei/p/11775503.html</a></p>
+<p><img src="/2022/11/05/RSA/image-20221028223233253.png" alt="image-20221028223233253"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 扩展欧几里得</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">egcd</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span> a == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> (b, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        gcd, x, y = egcd(b%a, a)</span><br><span class="line">        <span class="keyword">return</span> (gcd, y - (b//a) * x, x) <span class="comment"># 辗转相除法反向推导每层a、b的因子使得gcd(a,b)=ax+by成立 </span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 0, 4</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">attack</span>(<span class="params">i, j</span>):</span><br><span class="line">    e1 = <span class="built_in">int</span>(e[i], <span class="number">16</span>)</span><br><span class="line">    e2 = <span class="built_in">int</span>(e[j], <span class="number">16</span>)</span><br><span class="line">    c1 = <span class="built_in">int</span>(c[i], <span class="number">16</span>)</span><br><span class="line">    c2 = <span class="built_in">int</span>(c[j], <span class="number">16</span>)</span><br><span class="line">    n = <span class="built_in">int</span>(N[i], <span class="number">16</span>)</span><br><span class="line"></span><br><span class="line">    gcd, r, s = egcd(e1, e2)</span><br><span class="line">    <span class="comment"># 考虑r, s为负数的情况</span></span><br><span class="line">    <span class="keyword">if</span> r &lt; <span class="number">0</span>:</span><br><span class="line">        r = -r</span><br><span class="line">        c1 = inverse(c1, n)</span><br><span class="line">    <span class="keyword">elif</span> s &lt; <span class="number">0</span>:</span><br><span class="line">        s = -s</span><br><span class="line">        c2 = inverse(c2, n)</span><br><span class="line">    m = <span class="built_in">pow</span>(c1, r, n)*<span class="built_in">pow</span>(c2, s, n) % n</span><br><span class="line">    plain = binascii.a2b_hex(<span class="built_in">hex</span>(m)[<span class="number">2</span>:])</span><br><span class="line">    <span class="built_in">print</span>(plain[-<span class="number">8</span>:])</span><br></pre></td></tr></table></figure>
+
+<p>输出 <code>My secre</code></p>
+<h4 id="2-2-Blinding"><a href="#2-2-Blinding" class="headerlink" title="2.2 Blinding"></a>2.2 Blinding</h4><p>假设 $&lt;N,d&gt;$ 是Bob的私钥，而 $&lt;N,e&gt;$是对应的公钥。假设对手Marvin想要Bob在消息 $M \in Z_N^*$ 上签名。Bob当然会拒绝。Marvin尝试下面步骤：他从 $r\in Z_N^*$ 中随机挑选r并设置 $M’=r^eM \ mod \ N$.</p>
+<p>他请求Bob在随机明文 $M’$ 上签名，后者则会单纯的去签这个看上去没啥问题的明文 $M’$ ，注意 $S’=(M’)^d\ mod \ N$ . Marvn现在可以简单的通过计算 $S=S’/r\ mod \ N$ 就可以获得Bob在原始明文M上的签名S。因为<br>$$<br>S^e=(S’)^e/r^e = (M’)^{ed}/r^e = M’/r^e = M \ (mod \ N)<br>$$<br>这种称为<strong>Blinding</strong>的技术使Marvin可以通过要求Bob签署随机明文的消息来获得他指定的消息上的有效签名</p>
+<p>  Bob并不知道他实际在什么消息上签名，不过由于一般在消息签名之前还会对其做一次单向哈希</p>
+<p>，所以这种攻击并不是个严重的问题。</p>
+<h4 id="3-Low-Private-Exponent"><a href="#3-Low-Private-Exponent" class="headerlink" title="3 Low Private Exponent"></a>3 Low Private Exponent</h4><p>为了减少解密时间（数字签名时间），我们希望用一个小一些的解密指数d，因为模幂运算时间复杂度接近$log_2d$ ，而小的解密指数可以至少十倍的运算性能。然而会导致一些攻击出现</p>
+<blockquote>
+<p><strong>定理：</strong> 假设 $N=pq$，其中 $q&lt;p&lt;2q$ 假设 $d&lt;\frac{1}{3}N^{1/4}$. 我们通过e和N就可以有效地恢复d出来</p>
+<p>证明:  已知 $ed-k\phi(N)=1$ , 因此就可以得到<br>$$<br>\lvert \frac{e}{\phi(N)}-\frac{k}{d} \rvert = \frac{1}{d\phi(N)}<br>$$<br>其中 $\frac{k}{d}$ 是 $\frac{e}{\phi(N)}$ 的近似值，虽然Marvin不知道 $\phi(N)$ ，但是他可以用N去近似。也就是 $\phi(N)=N-p-q+1$ 并且 $p+q-1 &lt; 3\sqrt{N}$ ，所以我们推出 $\lvert N-\phi(N) \rvert &lt; 3\sqrt{N}$. 接着用N去替换上面不等式就可以得到<br>$$<br>\lvert \frac{e}{N}-\frac{k}{d} \rvert=\lvert \frac{ed-k\phi(N)-kN+k\phi(N)}{Nd} \rvert\<br>= \lvert \frac{1-k(N-\phi(N))}{Nd} \rvert \leq \lvert\frac{3k\sqrt{N}}{Nd}\rvert = \frac{3k}{d\sqrt{N}}<br>$$<br>又根据 $k\phi(N)=ed-1&lt;ed$ 因为 $e&lt;\phi(N)$ 我们知道 $k&lt;d&lt;\frac{1}{3}N^{1/4}$  由此可推出<br>$$<br>\lvert \frac{e}{N}-\frac{k}{d} \rvert\leq \frac{1}{dN^{1/4}}&lt;\frac{1}{2d^2 }<br>$$</p>
+</blockquote>
+<p>这是一个经典的逼近关系，分数 $\frac{k}{d}$ 且 $d&lt;N$ 在 $log_2N$的约束下，非常逼近 $\frac{e}{N}$.     实际上所有类似的分数都是连分式 $\frac{e}{N}$ 展开的收敛。所以我们需要做的就是将连分式 $\frac{e}{N}$ 展开，其中一个就等于 $\frac{k}{d}$ 因为 $ed-k\phi(N)=1$  可得到 $gcd(k,d)=1$ 因此 $\frac{k}{d}$ 就是一个最简分式。可在线性时间下恢复私钥d。</p>
+<p>这个理论最近被改进到只要 $d&lt;N^{0.292}$ , 攻击者就可以恢复出来私钥d。这也表明Wiener的界限并不确凿，很可能正确的界限应该是 $d&lt;N^{0.5}$ 所以这也引出了第二个开放问题</p>
+<blockquote>
+<p><strong>开放问题2：</strong> 假设 $N=pq$ 且 $d &lt; N^{0.5}$ . 在给出 e, N的前提下是否能够恢复私钥d?</p>
+</blockquote>
+<h4 id="Low-Public-Exponent"><a href="#Low-Public-Exponent" class="headerlink" title="Low Public Exponent"></a>Low Public Exponent</h4><p>为了减少加密或签名-验证的时间，习惯上使用小的公共指数e。e的最小可能值是3，但要击败某些攻击，该值应该是65537。后者当使用时，需要经过17次迭代乘法；相比而言，若使用随机加密指数e，则需要近似1000次乘法迭代。与前一节不同，针对小e的攻击应用远不止恢复明文数据。</p>
+<h4 id="4-1-Coppersmith’s-Theorem"><a href="#4-1-Coppersmith’s-Theorem" class="headerlink" title="4.1 Coppersmith’s Theorem"></a>4.1 Coppersmith’s Theorem</h4><p>对低公共指数RSA的最强大攻击是基于Coppersmith的定理，Coppersmith定理有许多应用，这里只会涉及其中的一些。</p>
+<blockquote>
+<p><strong>定理3：</strong>  假设 N 是一个整数并且 $f\in \Z[x]$ 是一个度数为d的一元多项式。设 $X=N^{\frac{1}{d}-\epsilon}$ 且 $\epsilon \geq 0$. 那么给出 $&lt;N,f&gt;$ Marvin可以有效地找出所有整数 $\lvert x_0 \rvert&lt;X$ 且满足条件 $f(x_0)=0 \ mod\ N$ 它的运行时间由在维数为𝑂(𝑤)且𝑤=𝑚𝑖𝑛(1/𝜖,log2𝑁)的格上运行的LLL算法所需时间决定</p>
+</blockquote>
+<p>这个算法提供了一种有效地寻找所有f模N的且小于 $X=N^{1/d}$ 的根的方法。当X取值越小，算法消耗时间就越短。这个定理的强大之处在于它能够找出所有多项式的小根，且当模数为素数时，没有比它更强大的求根算法。</p>
+<p>接下来介绍一种简化方法，给定多项式 $h(x)=\sum a_ix^i \in \Z[x]$， 并定义 $\lvert|h| \rvert^2= \sum_i{|a_i|^2}$</p>
+<blockquote>
+<p>**定理4: ** 令 $h(x) \in \Z[x]$ 是d次多项式并且 $X$ 是个正整数，假设 $\lvert| h(xX)|\rvert &lt; N/\sqrt{d}$ . 如果 $\lvert x_0 \rvert &lt; X$满足 $h(x_0) = 0 \mod \ N$ ，那么 $h(x_0)=0$ 对整数也成立。 </p>
+<p><strong>证明：</strong> 观察 Schwarz不等式可以知道<br>$$<br>\lvert h(x_0) \rvert = \lvert \sum a_ix_0^i \rvert = \lvert \sum a_iX^i(\frac{x_0}{X})^i  \rvert \leq \sum \lvert a_iX^i(\frac{x_0}{X})^i\rvert \<br>\leq \sum{\lvert a_iX^i \rvert} \leq \sqrt{d}||h(xX)|| &lt;N<br>$$<br>因为 $h(x_0) = 0 \mod N$ ，所以可以推出 $h(x_0) = 0$</p>
+</blockquote>
+<p>引理指出，如果h是具有低范数的多项式，则h mod N的所有小根也是整数上h的根.这个引理指示我们要求$f(x)\ mod \ N$ 上的小根 $x_0$， 我们应该去寻找另一个小范数的多项式 $h \in \Z[x]$ 并且 与 f模 N具有相同的根。这样 能容易找到在ℎ整数上的根 $x_0$. 因此我们需要搜寻多项式 $g \in \Z[x]$ ,使得 $h=gf$ 具有低范数（&lt;N）,这相当于搜寻低范数多项式下的所有整数线性组合 $f,xf,x^2f, \dots ,x^rf$.然而多数情况下，并没有那么多足够小的范数的非平凡组合。</p>
+<blockquote>
+<p>Coppersmith找到了解决方法的诀窍，如果 $f(x_0)=0 \ mod \ N$ 那么 $f(x_0)^k=0\ mod\ N^k $ 对于任意k都成立。更一般地， 定义下面的多项式：<br>$$<br>g_{u,v}(x)=N^{m-v}x^uf(x)^v\<br>u \geq0 \ and \ 0\leq v \leq m.<br>$$<br> 那么 $x_0$ 就是 $g_{u,v}(x)$ 模 $N^m$ 的根</p>
+</blockquote>
+<p>要使用引理4，我们必须找到多项式 $g_{u,v}(x)$ 的 一个整数线性组合 $h(x)$，使得$h(xX)$的范数小于$N^m$(回忆X是满足$X\leq N^{1/d}$ 的$x_0$的上界)。多亏了范数上的放松上限（$N^m$替代了$N$） ，我们可以证明对于足够大的整数m，总是存在一个线性组合 $h(x)$ 满足规定的界。而一旦 $h(x)$ 找到了，定理4就指出其拥有并可以简单地找到整数根 $x_0$ </p>
+<p>下面是一些关于格的基本概念。假设 $u_1, \dots , u_w \in \Z^w$ 是一个线性独立向量，由 $&lt;u_1, \dots , u_w&gt;$ 构成的(满秩) 格L是 $u_1, \dots , u_w$ 的所有整数的线性组合。L的行列式定义为 $w \times w$ 方阵的行列式，其中行向量为 $u_1, \dots , u_w$</p>
+<p>在我们的例子中，我们将多项式 $g_{u,v}(xS)$ 视作向量，转而去研究由它们构成的格L。设 $v=0,\dots ,m$ 且 $u=0,\dots,d-1$ , 因此格的维数是 $w=d(m+1)$. 例如，当f是二次一元多项式且 $m=3$ 得到一下的格：</p>
+<p><img src="/2022/11/05/RSA/image-20221031223257524.png" alt="image-20221031223257524"></p>
+<p>元素 $*$ 对应于我们忽略其值的多项式的系数，所有空元素都代表0。由于矩阵是三角形的，因此其行列式是对角线上元素的乘积 (上面明确给出)。我们的目标是在L中找到短向量。</p>
+<p>Hermite的经典结论表明，任何维度为 $w$ 的格L的都包含一个非零向量 $v \in L$ ，它的范数满足 $\lvert v \rvert &lt; r_wdet(L)^{1/w}$ , 其中 $r_w$ 是一个只取决于 $w$ 的常数。Hermite的界可以表明，对于足够大的m，在格中都包含范数小于 $N^m 的向量。问题是我们是否可以在格L中构造出一个短向量，其长度不大于Hermite界，这便引出下面的LLL算法。</p>
+<blockquote>
+<p><strong>定理5</strong>：假设格L有一组基 $&lt;u_1, \dots, u_w&gt;$ ，通过LLL算法，可以得到一个向量 $v\in L$ 满足<br>$$<br>\lvert v \rvert \leq 2^{w/4}det(L)^{1/w}<br>$$<br>LLL算法的运行时间是其输入长度的四次方。</p>
+</blockquote>
+<p>通过LLL，我们就可以完成Coppersmith定理的证明。为了确保LLL算法产生的向量满足引理4的界，我们需要<br>$$<br>2^{w/4}det(L)^{1/w} &lt; N^m/\sqrt{w}<br>$$<br>其中格L的维数是 $w=d(m+1)$ . 计算表明，对于足够大的m，可以满足界。实际上，当 $X=N^{\frac{1}{d}-\epsilon}$时，只需取 $m=O(k/d)$ 且 $k=min(\frac{1}{\epsilon},logN)$ 即可。因此，运行时间主要由在维数为 $O(k)$ 的格上运行LLL算法所决定。</p>
+<p>一个自然的问题是，Coppersmith定理是否可以应用于二元多项式和多元多项式。假设 $f(x,y)\in \Z_n[x, y]$ 有根 $(x_0,y_0)$ 且 $\lvert x_0y_0 \rvert$ 有适当的界，那么Marvin是否能有效地找到根 $(x_0, y_0)$ ？尽管相同的技术似乎可以适用于某些二元多项式，但目前它还是一个有待证明的开放性问题。随着越来越多的结果取决于Coppersmith定理的二元扩展，对于算法的要求也更加苛刻。</p>
+<blockquote>
+<p><strong>开放问题3</strong>：找到可以将Coppersmith定理推广为二元多项式的一般条件</p>
+</blockquote>
+<h4 id="4-2-Hastad广播攻击"><a href="#4-2-Hastad广播攻击" class="headerlink" title="4.2 Hastad广播攻击"></a>4.2 Hastad广播攻击</h4><p>假设Bob希望向多方 $P_1,P_2,\dots, P_k$ 发送加密消息M，每方拥有一对RSA密钥 $&lt;N_i, e_i&gt;$. 假设 M 小于所有 $N_i$ Bob单纯地要去发送M，于是用每一对公钥加密消息然后发送密文给对应的 $P_i$. 攻击者 Marvin 可以窃取 Bob 传递的密文</p>
+<p>简化起见，假设所有的加密指数 $e_i$ 都等于3. 一个简单的论证表明，如果 $k \geq 3$，Marvin便可以恢复M。实际上，Marvin得到 $C_1,C_2,C_3$，其中<br>$$<br>C_1=M^3 \ mod\ N_1, \ \ C_2=M^3 \ mod\ N_2, \ \ C_3=M^3 \ mod\ N_3<br>$$<br>我们假设 $N_i$ 之间两两互素，否则的话 Marvin便可以直接因式分解其中的一些 $N_i$。利用CRT，我们就可以得到一个 $C’ \in \Z_{N_1N_2N_3}$ 满足 $C’ = M^3 \ mod \ N_1N_2N_3$ . 因为M是小于所有 $N_i$ 的，因此 $M^3 &lt; N_1N_2N_3$. 所以 $C’=M^3$ 遍历整数，Marvin可以通过计算 $C’$ 的立方根来恢复M。更一般地说，如果所有公共指数都等于e，只需 $k \geq e$ ， Marvin便可以恢复M。只有当使用小e时，攻击才是可行的。</p>
+<p>我们结合上述思路去做题。符合低加密指数的帧有Frame3/8/12/16/20</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=gbk</span></span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">from</span> Crypto.Util.number <span class="keyword">import</span> *</span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"></span><br><span class="line">N = []</span><br><span class="line">e = []</span><br><span class="line">c = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">egcd</span>(<span class="params">a, b</span>):</span><br><span class="line">    <span class="keyword">if</span> a == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> (b, <span class="number">0</span>, <span class="number">1</span>)</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        gcd, x, y = egcd(b%a, a)</span><br><span class="line">        <span class="keyword">return</span> (gcd, y - (b//a) * x, x) <span class="comment"># 辗转相除法反向推导每层a、b的因子使得gcd(a,b)=ax+by成立 </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">chinese_remainder_therom</span>(<span class="params">items</span>):</span><br><span class="line">    N = <span class="number">1</span></span><br><span class="line">    result = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> a,n <span class="keyword">in</span> items:</span><br><span class="line">        N *= n</span><br><span class="line">    <span class="keyword">for</span> a, n <span class="keyword">in</span> items:</span><br><span class="line">        m = N//n</span><br><span class="line">        gcd, r, s = egcd(n, m)</span><br><span class="line">        <span class="keyword">if</span> gcd != <span class="number">1</span>:</span><br><span class="line">            N = N // n</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        result += a*s*m</span><br><span class="line">    <span class="keyword">return</span> result % N, N</span><br><span class="line"></span><br><span class="line"><span class="comment"># 低加密指数</span></span><br><span class="line"><span class="comment"># Frame3/8/12/16/20</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">low_e_5</span>():</span><br><span class="line">    sessions = [</span><br><span class="line">        &#123;<span class="string">&quot;c&quot;</span>:<span class="built_in">int</span>(c[<span class="number">3</span>], <span class="number">16</span>), <span class="string">&quot;n&quot;</span>: <span class="built_in">int</span>(N[<span class="number">3</span>], <span class="number">16</span>)&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;c&quot;</span>:<span class="built_in">int</span>(c[<span class="number">8</span>], <span class="number">16</span>), <span class="string">&quot;n&quot;</span>: <span class="built_in">int</span>(N[<span class="number">8</span>], <span class="number">16</span>)&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;c&quot;</span>:<span class="built_in">int</span>(c[<span class="number">12</span>], <span class="number">16</span>), <span class="string">&quot;n&quot;</span>: <span class="built_in">int</span>(N[<span class="number">12</span>], <span class="number">16</span>)&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;c&quot;</span>:<span class="built_in">int</span>(c[<span class="number">16</span>], <span class="number">16</span>), <span class="string">&quot;n&quot;</span>: <span class="built_in">int</span>(N[<span class="number">16</span>], <span class="number">16</span>)&#125;,</span><br><span class="line">        &#123;<span class="string">&quot;c&quot;</span>:<span class="built_in">int</span>(c[<span class="number">20</span>], <span class="number">16</span>), <span class="string">&quot;n&quot;</span>: <span class="built_in">int</span>(N[<span class="number">20</span>], <span class="number">16</span>)&#125;,</span><br><span class="line">    ]</span><br><span class="line">    data = []</span><br><span class="line">    <span class="keyword">for</span> session <span class="keyword">in</span> sessions:</span><br><span class="line">        data += [(session[<span class="string">&#x27;c&#x27;</span>], session[<span class="string">&#x27;n&#x27;</span>])]</span><br><span class="line">    x, y = chinese_remainder_therom(data)</span><br><span class="line">    <span class="keyword">return</span> x, y</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">recover_the_plain</span>():</span><br><span class="line">    x,y = low_e_5()</span><br><span class="line">    tmp = gmpy2.iroot(gmpy2.mpz(x), <span class="number">5</span>)</span><br><span class="line">    <span class="keyword">return</span> binascii.a2b_hex(<span class="built_in">hex</span>(tmp[<span class="number">0</span>])[<span class="number">2</span>:])</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">21</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;/Users/racerz/Desktop/密码学/待解决的问题/密码挑战赛赛题三/data/Frame<span class="subst">&#123;i&#125;</span>&quot;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = f.read()</span><br><span class="line">        N.append(data[:<span class="number">256</span>])</span><br><span class="line">        e.append(data[<span class="number">256</span>:<span class="number">512</span>])</span><br><span class="line">        c.append(data[<span class="number">512</span>:<span class="number">768</span>])</span><br><span class="line"></span><br><span class="line">plain = recover_the_plain()</span><br><span class="line"><span class="built_in">print</span>(plain[-<span class="number">8</span>:])</span><br></pre></td></tr></table></figure>
+
+<p>输出 <code>t is a f</code></p>
+<p>回到paper</p>
+<p>Hasted提供了一种更强大的攻击。为了抵御上述攻击，发送方会做一些简单的防御。Bob会在加密消息前做一些”填充”，而不是直接广播加密后的M。举例来说，假设M有m比特长，可以发送 $M_i=i2^m+M$ 给 $P_i$ . 由于Marvin获得了不同消息的加密，因此他无法发起上述攻击。然而，Hasted表明这种线性填充是不安全的，实际上，他证明了在加密之前将消息应用于任何固定多项式并不能阻止攻击。</p>
+<p>假设对于每一方 $P_1,\dots,P_k$ ，Bob都有一个固定的公用多项式 $f_i \in \Z_{N_i}[x]$. 为了广播消息M，Bob 将加密消息 $f_i(M)$ 给对应的 $P$. 通过窃听，Marvin得到 $C_i=f_i(M)^{e^i}\ mod \ N_i\ for\ i=1,\dots,k$ Hastad表明，如果涉及足够多方参与，Marvin还是可以从所有密文中恢复明文M。以下定理是Hastad原始结论的更强版本</p>
+<blockquote>
+<p><strong>定理6</strong>(Hastad)：假设 $N_1,\dots,N_k$ 两两互素且 $N_{min}=min_i(N_i)$ ， 假设 $g_i \in \Z_{N_i}[x]$ 为k个d次多项式。假设存在唯一的 $M&lt;N_{min}$ 满足<br>$$<br>g_i(M) = 0\ mod\ N_i \ \ \ for\ all\ i=1,\dots,k<br>$$<br>在条件 $k&gt;d$ 下，给定 $&lt;N_i.g_i&gt;^k_{i=1}$ 我们可以有效地恢复M </p>
+</blockquote>
+<p>这个定理表明，当提供足够多的方程时，我们就可以有效地求解模数两两互素的单变量方程组。通过设置 $g_i=f_i^{e_i}-C_i\ mod \ N_i$， 我们看到，只要至少有d组数据，Marvin就可以从给定的密文中恢复M，特别是，如果所有 $e_i$ 等于e，并且Bob发出线性相关的消息，那么我们只要**k(k&gt;e)**，Marvin就可以恢复出明文</p>
+<p>Hastad的原始定理比上述定理更弱。与d次多项式不同，Hasted需要d(d+1)/2次多项式。Hastad的证明类似于上一节中描述的Coppersmith定理的证明。但是，Hastad在并没有在格中使用g的幂，因此获得了较弱的界</p>
+<p>总结这一部分，我们注意到，要正确防御上述广播攻击，必须使用随机填充而不是固定填充。</p>
+<h4 id="4-3-Franklin-Reiter-相关消息攻击"><a href="#4-3-Franklin-Reiter-相关消息攻击" class="headerlink" title="4.3 Franklin-Reiter 相关消息攻击"></a>4.3 Franklin-Reiter 相关消息攻击</h4><p>当Bob使用相同的模数发送与Alice相关的加密消息时，设 $&lt;N,e&gt;$ 是Alice的公钥， $M_1,M_2\in \Z^*_{N}$ 是两个不同的消息且对于一些已知多项式 $f\in \Z_N[x]$ 满足 $M_1=f(M_2)\ mod\ N$. 为了向Alice发送 $M_1,M_2$ ，Bob将简单地加密消息并传输生成的密文 $C_1, C_2$. 我们知道给出 $C_1,C_2$，Marvin可以简单地恢复出 $M_1, M_2$. 虽然攻击适用于任何小e，但是为了简化，我们在下述定理中假设e=3</p>
+<blockquote>
+<p><strong>引理7(FR)</strong>: 设e=3 且 $&lt;N,e&gt;$ 是RSA公钥. 设 $M_1 \neq M_2 \in Z_N^{*}$ 满足存在线性多项式 $f=ax+b \in \Z_N[x] $ 且 $b \neq 0$, 使得 $M_1=f(M_2)$ 因此，给出 $&lt;N,e,C_1,C_2,f&gt;$, Marvin便可以在log N的二次方时间下恢复出$M_1,M_2$</p>
+<p>**证明: ** 为了保持这部分证明的一般性，我们使用任意的e（而不是限制e=3）. 因为 $C_1=M_1^{e}\ mod \ N$， 我们知道 $M_2$ 是多项式 $g_1(x)=f(x)^e-C_1 \in \Z_N[x]$ 的根。类似地，$M_2$ 也是 $g_2(x)=x^e-C_2 \in \Z_N[x]$ 的根。线性因子 $x-M_2$ 均整除上述多项式。因此， Marvin 可使用欧几里得算法来计算 $g_1$和 $g_2$ 的最大公因数。如果结果表现为线性，则 $M_2$就可以找到。</p>
+<p>我们证明，当e = 3时，gcd一定是线性的。多项式因子 $x^3-C_2$ 将p和q均模成一个线性因子和一个不可约二次因子（因为 $gcd(e,\phi(N))=1$ 因此 $s^3-C_2$ 在 $\Z_N$ 下只有单根）. 因为 $g_2$ 不能整除 $g_1$ ，因此 gcd 一定是线性的。对于 e&gt;3时，gcd几乎总是线性的。然而，对于一些少见的 $M_1,M_2,f$ ，是有可能得到一个非线性的gcd，从而这种情况下会导致攻击失败。</p>
+<p>e&gt;3时，攻击需要e的二次方时间。因此，它只能在使用小的公共指数e时应用。对于大e来说，计算gcd的工作是令人望而却步的。设计针对任意e的这种攻击是一个有趣的问题 (尽管可能很困难)。特别地，上面 $g_1$ 和 $g_2$ 的gcd能否在loge的多项式时间下找到呢？</p>
+</blockquote>
+<h4 id="4-4-Coppersmith-短填充攻击"><a href="#4-4-Coppersmith-短填充攻击" class="headerlink" title="4.4 Coppersmith 短填充攻击"></a>4.4 Coppersmith 短填充攻击</h4><p>Franklin-Reiter攻击看起来有些人为。毕竟为什么Bob要想Alice发送相关消息的密文呢？Coppersmith强化了攻击，并证明了一个有关填充攻击的结论。</p>
+<p>简单的随机填充算法可能会通过在末端添加一些随机位来填充明文M。以下攻击指出了这种简单化填充的危险。假设Bob向Alice发送了正确填充的加密M。攻击者，Marvin，拦截密文并阻止其到达目的地。Bob注意到Alice没有回应他的信息，并决定将M重新发送给Alice，他随机填充M并传输生成的密文。Marvin现在有两个密文，对应于同一消息但使用两个不同的随机填充生成的密文。以下定理表明，尽管他不知道所使用的填充是什么，但Marvin依然能够恢复明文。</p>
+<blockquote>
+<p><strong>定理8</strong>：假设 $&lt;N,e&gt;$ 是一个RSA公钥，其中N有n位长度。令 $m=\lfloor n/e^2 \rfloor$，设 $M \in \Z^*_N$ 且消息长度至少 n-m 位长。定义 $M_1=2^mM+r_1$ 且 $M_2=2^mM+r_2$ 其中 $r_1$ 和 $r_2$ 是不同的整数满足 $0 \leq r_1,r_2 &lt; 2^m$. 如果Marvin得到 $&lt;N,e&gt;$ 以及 $M_1$ 和 $M_2$ 对应的密文 $C_1$ 和 $C_2$ （但是没有 $r_1 \ r_2$ ）， 他就可以有效地恢复M</p>
+<p><strong>证明</strong>：定义 $g_1(x,y)=x^e-C_1$ 以及 $g_2(x,y)=(x+y)^e-C_2$. 已知当 $y=r_2-r_1$ 时，上述多项式有公共根 $M_1$. 换句话说， $\triangle = r_2-r_1$ 就是结果 $h(y)=res_x(g_1,g_2) \in \Z_N[y]$. h的度数最多为 $e^2$. 而且 $\lvert \triangle \rvert&lt;2^m&lt;N^{1/e^2}$ 因此， $\triangle$ 是 h模N的一个小根，且 Marvin可以通过Coppersmith定理有效地找到这个根。 一旦 $\triangle$ 求得，就可以前一部分Franklin-Reiter攻击来计算$M_2$ ，最终算出 $M$</p>
+</blockquote>
+<p>当 e=3 时，只要填充长度小于 $1/9^{th}$ 消息的长度，那么就可以发起攻击。这是一个重要的结果。请注意，对于推荐值e = 65537，攻击对标准模数大小是无用的。</p>
+<h4 id="4-5-部分密钥泄漏攻击"><a href="#4-5-部分密钥泄漏攻击" class="headerlink" title="4.5 部分密钥泄漏攻击"></a>4.5 部分密钥泄漏攻击</h4><p>设 $&lt;N,d&gt;$ 是RSA的私钥。假设通过某种方式，Marvin能够暴露d的一小部分位，例如其中的四分之一。他能重建d的其余部分吗？令人惊讶的是，当相应的公钥很小时，答案是肯定的。最近相关学者 表明，只要 $e &lt; \sqrt{N}$，有可能从它的一小部分比特中重建所有的d。这些结果说明了保护整个私有RSA密钥的重要性。</p>
+<blockquote>
+<p><strong>定理9（BDF）</strong>：设 $&lt;N,d&gt;$ 为RSA私钥，且N有n比特长。给出至少 $\lceil n/4 \rceil$ 长度的私钥d，Marvin就可以在接近 $elog_2e$ 的时间下恢复所有d的部分。</p>
+<p><strong>定理10（Coppersmith）</strong>：设 $N=pq$ 是RSA n长度的模数。给出至少 $\lceil n/4 \rceil$ 长度的私钥p或q，就可以有效地恢复N。</p>
+</blockquote>
+<p>定理9很容易从定理10得出。事实上，通过定义e和d，存在一个整数k，使得<br>$$<br>ed - k(N - p - q + 1) = 1<br>$$<br>因为 $d&lt;\phi(N)$，我们需要k满足 $0&lt;k\leq e$. 对方程式模 $2^{n/4}$ 进行约化，并设置q=N/p。可得<br>$$<br>(ed)p-kp(N-p+1)+kN=p\ (mod\ 2^{n/4})<br>$$<br>由于Marvin已经得到至少n/4位长度的d，因此他知道 $ed\ mod\ 2^{n/4}$ 的值。因此，我们就得到了k和p的一个等式。对于e对应的每一个k的每个可能值，我们求解上述方程，获得 $p\ mod\ 2^{n/4}$ 的候选值。对于这些候选值中的每一个，运行定理10的算法来尝试分解因子N。可以证明 $p\ mod\ 2^{n/4}$ 的候选值总数最多为 $elog_2e$. 因此，在最多$elog_2e$尝试之后，N即可被分解。</p>
+<p>定理9被称为部分泄漏暴露攻击。对于更大的值e，只要满足 $e&lt;\sqrt{N}$，也存在类似的攻击。不过要实现此种攻击的技术要更复杂。有趣的是，基于离散对数的密码系统，例如ElGamal公钥系统，却不容易受到部分密钥泄漏的影响。事实上，如果给出 $g^x\ mod\ p$ 以及x的常数分数，并没有已知的多项式时间算法来计算x的其余部分。</p>
+<p>最后这一部分，我们证明了当加密指数e较小时，RSA系统泄漏了相应私钥d的一半最高有效位。要看到这一点，回顾 $ed-k(N-p-q+1)=1$ ，其中整数k满足 $0&lt;k\leq e$. 给定k，Marvin可以很容易地计算出<br>$$<br>\hat{d}=\lfloor (kN+1)/e \rfloor<br>$$<br>即可得<br>$$<br>\lvert \hat{d}-d \rvert \leq k(p+q)/e \leq 3k\sqrt{N}/e &lt; 3\sqrt{N}<br>$$<br>因此，$\hat{d}$ 是d一个很好的近似。界限表明，对于大多数d，$\hat{d}$ 一半最重要位都和d一样。因为k只有e个可能的值，Marvin可以构造一个大小为e的小集合，使集合中的一个元素等于d的最高有效位的一半。e = 3的情况特别有趣，在这种情况下，可以证明总是k = 2，因此系统完全泄漏了d的一半最高有效位。</p>
+<h4 id="5-执行攻击"><a href="#5-执行攻击" class="headerlink" title="5 执行攻击"></a>5 执行攻击</h4><p>我们将注意力转向完全不同的攻击类别，这些攻击不是攻击RSA功能的底层结构，而是集中在RSA的实现上。</p>
+<h4 id="5-1-时间攻击"><a href="#5-1-时间攻击" class="headerlink" title="5.1 时间攻击"></a>5.1 时间攻击</h4><p>想象存储RSA私钥的智能卡。由于该卡具有防篡改性，因此攻击者Marvin无法检查其内容并泄漏密钥。但是，Kocher想到的巧妙攻击表明，通过精确测量智能卡执行RSA解密 (或签名) 所需的时间，Marvin可以快速发现s私钥。</p>
+<p>我们将解释如何使用”重复平方算法”对RSA的简单实现进行攻击。假设 $d=d_nd_{n-1}\dots d_0$ 是d的二进制表示形式，即 $d=\sum_{i=0}^{n}2^id_i\ ,d_i\in {0,1}$. 重复平方算法计算 $C=M^d\ mod\ N$, 最多需要进行2n次模乘运算。它是基于观察 $C=\prod \limits_{i=0}^nM^{2^id_i}\ mod N$. 该算法具体如下：</p>
+<blockquote>
+<p>令z等于M且C等于1，对于 $i=0,\dots,n$ ，执行下列步骤：</p>
+<p>（1）如果 $d_i=1$ 则 $C=Cz \mod N$</p>
+<p>（2）令 $z=z^2 \mod N$</p>
+</blockquote>
+<p>对于 $i=0,\dots,n$ ，变量z遍历 $M^{2^i}\ mod\ N$ 的集合。变量C在集合中”收集”合适的幂来求得 $M^d\ mod\ N$.</p>
+<p>要发起攻击，Marvin需要智能卡对大量随机消息 $M_1,\dots,M_k \in \Z^*_N$ 生成签名，并测量生成每一个签名所需时间 $T_i$.</p>
+<p>攻击从最低有效位开始，逐个恢复每个比特位。已知d是奇数，因此 $d_0=1$. 考虑第二次迭代，刚开始时 $z=M^2\ mod\ N$ 且 $C=M$. 如果 $d_1=1$ , 智能卡就会计算乘积 $Cz=MM^2\ mod\ N$ ； 否则它就不会进行这一步计算。设 $t_i$ 是智能卡计算 $M_iM_i^2\ mod\ N$ 所需的时间。每一个 $t_i$ 都是不一样的，因为它计算 $M_iM_i^2\ mod\ N$ 所需的时间取决于 $M_i$ 的值（简单的模归约算法根据被归约的值需要不同的计算时间）。Marvin一旦获得智能卡的物理规格，就可以离线测量得到 ${t_i}$ (在发起攻击之前)。</p>
+<p>Kocher观察到当 $ d_i = 1$ 时，两集合 ${t_i}$ 和 ${T_i}$ 是相关的。例如，对于某些 $i,t_i$ 的时间远超预期，那么 $T_i$ 也可能比预期的要大。另一方面，如果 $d_1=0$，则两集合 ${t_i}$ 和 ${T_i}$ 是表现为相互独立的随机变量。通过测量相关性，Marvin就可以判断 $d_i$ 的取值。</p>
+<p>继续使用这个办法，他就可以恢复出 $d_2,d_3$ 等等。注意，当使用低加密指数e时，上一节的部分密钥泄露攻击表明，仅需要使用Kocher的时间攻击发现d的四分之一位就足矣。</p>
+<p>有两种方法可以防御攻击。最简单的方法是添加适当的延迟，使得模求幂总是需要固定的时间。第二种方法是由Rivest提出的，基于盲化的方法。在解密M之前，智能卡会先随机选取 $r\in \Z^*_N$ 并计算 $M’=Mr^e\ mod\ N$. 然后将d应用于M，并获得 $C’=(M’)^d\ mod\ N$. 最后，智能卡令 $C=C’/r\ mod\ N$ . 通过这种方法，智能卡将d应用于Marvin未知的消息 $M’$ 上。这样的话，Marvin就不能发起攻击了。</p>
+<p>Kocher最近在这些路线发现了另一种称为功率密码分析的攻击。Kocher表明，通过精确测量智能卡在签名生成过程中的功耗，Marvin通常可以轻松地发现密钥。事实证明，在多精度乘法过程中，卡的功耗高于正常值。通过测量高消耗周期的长度，Marvin可以轻松地确定在给定的迭代中该卡是执行了一次海水两次乘法，从而得到了d的比特位。</p>
+<h4 id="5-2-随机故障"><a href="#5-2-随机故障" class="headerlink" title="5.2 随机故障"></a>5.2 随机故障</h4><p>RSA解密和签名的实现经常使用中国剩余定理来加快 $M^d\ mod\ N$ 的计算。签名者Bob替换模N，先去对p和q进行模运算签名，然后使用中国剩余定理将结果结合起来。更准确地讲，Bob先计算<br>$$<br>C_p=M^{d_p}\ mod\ p\ \ \ \ and \ \ \ \ C_q=M^{d_q}\ mod\ q<br>$$<br>其中 $d_p=d\ mod\ (p-1)$ 以及 $d_q=d\ mod\ (q-1)$ ，然后，他通过如下设置求得签名C<br>$$<br>C=T_1C_p+T_2C_q\ \ (mod\ N)<br>$$<br>其中<br>$$<br>T_1=\begin{Bmatrix} 1\ mod\ p \ 0\ mod\ q \end{Bmatrix}\quad T_2=\begin{Bmatrix} 0\ mod\ p \ 1\ mod\ q \end{Bmatrix}<br>$$<br>与两次求幂相比，最后一个CRT步骤的运行时间可以忽略不计。注意，p和q是n的一半长度，因为乘法的简单实现需要平方时间，因此模p的乘法比模N快四倍。此外，$d_p$ 是d长度的一半，因此计算 $M^{d_p}$ 比计算 $M^{d}$ 快八倍。因此，总体签名时间减少了四倍，许多实现都使用这种方法来提高性能。</p>
+<p>Boneh, DeMillo, 和 Lipton发现使用CRT方法存在内在危险。假设在生成签名时，Bob计算机上的故障导致其在单个指令中计算错误。例如，在将寄存器值从一个位置复制到另一个位置时，其中一个比特位被翻转了（故障可能是由环境电磁干扰引起的，也可能是由罕见的硬件故障引起的，就像在早期版本的奔腾芯片中发现的那样）。给出一个无效签名，攻击者 Marvin 可以很容易地分解模数N。</p>
+<p>A. K. Lenstra解释了一种攻击形式，假设Bob生成签名时发生错误。那么 $C_p$ 或 $C_q$ 中的一个就会计算错误。假如 $C_p$ 是错误的，但 $\hat{C_q}$ 没错。生成的签名即 $\hat{C}=T_1C_p+T_2\hat{C_q}$. Marvin一收到 $\hat{C}$， 他就知道是错误的签名因为 $\hat{C}^e \neq M\ mod \ N$. 然而，注意到<br>$$<br>\hat{C}^e=M\ mod\ p \quad while \quad \hat{C}^e \neq M\ mod\ q<br>$$<br>因此，$gcd(N,\hat{C}^e-M)$ 就是N的非平凡因子。</p>
+<p>为了使攻击起作用，马文必须对M有充分的了解。也就是说，我们假设Bob不使用任何随机填充方法。在签名前随机填充可以有效地防御攻击。一种更简单的防御方法是Bob在将生成的签名发出去之前先自己检查一下。使用CRT加速方法时，检查签名尤为重要。随机故障对许多密码系统都是危险的，许多系统，包括RSA的非CRT实现，都可以使用随机故障进行攻击。然而，这些结果更多的是理论性的。</p>
+<h4 id="5-3-Bleichenbacher’s-Attack-on-PKCS-1"><a href="#5-3-Bleichenbacher’s-Attack-on-PKCS-1" class="headerlink" title="5.3 Bleichenbacher’s Attack on PKCS 1"></a>5.3 Bleichenbacher’s Attack on PKCS 1</h4><p>假设 N 是一个n位的RSA模数，M是m位消息，且m&lt;n. 在应用RSA加密之前，通过将随机位附加到消息M形成n位长度。被称为公钥加密标准1 (PKCS 1) 的旧版标准就使用这种方法。经填充后，消息如下：</p>
+<p><img src="/2022/11/05/RSA/image-20221104235154854.png" alt="image-20221104235154854"></p>
+<p>生成的消息长度为n位，并使用RSA直接加密。包含”02”的初始块是16位长，且可以看到已经在消息上添加了随机填充。</p>
+<p>当Bob的电脑接收到PKCS 1消息时，应用程序 (例如，web浏览器) 会对其进行解密，检查初始块，并去除填充。但是，某些应用程序会检查”02”初始块，如果不存在，则会返回一条错误消息提示”无效密文”。Bleichenbacher 表明，此错误消息可能导致灾难性的后果: 使用错误消息，攻击者Marvin可以解密他选择的密文。</p>
+<p>假设Marvin截取了一个给Bob的密文C，并要解密它。为了实施攻击，Marvin会随机选取 $r\in\Z^*_N$ ， 并计算 $C’=rC\ mod\ N$, 并发送 $C’$ 给Bob的电脑。在Bob的电脑上运行的应用程序接收 $C’$ 并尝试对其进行解密。结果是其要么以错误消息响应，要么根本不响应 (如果 $C’$ 恰好格式正确)。因此，Marvin得知了解密 $C’$ 过程中16位的最高有效位是否等于02.实际上 ，Marvin有这样一个oracle，可以为他测试对于他选择的任何r， $rC\ mod\ N$ 解密的16位最高有效位是否等于02，Bleichenbacher表明，这样的oracle对于解密C是非常有效的。</p>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>对RSA的二十年研究产生了一些有见地的攻击，但从未发现过毁灭性的攻击。到目前为止发现的攻击主要说明了实施RSA时要避免的陷阱。目前看来，可以信任正确的RSA密码实现可以在数字世界中提供安全性。</p>
+<p>我们将对RSA的攻击分为四类:（1）利用系统公然误用的基本攻击，（2）低私钥指数攻击，很严重，所以不要使用，（3）低加密指数攻击，（4）以及对实施的攻击（对RSA系统执行时的攻击）</p>
+<p>这些不断的攻击表明，我们对基础数学结构的研究还是不够的。Desmedt和Odlyzko，Joye和Quisquater 以及deJonge和Chaum 提出了一些额外的攻击。在整篇论文中，我们观察到，通过在加密或签名之前正确填充消息可以防止许多攻击。</p>
+<h4 id="密码挑战赛题目后续方法"><a href="#密码挑战赛题目后续方法" class="headerlink" title="密码挑战赛题目后续方法"></a>密码挑战赛题目后续方法</h4><h5 id="因数碰撞攻击-Frame1-18"><a href="#因数碰撞攻击-Frame1-18" class="headerlink" title="因数碰撞攻击 Frame1/18"></a>因数碰撞攻击 Frame1/18</h5><p>这种含有共因子的可以通过欧几里得求gcd得到模数的因子，进而通过简单的乘除运算即可分解N，比较简单</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=gbk</span></span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">N = []</span><br><span class="line">e = []</span><br><span class="line">c = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">find_same_actor</span>():</span><br><span class="line">    <span class="keyword">global</span> N</span><br><span class="line">    ps = []</span><br><span class="line">    same_actor = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">21</span>):</span><br><span class="line">        <span class="keyword">for</span> j <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, <span class="number">21</span>):</span><br><span class="line">            <span class="keyword">if</span> <span class="built_in">int</span>(N[i] == N[j]):</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            p = gmpy2.gcd(<span class="built_in">int</span>(N[i], <span class="number">16</span>), <span class="built_in">int</span>(N[j], <span class="number">16</span>))</span><br><span class="line">            <span class="keyword">if</span> p != <span class="number">1</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&#x27;[+] (<span class="subst">&#123;i&#125;</span>, <span class="subst">&#123;j&#125;</span>)&#x27;</span>)</span><br><span class="line">                ps.append(p)</span><br><span class="line">                same_actor.append((i,j))</span><br><span class="line">    <span class="keyword">return</span> ps, same_actor</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">p, q, e, c</span>):</span><br><span class="line">    phi = (p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    d = gmpy2.invert(e, phi)</span><br><span class="line">    plain = gmpy2.powmod(c, d, p*q)</span><br><span class="line">    <span class="keyword">return</span> plain</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">21</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;/Users/racerz/Desktop/密码学/待解决的问题/密码挑战赛赛题三/data/Frame<span class="subst">&#123;i&#125;</span>&quot;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = f.read()</span><br><span class="line">        N.append(data[:<span class="number">256</span>])</span><br><span class="line">        e.append(data[<span class="number">256</span>:<span class="number">512</span>])</span><br><span class="line">        c.append(data[<span class="number">512</span>:<span class="number">768</span>])</span><br><span class="line"></span><br><span class="line">ps, same_actor = find_same_actor()</span><br><span class="line"><span class="keyword">for</span> p, index <span class="keyword">in</span> <span class="built_in">zip</span>(ps, same_actor):</span><br><span class="line">    q1 = <span class="built_in">int</span>(N[index[<span class="number">0</span>]], <span class="number">16</span>) // p</span><br><span class="line">    q2 = <span class="built_in">int</span>(N[index[<span class="number">1</span>]], <span class="number">16</span>) // p</span><br><span class="line"></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;[+]frame<span class="subst">&#123;index[<span class="number">0</span>]&#125;</span>\&#x27;s p = <span class="subst">&#123;p&#125;</span>, q = <span class="subst">&#123;q1&#125;</span>&#x27;</span>)</span><br><span class="line">    plain1 = decrypt(p, q1, <span class="built_in">int</span>(e[index[<span class="number">0</span>]], <span class="number">16</span>), <span class="built_in">int</span>(c[index[<span class="number">0</span>]], <span class="number">16</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;[+]plain from frame<span class="subst">&#123;index[<span class="number">0</span>]&#125;</span>\&#x27;s <span class="subst">&#123;binascii.a2b_hex(<span class="built_in">hex</span>(plain1)[<span class="number">2</span>:])[-<span class="number">8</span>:]&#125;</span>&#x27;</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;[+]frame<span class="subst">&#123;index[<span class="number">1</span>]&#125;</span>\&#x27;s p = <span class="subst">&#123;p&#125;</span>, q = <span class="subst">&#123;q2&#125;</span>&#x27;</span>)</span><br><span class="line">    plain2 = decrypt(p, q2, <span class="built_in">int</span>(e[index[<span class="number">1</span>]], <span class="number">16</span>), <span class="built_in">int</span>(c[index[<span class="number">1</span>]], <span class="number">16</span>))</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;[+]plain from frame<span class="subst">&#123;index[<span class="number">1</span>]&#125;</span>\&#x27;s <span class="subst">&#123;binascii.a2b_hex(<span class="built_in">hex</span>(plain2)[<span class="number">2</span>:])[-<span class="number">8</span>:]&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<img src="/2022/11/05/RSA/image-20221105201228382.png" alt="image-20221105201228382" style="zoom:50%;">
+
+<h5 id="费马分解法-Frame-10"><a href="#费马分解法-Frame-10" class="headerlink" title="费马分解法 Frame 10"></a>费马分解法 Frame 10</h5> <img src="/2022/11/05/RSA/image-20221105205747397.png" alt="image-20221105205747397" style="zoom:50%;">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=gbk</span></span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"><span class="keyword">import</span> math</span><br><span class="line"></span><br><span class="line">N = []</span><br><span class="line">e = []</span><br><span class="line">c = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">factor</span>(<span class="params">n</span>):</span><br><span class="line">    base = math.factorial(<span class="number">2</span> ** <span class="number">14</span>)</span><br><span class="line">    x = <span class="number">0</span></span><br><span class="line">    i = <span class="number">0</span></span><br><span class="line">    y = <span class="number">0</span></span><br><span class="line">    x0 = gmpy2.iroot(n, <span class="number">2</span>)[<span class="number">0</span>] + <span class="number">1</span></span><br><span class="line">    <span class="keyword">while</span>(i &lt;= (base - <span class="number">1</span>)):</span><br><span class="line">        x = (x0+i)*(x0+i) - n</span><br><span class="line">        <span class="keyword">if</span> gmpy2.is_square(x):</span><br><span class="line">            y = gmpy2.isqrt(x)</span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line">        i += <span class="number">1</span></span><br><span class="line">    p = x0 + i + y     <span class="comment"># 平方差</span></span><br><span class="line">    <span class="keyword">return</span> p</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">p, q, e, c</span>):</span><br><span class="line">    phi = (p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    d = gmpy2.invert(e, phi)</span><br><span class="line">    plain = gmpy2.powmod(c, d, p*q)</span><br><span class="line">    <span class="keyword">return</span> plain</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">21</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;/Users/racerz/Desktop/密码学/待解决的问题/密码挑战赛赛题三/data/Frame<span class="subst">&#123;i&#125;</span>&quot;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = f.read()</span><br><span class="line">        N.append(data[:<span class="number">256</span>])</span><br><span class="line">        e.append(data[<span class="number">256</span>:<span class="number">512</span>])</span><br><span class="line">        c.append(data[<span class="number">512</span>:<span class="number">768</span>])</span><br><span class="line"></span><br><span class="line">p = factor(<span class="built_in">int</span>(N[<span class="number">10</span>], <span class="number">16</span>))</span><br><span class="line">q = <span class="built_in">int</span>(N[<span class="number">10</span>], <span class="number">16</span>) // p</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;[+]frame10\&#x27;s p = <span class="subst">&#123;p&#125;</span> and q = <span class="subst">&#123;q&#125;</span>&#x27;</span>)</span><br><span class="line">plain = decrypt(p, q, <span class="built_in">int</span>(e[<span class="number">10</span>], <span class="number">16</span>), <span class="built_in">int</span>(c[<span class="number">10</span>], <span class="number">16</span>))</span><br><span class="line">plain = binascii.a2b_hex(<span class="built_in">hex</span>(plain)[<span class="number">2</span>:])</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&#x27;[+]frame10\&#x27;s plain is <span class="subst">&#123;plain[-<span class="number">8</span>:].decode()&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<img src="/2022/11/05/RSA/image-20221105211942517.png" alt="image-20221105211942517" style="zoom:50%;">
+
+<h5 id="Pollard-p-1-分解法-Frame-2-6-19"><a href="#Pollard-p-1-分解法-Frame-2-6-19" class="headerlink" title="Pollard p-1 分解法 Frame 2/6/19"></a>Pollard p-1 分解法 Frame 2/6/19</h5><p>适用于<strong>p-1或q-1</strong>能够被<strong>小素数</strong>整除的情况</p>
+<p><img src="/2022/11/05/RSA/image-20221105213630332.png" alt="image-20221105213630332"></p>
+<p>算法步骤：</p>
+<img src="/2022/11/05/RSA/image-20221105214202851.png" alt="image-20221105214202851" style="zoom:50%;">
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># coding=gbk</span></span><br><span class="line"><span class="keyword">import</span> gmpy2</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"></span><br><span class="line">N = []</span><br><span class="line">e = []</span><br><span class="line">c = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">pollard</span>(<span class="params">n</span>):</span><br><span class="line">    B = <span class="number">2</span> ** <span class="number">20</span></span><br><span class="line">    a = <span class="number">2</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">2</span>, B+<span class="number">1</span>):</span><br><span class="line">        a = <span class="built_in">pow</span>(a, i, n)    <span class="comment"># 优化</span></span><br><span class="line">        d = gmpy2.gcd(a-<span class="number">1</span>, n)</span><br><span class="line">        <span class="keyword">if</span> <span class="number">1</span>&lt;d&lt;n:</span><br><span class="line">            <span class="keyword">return</span> d</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">decrypt</span>(<span class="params">p, q, e, c</span>):</span><br><span class="line">    phi = (p-<span class="number">1</span>)*(q-<span class="number">1</span>)</span><br><span class="line">    </span><br><span class="line">    d = gmpy2.invert(e, phi)</span><br><span class="line">    plain = gmpy2.powmod(c, d, p*q)</span><br><span class="line">    <span class="keyword">return</span> plain</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">21</span>):</span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">f&quot;/Users/racerz/Desktop/密码学/待解决的问题/密码挑战赛赛题三/data/Frame<span class="subst">&#123;i&#125;</span>&quot;</span>, <span class="string">&#x27;r&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        data = f.read()</span><br><span class="line">        N.append(data[:<span class="number">256</span>])</span><br><span class="line">        e.append(data[<span class="number">256</span>:<span class="number">512</span>])</span><br><span class="line">        c.append(data[<span class="number">512</span>:<span class="number">768</span>])</span><br><span class="line"></span><br><span class="line">index = [<span class="number">2</span>, <span class="number">6</span>, <span class="number">19</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> each <span class="keyword">in</span> index:</span><br><span class="line">    p = pollard(<span class="built_in">int</span>(N[each], <span class="number">16</span>))</span><br><span class="line">    q = <span class="built_in">int</span>(N[each], <span class="number">16</span>) // p</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;[+]frame<span class="subst">&#123;each&#125;</span>\&#x27;s p = <span class="subst">&#123;p&#125;</span> and q = <span class="subst">&#123;q&#125;</span>&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    plain = decrypt(p, q, <span class="built_in">int</span>(e[each], <span class="number">16</span>), <span class="built_in">int</span>(c[each], <span class="number">16</span>))</span><br><span class="line">    plain = binascii.a2b_hex(<span class="built_in">hex</span>(plain)[<span class="number">2</span>:])</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&#x27;[+]frame<span class="subst">&#123;each&#125;</span>\&#x27;s plain is <span class="subst">&#123;plain[-<span class="number">8</span>:].decode()&#125;</span>&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<img src="/2022/11/05/RSA/image-20221105214823705.png" alt="image-20221105214823705" style="zoom:50%;">
+
+
+
+
+
+
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p>[1] <a target="_blank" rel="noopener" href="http://blog.tolinchan.xyz/2021/11/25/%E4%BA%8C%E5%8D%81%E5%B9%B4%E4%BB%A5%E6%9D%A5%E5%AF%B9-rsa-%E5%AF%86%E7%A0%81%E7%B3%BB%E7%BB%9F%E6%94%BB%E5%87%BB%E7%BB%BC%E8%BF%B0/">http://blog.tolinchan.xyz/2021/11/25/%E4%BA%8C%E5%8D%81%E5%B9%B4%E4%BB%A5%E6%9D%A5%E5%AF%B9-rsa-%E5%AF%86%E7%A0%81%E7%B3%BB%E7%BB%9F%E6%94%BB%E5%87%BB%E7%BB%BC%E8%BF%B0/</a></p>
+<p>[2] <a target="_blank" rel="noopener" href="https://blank-vax.github.io/2019/11/25/RSA_Breaking/">https://blank-vax.github.io/2019/11/25/RSA_Breaking/</a></p>
+<p>[3] <a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_42667481/article/details/106729900">https://blog.csdn.net/qq_42667481/article/details/106729900</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Factoring-Large-Integers"><span class="toc-number">2.</span> <span class="toc-text">Factoring Large Integers</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Elementary-Attacks"><span class="toc-number">3.</span> <span class="toc-text">Elementary Attacks</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#1-Common-Modulus"><span class="toc-number">3.1.</span> <span class="toc-text">1. Common Modulus</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-2-Blinding"><span class="toc-number">4.</span> <span class="toc-text">2.2 Blinding</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-Low-Private-Exponent"><span class="toc-number">5.</span> <span class="toc-text">3 Low Private Exponent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Low-Public-Exponent"><span class="toc-number">6.</span> <span class="toc-text">Low Public Exponent</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-Coppersmith%E2%80%99s-Theorem"><span class="toc-number">7.</span> <span class="toc-text">4.1 Coppersmith’s Theorem</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-Hastad%E5%B9%BF%E6%92%AD%E6%94%BB%E5%87%BB"><span class="toc-number">8.</span> <span class="toc-text">4.2 Hastad广播攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-Franklin-Reiter-%E7%9B%B8%E5%85%B3%E6%B6%88%E6%81%AF%E6%94%BB%E5%87%BB"><span class="toc-number">9.</span> <span class="toc-text">4.3 Franklin-Reiter 相关消息攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-4-Coppersmith-%E7%9F%AD%E5%A1%AB%E5%85%85%E6%94%BB%E5%87%BB"><span class="toc-number">10.</span> <span class="toc-text">4.4 Coppersmith 短填充攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-5-%E9%83%A8%E5%88%86%E5%AF%86%E9%92%A5%E6%B3%84%E6%BC%8F%E6%94%BB%E5%87%BB"><span class="toc-number">11.</span> <span class="toc-text">4.5 部分密钥泄漏攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-%E6%89%A7%E8%A1%8C%E6%94%BB%E5%87%BB"><span class="toc-number">12.</span> <span class="toc-text">5 执行攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E6%97%B6%E9%97%B4%E6%94%BB%E5%87%BB"><span class="toc-number">13.</span> <span class="toc-text">5.1 时间攻击</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-%E9%9A%8F%E6%9C%BA%E6%95%85%E9%9A%9C"><span class="toc-number">14.</span> <span class="toc-text">5.2 随机故障</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-Bleichenbacher%E2%80%99s-Attack-on-PKCS-1"><span class="toc-number">15.</span> <span class="toc-text">5.3 Bleichenbacher’s Attack on PKCS 1</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">16.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AF%86%E7%A0%81%E6%8C%91%E6%88%98%E8%B5%9B%E9%A2%98%E7%9B%AE%E5%90%8E%E7%BB%AD%E6%96%B9%E6%B3%95"><span class="toc-number">17.</span> <span class="toc-text">密码挑战赛题目后续方法</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%9B%A0%E6%95%B0%E7%A2%B0%E6%92%9E%E6%94%BB%E5%87%BB-Frame1-18"><span class="toc-number">17.1.</span> <span class="toc-text">因数碰撞攻击 Frame1&#x2F;18</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E8%B4%B9%E9%A9%AC%E5%88%86%E8%A7%A3%E6%B3%95-Frame-10"><span class="toc-number">17.2.</span> <span class="toc-text">费马分解法 Frame 10</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#Pollard-p-1-%E5%88%86%E8%A7%A3%E6%B3%95-Frame-2-6-19"><span class="toc-number">17.3.</span> <span class="toc-text">Pollard p-1 分解法 Frame 2&#x2F;6&#x2F;19</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">18.</span> <span class="toc-text">参考链接</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/05/RSA/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/05/RSA/&text=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/05/RSA/&title=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/05/RSA/&is_video=false&description=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Twenty Years of Attacks on the RSA Cryptosystem&body=Check out this article: https://racerz-fighting.github.io/2022/11/05/RSA/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/05/RSA/&title=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/05/RSA/&title=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/05/RSA/&title=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/05/RSA/&title=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/05/RSA/&name=Twenty Years of Attacks on the RSA Cryptosystem&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/05/RSA/&t=Twenty Years of Attacks on the RSA Cryptosystem"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2022
+    RacerZ
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
