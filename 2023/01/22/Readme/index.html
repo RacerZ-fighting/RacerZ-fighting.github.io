@@ -6,12 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="JNDI EXP——基于JNDI服务的Java漏洞利用工具本项目是Java小白对前期学习内容的一个梳理和总结，并最终输出落地的小成果。 本项目是基于 su18 师傅的 JNDI 以及 welk1n 师傅的 JNDI-Injection-Exploit，在他们的基础上拓展了小部分高版本绕过的姿势，以及采用了配置文件和命令行结合的方式来输入数据，本质上是一个轮子项目，但是自己学到了模块化集成与开发，知">
+    <meta name="description" content="JNDI EXP——基于JNDI服务的Java漏洞利用工具项目地址：https:&#x2F;&#x2F;github.com&#x2F;RacerZ-fighting&#x2F;JNDI-EXP 本项目是Java小白对前期学习内容的一个梳理和总结，并最终输出落地的小成果。 本项目是基于 su18 师傅的 JNDI 以及 welk1n 师傅的 JNDI-Injection-Exploit，在他们的基础上拓展了小部分高版本绕过的姿势，以及采">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JNDI EXP 项目">
 <meta property="og:url" content="https://racerz-fighting.github.io/2023/01/22/Readme/index.html">
 <meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="JNDI EXP——基于JNDI服务的Java漏洞利用工具本项目是Java小白对前期学习内容的一个梳理和总结，并最终输出落地的小成果。 本项目是基于 su18 师傅的 JNDI 以及 welk1n 师傅的 JNDI-Injection-Exploit，在他们的基础上拓展了小部分高版本绕过的姿势，以及采用了配置文件和命令行结合的方式来输入数据，本质上是一个轮子项目，但是自己学到了模块化集成与开发，知">
+<meta property="og:description" content="JNDI EXP——基于JNDI服务的Java漏洞利用工具项目地址：https:&#x2F;&#x2F;github.com&#x2F;RacerZ-fighting&#x2F;JNDI-EXP 本项目是Java小白对前期学习内容的一个梳理和总结，并最终输出落地的小成果。 本项目是基于 su18 师傅的 JNDI 以及 welk1n 师傅的 JNDI-Injection-Exploit，在他们的基础上拓展了小部分高版本绕过的姿势，以及采">
 <meta property="og:locale" content="en_US">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/22/Readme/image-20230122220242899.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/22/Readme/image-20230122161954927.png">
@@ -28,7 +28,7 @@
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/22/Readme/image-20230122221117197.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/22/Readme/image-20230122224954960.png">
 <meta property="article:published_time" content="2023-01-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-28T14:49:05.198Z">
+<meta property="article:modified_time" content="2023-01-28T14:59:02.106Z">
 <meta property="article:author" content="RacerZ">
 <meta property="article:tag" content="Java安全">
 <meta name="twitter:card" content="summary">
@@ -165,7 +165,8 @@
   
 
   <div class="content" itemprop="articleBody">
-    <h2 id="JNDI-EXP——基于JNDI服务的Java漏洞利用工具"><a href="#JNDI-EXP——基于JNDI服务的Java漏洞利用工具" class="headerlink" title="JNDI EXP——基于JNDI服务的Java漏洞利用工具"></a>JNDI EXP——基于JNDI服务的Java漏洞利用工具</h2><p>本项目是Java小白对前期学习内容的一个梳理和总结，并最终输出落地的小成果。</p>
+    <h2 id="JNDI-EXP——基于JNDI服务的Java漏洞利用工具"><a href="#JNDI-EXP——基于JNDI服务的Java漏洞利用工具" class="headerlink" title="JNDI EXP——基于JNDI服务的Java漏洞利用工具"></a>JNDI EXP——基于JNDI服务的Java漏洞利用工具</h2><p>项目地址：<a target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting/JNDI-EXP">https://github.com/RacerZ-fighting/JNDI-EXP</a></p>
+<p>本项目是Java小白对前期学习内容的一个梳理和总结，并最终输出落地的小成果。</p>
 <p>本项目是基于 su18 师傅的 <a target="_blank" rel="noopener" href="https://github.com/su18/JNDI">JNDI</a> 以及 welk1n 师傅的 <a target="_blank" rel="noopener" href="https://github.com/welk1n/JNDI-Injection-Exploit/">JNDI-Injection-Exploit</a>，在他们的基础上拓展了小部分高版本绕过的姿势，以及采用了配置文件和命令行结合的方式来输入数据，本质上是一个轮子项目，但是自己学到了模块化集成与开发，知识点归纳的能力，这就足够了。</p>
 <h2 id="功能"><a href="#功能" class="headerlink" title="功能"></a>功能</h2><p>工具启动后可以看到提供 RMI 和 LDAP 两种服务，根据用户命令行输入来启动指定的服务。同时后台有 Jetty 内置 web服务器用来接收处理重定向请求，返回攻击向量</p>
 <p><img src="/2023/01/22/Readme/image-20230122220242899.png" alt="image-20230122220242899"></p>
@@ -179,7 +180,7 @@
 <p>另外，搭配配置文件来指定具体的内容</p>
 <p><img src="/2023/01/22/Readme/image-20230122162757279.png" alt="image-20230122162757279"></p>
 <p>其中最后的 echo 选项指定回显方式</p>
-<h2 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a>安装使用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone </span><br><span class="line">java -jar JNDIEXP-1.0-SNAPSHOT-all.jar -h</span><br></pre></td></tr></table></figure>
+<h2 id="安装使用"><a href="#安装使用" class="headerlink" title="安装使用"></a>安装使用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git clone https://github.com/RacerZ-fighting/JNDI-EXP.git</span><br><span class="line">java -jar JNDIEXP-1.0-SNAPSHOT-all.jar -h</span><br></pre></td></tr></table></figure>
 
 
 
