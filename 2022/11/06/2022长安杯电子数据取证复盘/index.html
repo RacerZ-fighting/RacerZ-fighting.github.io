@@ -153,7 +153,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -286,25 +288,22 @@
 <li><p>分析检材1，搭建该服务器的技术员IP地址是多少？用该地址解压检材2</p>
 <p>当时的思路是，首先先查看了一下检材一镜像对应的ip</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113054324.png" alt="image-20221104113054324"></p>
 <p>得到<code>172.16.80.133</code></p>
 <p>搭建该服务器的技术员可能是远程连接上来的，我们看看本机开启了哪些服务</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -anpt</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113323152.png" alt="image-20221104113323152"></p>
 </li>
 </ol>
 <p>可以看到端口22开启了ssh服务，所以可以直接连上来。通过last验证</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113417108.png" alt="image-20221104113417108"></p>
 <p>于是得到了检材2的解压密码 <code>172.16.80.100</code></p>
-<ol start="3">
-<li> 检材1中，操作系统发行版本号为</li>
-</ol>
-<p>   查看文件<code>/etc/centos-release</code>即可得到</p>
-<p>   <img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113642837.png" alt="image-20221104113642837"></p>
-<p>   7.5.1804</p>
-<ol start="4">
+<ol>
+<li><p>检材1中，操作系统发行版本号为</p>
+<p>查看文件<code>/etc/centos-release</code>即可得到</p>
+<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113642837.png" alt="image-20221104113642837"></p>
+<p>7.5.1804</p>
+</li>
 <li><p>检材1系统中，网卡绑定的静态IP地址为</p>
 <p>这里我当时是查看网卡里面写的，位于<code>/etc/sysconfig/network-scripts</code></p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113847257.png" alt="image-20221104113847257"></p>
@@ -340,14 +339,13 @@
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155607001.png" alt="image-20221104155607001"></p>
 <p>看下<code>md5Key</code>是什么，验证猜想正确</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155706887.png" alt="image-20221104155706887"></p>
-<h4 id="前端部分"><a href="#前端部分" class="headerlink" title="前端部分"></a>前端部分</h4><ol start="8">
+<h4 id="前端部分"><a href="#前端部分" class="headerlink" title="前端部分"></a>前端部分</h4><ol>
 <li><p>检材1中，网站<strong>前台页面</strong>里给出的APK的下载地址是</p>
 <p>前台页面的前端在<code>/web/app/web</code>下，其实历史记录中给出了如何跑起来，当时对前后端分离架构还不是很理解。去盲翻前端页面，还真在<code>src/App.vue</code>下找到了一个apk链接，但实际上已经是注释掉了，”二维码链接已修改”</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104160648209.png" alt="image-20221104160648209"></p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104160444804.png" alt="image-20221104160444804"></p>
 <p>于是启动测试一下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161128636.png" alt="image-20221104161128636"></p>
 <p>访问虚拟机3000端口，可以在得到一张二维码图片，扫描即可得到二维码中的apk下载地址</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161332029.png" alt="image-20221104161332029"></p>
@@ -356,13 +354,12 @@
 <p><a target="_blank" rel="noopener" href="https://pan.forensix.cn/f/c45ca511c7f2469090ad/?dl=1">https://pan.forensix.cn/f/c45ca511c7f2469090ad/?dl=1</a></p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161614477.png" alt="image-20221104161614477"></p>
 <p>得到一个apk文件我们先保存下来</p>
-<ol start="7">
+<ol>
 <li><p>检材1中，网站管理<strong>后台页面</strong>对应的网络端口为</p>
 <p>原来是问的前端启动的端口，后端是在6010（admin-api.jar）</p>
 <p>对于后台的前端我们同样测试一下</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162608208.png" alt="image-20221104162608208"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162713623.png" alt="image-20221104162713623"></p>
 <p>访问虚拟机9090端口，可以验证</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162847693.png" alt="image-20221104162847693"></p>
@@ -376,7 +373,7 @@
 <p>检材2：根据IP地址落地及后续侦查，抓获了搭建网站的技术员，扣押了其个人电脑并制作镜像“检材2”，分析所有掌握的检材回答下列问题</p>
 </blockquote>
 <p><strong>ip地址：172.16.80.100</strong></p>
-<ol start="11">
+<ol>
 <li><p>检材2中，windows账户Web King的登录密码是</p>
 <p>火眼仿真看一下账户信息</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104164724230.png" alt="image-20221104164724230"></p>
@@ -396,7 +393,7 @@
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104171230331.png" alt="image-20221104171230331"></p>
 <p>还有一种更直接的方法就是火眼仿真中直接在powershell里按方向键上即可直接得到最后一条历史命令</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104184919850.png" alt="image-20221104184919850"></p>
-<ol start="14">
+<ol>
 <li><p>检材2中，下载的涉案网站源代码文件名为 </p>
 <p>在Chrome浏览器的下载历史记录当中有对应几个zip包，以及对应的下载来源</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104171458984.png" alt="image-20221104171458984"></p>
@@ -406,7 +403,7 @@
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183326111.png" alt="image-20221104183326111"> </p>
 <p>同时在github上我们也找到了网站的架构图</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183359183.png" alt="image-20221104183359183"></p>
-<ol start="15">
+<ol>
 <li><p>检材2中，网站管理后台root账号的密码为</p>
 <p>在登录之后有保存的密码遗留 密码即root</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183745851.png" alt="image-20221104183745851"></p>
@@ -427,7 +424,6 @@
 <li><p>上述数据库debian-sys-maint用户的初始密码是</p>
 <p>首先什么是<code>debian-sys-maint</code>用户？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">正如它的字面意思（Debian System Matainence），Debian系统对MySQL维护用的，你可以理解为通过系统的某个“非常规”程序对Mysql进行备份恢复等行为时，改程序所使用的登录Mysql的账户。 ——你应该可以理解吧？你手工维护的时候同样需要用某账户登入Mysql再操作的——系统的程序也一样需要这么做，只是它通过这个账户免去了你手工操作的“麻烦”，加深了系统复杂度，让你更加难以理解mysql和Linux的工作原理。 原则上Linux系统本身与MySQL无需任何直接或间接的接触，你大可以删除，维护时使用网上大家最常用的方法来维护（这类方法可以适用于安装在任何系统上的Mysql，而此账户所对应的“便捷”方法——正如他的名字一样，仅适用于Debian）</span><br></pre></td></tr></table></figure>
-
 <p>在windows中我们是找不到mysql相关的服务的，因为通过历史记录可以看到它是运行在wsl子系统当中</p>
 <p>它的默认密码存放在wsl子系统的<code>/etc/mysql/debian.cnf</code>中</p>
 <p>查看可知初始密码ZdQfi7vaXjHZs75M</p>
@@ -453,14 +449,12 @@
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202842433.png" alt="image-20221104202842433"></p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203010631.png" alt="image-20221104203010631"></p>
 <p>（4）docker启动了mysql服务</p>
-<ol start="20">
+<ol>
 <li><p>检材3中，监听33050端口的程序名（program name）为</p>
 <p>我们先启动docker服务</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service docker start</span><br></pre></td></tr></table></figure>
-
 <p>然后查看网络服务监听状态</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -lnpt</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203601351.png" alt="image-20221104203601351"></p>
 <p>可知程序名为docker-proxy</p>
 </li>
@@ -480,7 +474,6 @@
 <p>从上一题的docker-compose.yml配置文件当中可以看到外部数据映射到了<code>/var/lib/mysql</code>目录下</p>
 <p>或者可以通过查看docker配置判断</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line"># 8eda4cb0b452   mysql:5.7.32</span><br><span class="line">docker inspect 8eda4cb0b452</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104211035133.png" alt="image-20221104211035133"></p>
 </li>
 <li><p>涉案网站调用的MySQL数据库名为</p>
@@ -496,7 +489,7 @@
 <p>但是有个坑点在于用户登录时也会出现update数据的操作，需要排除</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213028054.png" alt="image-20221104213028054"></p>
 <p>所以总共有效数据为3条</p>
-<ol start="26">
+<ol>
 <li><p>勒索者在数据库中删除的用户数量为</p>
 <p>同理，全局搜索<code>delete</code>关键词，总共28条数据</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213215957.png" alt="image-20221104213215957"></p>
@@ -507,14 +500,11 @@
 <p>接下来就是需要网站重构了，我们将检材2中的启动脚本和数据库放到对应的检材目录中</p>
 <p>在检材中，更新docker内的数据库</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213631595.png" alt="image-20221104213631595"></p>
 <p>在<code>/web</code>下，首先赋予启动脚本执行权限</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 start.sh</span><br></pre></td></tr></table></figure>
-
 <p>然后启动脚本</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh start.sh</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213858451.png" alt="image-20221104213858451"></p>
 <p>然后在检材1中<code>/web/app</code>下相同操作</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214541272.png" alt="image-20221104214541272"></p>
@@ -540,33 +530,29 @@
 </ol>
 <p>然后在表中去查询即可</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from member where member_grade_id</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104231655847.png" alt="image-20221104231655847"></p>
-<ol start="29">
+<ol>
 <li><p>还原全部被删改数据，哪些用户ID没有充值记录</p>
 <p>首先定位充值记录信息在<code>member_transaction</code>表中可以看到交易记录</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104232624214.png" alt="image-20221104232624214"></p>
 <p>联合<code>member</code>表，我们就可以定位哪些用户ID没有充值记录</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select member.id from member where member.id not in (select distinct (member_transaction.member_id) from member_transaction);</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233218741.png" alt="image-20221104233218741"></p>
 </li>
 </ol>
 <p>得到318 989</p>
-<ol start="30">
+<ol>
 <li><p>还原全部被删改数据，2022年10月17日总计产生多少笔交易记录？</p>
 <p>还是在<code>member_transaction</code>表，我们的交易时间对应的字段是<code>create_time</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from member_transaction where create_time like &#x27;%2022-10-17%&#x27;;</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233539701.png" alt="image-20221104233539701"></p>
 </li>
 </ol>
 <p>共计1000条</p>
-<ol start="31">
+<ol>
 <li><p>还原全部被删改数据，该网站中充值的USDT总额为</p>
 <p>还是在<code>member_transaction</code>表，我们计算一下总额即可，对应<code>amount</code>字段</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select SUM(amount) from member_transaction;</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233730193.png" alt="image-20221104233730193"></p>
 <p>也就是408228</p>
 </li>
@@ -578,7 +564,7 @@
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105151439716.png" alt="image-20221105151439716"></p>
 <p>经过百度查询可知是V6.0.2.0版本夜神模拟器的备份文件，通过解压可以查看其中的内置备份文件，并存在vmdk后缀文件</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105152424387.png" alt="image-20221105152424387"></p>
-<ol start="33">
+<ol>
 <li><p>嫌疑人使用的安卓模拟器软件名称是</p>
 <p>夜神模拟器</p>
 </li>
@@ -627,7 +613,7 @@
 </blockquote>
 <p>在检材二的D盘存在两个可疑文件，其中一个是加密文档，另一个是解密程序，与第二封邮件内容相对应</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165048798.png" alt="image-20221105165048798"></p>
-<ol start="41">
+<ol>
 <li><p>分析加密程序，编译该加密程序使用的语言是</p>
 <p>使用exeinfope查看exe发现程序是pyinstaller生成的可执行文件，于是得出编译该加密程序使用的语言是python</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183551344.png" alt="image-20221105183551344"> </p>
@@ -644,7 +630,8 @@
 </li>
 <li><p>分析加密程序，其使用的非对称加密方式公钥后5位为？</p>
 <p>同样可以在代码中发现publickey如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pubkey = &#x27;-----BEGIN PUBLIC KEY-----\nMIIBIzANBgkqhkiG9w0BAQEFAAOCARAAMIIBCwKCAQEAx5JF4elVDBaakgGeDSxI\nCO1LyyZ6B2TgR4DNYiQoB1zAyWPDwektaCfnvNeHURBrw++HvbuNMoQNdOJNZZVo\nbHVZh+rCI4MwAh+EBFUeT8Dzja4ZlU9E7jufm69TQS0PSseIiU/4Byd2i9BvIbRn\nHLFZvi/VXphGeW0qVeHkQ3Ll6hJ2fUGhTsuGLc1XXHfiZ4RbJY/AMnjYPy9CaYzi\nSOT4PCf/O12Kuu9ZklsIAihRPl10SmM4IRnVhZYYpXedAyTcYCuUiI4c37F5GAhz\nRDFn9IQ6YQRjlLjuOX8WB6H4NbnKX/kd0GsQP3Zbogazj/z7OM0Y3rv3T8mtF6/I\nkwIEHoau+w==\n-----END PUBLIC KEY-----\n&#x27;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pubkey = &#x27;-----BEGIN PUBLIC KEY-----\nMIIBIzANBgkqhkiG9w0BAQEFAAOCARAAMIIBCwKCAQEAx5JF4elVDBaakgGeDSxI\nCO1LyyZ6B2TgR4DNYiQoB1zAyWPDwektaCfnvNeHURBrw++HvbuNMoQNdOJNZZVo\nbHVZh+rCI4MwAh+EBFUeT8Dzja4ZlU9E7jufm69TQS0PSseIiU/4Byd2i9BvIbRn\nHLFZvi/VXphGeW0qVeHkQ3Ll6hJ2fUGhTsuGLc1XXHfiZ4RbJY/AMnjYPy9CaYzi\nSOT4PCf/O12Kuu9ZklsIAihRPl10SmM4IRnVhZYYpXedAyTcYCuUiI4c37F5GAhz\nRDFn9IQ6YQRjlLjuOX8WB6H4NbnKX/kd0GsQP3Zbogazj/z7OM0Y3rv3T8mtF6/I\nkwIEHoau+w==\n-----END PUBLIC KEY-----\n&#x27;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>被加密文档中，FLAG1的值是</p>
 <p>同样对decrypt_file.exe进行解包与反编译后发现解密需要的密码明文写在了程序中</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184554721.png" alt="image-20221105184554721"> </p>
@@ -659,7 +646,7 @@
 </blockquote>
 <p>加密勒索apk程序我们在检材1的二维码链接中可以下载得到</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165256712.png" alt="image-20221105165256712"></p>
-<ol start="46">
+<ol>
 <li><p>恶意APK程序的包名为</p>
 <p>直接利用雷电APP智能分析就能查看</p>
 <p> cn.forensix.changancup</p>
@@ -683,13 +670,12 @@
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106051009626.png" alt="image-20221106051009626"></p>
 </li>
 </ol>
-<p>尝试用frida进行hook，模拟器先把frida-server开起来（注意不要给ZTuoExchange root权限），跑脚本<code> frida -U -l hook.js &quot;ZTuoExchange&quot;</code></p>
+<p>尝试用frida进行hook，模拟器先把frida-server开起来（注意不要给ZTuoExchange root权限），跑脚本<code>frida -U -l hook.js &quot;ZTuoExchange&quot;</code></p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/WXjzcccc/article/details/127609236">https://blog.csdn.net/WXjzcccc/article/details/127609236</a></p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function () &#123;</span><br><span class="line">    Java.perform(function () &#123;</span><br><span class="line">        var app = Java.use(<span class="string">&quot;cn.forensix.cab.App&quot;</span>);  // 指定类</span><br><span class="line">        var OooO0oo = app.<span class="keyword">class</span>.getField(<span class="string">&quot;OooO0oo&quot;</span>);  // 指定属性</span><br><span class="line">        var OooO0O0 = app.<span class="keyword">class</span>.getField(<span class="string">&quot;OooO0O0&quot;</span>).get(null);  // 获取已实例化的对象</span><br><span class="line">        console.log(OooO0oo.get(OooO0O0));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
-
-<ol start="50">
+<ol>
 <li>解锁第三关所需的KEY值由ASCII可显示字符组成，请请分析获取该KEY值</li>
 </ol>
 <p>关键的验证</p>
@@ -697,7 +683,6 @@
 <p>查看该函数声明，要求字符串长度为24，4个一组，分成6组操作。其中try块里会触发unused异常，真正的验证逻辑在catch块中。可以把需要用到的操作拿出来，每4个进行爆破。</p>
 <p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106052132590.png" alt="image-20221106052132590"></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span>[] OooO0oO = &#123;<span class="number">1197727163</span>, <span class="number">1106668241</span>, <span class="number">312918615</span>, <span class="number">1828680913</span>, <span class="number">1668105995</span>, <span class="number">1728985987</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> n=<span class="number">0</span>; n&lt;<span class="number">6</span>; n++) &#123;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0x20</span>; i &lt; <span class="number">0x7f</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0x20</span>; j &lt; <span class="number">0x7f</span>; j++) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> <span class="number">0x20</span>; k &lt; <span class="number">0x7f</span>; k++) &#123;</span><br><span class="line">                        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0x20</span>; l &lt; <span class="number">0x7f</span>; l++) &#123;</span><br><span class="line">                            <span class="type">long</span> <span class="variable">tmp</span> <span class="operator">=</span> (<span class="type">long</span>) (i &lt;&lt; <span class="number">16</span>);</span><br><span class="line">                            tmp |= (<span class="type">long</span>) (j &lt;&lt; <span class="string">&#x27;\b&#x27;</span>);</span><br><span class="line">                            tmp |= (<span class="type">long</span>) (k &lt;&lt; <span class="number">24</span>);</span><br><span class="line">                            tmp |= (<span class="type">long</span>) l;</span><br><span class="line"></span><br><span class="line">                            <span class="keyword">if</span> (((OooO(tmp, <span class="number">4294967296L</span>)[<span class="number">0</span>] % <span class="number">4294967296L</span>) + <span class="number">4294967296L</span>) % <span class="number">4294967296L</span> == ((<span class="type">long</span>) OooO0oO[n])) &#123;</span><br><span class="line">                                System.out.print((<span class="type">char</span>) i);</span><br><span class="line">                                System.out.print((<span class="type">char</span>) j);</span><br><span class="line">                                System.out.print((<span class="type">char</span>) k);</span><br><span class="line">                                System.out.print((<span class="type">char</span>) l);</span><br><span class="line">                                flag = <span class="literal">true</span>;</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (flag)</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (flag)</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (flag)</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">OooO0O0</span><span class="params">(String str)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (str.length() != <span class="number">24</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">long</span>[] jArr = <span class="keyword">new</span> <span class="title class_">long</span>[<span class="number">6</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; str.length() / <span class="number">4</span>; i++) &#123;</span><br><span class="line">         <span class="type">int</span> <span class="variable">i2</span> <span class="operator">=</span> i * <span class="number">4</span>;</span><br><span class="line">         jArr[i] = (<span class="type">long</span>) (str.charAt(i2) &lt;&lt; <span class="number">16</span>);</span><br><span class="line">         jArr[i] = jArr[i] | ((<span class="type">long</span>) (str.charAt(i2 + <span class="number">1</span>) &lt;&lt; <span class="string">&#x27;\b&#x27;</span>));</span><br><span class="line">         jArr[i] = jArr[i] | ((<span class="type">long</span>) (str.charAt(i2 + <span class="number">2</span>) &lt;&lt; <span class="number">24</span>));</span><br><span class="line">         jArr[i] = ((<span class="type">long</span>) str.charAt(i2 + <span class="number">3</span>)) | jArr[i];</span><br><span class="line"><span class="comment">//         PrintStream printStream = System.out;</span></span><br><span class="line"><span class="comment">//         printStream.println(&quot;buildKey:i:&quot; + i + &quot;,value:&quot; + jArr[i]);</span></span><br><span class="line">         &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">int</span>[] iArr = &#123;<span class="number">1197727043</span>, <span class="number">1106668192</span>, <span class="number">312918557</span>, <span class="number">1828680848</span>, <span class="number">1668105873</span>, <span class="number">1728985862</span>&#125;;</span><br><span class="line">            Object[] objArr = &#123;<span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;:&#x27;</span>, <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;z&#x27;</span>, <span class="string">&#x27;&#125;&#x27;</span>&#125;;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i3</span> <span class="operator">=</span> <span class="number">0</span>; i3 &lt; <span class="number">6</span>; i3++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (((<span class="type">long</span>) iArr[i3]) - jArr[i3] != ((<span class="type">long</span>) ((Integer) objArr[i3]).intValue())) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception unused) &#123;</span><br><span class="line">             <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i4</span> <span class="operator">=</span> <span class="number">0</span>; i4 &lt; <span class="number">6</span>; i4++) &#123;</span><br><span class="line">                 <span class="keyword">if</span> (((OooO(jArr[i4], <span class="number">4294967296L</span>)[<span class="number">0</span>] % <span class="number">4294967296L</span>) + <span class="number">4294967296L</span>) % <span class="number">4294967296L</span> != ((<span class="type">long</span>) <span class="built_in">this</span>.OooO0oO[i4])) &#123;</span><br><span class="line">                     <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">long</span>[] OooO(<span class="type">long</span> j, <span class="type">long</span> j2) &#123;</span><br><span class="line">         <span class="keyword">if</span> (j == <span class="number">0</span>) &#123;</span><br><span class="line">             <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">long</span>[]&#123;<span class="number">0</span>, <span class="number">1</span>&#125;;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="type">long</span>[] OooO = OooO(j2 % j, j);</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">long</span>[]&#123;((j2 / j) * OooO[<span class="number">0</span>]) + OooO[<span class="number">1</span>], OooO[<span class="number">0</span>]&#125;;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
 <p>答案：<code>a_asd./1imc2)dd1234]_+=+</code></p>
 
   </div>

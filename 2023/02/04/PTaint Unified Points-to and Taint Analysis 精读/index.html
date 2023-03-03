@@ -13,14 +13,25 @@
 <meta property="og:site_name" content="RacerZ">
 <meta property="og:description" content="P&#x2F;Taint: Unified Points-to and Taint Analysis 精读 前言 本文提出的一个观点就是，信息流分析本质上等同于指针分析，只不过人工定义了需要信息源指向的抽象对象。 两者相结合的好处体现在多个方面。首先可以在不做过多修改的情况下，直接用指针分析实现来计算污点分析；并且一些增强版指针分析（如不同版本的上下文敏感指针分析）以及处理反射的分析都可以直接用在信息流分析">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230130173601821.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230130174015349.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230131210631029.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230131235844494.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230201005537346.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202004937647.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202005001425.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202112923626.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202113319392.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202115343700.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202120735999.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202120749052.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202121409431.png">
 <meta property="article:published_time" content="2023-02-03T16:00:00.000Z">
 <meta property="article:modified_time" content="2023-02-06T11:20:19.643Z">
 <meta property="article:author" content="RacerZ">
 <meta property="article:tag" content="软件漏洞分析">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230131210631029.png">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230130173601821.png">
     
     
       
@@ -52,7 +63,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -176,10 +189,8 @@
 <p>指针分析计算的是程序中的表达式所指向的抽象对象。抽象对象通常由调用点来标识，调用点就是如 new 实例对应的指令执行分配的：这里还会分上下文敏感和非上下敏感，对于前者，所有运行时对象如果是同一指令分配的则会映射到同一抽象对象，也就是忽略了上下文堆抽象。</p>
 <p>指向分析的源头就是从一个分配指令开始</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">A</span> <span class="variable">a1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">A</span>(); <span class="comment">// heap allocation/abstract obj.</span></span><br></pre></td></tr></table></figure>
-
 <p>指向分析将简单地推断局部变量 a1 可以指向用上述 new 语句标识的抽象对象。指向分析的精髓实际上在于计算这些抽象对象如何在不同语言构建上流动，下面以方法的调用、返回和局部赋值语句以及堆抽象对象的 loads 和 stores 为例：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Object</span> <span class="variable">p</span> <span class="operator">=</span> foo();</span><br><span class="line">bar(p);</span><br><span class="line"><span class="type">B</span> <span class="variable">b1</span> <span class="operator">=</span> p.fld;</span><br><span class="line">...</span><br><span class="line">A <span class="title function_">foo</span><span class="params">()</span> &#123;</span><br><span class="line"><span class="type">A</span> <span class="variable">a1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">A</span>(); <span class="comment">// abstract object A1</span></span><br><span class="line"><span class="keyword">return</span> a1;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">void</span> <span class="title function_">bar</span><span class="params">(Object q)</span> &#123;</span><br><span class="line"><span class="type">A</span> <span class="variable">a2</span> <span class="operator">=</span> (A) q;</span><br><span class="line">a2.fld = <span class="keyword">new</span> <span class="title class_">B</span>(); <span class="comment">// abstract object B1</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>在这个例子中局部变量 a1, p, q 和 a2 都可以指向抽象对象 A1，而局部变量 b1 指向抽象对象 B1。最终，抽象对象 A1 通过方法调用和返回流动， B1 通过抽象对象的 loads 和 stores 流动。</p>
 <p>指针分析算法的精髓就在于能尽可能精确的推断出对象流动（may analysis）。其分析结果是一个变量和它所指向的所有抽象对象（调用点）的映射 map.</p>
 </li>
@@ -187,15 +198,12 @@
 <p>信息流分析计算的是哪些作为 source 的数据产生的值可以到达特定的数据 sinks 处。它通常用在分析实际的安全和隐私问题上：计算哪些污点数据源 sources 可以产生污点数据用在可信计算上（类似越权、非授权）；以及一些非授权访问、信息泄露的场景。</p>
 <p>信息流分析计算的起点通常是一个作为 source 点的 API调用，比如下面是一个接收用户输入字符串的代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">a</span> <span class="operator">=</span> source.readLine();  <span class="comment">// taint source</span></span><br></pre></td></tr></table></figure>
-
 <p>信息流分析的精髓在于追踪所有在程序当中传播的污点值。这里要区分污点和对象的概念。污点关心的是其数据的值，而不是它们在内存中的位置（或者说堆分配方式）。</p>
 <p>因而，相同的污点可以通过不同的对象类型传递。它通常是利用的数据转换函数来传递的，如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">a</span> <span class="operator">=</span> source.readLine();  <span class="comment">// taint source</span></span><br><span class="line"><span class="type">byte</span>[] aAsBytes = a.getBytes();</span><br></pre></td></tr></table></figure>
-
 <p>可以看到尽管 a 和 aAsBytes 变量的类型不同，但是拥有同一污点 source。污点字符串值产生了污点字节数组，但实际上污点的内容没有丢失。</p>
 <p>最后，污点可以通过 sanitization 函数移除。如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">a</span> <span class="operator">=</span> source.readLine (); <span class="comment">// taint source</span></span><br><span class="line"><span class="type">String</span> <span class="variable">aSafe</span> <span class="operator">=</span> java.net.URLEncoder.encode(a, <span class="string">&quot;UTF -8&quot;</span>);</span><br></pre></td></tr></table></figure>
-
 <p>相似点：都计算了对象在程序中的流动</p>
 <p>区别：</p>
 <ol>
@@ -206,7 +214,6 @@
 <p>对象通过方法调用和堆的流动与原先指针分析算法一样，增加了一些值但是保持原来的处理逻辑：识别出所有的信息流 sourses 和数据转换函数，通过手动构造抽象对象，让原有的指针分析算法按照和之前调用点抽象的处理逻辑一样进行分析。</p>
 <p>还拿刚才的例子：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">String</span> <span class="variable">a</span> <span class="operator">=</span> source.readLine ();</span><br><span class="line"><span class="comment">// artificial abstract object</span></span><br><span class="line"><span class="type">byte</span>[] aAsBytes = a.getBytes ();</span><br><span class="line"><span class="comment">// parametric artificial abstract object</span></span><br></pre></td></tr></table></figure>
-
 <p>联合的分析会视 readLine 方法调用为手动构造的抽象对象的 source。<strong>手动构造对象表示一个特定的污点，它作为一个值与常规对象一起传递</strong>。手动构造的抽象对象和指针分析中的抽象对象实质是正交的，也就是说如果一个变量同时指向这两种抽象对象，那么说明该变量接收了一个指定调用点分配的污点对象（污点信息指向标记的 source）.</p>
 <p>类似地，对于数据转换函数的调用也会手动构造 sources 的抽象对象，区别在于为了保存每一个污点值，需要对每一个传入调用的污点值都构造一个抽象对象。</p>
 <p>对于 sanitization 函数，只会控制 inter-procedural 传播涉及到的手动构造的抽象对象。污点值不会流入 sanitization 方法。实际上这个是原有指针分析算法逻辑为了支持联合分析所需做出的少部分改动： <strong>inter-procedural 传播在涉及到 sanitization 函数调用时需要过滤掉所有涉及的手动构建的抽象对象</strong>。</p>
@@ -219,8 +226,8 @@
 <p>首先忽略数据转换函数和 sanitization，先讨论如何将信息流分析和指针分析作同步。</p>
 <p>下面图1展示了分析中的 domain，包括输入，关系运算和输出，以及产生新污点值的构建函数。图2代表分析。</p>
 <p>红色框住的元素代表修改了用于支持信息流分析的部分，其余为参数和谓词的别名。语法规则：左箭头将推断出的 facts 和已知的 facts 分隔开</p>
-<p>![image-20230130173601821](PTaint Unified Points-to and Taint Analysis 精读/image-20230130173601821.png)</p>
-<p>![image-20230130174015349](PTaint Unified Points-to and Taint Analysis 精读/image-20230130174015349.png)</p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230130173601821.png" alt="image-20230130173601821"></p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230130174015349.png" alt="image-20230130174015349"></p>
 <p><strong>模式变更：</strong>定义值抽象 A , 包括指针分析中的调用点抽象 $A_H$ 和 污点值抽象 $A_T$.     它们都代表程序当中值引入的位置；重命名指针分析的输出关系 $V_{AR}P_{OINTS}TO$ 和 $F_{LD}P_{OINTS}TO$ 为 $F_{LOWS}T_{O}V_{AR}$ 和 $F_{LOWS}T_{O}F_{LD}$ . 也就是说之前所有的堆抽象概念转变为统一的值抽象</p>
 <p><strong>算法变更：</strong>在图2中，前8条规则时标准的上下文敏感指针分析模型。唯一的变化是在计算调用图上 (谓词 $C_{ALL}G_{RAPH}$). 在计算 virtual calls 的 receiver objects 时不是所有的值抽象都用到：因为 receiver objects <strong>必须是标准的堆抽象</strong>。这个检查可以避免分析到达一些不可达的方法，虽然说污点对象看起来在调用点调用了。这个原因在于污点值抽象和堆抽象在传播规则上略有不同，后者的规则中引入了即使<strong>在正常对象不会传播的情况下也可以促进污点值流动的捷径</strong>。</p>
 <p>最后两个规则时新引入的。它们只是将对信息 sources 的调用标记为创建抽象值的点，将对信息 sinks 的调用标记为泄漏点，并将其作为输出的一部分进行报告。</p>
@@ -230,8 +237,7 @@
 <p>最后一个规则只是对分析结果的利用。它表述了如果抽象的污点值到达了 sink 函数调用点的第i个参数上，且第i个参数是敏感的话，则会导致信息泄露（$S_{INK}M_{ETHOD}(meth,i)$）。</p>
 </li>
 <li><p>Flow-Through Data Transform Functions</p>
-<img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230131210631029.png" alt="image-20230131210631029" style="zoom:50%;">
-
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230131210631029.png" alt="image-20230131210631029" style="zoom:50%;"></p>
 <p>图3的引入是为了支持数据转换函数能够使得污点信息在不同数据类型的值之间传播，这里定义了一些额外的规则和逻辑来表示污点对象的创建。要指出这里只是列出了一些典型的污点转换规则，在 P/Taint 中定义了更多方式（这里说的也就是污点传播方式，tai-e 中有特别说明）。</p>
 <p>图3中定义了两种新的输入关系，BaseToRetTransfer 和 ArgToRetTransfer，一个中间谓词 IsTaintedFrom，和新的构建函数 TransferTaint. 新的输入关系编码了方法返回值的污点传播方式，或者是方法调用的 receiver variable（base variable），或者是参数传递。为了方便，会列出新的污点值类型。前两条规则中将输入信息组合为更一般的中间谓词，IsTaintedFrom(from,to,type) 捕获了哪些变量作为输入以及新产生的污点值及其类型</p>
 <p>图中的第三个规则负责处理在现有污点值流向转换函数时创建新的污点值。这个规则体中有个细节：<strong>新的污点值并不是在转换函数返回点处产生（对应变量 to），而是只要污点对象流到该点，且该点为堆对象第一次分配和赋值处。</strong></p>
@@ -242,7 +248,7 @@
 <li><p>Sanitization Functions</p>
 <p>Sanitization 函数的处理要阻止所有污点值流过其预定义函数。因此引入新的输入关系，SanitizationMethod 并且修改了跨函数赋值的逻辑。</p>
 <p>可以看到这个规则在处理堆抽象的传播时逻辑不变，而污点值只有当赋值语句的左边变量（也就是变了 to）是 Sanitization 函数的显式参数时才会传播。</p>
-<p>![image-20230131235844494](PTaint Unified Points-to and Taint Analysis 精读/image-20230131235844494.png)</p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230131235844494.png" alt="image-20230131235844494"></p>
 </li>
 <li><p>Scaling to a Full Taint Analysis Framework: Benefits</p>
 <p>前一部分构建的模型是 P/Taint 框架的基础，下面将描述如何将方法拓展至实际的编程语言以及其中的优势</p>
@@ -258,8 +264,7 @@
 <p>我们可以通过上下文敏感来提供指针分析的精度：<strong>通过上下文信息来量化变量和抽象对象</strong>，因而不会对不同方法调用点的对象或者同一抽象对象作合并。</p>
 <p>首先，Doop 中已经有一套成熟的模式在规则中添加上下文敏感信息，而且通过定义构造函数 Record 和 Merge 该模式允许插入不同的上下文模型（call-site / object / type / hybrid）.</p>
 <p>下图中展示了图2中上下文敏感形式的 CallGraphEdge</p>
-<img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230201005537346.png" alt="image-20230201005537346" style="zoom:50%;">
-
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230201005537346.png" alt="image-20230201005537346" style="zoom:50%;"></p>
 <p>Merge 用于创建 virtual 调用点的新的调用上下文。这些上下文信息用来量化方法调用，即它们将施加到方法中的所有局部变量上。Merge 函数将会获取 virtual 方法调用点的所有信息并合并创建一个新的上下文</p>
 </li>
 <li><p>Other Pragmatic Features</p>
@@ -318,15 +323,15 @@
 </li>
 <li><p>Overall Effectiveness</p>
 <p>结果如下：</p>
-<p>![image-20230202004937647](PTaint Unified Points-to and Taint Analysis 精读/image-20230202004937647.png)</p>
-<p>![image-20230202005001425](PTaint Unified Points-to and Taint Analysis 精读/image-20230202005001425.png)</p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202004937647.png" alt="image-20230202004937647"></p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202005001425.png" alt="image-20230202005001425"></p>
 <p>总体表现出了高精度和低误报。误报的来源在于 P/Taint 非流敏感或者 path 敏感，以及数组敏感（不区分数组索引）</p>
 </li>
 <li><p>Sensitivity Analysis: Precision</p>
 <p>用不同的上下文敏感支持来运行 SecuriBench Micro 以及 JInfoFlow-bench benchmarks 下面的图中展示了精度分数。</p>
 <p>可以看到在我们联合分析的方法中，无需做更多代码上的更改，仅需选择不同的上下文敏感分析，就可以在精度和可扩展性之间做权衡。</p>
-<p>![image-20230202112923626](PTaint Unified Points-to and Taint Analysis 精读/image-20230202112923626.png)</p>
-<p>![image-20230202113319392](PTaint Unified Points-to and Taint Analysis 精读/image-20230202113319392.png)</p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202112923626.png" alt="image-20230202112923626"></p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202113319392.png" alt="image-20230202113319392"></p>
 <p>还有一些其他的发现：</p>
 <ul>
 <li>在不同的环境下，不同的上下文敏感方式展现出不同的精度优势</li>
@@ -336,17 +341,17 @@
 <li><p>Sensitivity Analysis: Recall </p>
 <p>反射是影响现实信息流分析样本召回率的主要特征，我们通过是否使用 P/Taint 的反射支持来作对比。这里提一句反射的支持利用的 Doop 提供的技术（利用 substring analysis + use-based analysis）.  </p>
 <p>JInfoFlow-bench 测试样本中包含更多的基于反射的行为，图示中可以看到影响变化。</p>
-<p>![image-20230202115343700](PTaint Unified Points-to and Taint Analysis 精读/image-20230202115343700.png)</p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202115343700.png" alt="image-20230202115343700"></p>
 </li>
 <li><p>Sensitivity Analysis: Running Time</p>
 <p>图示中展示了不同的测试样本在不同分析参数下运行所需的时间。注意图表中的两部分并不在同一尺度上，首先对于 open programs 的支持使得对于所有 SecuriBench 的程序可以同时并行分析，导致更快的运行时间。而对于其他样本，都是单独分析，因此总时间达到几十分钟。</p>
-<p>![image-20230202120735999](PTaint Unified Points-to and Taint Analysis 精读/image-20230202120735999.png)</p>
-<p>![image-20230202120749052](PTaint Unified Points-to and Taint Analysis 精读/image-20230202120749052.png)</p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202120735999.png" alt="image-20230202120735999"></p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202120749052.png" alt="image-20230202120749052"></p>
 <p>总体来看，虽然反射会使得分析时间加倍，但是还是高性能的。</p>
 </li>
 <li><p>UnifiedAnalysis vs. Points-To</p>
 <p>最后，我们记录了一些联合分析与原始指针分析在性能度量上的对比。已知两者算法逻辑的核心是一样的（指针分析），只不过前者会处理更多的抽象对象。所以我们展现了分析中通过推断“流入”污点抽象对象以及堆抽象对象的相对占比。</p>
-<p>![image-20230202121409431](PTaint Unified Points-to and Taint Analysis 精读/image-20230202121409431.png)</p>
+<p><img src="/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/image-20230202121409431.png" alt="image-20230202121409431"></p>
 <p>图示中表示了 FlowsToVar 关系的大小（除去了上下文信息），其中分成指向抽象污点对象的元组和指向抽象堆的元组。经过不同精度的多次分析，我们可以看到污点对象流也是整个计算的重要占比。这证实了污点传播并不是底层分析逻辑的附加任务，即使只是少量的污点 sources，也能同堆抽象对象流产生的分析推断相竞争。</p>
 </li>
 </ul>
@@ -363,7 +368,7 @@
 <p><em>Omer Tripp, Marco Pistoia, Patrick Cousot, Radhia Cousot, and Salvatore Guarnieri. 2013. ANDROMEDA: Accurate and<br>Scalable Security Analysis of Web Applications</em></p>
 </li>
 </ul>
-<ol start="2">
+<ol>
 <li><p>程序依赖图的使用</p>
 <p>控制依赖图对检测信息流中的隐式控制依赖比较有帮助</p>
 </li>

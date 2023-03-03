@@ -8,11 +8,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <meta name="description" content="写在前面有了静态分析基础，开始看看这个Soot，一定得实践与理论结合着来，把文档看一遍 A Survivor’s Guide to Java Program Analysis with Soot1 IntroductionSoot研发出来的目的是为了提供一种更好、更快的理解Java程序执行的工具。 Soot主要的优势之一在于它提供了四种不同的中间表示（IR）用作分析。每一种IR都是不同水平的抽象，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Soot文档学习">
+<meta property="og:title" content="Soot文档学习（1）">
 <meta property="og:url" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="RacerZ">
 <meta property="og:description" content="写在前面有了静态分析基础，开始看看这个Soot，一定得实践与理论结合着来，把文档看一遍 A Survivor’s Guide to Java Program Analysis with Soot1 IntroductionSoot研发出来的目的是为了提供一种更好、更快的理解Java程序执行的工具。 Soot主要的优势之一在于它提供了四种不同的中间表示（IR）用作分析。每一种IR都是不同水平的抽象，">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230219224911520.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230219234245575.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230219235251349.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230106232252628.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230106233548096.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230106234602432.png">
@@ -28,6 +31,7 @@
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230109112551714.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230109115928783.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230109125110938.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230220233617787.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230109153957662.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230109154201035.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230109161736171.png">
@@ -46,11 +50,11 @@
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230116235220548.png">
 <meta property="og:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230116235604762.png">
 <meta property="article:published_time" content="2023-01-16T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-17T09:31:52.416Z">
+<meta property="article:modified_time" content="2023-02-21T14:58:49.144Z">
 <meta property="article:author" content="RacerZ">
 <meta property="article:tag" content="静态分析">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230106232252628.png">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230219224911520.png">
     
     
       
@@ -70,7 +74,7 @@
       
     
     <!-- title -->
-    <title>Soot文档学习</title>
+    <title>Soot文档学习（1）</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -82,7 +86,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -125,16 +131,16 @@
     <div id="share" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&text=Soot文档学习"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&is_video=false&description=Soot文档学习"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Soot文档学习&body=Check out this article: https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&name=Soot文档学习&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&t=Soot文档学习"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&text=Soot文档学习（1）"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习（1）"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&is_video=false&description=Soot文档学习（1）"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Soot文档学习（1）&body=Check out this article: https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习（1）"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习（1）"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习（1）"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习（1）"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&name=Soot文档学习（1）&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&t=Soot文档学习（1）"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
 </ul>
 
     </div>
@@ -151,7 +157,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        Soot文档学习
+        Soot文档学习（1）
     </h1>
 
 
@@ -189,10 +195,10 @@
 <p>Soot构建了如下几种数据结构表示：</p>
 <ol>
 <li><p>Scene</p>
-<p>该类表示程序分析时涉及到的完整环境。通过它，你可以设置例如，应用类（提供给Soot用于分析的类）、主类（包含主方法的类）和关于过程间分析的访问信息（例如，指向信息和调用图）</p>
+<p>该类表示程序分析时涉及到的完整环境。通过它，你可以设置例如，应用类（提供给Soot用于分析的类）、主类（包含 main 方法的类）和关于过程间分析的访问信息（例如，指向信息和调用图）</p>
 </li>
 <li><p>SootClass </p>
-<p>代表一个加载进Soot当中或者使用Soot创建的类</p>
+<p>代表一个装入到Soot当中或者使用Soot创建的类</p>
 </li>
 <li><p>SootMethod</p>
 <p>代表一个类中的方法</p>
@@ -206,10 +212,8 @@
 </ol>
 <h5 id="1-1-安装Soot"><a href="#1-1-安装Soot" class="headerlink" title="1.1 安装Soot"></a>1.1 安装Soot</h5><p>这里需要注意在下载soot时分为两种类型，<code>soot-&lt;RELEASE&gt;-jar-with-dependencies.jar</code>是包含了所有所需库的文件；而<code>soot-&lt;RELEASE&gt;.jar</code>仅仅包含Soot本身，需要手动选择需要分析的依赖。</p>
 <h5 id="1-2-Road-map-to-this-guide-路线图"><a href="#1-2-Road-map-to-this-guide-路线图" class="headerlink" title="1.2 Road-map to this guide(路线图)"></a>1.2 Road-map to this guide(路线图)</h5><ul>
-<li><p>内部表示 详细描述Soot中的四种中间表示</p>
-</li>
-<li><p>基本的Soot框架 简述了构成方法体的基础对象</p>
-</li>
+<li>内部表示 详细描述Soot中的四种中间表示</li>
+<li>基本的Soot框架 简述了构成方法体的基础对象</li>
 <li><p>Soot作为独立的工具 描述了如何使用Soot作为独立的工具。为此，本节介绍了Soot的内部工作原理、在命令行使用Soot及其接收的不同参数、Soot提供的一些内置分析框架以及如何使用用户自定义分析框架来扩展该工具</p>
 </li>
 <li><p>数据流框架 细致地描述了如何利用Soot内置数据流框架，伴随一个复杂表示分析的完整实例实现。这部分还讲述了标记Eclipse插件的代码以可视化地显示结果</p>
@@ -218,8 +222,7 @@
 </li>
 <li><p>指针分析 介绍了两种高级指针分析框架 SPARK and Paddle</p>
 </li>
-<li><p>抽象控制流图的提取 描述了如何使用Soot来提取抽象控制流图的定制IR，以用作分析的起点，该分析可能受益于在抽象过程中所做的简化，如Java字符串分析</p>
-</li>
+<li>抽象控制流图的提取 描述了如何使用Soot来提取抽象控制流图的定制IR，以用作分析的起点，该分析可能受益于在抽象过程中所做的简化，如Java字符串分析</li>
 </ul>
 <h5 id="2-Basic-Soot-Constructs"><a href="#2-Basic-Soot-Constructs" class="headerlink" title="2 Basic Soot Constructs"></a>2 Basic Soot Constructs</h5><p>在这一节我们描述贯穿在Soot使用当中的常用基础对象。具体来讲，我们关注那些组成方法中代码的对象。由于这些都是非常简单的构造，因此这些描述相当简短</p>
 <h5 id="2-1-Method-bodies"><a href="#2-1-Method-bodies" class="headerlink" title="2.1 Method bodies"></a>2.1 Method bodies</h5><p>Soot类<code>Body</code>代表一个方法体，它表示代码的风格取决于使用的IR，分别有：</p>
@@ -229,50 +232,111 @@
 <li>ShimpleBody</li>
 <li>JimpleBody</li>
 </ul>
-<p>我们可以使用Body来访问各种信息，特别是我们可以检索局部声明（<code>getLocals()</code>）的Collection类变量（Soot使用它自己的Collection实现，称为Chain），构成方法体中的语句（<code>getUnits()</code>）和方法体中的异常处理（<code>getTraps()</code>）</p>
+<p>我们可以使用Body来访问各种信息，特别是我们可以检索局部声明（<code>getLocals()</code>）的 Collection 类变量（Soot使用它自己的Collection实现，称为 Chain），构成方法体中的语句（<code>getUnits()</code>）和方法体中的异常处理（<code>getTraps()</code>）</p>
 <h5 id="2-2-Statements"><a href="#2-2-Statements" class="headerlink" title="2.2 Statements"></a>2.2 Statements</h5><p>Soot中的语句由接口<code>Unit</code>来表示，其中对于不同的IR存在不同的实现方式-例如，Jimple使用<code>Stmt</code>，而Grimp使用<code>Inst</code></p>
-<p>通过<code>Unit</code>类，我们可以获取到所有变量值（<code>getUseBoxes()</code>）,值定义的地方<code>getDefBoxes()</code>以及两者都取<code>getUseAndDefBoxes()</code>. 另外，我们可以获取跳转到当前<code>unit</code>的所有<code>unit</code>（<code>getBoxedPointingToThis()</code>）以及当前<code>unit</code>要跳转到的所有<code>unit</code>（<code>getUnitBoxs()</code>）. 这里的跳转指的是控制流而非顺序执行。Unit类也提供不同的方法来查询分支行为，如<code>fallsThrough()</code> 和 <code>branches()</code>. </p>
-<h5 id="Values"><a href="#Values" class="headerlink" title="Values"></a>Values</h5><p>Value表示一个数据。Value的表示可以是局部变量（<code>Local</code>），常量（<code>Jimple Constant</code>），表达式（<code>Jimple Expr</code>）等等. 表达式拥有不同的实现，比如<code>BinopExpr</code> 和 <code>InvokeExpr</code>，通常可视为对一个或多个值执行某些操作并返回另一个值</p>
-<h5 id="References"><a href="#References" class="headerlink" title="References"></a>References</h5><p>引用在Soot中被称作boxes，其中有两种不同的类型：</p>
+<p>通过<code>Unit</code>类，我们可以获取到所有变量值（<code>getUseBoxes()</code>）, 值定义的地方<code>getDefBoxes()</code>以及两者都取<code>getUseAndDefBoxes()</code>. 另外，我们可以获取跳转到当前<code>unit</code>的所有<code>unit</code>（<code>getBoxedPointingToThis()</code>）以及当前<code>unit</code>要跳转到的所有<code>unit</code>（<code>getUnitBoxs()</code>）. 这里的跳转指的是控制流而非顺序执行。Unit类也提供不同的方法来查询分支行为，如<code>fallsThrough()</code> 和 <code>branches()</code>. </p>
+<ul>
+<li><p>对于 <code>getDefBoxes()</code> 的解释</p>
+<p>返回一个 valueBox 的列表，对应 unit（语句）中所有已被定义的变量</p>
+</li>
+<li><p><code>fallsThrough()</code></p>
+<p>如果执行可以顺利流到紧挨着的下一条语句，就会返回True</p>
+</li>
+<li><p><code>branches()</code></p>
+<p>如果执行可以继续流下去，但是并不会流到紧挨着的下一条语句，返回True</p>
+</li>
+<li><p><code>redirectJumpsToThisTo()</code></p>
+<p>改变所有曾经指向这个Unit的跳转，让他们都指向这个新的<code>newLocation</code></p>
+</li>
+</ul>
+<h5 id="Values"><a href="#Values" class="headerlink" title="Values"></a>Values</h5><p>Value表示一个数据。Value的表示可以是局部变量（<code>Local</code>），常量（<code>Jimple Constant</code>），表达式（<code>Jimple Expr</code>）等等.  Expr 表达式又拥有不同的实现，比如<code>BinopExpr</code> 和 <code>InvokeExpr</code>，通常可视为对一个或多个值执行某些操作并返回另一个值</p>
+<p>其中一些常用的类型：</p>
+<ul>
+<li><p>Local </p>
+<p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230219224911520.png" alt="image-20230219224911520" style="zoom:80%;"></p>
+</li>
+<li><p>Constant </p>
+<p><strong>StringConstant </strong>和 <strong>NumericConstant</strong></p>
+</li>
+</ul>
+<p><strong>stmt 与 Expr 的区别：</strong></p>
+<p>前者无返回值，后者有返回值</p>
+<p>实现 stmt 接口：<code>AbstractStmt</code></p>
+<p><code>AbstractStmt</code> 子类说明：</p>
+<ul>
+<li><p><code>AbstractDefinitionStmt</code></p>
+<p>子类 1：<code>JAssignStmt</code></p>
+<p>复制语句</p>
+<p>子类2：<code>JIdentityStmt</code></p>
+<p>显式或隐式赋值给变量</p>
+<ol>
+<li><p>函数传参</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r1 := <span class="meta">@parameter0</span>: java.lang.String</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>this 传参</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r0 := <span class="meta">@this</span>: com.spring.Controller</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p><strong>两者区别：</strong></p>
+<p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230219234245575.png" alt="image-20230219234245575"></p>
+</li>
+<li><p><code>AbstractSwitchStmt</code></p>
+<p>switch语句主要由于JVM对于不同的Switch语句，会生成不同的操作指令</p>
+<p>子类1：<code>JLookupSwitchStmt</code></p>
+<p>子类2：<code>JTableSwitchStmt</code></p>
+</li>
+<li><p><code>AbstractOpStmt</code></p>
+<p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230219235251349.png" alt="image-20230219235251349"></p>
+</li>
+</ul>
+<p>表达式 Expr 部分</p>
+<ul>
+<li><p><code>AbstractInvokeExpr</code></p>
+<p><strong>调用的表达式</strong></p>
+<p>具体类型如下：</p>
+<p>| 类型                | soot                     | 具体用途                                                     |<br>| :————————— | :———————————- | :—————————————————————————————- |<br>| <strong>invokestatic</strong>    | <strong>JStaticInvokeExpr</strong>    | 调用static静态方法                                           |<br>| <strong>invokevirtual</strong>   | <strong>JVirtualInvokeExpr</strong>   | 调用虚方法、final方法                                        |<br>| <strong>invokeinterface</strong> | <strong>JInterfaceInvokeExpr</strong> | 调用接口方法，在运行时搜索实现了这个方法的对象，进行合适的调用 |<br>| <strong>invokespecial</strong>   | <strong>JSpecialInvokeExpr</strong>   | 调用实例方法，init构造方法、private、父类方法                |<br>| <strong>invokedynamic</strong>   | <strong>JDynamicInvokeExpr</strong>   | 动态解析出需要调用的方法，然后执行 invoke lambda             |</p>
+</li>
+<li><p><code>AbstractBinopExpr</code></p>
+<p>数学运算操作</p>
+</li>
+</ul>
+<h5 id="References"><a href="#References" class="headerlink" title="References"></a>References</h5><p>当Unit包含另一个Unit的时候，需要通过Box来访问</p>
+<p>引用在Soot中被称作 boxes，其中有两种不同的类型：</p>
 <ul>
 <li>UnitBoxes 针对Units类，当一个unit类存在多个后继时使用，比如分支语句的情况</li>
 <li>ValueBoxes 针对Values类，如前所述,每个unit都有一个value使用和定义的标识，当替换成use或者def boxes在units中将会很有用，比如在执行常量传播时</li>
 </ul>
-<h5 id="3-Intermediate-Representations"><a href="#3-Intermediate-Representations" class="headerlink" title="3 Intermediate Representations"></a>3 Intermediate Representations</h5><p>Soot框架为代码提供了四种中间表示形式：Baf, Jimple, Shimple和Grimp. 这些表示针对不同的用途为代码提供了不同的抽象级别. 比如，baf是一种字节码标识，类似Java字节码；而imple是一个<strong>无堆栈的</strong>、<strong>类型化</strong>的3地址代码，适用于大多数分析。这节详细描述一下Jimple表示，简述一下其他几种</p>
+<h5 id="3-Intermediate-Representations"><a href="#3-Intermediate-Representations" class="headerlink" title="3 Intermediate Representations"></a>3 Intermediate Representations</h5><p>Soot框架为代码提供了四种中间表示形式：Baf, Jimple, Shimple和Grimp. 这些表示针对不同的用途为代码提供了不同的抽象级别. 比如，baf是一种字节码标识，类似Java字节码；而Jimple是一个<strong>无堆栈的</strong>、<strong>类型化</strong>的3地址代码，适用于大多数分析。这节详细描述一下Jimple表示，简述一下其他几种</p>
 <h5 id="3-1-Baf"><a href="#3-1-Baf" class="headerlink" title="3.1 Baf"></a>3.1 Baf</h5><p>Baf是一种基于堆栈的线性字节码表示。用于将Java字节码作为堆栈代码进行检查，但将<strong>常量池抽象</strong>出来，并将<strong>指令的类型相关变体</strong>抽象为单个指令（例如，在Java字节码中，有许多用于添加整数、长整数等的指令，在Baf中，它们都被抽象为单个加法指令）。Baf中的指令对应Soot的<code>Units</code>类，因此所有指令的实现都实现了<code>Inst</code>接口，后者又实现了<code>Unit</code>和<code>Switchable</code>接口。</p>
 <p>Baf表示的实现存放在<code>soot.baf</code>和<code>soot.baf.internal</code>包中。</p>
 <p>Baf对于基于字节码的分析、优化和转换（如peephole）非常有用</p>
 <p>作为基于Baf表示的Soot框架的一部分提供的优化可以在<code>soot.baf.toolkits.base</code>包中找到</p>
 <h5 id="3-2-Jimple"><a href="#3-2-Jimple" class="headerlink" title="3.2 Jimple"></a>3.2 Jimple</h5><p>Jimple是Soot中的主要表示。其是类型化的、3地址码的、基于语句的中间表示。</p>
 <p>Jimple表示可以直接由Soot创建，或者基于Java源代码、字节码或者class文件创建。</p>
-<p>从字节码到Jimple的转换通过从字节码到无类型Jimple的naive转换，具体通过为隐式堆栈位置引入新的局部变量并使用子例程移除JSR指令。从无类型的Jimple当中推断出局部变量的类型并添加进来。其还会清除Jimple代码中的冗余代码，如未使用的变量或赋值。转换到Jimple的一个重要步骤是表达式的<strong>线性化</strong>（和命名），使得一个语句最多只能引用3个局部变量或常数。从而为执行优化提供了更规则、更方便的表示。在Jimple表示下，分析只需要处理15种语句，而Java字节码中可能有200多种指令。</p>
-<p>在Jimple中，语句对应Soot中的Units类并且可以如此使用。其拥有15种语句，核心的有：<code>NopStmt, IdentityStmt</code>  和 <code> AssignStmt</code>。过程内控制流语句有<code>IfStmt, GotoStmt, TableSwitchStmt(对应JVM的tableswitch指令)</code> 和 <code>LookupSwitchStmt(对应JVM的lookupswitch指令)</code>. 跨函数过程分析语句有<code>InvokeStmt, ReturnStmt,ReturnVoidStmt</code>. 管理语句有<code>EnterMonitorStmt</code> 和 <code>ExitMonitorStmt</code>，最后两个是<code>ThrowStmt</code> 和 <code>RetStmt</code>(从JSR中返回，如果是从字节码中生成Jimple语句则不创建)</p>
+<p>从字节码到Jimple的转换通过从字节码到无类型Jimple的naive转换，具体通过为隐式堆栈位置引入新的局部变量并使用子例程移除JSR指令。从无类型的Jimple当中推断出<strong>局部变量的类型</strong>并添加进来。其还会清除Jimple代码中的冗余代码，如未使用的变量或赋值。转换到Jimple的一个重要步骤是表达式的<strong>线性化</strong>（和命名），使得一个语句最多只能引用3个局部变量或常数。从而为执行优化提供了更规则、更方便的表示。在Jimple表示下，分析只需要处理15种语句，而Java字节码中可能有200多种指令。</p>
+<p>在Jimple中，语句对应Soot中的Units类并且可以如此使用。其拥有15种语句，<strong>核心</strong>的有：<code>NopStmt, IdentityStmt</code>  和 <code>AssignStmt</code>。<strong>过程内控制流语句</strong>有<code>IfStmt, GotoStmt, TableSwitchStmt(对应JVM的tableswitch指令)</code> 和 <code>LookupSwitchStmt(对应JVM的lookupswitch指令)</code>. <strong>过程间分析语句</strong>有<code>InvokeStmt, ReturnStmt,ReturnVoidStmt</code>. <strong>监控语句</strong>有<code>EnterMonitorStmt</code> 和 <code>ExitMonitorStmt</code>，最后两个是<code>ThrowStmt</code> 和 <code>RetStmt</code>(从JSR中返回，如果是从字节码中生成Jimple语句则不创建)</p>
 <p>将下面的例子生成Jimple语句</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Foo</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">Foo</span> <span class="variable">f</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Foo</span>();</span><br><span class="line">        <span class="type">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">7</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">14</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> (f.bar(<span class="number">21</span>) + a) * b;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">bar</span><span class="params">(<span class="type">int</span> n)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> n + <span class="number">42</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>执行下列命令用于生成Jimple文件</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp .\soot-<span class="number">4.4</span><span class="number">.0</span>-<span class="number">20220321.130129</span>-<span class="number">1</span>-jar-with-dependencies.jar soot.Main -pp -f J -cp .  Foo</span><br></pre></td></tr></table></figure>
-
 <p>Jimple文件如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">public static void main(java.lang.String[])</span><br><span class="line">  &#123;</span><br><span class="line">      Foo f, temp$0;</span><br><span class="line">      java.lang.String[] args;</span><br><span class="line">      int a, b, x, temp$1, temp$2, temp$3, temp$4;</span><br><span class="line"></span><br><span class="line">args := @parameter0: java.lang.String[];</span><br><span class="line">temp$0 = new Foo;</span><br><span class="line">specialinvoke temp$0.&lt;Foo: void &lt;init&gt;()&gt;();</span><br><span class="line">f = temp$0;</span><br><span class="line">a = 7;</span><br><span class="line">b = 14;</span><br><span class="line">// InvokeStmt</span><br><span class="line">      temp$1 = virtualinvoke f.&lt;Foo: int bar(int)&gt;(21);</span><br><span class="line">temp$2 = temp$1;</span><br><span class="line">temp$3 = temp$2 + a;</span><br><span class="line">temp$4 = temp$3 * b;</span><br><span class="line">x = temp$4;</span><br><span class="line">return;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public int bar(int)</span><br><span class="line">  &#123;</span><br><span class="line">      Foo this;</span><br><span class="line">      int n, temp$0, temp$1;</span><br><span class="line">this := @this: Foo;</span><br><span class="line">n := @parameter0: int;</span><br><span class="line">temp$0 = n;</span><br><span class="line">temp$1 = temp$0 + 42;</span><br><span class="line">return temp$1;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-
-<p>上述代码片段为main和bar方法生成的Jimple语句。Jimple是Java源代码和Java字节码的混合体。Jimple中拥有类似Java的语句结构那样的局部变量的声明和赋值，但是对于控制流和方法调用，风格又和Java字节码类似。以<code>$</code>开头的局部变量表示堆栈位置，而不是原始程序中的局部变量，而不带<code>$</code>的变量表示真实的局部变量。</p>
-<p>线性化过程将语句<code>int x = (f.bar(21) + a) * b</code>分解成三地址码的形式<code>temp$3 = temp$2 + a;         temp$4 = temp$3 * b;</code></p>
+<p>上述代码片段为main和bar方法生成的Jimple语句。Jimple是Java源代码和Java字节码的混合体。Jimple中拥有类似Java的语句结构那样的局部变量的声明和赋值，但是对于控制流和方法调用，风格又和Java字节码类似。以<script type="math/tex">`开头的局部变量表示堆栈位置，而不是原始程序中的局部变量，而不带`</script>的变量表示真实的局部变量。</p>
+<p>线性化过程将语句<code>int x = (f.bar(21) + a) * b</code>分解成三地址码的形式<code>temp$3 = temp$2 + a;
+        temp$4 = temp$3 * b;</code></p>
 <p>在Jimple中，参数值和this引用使用<code>IdentityStmt</code>进行赋值，例如bar方法中的语句<code>n := @parameter0: int;</code>以及<code>this := @this: Foo;</code> 。通过使用<code>IdentityStmt</code>，确保所有局部变量至少有一个定义点，因此this变量在哪里被定义就很清晰了。</p>
 <p>所有局部变量都是类型化的。在分析过程中使用类型信息很有帮助</p>
 <p>请注意，Jimple不是Java源代码，特别是当您将Java源代码与生成的Jimple代码进行比较时，引入新的唯一变量可能会导致结果与预期之间的巨大差异</p>
-<p>Jimple中间表示在以下依赖中提供<code>soot.jimple</code>和<code>soot.jimple.internal</code>，在<code>soot.jimple.toolkits.*</code>特别是 <code>soot.jimple.toolkits.scalar</code>和<code>soot.jimple.- toolkits.annotation.*</code>中有很多优化的集合类可以使用</p>
+<p>Jimple中间表示在以下依赖中提供<code>soot.jimple</code>和<code>soot.jimple.internal</code>，在<code>soot.jimple.toolkits.*</code>特别是 <code>soot.jimple.toolkits.scalar</code>和<code>soot.jimple.-
+toolkits.annotation.*</code>中有很多优化的集合类可以使用</p>
 <h5 id="3-3-Shimple"><a href="#3-3-Shimple" class="headerlink" title="3.3 Shimple"></a>3.3 Shimple</h5><p>Shimple中间表示是Jimple表示的<strong>静态单赋值形式</strong>，SSA-form保证每个局部变量都有<strong>一个静态定义点</strong>，这大大简化了许多分析。</p>
 <p>除了单静态定义点和所谓的<code>phi-nodes</code>比较特殊，其他形式均与Jimple一样，因此两者几乎可以同等对待</p>
 <p>下面实例类</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ShimpleExample</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">test</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">x</span> <span class="operator">=</span> <span class="number">100</span>;</span><br><span class="line">        <span class="keyword">while</span> (as_long_as_it_takes) &#123;</span><br><span class="line">            <span class="keyword">if</span> (x &lt; <span class="number">200</span>) &#123;</span><br><span class="line">                x = <span class="number">100</span>;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                x = <span class="number">200</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> x;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>利用下面的指令生成Shimple文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp .\soot-4.4.0-20220321.130129-1-jar-with-dependencies.jar soot.Main -pp -f S -cp . ShimpleExample</span><br></pre></td></tr></table></figure>
-
 <p>(我自己生成的更复杂，先看paper上的样例)</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">public int test() &#123;</span><br><span class="line">	ShimpleExample r0;</span><br><span class="line">	int i0, i0_1, i0_2, i0_3;</span><br><span class="line">	boolean $z0;</span><br><span class="line">	</span><br><span class="line">	r0 := @this: ShimpleExample;</span><br><span class="line">(0) i0 = 100;</span><br><span class="line"></span><br><span class="line">label0:</span><br><span class="line">	i0_1 = Phi(i0 #0, i0_2 #1, i0_3 #2);</span><br><span class="line">	$z0 = r0.&lt;ShimpleExample: boolean as_long_as_it_takes&gt;;</span><br><span class="line">	if $z0 == 0 goto label2;</span><br><span class="line"></span><br><span class="line">	if i0_1 &gt;= 200 goto label1;</span><br><span class="line"></span><br><span class="line">	i0_2 = 100;</span><br><span class="line">(1) goto label0;</span><br><span class="line"></span><br><span class="line">label1:</span><br><span class="line">	i0_3 = 200;</span><br><span class="line">(2) goto label0;</span><br><span class="line"></span><br><span class="line">	label2:</span><br><span class="line">		return i0_1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>相比于Jimple结构，这里有两点不同。新引入的Phi-node以及i0变量被拆分成了4个变量<code>i0,i0_1,i0_2,i0_3</code></p>
 <p>在SSA形式下，<code>i0_1</code>的值依赖于控制流图中涉及的路径，其与Phi-nodes相关。该值可能来自（0）、（1）或（2）。Phi-node可以被看作是一个函数，如果流从（0）到达则返回<code>i0</code>的值，如果流从（1）到达则返回<code>i0_2</code>的值，或者如果流从（2）到达则返回<code>i0_3</code>的值。</p>
 <p>Simple对控制流进行了<strong>显式编码</strong>，因此可以方便地对Simple代码进行控制流敏感分析</p>
@@ -282,25 +346,21 @@
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230106232252628.png" alt="image-20230106232252628"></p>
 <p>在这里将会运行常量传播并作合并处理</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp .\soot-4.4.0-20220321.130129-1-jar-with-dependencies.jar soot.Main -pp -f J -O -cp . ShimpleExample</span><br></pre></td></tr></table></figure>
-
 <p>基于Jimple处理的结果如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">public int test() &#123;</span><br><span class="line">	ShimpleExample r0;</span><br><span class="line">	int i0;</span><br><span class="line">	boolean $z0;</span><br><span class="line"></span><br><span class="line">	r0 := @this: ShimpleExample;</span><br><span class="line">	i0 = 100;</span><br><span class="line"></span><br><span class="line">label0:</span><br><span class="line">	$z0 = r0.&lt;ShimpleExample: boolean as_long_as_it_takes&gt;;</span><br><span class="line">	if $z0 == 0 goto label2;</span><br><span class="line"></span><br><span class="line">	if i0 &gt;= 200 goto label1;</span><br><span class="line"></span><br><span class="line">	i0 = 100;</span><br><span class="line">	goto label0;</span><br><span class="line"></span><br><span class="line">label1:</span><br><span class="line">	i0 = 200;</span><br><span class="line">	goto label0;</span><br><span class="line"></span><br><span class="line">	label2:</span><br><span class="line">		return i0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>这与我们之前看到的输出完全相同，即运行未经优化的Soot时的输出！基于Jimple表示，优化不能推导出x是常数</p>
 <p>利用Shimple进行分析</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp .\soot-4.4.0-20220321.130129-1-jar-with-dependencies.jar soot.Main -pp -f J -O -via-shimple -cp . ShimpleExample</span><br></pre></td></tr></table></figure>
-
 <p>基于Shimple的结果如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">public int test() &#123;</span><br><span class="line">	ShimpleExample r0;</span><br><span class="line">	boolean $z0;</span><br><span class="line"></span><br><span class="line">	r0 := @this: ShimpleExample;</span><br><span class="line"></span><br><span class="line">label0:</span><br><span class="line">	$z0 = r0.&lt;ShimpleExample: boolean as_long_as_it_takes&gt;;</span><br><span class="line">	if $z0 == 0 goto label1;</span><br><span class="line"></span><br><span class="line">	goto label0;</span><br><span class="line"></span><br><span class="line">label1:</span><br><span class="line">	return 100;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230106233548096.png" alt="image-20230106233548096"></p>
 <p>这与预期一致。因为成员变量<code>as_long_as_it_takes</code>非静态的，因此还是得保留while循环，但是优化器推断出了x是个常量，因此phi-node在三个相同的值之间作了选择并且优化掉了。</p>
 <p><strong>结论：Shimple显式地暴露了控制结构，并且变量只有静态的单个赋值</strong></p>
-<p>Shimple中间表示可在依赖 <code>soot.shimple / soot.shimple.internal</code>，并且<code>soot.shimple. toolkits.scalar</code>可以获得<code>constant-folder</code>（常量合并这个功能？）</p>
+<p>Shimple中间表示可在依赖 <code>soot.shimple / soot.shimple.internal</code>，并且<code>soot.shimple.
+toolkits.scalar</code>可以获得<code>constant-folder</code>（常量合并这个功能？）</p>
 <h4 id="3-4-Grimp"><a href="#3-4-Grimp" class="headerlink" title="3.4 Grimp"></a>3.4 Grimp</h4><p>Grimp类似于Jimple，但允许表达式树与<code>New</code>操作符一起使用。在这方面，Grimp比Jimple更接近于Java源代码，因此更容易阅读，因此是人类读者检查反汇编代码的最佳中间表示</p>
 <p>下面用指令运行一下Foo类的例子生成Grimp中间表示</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp .\soot-4.4.0-20220321.130129-1-jar-with-dependencies.jar soot.Main -pp -f G -cp . Fooxxxxxxxxxx c java -cp .\soot-4.4.0-20220321.130129-1-jar-with-dependencies.jar soot.Main -pp -f G -cp . Foo</span><br></pre></td></tr></table></figure>
-
 <p>结果如下：</p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230106234602432.png" alt="image-20230106234602432"></p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230106234616066.png" alt="image-20230106234616066"></p>
@@ -316,11 +376,9 @@
 <p>Soot可以作为一个独立的工具用于许多不同的目的，例如对代码做一些内置分析或转化。本节将介绍如何将Soot用作独立工具、如何根据其用途对选项进行分组，并详细介绍一些最常用的选项</p>
 <p>如果类路径中包含Soot，则可以按如下所示从命令行调用Soot</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java [javaOptions] soot.Main [sootOptions] classname</span><br></pre></td></tr></table></figure>
-
 <p>其中[sootOptions]表示Soot接受的各种选项，classname表示待分析的类</p>
 <p>获取Soot支持的选项列表：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java soot.Main -h</span><br><span class="line">java -jar  .\soot-4.4.0-20220321.130129-1-jar-with-dependencies.jar --help</span><br></pre></td></tr></table></figure>
-
 <p><strong>类划分：</strong>在Soot中，我们区分三种类：参数类、应用程序类和库类</p>
 <p>参数类是指定给Soot的类。使用命令行工具时，这些类是显式列出的类（直接给出的），也可以是在<code>-process-dir</code>选项指定的目录下的类</p>
 <p>应用程序类是要由Soot分析或转换并转换为输出的类</p>
@@ -329,36 +387,32 @@
 <p>在应用程序模式下，参数类引用的所有类除了JRK中的一些类之外本身也都是应用程序类。在非应用程序模式下，这些类将是库类</p>
 <p>Soot提供了更多选项来偏向哪些类是应用程序模式下的应用程序类</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">-i PKG -include PKG 		包中名称以PKG开始的类将被视为应用程序类</span><br><span class="line">-x PKG, -exclude PKG 		包中名称以PKG开始的那些类将被视为库类</span><br><span class="line">-include-all 			参数类引用的所有类都将被视为应用程序类</span><br><span class="line"></span><br><span class="line">Soot提供几个选项来控制输入处理</span><br><span class="line">Input options </span><br><span class="line">-cp PATH, -soot-class-path PATH 	将PATH设置为搜索类的类路径</span><br><span class="line">-process-dir DIR 	将DIR下的所有类设置为参数类</span><br><span class="line">-src-prec FORMAT  设置要使用的源文件的优先级，格式如：c（或class）表示类文件（默认值）; J（或jimple）					 表示Jimple文件; java则表示java文件</span><br><span class="line"></span><br><span class="line">Output options </span><br><span class="line">-f J -f jimple      指定输出格式 （应用程序类默认输出格式为class文件）</span><br><span class="line">-d DIR, -output-dir DIR 	指定用于存储输出文件的文件夹DIR（默认为sootOutput）</span><br><span class="line">-outjar, -output-jar		将所有输出保存在JAR文件中，而不是目录中</span><br></pre></td></tr></table></figure>
-
-<h5 id="4-1-Soot-phases"><a href="#4-1-Soot-phases" class="headerlink" title="4.1 Soot phases"></a>4.1 Soot phases</h5><p>Soot的执行分为几个阶段，称为packs。第一步是生成Jimple代码，然后分配到不同包中，这是通过解析类、jimple或java文件，然后将其结果传递给<code>jimpleBody（jb）</code>包来完成的。</p>
-<p>包的命名格式很简单，第一个字母表示包接受哪个IR表示，比如s代表Shimple，j代表Jimple，b代表Baf，以及g代表Grimp。第二个字母指定包的职责，<strong>B用于主体创建，t用于用户定义的转换，o用于优化，a用于属性生成（注释）</strong>，包名结尾的p代表“包”。</p>
+<h5 id="4-1-Soot-phases"><a href="#4-1-Soot-phases" class="headerlink" title="4.1 Soot phases"></a>4.1 Soot phases</h5><p>Soot的执行分为几个阶段，称为 <strong>packs</strong>。第一步是生成Jimple代码，然后分配到不同包中，这是通过解析类、jimple或java文件，然后将其结果传递给 <code>jimpleBody（jb）</code>包来完成的。</p>
+<p>包的命名格式很简单，第一个字母表示包接受哪个IR表示，比如s代表Shimple，j代表Jimple，b代表Baf，以及g代表Grimp。第二个字母指定包的职责，<strong>B用于方法体创建，t用于用户定义的转换，o用于优化，a用于属性生成（注释）</strong>，包名结尾的p代表“包” 。</p>
 <p>允许用户定义转换的包如jtp（Jimple转换包）和stp（Shimple转环包）比较特殊。任何用户定义的转换（例如，来自分析的标记信息）都可以注入到这些包中，然后它们将包含在Soot的执行中</p>
 <p>包的执行流图如下所示：（程序内分析）</p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230107004202308.png" alt="image-20230107004202308"></p>
 <p>每个应用程序类都通过此执行流中的路径进行处理，但它们无权访问处理其他应用程序类时生成的任何信息</p>
-<p><strong>程序间分析：</strong>对于过程间分析，执行流稍有不同。我们需要通过指定选项<code>-w</code>将Soot设置为<code>Whole-program</code>模式。在此模式下，Soot在执行周期中将包含三个其他程序包：cg（调用图生成）、wjtp（完整Jimple转换包）和wjap（完成Jimple注释包）。此外，为了添加整个程序优化（例如静态内联）功能，我们指定选项<code>-W</code>进一步向包中添加wjop（完整Jimple优化包)。这些包与程序内分析使用的包之间的区别在于，这些包中生成的信息可通过<code>Scene</code>供Soot的其余部分使用</p>
+<p>注意这里的 t 类似插件的作用，可以在其中执行自定义的转换</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">PackManager.v().getPack(<span class="string">&quot;jtp&quot;</span>).add(<span class="keyword">new</span> <span class="title class_">Transform</span>(<span class="string">&quot;jtp.myTransform&quot;</span>, <span class="keyword">new</span> <span class="title class_">BodyTransformer</span>()&#123;</span><br><span class="line"> </span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">internalTransform</span><span class="params">(Body b, String phaseName,</span></span><br><span class="line"><span class="params">			Map options)</span> &#123;</span><br><span class="line">			<span class="comment">// TODO Auto-generated method stub</span></span><br><span class="line">			...</span><br><span class="line">			</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>程序间分析：</strong>对于过程间分析，执行流稍有不同。我们需要通过指定选项 <code>-w</code> 将Soot设置为<code>Whole-program</code>模式。在此模式下，Soot在执行周期中将包含三个其他程序包：cg（调用图生成）、wjtp（完整Jimple转换包）和wjap（完成Jimple注释包）。此外，为了添加整个程序优化（例如静态内联）功能，我们指定选项 <code>-W</code> 进一步向包中添加 wjop（完整Jimple优化包)。这些包与程序内分析使用的包之间的区别在于，这些包中生成的信息可通过<code>Scene</code> 供Soot的其余部分使用</p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230107005146700.png" alt="image-20230107005146700"></p>
 <p><strong>Phase options:</strong></p>
 <p>要生成Soot中所有可用包的列表，请执行以下命令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java soot.Main -pl</span><br></pre></td></tr></table></figure>
-
 <p>此信息可用于获取有关不同包及其包含的操作（例如，内置分析）可用选项</p>
 <p>要列出包的帮助信息和可用选项，可用</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java soot.Main -ph PACK</span><br></pre></td></tr></table></figure>
-
 <p>要为包设置选项，需要指定<code>-p</code>选项，后接包名和<code>OPT:VAL</code>形式的键值对。OPT是想设置的选项，VAL是对应的值。</p>
 <h5 id="4-2-Off-The-Shelf-Analysis"><a href="#4-2-Off-The-Shelf-Analysis" class="headerlink" title="4.2 Off-The-Shelf Analysis"></a>4.2 Off-The-Shelf Analysis</h5><p>Soot包括几个示例分析来演示其功能</p>
 <p><strong>Null Pointer Analysis</strong>：内置的空指针分析位于jap包中，并进一步分为两个单独的实体：空指针检查器和空指针着色器。前者查找有可能抛出NullPointerException的指令，而后者使用该信息为Eclipse插件添加标记信息，要运行空指针着色器以在程序中生成空值的可视化效果，可以：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java soot.Main -xml-attributes -f J -p jap.npcolorer on MyClass</span><br></pre></td></tr></table></figure>
-
 <p>这将产生一个Jimple文件，当在Eclipse中查看此文件时，引用类型将根据其是否为null进行颜色编码（绿色表示肯定不为空，蓝色表示未知，红色表示肯定为空）</p>
 <p><strong>Array Bounds Analysis</strong>：内置分析的另一个很好的例子是数组边界检查器，分析器会去检查数组是否越界。这种分析可以使编译器通过不在字节码中插入显式数组边界检查来达到优化效果。此分析也位于jap.abc下的jap包中。运行它以生成可视化效果的最简单方法是</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">java soot.Main -xml-attributes -f J -p jap.abc on -p jap.abc</span><br><span class="line">add-color-tags:true MyClass</span><br></pre></td></tr></table></figure>
-
 <p>分析结果说明了对于上界和下界，是否存在不安全的访问</p>
 <p><strong>Liveness Analysis</strong>：内置的活动性分析会对语句中确定存在的变量进行着色。它只有一个选项，即是否启用</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java soot.Main -xml-attributes -f J -p jap.lvtagger on MyClass</span><br></pre></td></tr></table></figure>
-
 <p>结果指出了语句中的所有活跃变量</p>
 <h5 id="4-3-Extending-Soot’s-Main-class"><a href="#4-3-Extending-Soot’s-Main-class" class="headerlink" title="4.3 Extending Soot’s Main class"></a>4.3 Extending Soot’s Main class</h5><p>设计和实现一个分析后，我们还希望能够从Soot中配合其他特征（比如内置分析）来使用。为此，我们需要扩展Soot的Main类以包含我们自己的分析。请注意，这不是Java意义上的扩展，而是一个中间步骤的注入，在这个步骤中，我们的分析被放入Soot。换句话说，我们希望Soot运行我们的分析，并且仍然处理我们传递给它的所有其他选项。</p>
 <p>如何完成取决于注入的分析是否为程序间分析或程序内分析。前者需要注入到<code>wjtp</code>阶段，而后者进入<code>jtp</code>阶段。下面的代码示例演示如何将类<code>MyAnalysisTagger</code>（执行某些过程内分析）的实例注入到Soot中。</p>
@@ -371,10 +425,9 @@
 <li>确定入口节点（如果是反向流，则为出口节点）和内部节点的初始状态或近似值，通常是空集empty或全集top，取决于分析的保守程度</li>
 </ol>
 <p>执行数据流分析时，我们需要某种结构来表示数据如何在程序中流动，例如控制流图（cfg）。Soot数据流框架旨在处理任何形式的cfg实现接口<code>soot.toolkits.graph.DirectedGraph</code></p>
-<h5 id="5-1-Step-1-Nature-of-the-analysis"><a href="#5-1-Step-1-Nature-of-the-analysis" class="headerlink" title="5.1 Step 1: Nature of the analysis"></a>5.1 Step 1: Nature of the analysis</h5><p>Soot提供了三种不同的分析实现：<code>ForwardFlowAnalysis, BackwardFlowAnalysis</code> 和<code> ForwardBranchedFlowAnalysis</code>。前两个图除了流向不同外都是相同的，其结果是两个maps：节点到IN集合以及节点到OUT集合。最后一个分析实现提供通过分支节点的每个分支传播不同信息的能力，比如：从包含语句<code>if(x&gt;0)</code>的结点流出的信息，可以是<code>x&gt;0</code>到一个分支或者$x\leq 0$到另一个分支。因此，该分析的结果是三个maps：节点到IN集合、节点到满足fallthrough 的OUT集合以及节点到分支OUT集合。所有这些的实现基于了不动点原理的worklist算法。如果您想以其他方式实现它，可以扩展其中一个抽象超类：<code>AbstractFlowAnalysis (the top one), FlowAnalysis </code>或<code>BranchedFlowAnalysis</code>，否则，将特定分析插入框架的方法是<strong>扩展前三个类中的一个</strong></p>
+<h5 id="5-1-Step-1-Nature-of-the-analysis"><a href="#5-1-Step-1-Nature-of-the-analysis" class="headerlink" title="5.1 Step 1: Nature of the analysis"></a>5.1 Step 1: Nature of the analysis</h5><p>Soot提供了三种不同的分析实现：<code>ForwardFlowAnalysis, BackwardFlowAnalysis</code> 和<code>ForwardBranchedFlowAnalysis</code>。前两个图除了流向不同外都是相同的，其结果是两个maps：节点到IN集合以及节点到OUT集合。最后一个分析实现提供通过分支节点的每个分支传播不同信息的能力，比如：从包含语句<code>if(x&gt;0)</code>的结点流出的信息，可以是<code>x&gt;0</code>到一个分支或者$x\leq 0$到另一个分支。因此，该分析的结果是三个maps：节点到IN集合、节点到满足fallthrough 的OUT集合以及节点到分支OUT集合。所有这些的实现基于了不动点原理的worklist算法。如果您想以其他方式实现它，可以扩展其中一个抽象超类：<code>AbstractFlowAnalysis (the top one), FlowAnalysis</code>或<code>BranchedFlowAnalysis</code>，否则，将特定分析插入框架的方法是<strong>扩展前三个类中的一个</strong></p>
 <p>对于上述非常复杂的表达式的例子，我们需要使用反向分析，因此我们的类签名将是：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">class VeryBusyExpressionAnalysis extends BackwardFlowAnalysis</span><br></pre></td></tr></table></figure>
-
 <p>现在，为了利用框架的功能，我们需要提供一个构造函数。在这个构造函数中，我们需要做两件事：</p>
 <ol>
 <li>调用父类构造函数</li>
@@ -412,36 +465,42 @@
 <p><strong>ToppedSet</strong>：包装另一个流集合（有界或无界），添加关于它是否是格的top集合的信息</p>
 <p>在我们活跃表达式示例中，我们需要包含表达式的流集合，因此我们希望比较它们的等价性。a + B的两次不同出现将是实现<code>BinopExpr</code>接口的某个类的不同实例化，因此它们永远不会相等。为了解决这个问题，我们使用<code>ArraySparseSet</code>的修改版本，其中我们更改了<code>contains</code>方法的实现：</p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230109125110938.png" alt="image-20230109125110938"></p>
-<h5 id="5-7-Control-flow-graphs"><a href="#5-7-Control-flow-graphs" class="headerlink" title="5.7 Control flow graphs"></a>5.7 Control flow graphs</h5><p>Soot在<code>soot.toolkits.graph</code>包中提供了几种不同的控制流图（CFG）。这些图的基础是接口<code>DirectedGraph</code>。它定义了用于获取以下内容的方法：图的入口点和出口点、给定节点的后继节点和前驱节点、以某种未定义的顺序迭代图的迭代器以及图的大小（节点数）</p>
+<h5 id="5-7-Control-flow-graphs"><a href="#5-7-Control-flow-graphs" class="headerlink" title="5.7 Control flow graphs"></a>5.7 Control flow graphs</h5><p>Soot在<code>soot.toolkits.graph</code>包中提供了几种不同的控制流图（CFG）。这些图的基础是接口 <code>DirectedGraph</code>。它定义了用于获取以下内容的方法：图的入口点和出口点、给定节点的后继节点和前驱节点、以某种未定义的顺序迭代图的迭代器以及图的大小（节点数）</p>
+<p>这里给出 API</p>
+<p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230220233617787.png" alt="image-20230220233617787"></p>
 <p>我们将在这里描述的实现是表示CFG的实现，其中节点是Soot单元。此外，我们将只描述表示过程内分析流</p>
-<p>这类图的基类是<code>UnitGraph</code>，它是提供构建CFG工具的抽象类。它有三种不同的实现方式：<code>BriefUnitGraph</code>, <code>ExceptionalUnitGraph</code> 和 <code>TrapUnitGraph</code>.</p>
+<p>这类图的基类是 <code>UnitGraph</code>，它是提供构建CFG工具的抽象类。它有三种不同的实现方式：<code>BriefUnitGraph</code>, <code>ExceptionalUnitGraph</code> 和 <code>TrapUnitGraph</code>.</p>
 <p><strong>BriefUnitGraph</strong> 是非常简单的，因为它没有表示由于抛出异常而产生的控制流的边</p>
-<p><strong>ExceptionalUnitGraph</strong> 包含从throw子句到其处理程序（catch块，在Soot中称为Trap）的边，前提是trap是方法体中的局部变量。此外，此图还考虑了虚拟机可能隐式抛出的异常（例如<code>ArrayIndexOutOfBoundsException</code>）. 对于每个可能抛出隐式异常的单元，从每个单元的<strong>前导到相应陷阱处理程序的第一个单元</strong>之间都有一条边。此外，如果异常单元包含副作用，则还将从异常单元向陷阱处理程序添加边（这里指的异常单元中出现异常的情况吧）。如果它没有副作用，则可以利用传递给图构造器之一的参数来选择性地添加或不添加该边，这是执行控制流分析时通常使用的CFG。</p>
-<p><strong>TrapUnitGraph</strong> 类似<code>ExceptionalUnitGraph</code>，也需要考虑抛出的异常。这里有三个主要区别：</p>
+<p><strong>ExceptionalUnitGraph</strong> 包含从throw子句到其处理程序（catch块，在Soot中称为Trap）的边，前提是 trap 是方法体中的局部变量。此外，此图还考虑了j计算语句可能隐式抛出的异常（例如<code>ArrayIndexOutOfBoundsException</code>）. 对于每个可能抛出隐式异常的单元，从每个单元的<strong>前导到相应陷阱处理程序的第一个单元</strong>之间都有一条边。此外，如果异常单元包含副作用，则还将从异常单元向陷阱处理程序添加边（这里指的异常单元中出现异常的情况吧）。如果它没有副作用，则可以利用传递给图构造器之一的参数来选择性地添加或不添加该边，这是执行控制流分析时通常使用的CFG。</p>
+<p><strong>TrapUnitGraph</strong> 类似 <code>ExceptionalUnitGraph</code>，也需要考虑抛出的异常。这里有三个主要区别：</p>
 <ol>
-<li>从每个trap单元添加边（即，在try块内）到陷阱处理程序</li>
+<li>从每个 trap 单元添加边（即，在try块内）到陷阱处理程序</li>
 <li>不存在可能向陷阱处理程序抛出隐式异常的单元的<strong>前趋项</strong>的边（除非它们也被陷阱捕获）</li>
 <li>单元中总是有<strong>可能会向陷阱处理程序抛出隐式异常</strong>的一条边</li>
 </ol>
 <p>要为给定的方法体构建CFG，只需将方法体传递给CFG构造函数之一</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">UnitGraph</span> <span class="variable">g</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ExceptionalUnitGraph</span>(body);</span><br></pre></td></tr></table></figure>
-
-<h5 id="5-8-Wrapping-the-results-of-the-analysis"><a href="#5-8-Wrapping-the-results-of-the-analysis" class="headerlink" title="5.8 Wrapping the results of the analysis"></a>5.8 Wrapping the results of the analysis</h5><p>特定分析的结果可通过 <code>AbstractFlowAnalysis#getFlowBefore</code>方法，<code>FlowAnalysis#getFlowAfter</code>方法，<code>BranchedFlowAnalysis#getBranchFlowAfter</code>和<code>getFallFlowAfter</code>方法。这些方法都只是返回表示lattice元素的对象. 为了更加稳固，通过给分析提供一个接口，屏蔽掉结果？而返回一个以lattice作为元素的不可修改的列表。</p>
+<h5 id="5-8-Wrapping-the-results-of-the-analysis"><a href="#5-8-Wrapping-the-results-of-the-analysis" class="headerlink" title="5.8 Wrapping the results of the analysis"></a>5.8 Wrapping the results of the analysis</h5><p>特定分析的结果可通过 <code>AbstractFlowAnalysis#getFlowBefore</code> 方法，<code>FlowAnalysis#getFlowAfter</code>方法，<code>BranchedFlowAnalysis#getBranchFlowAfter</code>和<code>getFallFlowAfter</code>方法。这些方法都只是返回表示lattice元素的对象. 为了更加稳固，通过给分析提供一个接口，屏蔽掉结果？而返回一个以lattice作为元素的不可修改的列表。</p>
 <p>对于活跃表达式分析示例，我们选择遵循内置Soot分析中使用的约定—提供通用接口及其一种可能的实现。接口非常简单，只是提供相关数据的访问器</p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230109153957662.png" alt="image-20230109153957662"></p>
 <p>这个接口的实现（我们将其命名为SimpleVeryBusyExpressions）执行实际的分析，并将数据收集到它自己的maps中，内含单元映射到不可修改的表达式列表</p>
 <p>下面实例如何手动运行活跃表达式分析：</p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230109154201035.png" alt="image-20230109154201035"></p>
 <h5 id="6-Annotating-code"><a href="#6-Annotating-code" class="headerlink" title="6 Annotating code"></a>6 Annotating code</h5><p>Soot中的注释框架最初设计用于支持使用Java类文件属性优化Java程序，其思想是将信息标记到代码的相关位上，然后虚拟机可以使用这些标记来执行某些优化，比如排除不必要的数组边界检查。这个框架(位于<code>soot.tagkit</code>)由四个主要的概念：<code>Hosts</code>, <code>Tags</code>, <code>Attributes</code> 和 <code>TagAggregators</code></p>
-<p><strong>Hosts</strong> 是可以保存和管理标记的任何对象，在 Soot中 <code>SootClass,SootField, SootMethod, Body, Unit, Value </code> 和 <code> ValueBox</code>均实现了这个接口</p>
+<p><strong>Hosts</strong> 是可以保存和管理标记的任何对象，在 Soot中 <code>SootClass,SootField, SootMethod, Body, Unit, Value</code> 和 <code>ValueBox</code>均实现了这个接口</p>
 <p><strong>Tags</strong> 是可以标记到hosts的任何对象，这是将名称-值对连接到hosts的一种非常通用的机制</p>
 <p><strong>Attributes</strong> 是标记概念的扩展。任何属性都可以输出到类文件中，特别是任何对类、字段、方法或主体的标记都应该实现此接口。属性应该映射到类文件属性中，并且因为Soot使用一个名为<code>Jasmin</code>的工具来输出字节码，所以任何应该输出到类文件的内容都必须继承<code>JasminAttribute</code>,Soot中的一个此类实现是<code>CodeAttribute</code></p>
 <p><strong>TagAggregators</strong> 是<code>BodyTransformers</code>（参见第6.1节），它收集某种类型的标记，并生成一个新的属性以输出到类文件。聚合器必须决定在哪里标记相关信息—例如，一个单元可能被转换成几个字节码指令，因此聚合器必须决定该单元上的注释应该引用哪一个。Soot为其内置标记提供了几个聚合器—比如<code>FirstTagAggregator</code>将标记与用其标记的第一条指令相关联. 一般来说，如果我们只使用内置标签，就不需要关注聚合器</p>
 <h5 id="6-1-Transformers"><a href="#6-1-Transformers" class="headerlink" title="6.1 Transformers"></a>6.1 Transformers</h5><p>Transformers实际上并不是标记框架的一部分，但用于注释代码。一般来说，Transformers是将某个代码块转换为另一个代码块的对象。在Soot中有两种不同的Transformers：<code>BodyTransformers</code> 和 <code>SceneTransformer</code> 。它们被分别设计为在单个方法体上（即过程内）和整个应用（即过程间）作transformations。要实现一个transformer，需要继承其中一个上述的Transformers并提供<code>internalTransform</code>方法的实现</p>
+<p>一个示例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">PackManager.v().getPack(<span class="string">&quot;jtp&quot;</span>).add(<span class="keyword">new</span> <span class="title class_">Transform</span>(<span class="string">&quot;jtp.myAnalysis&quot;</span>, <span class="keyword">new</span> <span class="title class_">MyAnalysis</span>()));</span><br><span class="line">PackManager.v().runPacks();</span><br><span class="line">System.out.println(Scene.v().getCallGraph().size());</span><br><span class="line">PackManager.v().writeOutput();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//MyAnalysis.java文件</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MyAnalysis</span> <span class="keyword">extends</span> <span class="title class_">BodyTransformer</span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">internalTransform</span><span class="params">(<span class="keyword">final</span> Body body,String phase, <span class="meta">@SuppressWarnings(&quot;rawtypes&quot;)</span>Map options)</span>&#123;      </span><br><span class="line">      <span class="keyword">for</span> (SootClass c:Scene.v().getApplicationClasses()) &#123;</span><br><span class="line">          System.out.println(<span class="string">&quot;[sootClass]&quot;</span>+c);</span><br><span class="line">        <span class="keyword">for</span>(SootMethod m:c.getMethods())</span><br><span class="line">        &#123;</span><br><span class="line">              System.out.println(<span class="string">&quot;[sootMethod]&quot;</span>+m);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span>(m.isConcrete())</span><br><span class="line">            &#123;</span><br><span class="line">                Body b=m.retrieveActiveBody();</span><br><span class="line">                  System.out.println(<span class="string">&quot;[body]&quot;</span>+b);</span><br><span class="line"></span><br><span class="line">                Iterator&lt;Unit&gt; i=b.getUnits().snapshotIterator();</span><br><span class="line">                <span class="keyword">while</span>(i.hasNext())</span><br><span class="line">                &#123;</span><br><span class="line">                    Unit u=i.next();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h5 id="6-2-Annotating-very-busy-expressions"><a href="#6-2-Annotating-very-busy-expressions" class="headerlink" title="6.2 Annotating very-busy expressions"></a>6.2 Annotating very-busy expressions</h5><p>让我们看看如何使用这种标记机制将运行活跃表达式分析的结果可视化地传达给用户。由于我们的示例是过程内分析，为了使用结果标记代码，我们继承BodyTransformer并实现了它的internalTransform方法。我们要做的就是为每个流出活跃表达式的单元作<code>StringTags</code>标记。此外，我们还希望对持续保持活跃的表达式作<code>ColorTag</code>标记。有了这些信息，用户可以很容易地看到活跃表达式通过他的方法，并快速识别到哪里可以优化。此过程的伪代码如下所示（有关完整详细信息，请参阅示例源代码）：</p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230109161736171.png" alt="image-20230109161736171"></p>
 <p>为了将分析插入到Soot中，我们重写Soot的<code>Main</code>类，将我们的标签插入到Jimple转换包中（如第4节所述）。</p>
-<h5 id="7-Call-Graph-Construction"><a href="#7-Call-Graph-Construction" class="headerlink" title="7 Call Graph Construction"></a>7 Call Graph Construction</h5><p>在执行过程间分析时，应用程序的调用图是一个基本实体. 调用图可用时(仅在whole-program 模式)，它可以通过环境类（<code>Scene</code>）使用<code>getCallGraph</code>方法进行访问。CallGraph类和其他相关的构造类位于<code>soot.jimple.toolkits.callgraph</code>包中。最简单的调用图是通过<strong>类层次分析（CHA）</strong>获得的，不需要进行设置。CHA很简单，因为它假设所有引用变量都可以指向正确类型的对象。以下是使用CHA获取调用图的示例：</p>
+<h5 id="7-Call-Graph-Construction"><a href="#7-Call-Graph-Construction" class="headerlink" title="7 Call Graph Construction"></a>7 Call Graph Construction</h5><p><strong>CallGraph构建</strong></p>
+<p><strong>前提：开启全局模式</strong></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Options.v().set_whole_program(<span class="literal">true</span>);</span><br><span class="line">PackManager.v().runPacks();</span><br></pre></td></tr></table></figure>
+<p>在执行过程间分析时，应用程序的调用图是一个基本实体. 调用图可用时(仅在whole-program 模式)，它可以通过环境类（<code>Scene</code>）使用<code>getCallGraph</code>方法进行访问。CallGraph类和其他相关的构造类位于<code>soot.jimple.toolkits.callgraph</code>包中。最简单的调用图是通过 <strong>类层次分析（CHA）</strong>获得的，不需要进行设置。CHA很简单，因为它假设所有引用变量都可以指向正确类型的对象。以下是使用CHA获取调用图的示例：</p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230111232854697.png" alt="image-20230111232854697"></p>
 <h5 id="7-1-Call-Graph-Representation"><a href="#7-1-Call-Graph-Representation" class="headerlink" title="7.1 Call Graph Representation"></a>7.1 Call Graph Representation</h5><p>Soot中的调用图是表示所有<strong>已知方法调用边</strong>的集合，这里包括：</p>
 <ul>
@@ -514,7 +573,6 @@
 <h5 id="Using-Paddle"><a href="#Using-Paddle" class="headerlink" title="Using Paddle"></a>Using Paddle</h5><p>Paddle是一个用于上下文敏感指针分析的模块化框架，它允许对分析的各个组件进行基准测试，比如以上下文敏感的变化进行基准测试，使其成为一个非常有趣的工具。Paddle也是一种早期α-release，因此请注意Paddle的稳健性较差。</p>
 <p>Paddle配备了大量选项，可根据您的特定需求配置分析。使用Soot命令行工具可以获得选项的完整说明，</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java soot.Main -phase-help cg.paddle</span><br></pre></td></tr></table></figure>
-
 <p>Paddle选项的指定类似于SPARK中使用选项名称和值的map，选项<code>verbose</code>、<code>set-impl</code>、<code>double-set-new</code>和<code>double-set-old</code>与SPARK中的相同。<code>q</code>选项确定队列的实现方式，并且<code>enabled</code>必须为<code>true</code>才能运行分析。<code>propagator</code>控制在将指针集进行传播时使用哪种传播算法，我们将其留给Paddle来选择并设置为<code>auto</code>。<code>conf</code>控制是即时还是提前创建调用图。Paddle的实现是基于子集的，但可通过将<code>simple-edges-bidirectional</code>选项设置为<code>true</code>来模拟基于等效的分析。最后四个选项是最重要的，所以我们描述一些细节：</p>
 <ul>
 <li><strong>bdd</strong>：控制BDD是否启用</li>
@@ -525,11 +583,10 @@
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230116225115072.png" alt="image-20230116225115072"></p>
 <p>k-CFA上下文敏感分析基于作为上下文的调用点串，并且k描述的是调用串的最大长度。正常情况下调用点敏感分析运行良好，但如果添加了额外的间接层，例如同样的函数在<code>setItem()</code>方法中调用了，则仅依赖于调用点的上下文敏感分析将会合并对setItem方法的两个调用的 points-to-sets 集合，因为他们对同样的函数调用点一样。例如如下这种情况：</p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230116224816633.png" alt="image-20230116224816633"></p>
-<p>通过使用一串调用点，我们能够区分对相同函数的两个调用，从而使 points-to-sets 集保持分离。程序中的调用链长度可以是任意大的，因此我们需要将长度固定为k –因此使用了 k-cfa</p>
+<p>通过使用一串调用点，我们能够区分对相同函数的两个调用，从而使 points-to-sets 集保持分离。程序中的调用链长度可以是任意大的，因此我们需要将长度固定为k —因此使用了 k-cfa</p>
 <p>下面测试一下利用 Paddle 的上下文敏感分析是否能推断出作为第4行声明的Container变量创建的item字段不与任何其他item字段共享 points-to 集。当设置选项为 1-cfa 时，Container.item变量的信息也与SPARK示例相同，这不是我们所期望的。</p>
 <p>出现此意外行为的原因是以下行：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">private Item item = new Item();</span><br></pre></td></tr></table></figure>
-
 <p>这条语句位于 Container 类中，Paddle默认不使用上下文敏感的堆抽象，因此每个容器对象的item字段都使用相同的堆抽象表示的。如果我们将这行语句改成<code>private Item item;</code> 则容器的item字段不指向同一个抽象对象，并且在新的Container类上运行Paddle会产生预期的结果(如下所示)</p>
 <p><img src="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/image-20230116230810507.png" alt="image-20230116230810507"></p>
 <p>获得正确结果的另一种方法是启动上下文相关的堆抽象选项 <code>opt.put(&quot;context-heap&quot;,&quot;true&quot;);</code> 这使得 Paddle 能够区分分配给不同 Container 类的 Items 字段。</p>
@@ -585,16 +642,16 @@
     <div id="share-footer" style="display: none">
       <ul>
   <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&text=Soot文档学习"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&is_video=false&description=Soot文档学习"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Soot文档学习&body=Check out this article: https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&name=Soot文档学习&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&t=Soot文档学习"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&text=Soot文档学习（1）"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习（1）"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&is_video=false&description=Soot文档学习（1）"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Soot文档学习（1）&body=Check out this article: https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习（1）"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习（1）"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习（1）"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&title=Soot文档学习（1）"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&name=Soot文档学习（1）&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/&t=Soot文档学习（1）"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
 </ul>
 
     </div>

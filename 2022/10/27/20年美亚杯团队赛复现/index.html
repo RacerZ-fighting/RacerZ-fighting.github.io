@@ -171,7 +171,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -281,28 +283,23 @@
 </li>
 <li><p>卷组是何时创建的？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lvdisplay</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231248213.png" alt="image-20221021231248213"></p>
 </li>
 <li><p>卷组的名称是甚么？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lvm 的相关概念</span><br><span class="line">pv：physical volume，物理磁盘，比如一整块固态硬盘</span><br><span class="line">vg：volume group，即卷组，比如Windows里的新建卷</span><br><span class="line">lv：logical volume，逻辑磁盘，比如c盘、d盘</span><br></pre></td></tr></table></figure>
-
 <p>同上可知，<code>ubuntu-vg</code></p>
 </li>
 <li><p>物理卷的PV UUID是多少？</p>
 <p>与LVM同理，可利用</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pvdisplay</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231832198.png" alt="image-20221021231832198"></p>
 </li>
 <li><p>卷组的VG UUID是甚么？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vgdisplay</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231909874.png" alt="image-20221021231909874"></p>
 </li>
 <li><p>Zello服务器的Linux内核版本是甚么？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">uname -a</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021231944860.png" alt="image-20221021231944860"></p>
 </li>
 <li><p>Zello服务器的操作系统版本是甚么？</p>
@@ -310,13 +307,11 @@
 </li>
 <li><p>Zello服务器的主机名是甚么？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/hostname</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021232558694.png" alt="image-20221021232558694"></p>
 </li>
 <li><p>Zello服务器的计算器ID是甚么？ </p>
 <p>这里指的是计算机的ID，找半天计算器。。。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /etc/machine-id</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021232927566.png" alt="image-20221021232927566"></p>
 </li>
 <li><p>Zello服务器中使用的wordpress版本是甚么？</p>
@@ -325,18 +320,15 @@
 </li>
 <li><p>Zello服务器与之同步的主机名是甚么？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">/etc/hosts</span><br><span class="line">或者</span><br><span class="line">/etc/ntp.conf</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021234443398.png" alt="image-20221021234443398"></p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235033557.png" alt="image-20221021235033557"></p>
 </li>
 <li><p>Zello服务器的时区是甚么？ </p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235139146.png" alt="image-20221021235139146"></p>
 </li>
 <li><p>有多少个<strong>本地用户</strong>已登录到Zello服务器？</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/etc/passwd</span><br></pre></td></tr></table></figure>
-
 <p> 每行各个字段标识</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221021235329704.png" alt="image-20221021235329704"></p>
 <p><strong>普通用户有两个特征：一是UID介于500~65535之间；二是shell的起始位置为<code>/bin/bash</code></strong></p>
@@ -397,7 +389,7 @@
 </li>
 </ol>
 <p>所以是<code>risk.xhtml</code></p>
-<ol start="25">
+<ol>
 <li><p>这个登录次数最多的IP地址来自哪个国家或地区？ </p>
 <p>其实可以之间ip查询的，但是线索应该就是在题目材料中，翻一番</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023004410958.png" alt="image-20221023004410958"></p>
@@ -410,7 +402,7 @@
 </li>
 </ol>
 <p>这个感觉还是定位的不准确</p>
-<ol start="27">
+<ol>
 <li><p>除DDoS之外，还可能涉及其他攻击吗？</p>
 <p>虽然日志给的并不是很详细，但是一般都会爆破一下账号密码</p>
 </li>
@@ -418,7 +410,7 @@
 <p>这也看不出来啥数据传输格式或者data啥的，所以现在还推不出来</p>
 </li>
 </ol>
-<h4 id="Bob路由器"><a href="#Bob路由器" class="headerlink" title="Bob路由器"></a>Bob路由器</h4><ol start="29">
+<h4 id="Bob路由器"><a href="#Bob路由器" class="headerlink" title="Bob路由器"></a>Bob路由器</h4><ol>
 <li><p>Bob路由器的型号是甚么？</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023090316715.png" alt="image-20221023090316715"></p>
 </li>
@@ -443,7 +435,7 @@
 </ol>
 <p>我们针对上面的题在Bob的其他设备上找答案</p>
 <h4 id="Bob的笔记本"><a href="#Bob的笔记本" class="headerlink" title="Bob的笔记本"></a>Bob的笔记本</h4><p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023091802400.png" alt="image-20221023091802400"></p>
-<ol start="34">
+<ol>
 <li><p>Bob的笔记本计算机的哈希值（SHA-1）是甚么？ </p>
 <p><code>5DF01AC2194A74804DEB0F7332532D39711C5770</code></p>
 </li>
@@ -464,7 +456,6 @@
 <p>抓包并没抓到什么可疑流量</p>
 <p>只能暴力搜索关键词</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">grep xxx ./mytracker/ -nr</span><br><span class="line"># -r 当指定要查找的是目录而非文件时，必须使用这项参数，否则grep指令将回报信息并停止动作</span><br><span class="line"># -n 在显示符合样式的那一行之前，标示出该行的列数编号</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023101115712.png" alt="image-20221023101115712"></p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221023101232370.png" alt="image-20221023101232370"></p>
 <p>得到<code>https://rest.coinapi.io/v1/exchangerate</code></p>
@@ -482,7 +473,7 @@
 </ol>
 <h4 id="Bob的桌上计算机"><a href="#Bob的桌上计算机" class="headerlink" title="Bob的桌上计算机"></a>Bob的桌上计算机</h4><p>打开后显示需要输入BitLocker，用之前apk得到的</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024225334538.png" alt="image-20221024225334538"></p>
-<ol start="41">
+<ol>
 <li><p>Bob的桌上计算机的哈希值（SHA-256）是甚么？ </p>
 <p><code>86C740D5FB096A18CC419AF74D7A55389F28D7F8E1CE6FABD17371E66E1C2673</code></p>
 </li>
@@ -499,7 +490,7 @@
 </ol>
 <h4 id="Bob-iphone"><a href="#Bob-iphone" class="headerlink" title="Bob iphone"></a>Bob iphone</h4><p>仿真分析的时候遇到了备份密码，在配置文件里面可以找到</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024233438328.png" alt="image-20221024233438328"></p>
-<ol start="44">
+<ol>
 <li><p>在Bob iphone, 与Alice和Cole通讯记录的完整路径是甚么？</p>
 <p>在前面个人赛中，我们能回忆到他们三人的通讯工具是WhatsApp</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221024234428266.png" alt="image-20221024234428266"></p>
@@ -515,7 +506,6 @@
 <li><p>Bob iPhone的时区设置是甚么？</p>
 <p>取证软件里又没有，我们暴力搜索一波</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grep &quot;UTC&quot; ./ -nr</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000307654.png" alt="image-20221025000307654"></p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000411920.png" alt="image-20221025000411920"></p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025000611730.png" alt="image-20221025000611730"></p>
@@ -527,7 +517,7 @@
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025001138703.png" alt="image-20221025001138703"></p>
 <p>前缀不太好搞<code>Bob/mobile/Containers/Shared/AppGroup/group.net.whatsapp.WhatsApp.shared/Message/Media/85262547937-1600392878@g.us/c/5/c56255d0-a407-4341-afef-7bf5accc52f0.txt</code></p>
 </li>
-<li><p>在Bob iphone, 谁是“ <a href="mailto:&#56;&#x35;&#x32;&#54;&#x32;&#x35;&#52;&#x37;&#57;&#51;&#55;&#x2d;&#49;&#x36;&#x30;&#48;&#51;&#x39;&#x32;&#x38;&#x37;&#56;&#x40;&#x67;&#x2e;&#x75;&#x73;">&#56;&#x35;&#x32;&#54;&#x32;&#x35;&#52;&#x37;&#57;&#51;&#55;&#x2d;&#49;&#x36;&#x30;&#48;&#51;&#x39;&#x32;&#x38;&#x37;&#56;&#x40;&#x67;&#x2e;&#x75;&#x73;</a>”的聊天群组中的管理员？</p>
+<li><p>在Bob iphone, 谁是“ 85262547937-1600392878@g.us”的聊天群组中的管理员？</p>
 <p>![image-20221025002017294](20年美亚杯团队赛复现/image-20221025002017294.png</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002147544.png" alt="image-20221025002147544"></p>
 </li>
@@ -536,8 +526,8 @@
 <p>同时数据库里也有相关记录</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002421333.png" alt="image-20221025002421333"></p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002441441.png" alt="image-20221025002441441"></p>
-<ol start="50">
-<li><p>“ <a href="mailto:&#56;&#x35;&#50;&#x36;&#x32;&#53;&#52;&#x37;&#57;&#x33;&#55;&#45;&#x31;&#54;&#x30;&#x30;&#x33;&#x39;&#50;&#x38;&#x37;&#x38;&#64;&#103;&#x2e;&#x75;&#115;">&#56;&#x35;&#50;&#x36;&#x32;&#53;&#52;&#x37;&#57;&#x33;&#55;&#45;&#x31;&#54;&#x30;&#x30;&#x33;&#x39;&#50;&#x38;&#x37;&#x38;&#64;&#103;&#x2e;&#x75;&#115;</a>”聊天群组中有多少个附件？</p>
+<ol>
+<li><p>“ 85262547937-1600392878@g.us”聊天群组中有多少个附件？</p>
 <p>细心一些，这几个文件夹下共4个附件，没法只看聊天记录来分析</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025002910942.png" alt="image-20221025002910942"> </p>
 </li>
@@ -554,7 +544,7 @@
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025003434625.png" alt="image-20221025003434625"></p>
 </li>
 </ol>
-<h4 id="Bob的Samsung"><a href="#Bob的Samsung" class="headerlink" title="Bob的Samsung"></a>Bob的Samsung</h4><ol start="54">
+<h4 id="Bob的Samsung"><a href="#Bob的Samsung" class="headerlink" title="Bob的Samsung"></a>Bob的Samsung</h4><ol>
 <li><p>Bob的Samsung S2的Android ID是甚么？</p>
 <p>全局搜索</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090335197.png" alt="image-20221025090335197"></p>
@@ -573,7 +563,7 @@
 </li>
 <li><p>Bob的Samsung S2的wifi mac地址是甚么？</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090746405.png" alt="image-20221025090746405"></p>
-<ol start="60">
+<ol>
 <li><p>“ userdata（ExtX）/ Root / media /Download / APK Testing”中的有多少APK檔？</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025090907794.png" alt="image-20221025090907794"></p>
 <p>10个</p>
@@ -609,7 +599,7 @@
 <p>就是上面图里找到的<code>helloworld</code></p>
 </li>
 </ol>
-<h4 id="Bob的IMAC-计算机"><a href="#Bob的IMAC-计算机" class="headerlink" title="Bob的IMAC 计算机"></a>Bob的IMAC 计算机</h4><ol start="68">
+<h4 id="Bob的IMAC-计算机"><a href="#Bob的IMAC-计算机" class="headerlink" title="Bob的IMAC 计算机"></a>Bob的IMAC 计算机</h4><ol>
 <li><p>从Bob iMAC 桌面名为Wallet.dat 的档案中可以取得以下那一个比特币地址?(某些字符被刻意用*遮盖)</p>
 <p>md有个开机密码没绕过去，我超绕过去了，就是之前的开机密码<code>Aa654321</code></p>
 <p>真的费劲儿</p>
@@ -634,7 +624,7 @@
 </li>
 </ol>
 <h4 id="Cole桌上计算机"><a href="#Cole桌上计算机" class="headerlink" title="Cole桌上计算机"></a>Cole桌上计算机</h4><p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221025230458232.png" alt="image-20221025230458232"></p>
-<ol start="73">
+<ol>
 <li><p>Cole桌上计算机的哈希值（SHA-1）是甚么？</p>
 <p><code>0D00A8A853B9001A9FC7BF89D9FBBA790C065CE2</code></p>
 </li>
@@ -671,13 +661,13 @@
 </li>
 </ol>
 <p><code>Ransome Note of **OS.txt</code></p>
-<ol start="83">
+<ol>
 <li><p>在Cole桌上计算机上发现的DDoS勒索字条中，比特币钱包地址是甚么？</p>
 <p><code>1L6fKWpEYvUi8FeG6BnXqfh1joAgmJA1h1</code></p>
 </li>
 </ol>
 <h4 id="Cole的手提电脑"><a href="#Cole的手提电脑" class="headerlink" title="Cole的手提电脑"></a>Cole的手提电脑</h4><p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026105146424.png" alt="image-20221026105146424"></p>
-<ol start="83">
+<ol>
 <li><p>Cole笔记本计算机的哈希值（SHA-1）是甚么？</p>
 <p><code>9CD259C89F2C5E6A2E02CFF13DBD61E423B82EF5</code></p>
 </li>
@@ -695,7 +685,6 @@
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026110722620.png" alt="image-20221026110722620"></p>
 <p>先查系统摘要，硬件架构</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Meiya Cup 2020\Image\Cole\Ram dump from Cole\coleramdump.mem&quot; imageinfo</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026111314865.png" alt="image-20221026111314865"></p>
 <p><code>Win7SP1x64</code></p>
 </li>
@@ -728,16 +717,15 @@
 </li>
 </ol>
 <p>他删除了一些文件</p>
-<ol start="93">
+<ol>
 <li><p>FTK Imager.exe的PID是甚么? </p>
 <p>内存取证知识，查看运行时进程号</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Meiya Cup 2020\Image\Cole\Ram dump from Cole\coleramdump.mem&quot; --profile=Win7SP1x64 pslist | grep FTK Imager.exe</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026114258890.png" alt="image-20221026114258890"></p>
 </li>
 </ol>
 <p>2456</p>
-<ol start="94">
+<ol>
 <li><p>FTK Imager.exe的父应用程序是甚么？</p>
 <p>也就是PPID 660</p>
 <p>对应explorer.exe</p>
@@ -745,7 +733,6 @@
 <li><p>FTK Imager.exe使用甚么DLL？</p>
 <p><code>dlllist: 列出某一进程加载的所有dll文件</code></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Meiya Cup 2020\Image\Cole\Ram dump from Cole\coleramdump.mem&quot; --profile=Win7SP1x64 -p 2456 dlllist  | findstr sensapi.dll</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115033991.png" alt="image-20221026115033991"></p>
 </li>
 <li><p>MpCmdRun.exe的PID是甚么? </p>
@@ -754,7 +741,7 @@
 </li>
 </ol>
 <p>1288</p>
-<ol start="97">
+<ol>
 <li><p>以下哪个与MpCmdRun.exe相关的项目是正确？</p>
 <p> <img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115455408.png" alt="image-20221026115455408"></p>
 <p>可以看到由svchost.exe启动的，终止于<code>2020-09-18 01:20:57 UTC+0000</code></p>
@@ -762,12 +749,11 @@
 <li><p>上次启动后，笔记本计算机连接的外部IP是甚么？</p>
 <p><code>查看当前的网络连接情况可以使用</code>netscan<code>模块，该模块会列出所有实时的网络连接信息，包括使用的协议类型、源地址、目的地址、双方的端口号、连接状态(LISTENING、CLOSED等)</code></p>
  <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Meiya Cup 2020\Image\Cole\Ram dump from Cole\coleramdump.mem&quot; --profile=Win7SP1x64 netscan</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221026115821944.png" alt="image-20221026115821944"></p>
 </li>
 </ol>
 <p>可以看到未连接/未连接到任何外部IP</p>
-<ol start="99">
+<ol>
 <li><p>上次启动后，笔记本计算机连接的网络驱动器路径是甚么？ </p>
 <p><strong>未连接/未连接到任何外部IP</strong></p>
 </li>
@@ -786,7 +772,7 @@
 <p>TIN SHUI WAI</p>
 </li>
 </ol>
-<h4 id="Cole的Raspberry-Pi-4"><a href="#Cole的Raspberry-Pi-4" class="headerlink" title="Cole的Raspberry Pi 4"></a>Cole的Raspberry Pi 4</h4><ol start="104">
+<h4 id="Cole的Raspberry-Pi-4"><a href="#Cole的Raspberry-Pi-4" class="headerlink" title="Cole的Raspberry Pi 4"></a>Cole的Raspberry Pi 4</h4><ol>
 <li><p>Cole的PI的哈希值（SHA-256）是甚么？</p>
 <p><code>EABC9BECCFA67E825864EBAB7B503EEC293C6209CDC931016D2F1D081F7C0556</code></p>
 </li>
@@ -812,16 +798,16 @@
 </li>
 </ol>
 <p>B</p>
-<ol start="110">
+<ol>
 <li><p>Cole PI装置中的儿童色情物品的创建时间是甚么？</p>
 <p>见上图，<code>2020/09/15 17:21</code></p>
 </li>
 </ol>
 <h4 id="Cole的NAS装置"><a href="#Cole的NAS装置" class="headerlink" title="Cole的NAS装置"></a>Cole的NAS装置</h4><p>啥叫NAS？</p>
 <blockquote>
-<p>NAS（Network Attached Storage：网络附属存储）按字面简单说就是连接在网络上，具备资料存储功能的装置，因此也称为“<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E7%BD%91%E7%BB%9C%E5%AD%98%E5%82%A8%E5%99%A8/9485387?fromModule=lemma_inlink">网络存储器</a>”。它是一种专用数据<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/%E5%AD%98%E5%82%A8%E6%9C%8D%E5%8A%A1%E5%99%A8?fromModule=lemma_inlink">存储服务器</a>。它以数据为中心，将存储设备与服务器彻底分离，集中管理数据，从而释放带宽、提高性能、降低总拥有成本、保护投资。其成本远远低于使用服务器存储，而效率却远远高于后者。</p>
+<p>NAS（Network Attached Storage：网络附属存储）按字面简单说就是连接在网络上，具备资料存储功能的装置，因此也称为“<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/网络存储器/9485387?fromModule=lemma_inlink">网络存储器</a>”。它是一种专用数据<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/存储服务器?fromModule=lemma_inlink">存储服务器</a>。它以数据为中心，将存储设备与服务器彻底分离，集中管理数据，从而释放带宽、提高性能、降低总拥有成本、保护投资。其成本远远低于使用服务器存储，而效率却远远高于后者。</p>
 </blockquote>
-<ol start="111">
+<ol>
 <li><p>Cole NAS的哈希值（SHA-256）是甚么?</p>
 <p><code>5B79890D90B661183F6849469FA2042D103D629A6BC9A4304E39B13C019D2871</code></p>
 </li>
@@ -837,14 +823,14 @@
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027093032413.png" alt="image-20221027093032413"></p>
 </li>
 </ol>
-<h4 id="Cole的手提电话"><a href="#Cole的手提电话" class="headerlink" title="Cole的手提电话"></a>Cole的手提电话</h4><ol start="115">
+<h4 id="Cole的手提电话"><a href="#Cole的手提电话" class="headerlink" title="Cole的手提电话"></a>Cole的手提电话</h4><ol>
 <li><p>在Cole手机, 的用户个人资料是甚么？ </p>
 <p>nmd我说为啥加载不出来镜像，正确的手机bin文件在补充文件里。。。</p>
 <p>算了小爷不做了</p>
 </li>
 </ol>
 <h4 id="Daniel-的桌上计算机"><a href="#Daniel-的桌上计算机" class="headerlink" title="Daniel 的桌上计算机"></a>Daniel 的桌上计算机</h4><p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027100626549.png" alt="image-20221027100626549"></p>
-<ol start="116">
+<ol>
 <li><p>Daniel的桌上计算机的哈希值（SHA-256）是甚么?</p>
 <p><code>07DD40CF28603F421F3A09CD38F1C8AA40A2AC4BFB46ECF8299C38CE6AE44ED5</code></p>
 </li>
@@ -877,7 +863,7 @@
 <p>答案：远程桌面协议</p>
 </li>
 </ol>
-<h4 id="Daniel的MacBook"><a href="#Daniel的MacBook" class="headerlink" title="Daniel的MacBook"></a>Daniel的MacBook</h4><ol start="123">
+<h4 id="Daniel的MacBook"><a href="#Daniel的MacBook" class="headerlink" title="Daniel的MacBook"></a>Daniel的MacBook</h4><ol>
 <li><p>Daniel的MacBook 计算机的哈希值（SHA-1）是甚么?</p>
 <p><code>C71C21730461FC901FD99F76C3679C3FED0DFAB9</code></p>
 </li>
@@ -886,7 +872,7 @@
 <p>2个</p>
 </li>
 </ol>
-<h4 id="Daniel-的iPhone"><a href="#Daniel-的iPhone" class="headerlink" title="Daniel 的iPhone"></a>Daniel 的iPhone</h4><ol start="125">
+<h4 id="Daniel-的iPhone"><a href="#Daniel-的iPhone" class="headerlink" title="Daniel 的iPhone"></a>Daniel 的iPhone</h4><ol>
 <li><p>Daniel的iPhone的操作系统是甚么版本？ </p>
 <p>iphone需要输入备份密码</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027112723380.png" alt="image-20221027112723380"></p>
@@ -894,6 +880,8 @@
 <li><p>Daniel的iPhone的wifi mac地址是甚么？</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027112744289.png" alt="image-20221027112744289"></p>
 </li>
+</ol>
+<ol>
 <li><p>Daniel的iPhone的IMEI是甚么？ </p>
 <p>证物照片中有</p>
 <p><img src="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221027112938052.png" alt="image-20221027112938052"></p>

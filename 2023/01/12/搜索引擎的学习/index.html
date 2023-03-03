@@ -51,7 +51,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -178,29 +180,33 @@
 </ul>
 <h4 id="Fofa的简单使用"><a href="#Fofa的简单使用" class="headerlink" title="Fofa的简单使用"></a>Fofa的简单使用</h4><ul>
 <li><p>逻辑运算符</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&amp;&amp; ：表示逻辑与</span><br><span class="line">|| ：表示逻辑或</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&amp;&amp; ：表示逻辑与</span><br><span class="line">|| ：表示逻辑或</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>查找指定应用的IP</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app=&quot;xxx&quot;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app=&quot;xxx&quot;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>查找使用指定协议的IP</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protocol=&quot;xxx&quot;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protocol=&quot;xxx&quot;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>查找开放端口的IP</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">port=&quot;3389&quot;</span><br><span class="line">ports=&quot;1433,3306,3389&quot;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">port=&quot;3389&quot;</span><br><span class="line">ports=&quot;1433,3306,3389&quot;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>查找IP或网段的信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#查找指定ip的信息</span><br><span class="line">ip=&quot;220.181.38.148&quot;   </span><br><span class="line">#查找指定网段的信息</span><br><span class="line">ip=&quot;220.181.38.0/24&quot;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#查找指定ip的信息</span><br><span class="line">ip=&quot;220.181.38.148&quot;   </span><br><span class="line">#查找指定网段的信息</span><br><span class="line">ip=&quot;220.181.38.0/24&quot;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>查找使用指定css或js的网站</p>
 <p>找到这个框架特有的<strong>css或js文件</strong>，然后将该css或js的<strong>路径</strong>复制粘贴到 Fofa进行查找</p>
 </li>
 <li><p>其他</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#查找title含有管理后台的ip</span><br><span class="line">title=&quot;管理后台&quot;     </span><br><span class="line">#查找响应头含有thinkphp的ip</span><br><span class="line">header=&quot;thinkphp&quot;   </span><br><span class="line">#查找响应包含有thinkphp的ip</span><br><span class="line">body=&quot;管理后台&quot;      </span><br><span class="line">#查找指定根域的所有子域</span><br><span class="line">domain=&quot;baidu.com&quot;  </span><br><span class="line">#查找域名中带有指定词的ip 从 url 中搜索&quot;test&quot;,注意搜索要用host作为名称</span><br><span class="line">host=&quot;test&quot;         </span><br><span class="line">#查找中国境内的ip，主要结合其他语句一起 搜索指定国家(编码)的资产</span><br><span class="line">country=CN </span><br><span class="line">city=&quot;Beijing&quot;      # 搜索指定城市的资产.例: 搜索指定城市的资产.</span><br><span class="line">region=&quot;Zhejiang&quot;   # 搜索指定行政区的资产.例: 搜索指定行政区的资产</span><br><span class="line">#搜索证书(如https证书、imaps证书等)中含有&quot;phpinfo.me&quot;关键词的网站和IP</span><br><span class="line">cert=&quot;phpinfo.me&quot; </span><br><span class="line"># 搜索使用此icon的资产</span><br><span class="line">icon_hash=&quot;-xxxx&quot;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#查找title含有管理后台的ip</span><br><span class="line">title=&quot;管理后台&quot;     </span><br><span class="line">#查找响应头含有thinkphp的ip</span><br><span class="line">header=&quot;thinkphp&quot;   </span><br><span class="line">#查找响应包含有thinkphp的ip</span><br><span class="line">body=&quot;管理后台&quot;      </span><br><span class="line">#查找指定根域的所有子域</span><br><span class="line">domain=&quot;baidu.com&quot;  </span><br><span class="line">#查找域名中带有指定词的ip 从 url 中搜索&quot;test&quot;,注意搜索要用host作为名称</span><br><span class="line">host=&quot;test&quot;         </span><br><span class="line">#查找中国境内的ip，主要结合其他语句一起 搜索指定国家(编码)的资产</span><br><span class="line">country=CN </span><br><span class="line">city=&quot;Beijing&quot;      # 搜索指定城市的资产.例: 搜索指定城市的资产.</span><br><span class="line">region=&quot;Zhejiang&quot;   # 搜索指定行政区的资产.例: 搜索指定行政区的资产</span><br><span class="line">#搜索证书(如https证书、imaps证书等)中含有&quot;phpinfo.me&quot;关键词的网站和IP</span><br><span class="line">cert=&quot;phpinfo.me&quot; </span><br><span class="line"># 搜索使用此icon的资产</span><br><span class="line">icon_hash=&quot;-xxxx&quot;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <p>如何扩大资产搜索范围？</p>
 <p>搜索的时候<strong>拆分title</strong>来搜索可以获得更多的搜索结果和更大的搜索范围，但是可能会带来脏数据，需要我们人工辨别是否为目标所属资产</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title=&quot;XX市XX医院&quot; =&gt; </span><br><span class="line">title=&quot;XX市&quot; &amp;&amp; title=&quot;XX医院&quot;</span><br></pre></td></tr></table></figure>
-
 <p>API<strong>接口的特殊姿势</strong></p>
 <p>可以得到</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. IP资产</span><br><span class="line">2. 关联相关IP段</span><br><span class="line">3. 端口扫描</span><br></pre></td></tr></table></figure>
-
 <p><strong>证书的特殊姿势</strong></p>
 <p>可以得到很多关联域名</p>
 <h4 id="Google-Hack"><a href="#Google-Hack" class="headerlink" title="Google Hack"></a>Google Hack</h4><ul>
@@ -208,9 +214,11 @@
 <ul>
 <li><p>使用正确的谷歌地址</p>
 <p>针对不同国家资源关联性，可以在其后加上国家的后缀，例如</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">google.co.uk 英国</span><br><span class="line">google.fr 法国</span><br><span class="line">google.co.in 印度</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">google.co.uk 英国</span><br><span class="line">google.fr 法国</span><br><span class="line">google.co.in 印度</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>轻松知道一个单词的意思</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define: xxx</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define: xxx</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 <li><p>基础法则</p>
@@ -236,78 +244,7 @@
 </ul>
 </li>
 <li><p>高级运算符</p>
-<table>
-<thead>
-<tr>
-<th align="center">高级运算符</th>
-<th align="left">特性/要点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">intitle</td>
-<td align="left">在页面的标题里查找字符串 与其他运算符混合使用效果佳</td>
-</tr>
-<tr>
-<td align="center">allintitle</td>
-<td align="left">在一个页面的标题里查找所有搜索项 与其他运算符或搜索项混合使用效果差</td>
-</tr>
-<tr>
-<td align="center">inurl</td>
-<td align="left">在一个页面的URL里查找字符串 与其他运算符混合使用效果佳 （<strong>有时 site 和 filetype 做的比 inurl 好</strong>）</td>
-</tr>
-<tr>
-<td align="center">allinurl</td>
-<td align="left">在一个页面的URL里查找所有搜索项 与其他运算符或搜索项混合使用效果差</td>
-</tr>
-<tr>
-<td align="center">filetype</td>
-<td align="left">基于文件扩展名搜索特殊类型文件 需要一个额外搜索项 其他运算符或搜索项混合使用效果差</td>
-</tr>
-<tr>
-<td align="center">allintext</td>
-<td align="left">别用它</td>
-</tr>
-<tr>
-<td align="center">site</td>
-<td align="left">把一个搜索限定在<strong>一个特别的网站或域中</strong> 与其他运算符混合使用效果佳 能够单独使用</td>
-</tr>
-<tr>
-<td align="center">link</td>
-<td align="left">搜索一个网站的链接或者URL 无法与其他运算符或搜索项混合使用 可以扩展成包含目录名、文件名、参数等内容的完整URL</td>
-</tr>
-<tr>
-<td align="center">inanchor</td>
-<td align="left">在链接的描述性文字中查找文本 其他运算符或搜索项混合使用效果佳 用作寻找网站之间的关系</td>
-</tr>
-<tr>
-<td align="center">daterange</td>
-<td align="left">寻找在一个特定日期范围内索引过的页面 需要一个搜索项 与其他运算符或搜索项混合使用效果佳 可以被as_qdr淘汰</td>
-</tr>
-<tr>
-<td align="center">numrange</td>
-<td align="left">在特定范围内查找一个数字 与其他运算符或搜索项混合使用效果佳 需要两个参数，可以简写</td>
-</tr>
-<tr>
-<td align="center">cache</td>
-<td align="left">显示Google缓存的页面拷贝 无法与其他运算符或搜索项混合使用 有很多妙用，但结果优点不可预测</td>
-</tr>
-<tr>
-<td align="center">info</td>
-<td align="left">显示关于一个页面的总结信息 无法与其他运算符或搜索项混合使用 直接搜网站名或URL会得到相同的结果</td>
-</tr>
-<tr>
-<td align="center">related</td>
-<td align="left">显示与所给网站或URL相关的站点 无法与其他运算符或搜索项混合使用</td>
-</tr>
-<tr>
-<td align="center">stocks</td>
-<td align="left">为一个股票代码显示Yahoo财经的股票列表 无法与其他运算符或搜索项混合使用 与本次课题无关</td>
-</tr>
-<tr>
-<td align="center">define</td>
-<td align="left">显示单词或短语的各种不同含义 无法与其他运算符或搜索项混合使用 与本次课题无关</td>
-</tr>
-</tbody></table>
+<p>| 高级运算符 | 特性/要点                                                    |<br>| :————: | :—————————————————————————————- |<br>|  intitle   | 在页面的标题里查找字符串 与其他运算符混合使用效果佳          |<br>| allintitle | 在一个页面的标题里查找所有搜索项 与其他运算符或搜索项混合使用效果差 |<br>|   inurl    | 在一个页面的URL里查找字符串 与其他运算符混合使用效果佳 （<strong>有时 site 和 filetype 做的比 inurl 好</strong>） |<br>|  allinurl  | 在一个页面的URL里查找所有搜索项 与其他运算符或搜索项混合使用效果差 |<br>|  filetype  | 基于文件扩展名搜索特殊类型文件 需要一个额外搜索项 其他运算符或搜索项混合使用效果差 |<br>| allintext  | 别用它                                                       |<br>|    site    | 把一个搜索限定在<strong>一个特别的网站或域中</strong> 与其他运算符混合使用效果佳 能够单独使用 |<br>|    link    | 搜索一个网站的链接或者URL 无法与其他运算符或搜索项混合使用 可以扩展成包含目录名、文件名、参数等内容的完整URL |<br>|  inanchor  | 在链接的描述性文字中查找文本 其他运算符或搜索项混合使用效果佳 用作寻找网站之间的关系 |<br>| daterange  | 寻找在一个特定日期范围内索引过的页面 需要一个搜索项 与其他运算符或搜索项混合使用效果佳 可以被as_qdr淘汰 |<br>|  numrange  | 在特定范围内查找一个数字 与其他运算符或搜索项混合使用效果佳 需要两个参数，可以简写 |<br>|   cache    | 显示Google缓存的页面拷贝 无法与其他运算符或搜索项混合使用 有很多妙用，但结果优点不可预测 |<br>|    info    | 显示关于一个页面的总结信息 无法与其他运算符或搜索项混合使用 直接搜网站名或URL会得到相同的结果 |<br>|  related   | 显示与所给网站或URL相关的站点 无法与其他运算符或搜索项混合使用 |<br>|   stocks   | 为一个股票代码显示Yahoo财经的股票列表 无法与其他运算符或搜索项混合使用 与本次课题无关 |<br>|   define   | 显示单词或短语的各种不同含义 无法与其他运算符或搜索项混合使用 与本次课题无关 |</p>
 <p>样例网站：<a target="_blank" rel="noopener" href="https://pentest-tools.com/information-gathering/google-hacking#use-cases">https://pentest-tools.com/information-gathering/google-hacking#use-cases</a></p>
 </li>
 <li><p>信息收集</p>
@@ -315,9 +252,9 @@
 <li><p>基础信息收集</p>
 <p><strong>子域名查询</strong> 利用<code>*</code>来进行泛查询</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:*.example.com -www.example.com</span><br></pre></td></tr></table></figure>
-
 <p>C段查询</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:18.18.18.*</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:18.18.18.*</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>敏感文件收集</p>
 <p><strong>备份文件</strong></p>
 <blockquote>
@@ -336,82 +273,71 @@
 <p><strong>配置文件</strong></p>
 <p>为了避免搜到一些模板配置文件或者默认配置文件，增加一些限定：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 过滤掉单词 sample example test how to tutorial</span><br><span class="line">2. -cvs 过滤掉CVS库</span><br><span class="line">site:example.com filetype:cnf my.cnf -cvs -example</span><br><span class="line"></span><br><span class="line">site:example.com inurl:config &quot;fetch =+refs/heads/*:refs/remotes/origin/*&quot;</span><br><span class="line">site:example.com inurl:configuration.php intext:&quot;class JConfig &#123;&quot;</span><br></pre></td></tr></table></figure>
-
 <p><strong>日志文件</strong></p>
 <p>通常以<code>log</code>结尾</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">site:example.com filetype:log inurl:log</span><br><span class="line">site:example.com ext:log log</span><br></pre></td></tr></table></figure>
-
 <p><strong>数据库文件</strong></p>
 <p>结尾如: <code>sql dbf mdb wdb</code></p>
 <p>对于二进制格式的文件，google不能理解，因此这里用inurl而不是filetype</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:db|backupdb...</span><br><span class="line">数据库转储：</span><br><span class="line">site:example.com intext:&quot;Dumping data for table&quot;</span><br></pre></td></tr></table></figure>
-
 <p><strong>样例文件</strong></p>
 <blockquote>
 <p>web服务器软件经常会在 web 目录里存有手册和文档一起提供给用户，这些文件告诉用户如何进行使用或理解。这些文件将会带来一些安全风险</p>
 </blockquote>
 <p>例如一些vpn软件手册中可能会存在默认密码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intitle:&quot;apache tomcat/&quot; &quot;Apache Tomcat examples&quot;</span><br><span class="line">site:example.com inurl:/examples/jsp/snp/snoop.jsp</span><br></pre></td></tr></table></figure>
-
 <p><strong>其他敏感文件</strong></p>
 <p>以robots.txt为例</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:&quot;robot.txt&quot; intext:disallow filetype:txt</span><br></pre></td></tr></table></figure>
-
 <p>注册表</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com filetype: reg HKEY_CURRENT_USER username</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com filetype: reg HKEY_CURRENT_USER username</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>敏感目录收集</p>
 <p><strong>目录遍历的位置</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intitle:index .of &quot;parent directory&quot;</span><br><span class="line">site:example.com intitle:index .of name size</span><br></pre></td></tr></table></figure>
-
 <p><strong>查看指定目录的遍历</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intitle:index .of inurl:admin</span><br></pre></td></tr></table></figure>
-
 <p><strong>查找服务器软件名、版本号、操作系统相关信息</strong>，还是从intitle入手</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intitle:index .of &quot;Application Data/Microsoft/Credentials&quot;</span><br><span class="line"></span><br><span class="line">site:example.com intitle:index .of etc|.sh_history|.bash_history|passwd|people.lst|htpasswd|...</span><br></pre></td></tr></table></figure>
-
 <p><strong>临时文件目录</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:tmp|temp|cache...</span><br></pre></td></tr></table></figure>
-
 <p><strong>登录位置查询</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 利用 intext</span><br><span class="line">site:example.com intext:管理|后台|登陆|用户名|密码|帐号|注册|admin|login|manage|manager|register|houtai|guanli|forgotten</span><br><span class="line"># 利用 inurl</span><br><span class="line">site:example.com inurl:admin|login|manage|manager|register|prelogin|logincheck</span><br><span class="line"># 利用版权信息、指纹信息</span><br><span class="line">site:example.com intext:&quot;Powered by&quot;</span><br><span class="line">site:example.com intext:&quot;XX科技&quot;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 利用 intext</span><br><span class="line">site:example.com intext:管理|后台|登陆|用户名|密码|帐号|注册|admin|login|manage|manager|register|houtai|guanli|forgotten</span><br><span class="line"># 利用 inurl</span><br><span class="line">site:example.com inurl:admin|login|manage|manager|register|prelogin|logincheck</span><br><span class="line"># 利用版权信息、指纹信息</span><br><span class="line">site:example.com intext:&quot;Powered by&quot;</span><br><span class="line">site:example.com intext:&quot;XX科技&quot;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>敏感信息收集</p>
 <p><strong>收集错误消息</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:&quot;sql syntax near&quot;|&quot;syntax error has occurred&quot;| &quot;incorrect syntax near&quot;|&quot;unexpected end of SQL command&quot;|&quot;mysql_connect()&quot;| &quot;mysql_query()&quot;|&quot;Warning: pg_connect()&quot;</span><br><span class="line"># 另一种间接搜索方式，即通过错误消息泄露出来的如服务器敏感路径来间接查找报错位置</span><br><span class="line">site:example.com intext:&quot;/var/lib/&quot;|&quot;/var/www/&quot;|&quot;D:\&quot;|&quot;C:\&quot;</span><br></pre></td></tr></table></figure>
-
 <p><strong>用户名、密码和其他秘密信息</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:(password|passcode|pass|密码) intext:(username|userid|user|用户|账户)</span><br></pre></td></tr></table></figure>
-
 <p>更多情况出现在网站提供的doc操作手册当中</p>
 <p><strong>电子邮箱地址查找</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:邮箱|邮件|email|e-mail</span><br><span class="line">site:example.com intext:&quot;@qq.com&quot;|&quot;@163.com&quot;...</span><br></pre></td></tr></table></figure>
-
 <p><strong>电话号码</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:电话|手机号|联系方式|请拨打...</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:电话|手机号|联系方式|请拨打...</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>Office文档收集</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">site:example.com filetype:doc &quot;密码&quot;</span><br><span class="line">site:example.com filetype:xls|xlxs &quot;密码&quot;</span><br><span class="line">site:example.com filetype:doc intitle:&quot;管理&quot;</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">site:example.com filetype:doc &quot;密码&quot;</span><br><span class="line">site:example.com filetype:xls|xlxs &quot;密码&quot;</span><br><span class="line">site:example.com filetype:doc intitle:&quot;管理&quot;</span><br></pre></td></tr></table></figure>
+</li>
 <li><p>功能性站点收集</p>
 <p><strong>文件上传</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:upload|upfile|saveup intext:提交|确定|上传</span><br></pre></td></tr></table></figure>
-
 <p><strong>文件下载</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:download|downfile intext:下载</span><br></pre></td></tr></table></figure>
-
 <p><strong>文件读取</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:&quot;path=&quot;|&quot;readfile=&quot;|&quot;file=&quot;|&quot;url=&quot;</span><br></pre></td></tr></table></figure>
-
 <p><strong>留言评论</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:提交|确定|评论</span><br></pre></td></tr></table></figure>
-
 <p><strong>个人空间</strong>（检查越权、存储型XSS）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:个人信息管理|会员|个人空间 OR inurl:member|zone</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:个人信息管理|会员|个人空间 OR inurl:member|zone</span><br></pre></td></tr></table></figure>
+</li>
 <li><p><strong>博彩、广告、反共言论查询</strong></p>
 <p>其目的是被挂了博彩等页面的网站可能是被入侵过的，可以利用证据来搜寻相关利用漏洞</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:博彩|澳门|反共|色情|百家乐|轮盘|时时彩|荷官|香港彩|娱乐城|性爱|大陆|共匪|楼凤|外围|良家|一夜情|交友|上门服务</span><br><span class="line"></span><br><span class="line">site:example.com intext:裸聊|找小姐|返水|自拍|六合彩|同城交友|丝袜|少妇|小姐|狼友|桑拿|夜生活|真人娱乐|真钱|娱乐城|免费试玩|随时结算</span><br><span class="line"></span><br><span class="line">site:example.com intext:老虎机|真人娱乐|返点|德州扑克|棋牌|进入直播|游戏账号|&quot;VIP俱乐部&quot;|菠菜...</span><br></pre></td></tr></table></figure>
-
 <p>一些语料库 <a target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting/1earn/blob/master/1earn/Security/RedTeam/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/%E7%A9%BA%E9%97%B4%E6%B5%8B%E7%BB%98.md#%E8%AF%AD%E6%96%99%E6%94%B6%E9%9B%86">https://github.com/RacerZ-fighting/1earn/blob/master/1earn/Security/RedTeam/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/%E7%A9%BA%E9%97%B4%E6%B5%8B%E7%BB%98.md#%E8%AF%AD%E6%96%99%E6%94%B6%E9%9B%86</a></p>
 </li>
 <li><p><strong>历史遗留后门文件</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 关键词查找</span><br><span class="line">site:example.com intext:剑眉大侠|不灭之魂|仗剑孤行|通杀版|法客论坛|上传的口令|&quot;导出DLL文件出错&quot;|&quot;token虚拟机管理&quot;|老子的绝对路径|免杀版</span><br><span class="line">site:example.com intext:法克|后门|木马|小马|大马|脱库|黑客|一句话后门|挂马|清马|&quot;扫描IP&quot;|开放端口|提权|执行命令|设置密码|提升权限</span><br><span class="line">site:example.com intext:一句话木马|过狗|安全狗|&quot;K8飞刀&quot;|&quot;K8拉登哥哥&quot;|&quot;K8搞基大队&quot;|反弹端口|&quot;hacked by&quot;...</span><br><span class="line"># 木马文件名查找</span><br><span class="line">site:example.com inurl:phpspy|udf|JFolder|JspSpyJDK5|AspxSpy2014Final...</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 关键词查找</span><br><span class="line">site:example.com intext:剑眉大侠|不灭之魂|仗剑孤行|通杀版|法客论坛|上传的口令|&quot;导出DLL文件出错&quot;|&quot;token虚拟机管理&quot;|老子的绝对路径|免杀版</span><br><span class="line">site:example.com intext:法克|后门|木马|小马|大马|脱库|黑客|一句话后门|挂马|清马|&quot;扫描IP&quot;|开放端口|提权|执行命令|设置密码|提升权限</span><br><span class="line">site:example.com intext:一句话木马|过狗|安全狗|&quot;K8飞刀&quot;|&quot;K8拉登哥哥&quot;|&quot;K8搞基大队&quot;|反弹端口|&quot;hacked by&quot;...</span><br><span class="line"># 木马文件名查找</span><br><span class="line">site:example.com inurl:phpspy|udf|JFolder|JspSpyJDK5|AspxSpy2014Final...</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
 </ul>

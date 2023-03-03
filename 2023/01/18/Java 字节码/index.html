@@ -13,15 +13,27 @@
 <meta property="og:site_name" content="RacerZ">
 <meta property="og:description" content="Java 字节码Java class文件格式123456789101112131415161718ClassFile &amp;#123;    u4 magic;    u2 minor_version;    u2 major_version;    u2 constant_pool_count;    cp_info constant_pool[constant_pool_count-1];">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230115172830015.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230115172915362.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230115173100707.png">
 <meta property="og:image" content="https://github.com/Y4tacker/JavaSec/raw/main/1.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ASM%E5%AD%A6%E4%B9%A0/img/1.jpeg">
 <meta property="og:image" content="https://github.com/Y4tacker/JavaSec/raw/main/1.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ASM%E5%AD%A6%E4%B9%A0/img/2.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230118111219258.png">
 <meta property="og:image" content="https://github.com/Y4tacker/JavaSec/raw/main/1.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ASM%E5%AD%A6%E4%B9%A0/img/asm-core-classes.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230115225203475.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230116173506490.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230116174308989.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230117203859698.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230116175440576.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230118105514531.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230118114237744.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230116001201930.png">
 <meta property="article:published_time" content="2023-01-17T16:00:00.000Z">
 <meta property="article:modified_time" content="2023-01-22T08:07:59.562Z">
 <meta property="article:author" content="RacerZ">
 <meta property="article:tag" content="Java">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/Y4tacker/JavaSec/raw/main/1.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ASM%E5%AD%A6%E4%B9%A0/img/1.jpeg">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230115172830015.png">
     
     
       
@@ -53,7 +65,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -155,122 +169,22 @@
 
   <div class="content" itemprop="articleBody">
     <h4 id="Java-字节码"><a href="#Java-字节码" class="headerlink" title="Java 字节码"></a>Java 字节码</h4><h5 id="Java-class文件格式"><a href="#Java-class文件格式" class="headerlink" title="Java class文件格式"></a>Java class文件格式</h5><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ClassFile &#123;</span><br><span class="line">    u4 magic;</span><br><span class="line">    u2 minor_version;</span><br><span class="line">    u2 major_version;</span><br><span class="line">    u2 constant_pool_count;</span><br><span class="line">    cp_info constant_pool[constant_pool_count-1];</span><br><span class="line">    u2 access_flags;</span><br><span class="line">    u2 this_class;</span><br><span class="line">    u2 super_class;</span><br><span class="line">    u2 interfaces_count;</span><br><span class="line">    u2 interfaces[interfaces_count];</span><br><span class="line">    u2 fields_count;</span><br><span class="line">    field_info fields[fields_count];</span><br><span class="line">    u2 methods_count;</span><br><span class="line">    method_info methods[methods_count];</span><br><span class="line">    u2 attributes_count;</span><br><span class="line">    attribute_info attributes[attributes_count];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p><code>u1</code> 、<code>u2</code>、 <code>u4</code> 分别表示1、2、4个字节的无符号数。<br>x即代表字节无符号数、其余info类型是复合结构</p>
 <p>可使用<code>java.io.DataInputStream</code>类中的对应方法：<code>readUnsignedByte</code>、<code>readUnsignedShort</code>、<code>readInt</code>方法读取。</p>
 </li>
 <li><p>魔数 Magic </p>
 <p>固定值 <code>0xCAFEBABE</code></p>
-<p>![image-20230115172830015](Java 字节码/image-20230115172830015.png)</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230115172830015.png" alt="image-20230115172830015"></p>
 <blockquote>
 <p>JVM加载class文件时会先读取4字节（<code>u4 magic;</code>）的魔数信息校验是否是一个class文件</p>
 </blockquote>
-<p>![image-20230115172915362](Java 字节码/image-20230115172915362.png)</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230115172915362.png" alt="image-20230115172915362"></p>
 </li>
 <li><p><strong>版本号</strong> Minor/Major Version</p>
 <p>class文件的版本号由两个<code>u2</code>组成（<code>u2 minor_version; u2 major_version;</code>），分别表示的是<code>minor_version</code>（副版本号）、<code>major_version</code> （主版本号），我们常说的<code>JDK1.8</code>、<code>Java9</code>等说的就是主版本号。</p>
-<p>![image-20230115173100707](Java 字节码/image-20230115173100707.png)</p>
-<table>
-<thead>
-<tr>
-<th>JDK版本</th>
-<th><strong>十进制</strong></th>
-<th><strong>十六进制</strong></th>
-<th>发布时间</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>JDK1.1</td>
-<td>45</td>
-<td>2D</td>
-<td>1996-05</td>
-</tr>
-<tr>
-<td>JDK1.2</td>
-<td>46</td>
-<td>2E</td>
-<td>1998-12</td>
-</tr>
-<tr>
-<td>JDK1.3</td>
-<td>47</td>
-<td>2F</td>
-<td>2000-05</td>
-</tr>
-<tr>
-<td>JDK1.4</td>
-<td>48</td>
-<td>30</td>
-<td>2002-02</td>
-</tr>
-<tr>
-<td>JDK1.5</td>
-<td>49</td>
-<td>31</td>
-<td>2004-09</td>
-</tr>
-<tr>
-<td>JDK1.6</td>
-<td>50</td>
-<td>32</td>
-<td>2006-12</td>
-</tr>
-<tr>
-<td>JDK1.7</td>
-<td>51</td>
-<td>33</td>
-<td>2011-07</td>
-</tr>
-<tr>
-<td>JDK1.8</td>
-<td>52</td>
-<td>34</td>
-<td>2014-03</td>
-</tr>
-<tr>
-<td>Java9</td>
-<td>53</td>
-<td>35</td>
-<td>2017-09</td>
-</tr>
-<tr>
-<td>Java10</td>
-<td>54</td>
-<td>36</td>
-<td>2018-03</td>
-</tr>
-<tr>
-<td>Java11</td>
-<td>55</td>
-<td>37</td>
-<td>2018-09</td>
-</tr>
-<tr>
-<td>Java12</td>
-<td>56</td>
-<td>38</td>
-<td>2019-03</td>
-</tr>
-<tr>
-<td>Java13</td>
-<td>57</td>
-<td>39</td>
-<td>2019-09</td>
-</tr>
-<tr>
-<td>Java14</td>
-<td>58</td>
-<td>3A</td>
-<td>2020-03</td>
-</tr>
-<tr>
-<td>Java15</td>
-<td>59</td>
-<td>3B</td>
-<td>2020-09</td>
-</tr>
-</tbody></table>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230115173100707.png" alt="image-20230115173100707"></p>
+<p>| JDK版本 | <strong>十进制</strong> | <strong>十六进制</strong> | 发布时间 |<br>| ———- | ————— | —————— | ———— |<br>| JDK1.1  | 45         | 2D           | 1996-05  |<br>| JDK1.2  | 46         | 2E           | 1998-12  |<br>| JDK1.3  | 47         | 2F           | 2000-05  |<br>| JDK1.4  | 48         | 30           | 2002-02  |<br>| JDK1.5  | 49         | 31           | 2004-09  |<br>| JDK1.6  | 50         | 32           | 2006-12  |<br>| JDK1.7  | 51         | 33           | 2011-07  |<br>| JDK1.8  | 52         | 34           | 2014-03  |<br>| Java9   | 53         | 35           | 2017-09  |<br>| Java10  | 54         | 36           | 2018-03  |<br>| Java11  | 55         | 37           | 2018-09  |<br>| Java12  | 56         | 38           | 2019-03  |<br>| Java13  | 57         | 39           | 2019-09  |<br>| Java14  | 58         | 3A           | 2020-03  |<br>| Java15  | 59         | 3B           | 2020-09  |</p>
 </li>
 <li><p>constant_pool_count <strong>常量池计数器</strong></p>
 <p>表示常量池中的数量，数值上等于 <code>常量池的数量+1</code></p>
@@ -280,61 +194,12 @@
 <p>表结构 <code>cp_info constant_pool[constant_pool_count-1];</code></p>
 <p>常量池对象 <code>cp_info</code> 数据结构：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cp_info &#123;</span><br><span class="line">   u1 tag;</span><br><span class="line">   u1 info[];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><code>u1 tag;</code>表示的是常量池中的<strong>存储类型</strong>，每一种<code>tag</code>都对应了不同的数据结构。</p>
 </li>
 <li><p>access_flags <strong>访问标志</strong></p>
 <p>表示的是某个类或者接口的<strong>访问权限及属性</strong>。</p>
 <blockquote>
-<table>
-<thead>
-<tr>
-<th>标志名</th>
-<th>十六进制值</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>ACC_PUBLIC</td>
-<td>0x0001</td>
-<td>声明为public</td>
-</tr>
-<tr>
-<td>ACC_FINAL</td>
-<td>0x0010</td>
-<td>声明为final</td>
-</tr>
-<tr>
-<td>ACC_SUPER</td>
-<td>0x0020</td>
-<td>废弃/仅JDK1.0.2前使用</td>
-</tr>
-<tr>
-<td>ACC_INTERFACE</td>
-<td>0x0200</td>
-<td>声明为接口</td>
-</tr>
-<tr>
-<td>ACC_ABSTRACT</td>
-<td>0x0400</td>
-<td>声明为abstract</td>
-</tr>
-<tr>
-<td>ACC_SYNTHETIC</td>
-<td>0x1000</td>
-<td>声明为synthetic，表示该class文件并非由Java源代码所生成</td>
-</tr>
-<tr>
-<td>ACC_ANNOTATION</td>
-<td>0x2000</td>
-<td>标识注解类型</td>
-</tr>
-<tr>
-<td>ACC_ENUM</td>
-<td>0x4000</td>
-<td>标识枚举类型</td>
-</tr>
-</tbody></table>
+<p>| 标志名         | 十六进制值 | 描述                                                   |<br>| ——————— | ————— | ——————————————————————————— |<br>| ACC_PUBLIC     | 0x0001     | 声明为public                                           |<br>| ACC_FINAL      | 0x0010     | 声明为final                                            |<br>| ACC_SUPER      | 0x0020     | 废弃/仅JDK1.0.2前使用                                  |<br>| ACC_INTERFACE  | 0x0200     | 声明为接口                                             |<br>| ACC_ABSTRACT   | 0x0400     | 声明为abstract                                         |<br>| ACC_SYNTHETIC  | 0x1000     | 声明为synthetic，表示该class文件并非由Java源代码所生成 |<br>| ACC_ANNOTATION | 0x2000     | 标识注解类型                                           |<br>| ACC_ENUM       | 0x4000     | 标识枚举类型                                           |</p>
 </blockquote>
 </li>
 <li><p>this_class <strong>当前类名称</strong></p>
@@ -356,63 +221,9 @@
 <li><p>fields[] <strong>成员变量数组</strong></p>
 <p>field_info 成员变量的数据结构：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">field_info &#123;</span><br><span class="line">   u2 access_flags;</span><br><span class="line">   u2 name_index;</span><br><span class="line">   u2 descriptor_index;</span><br><span class="line">   u2 attributes_count;</span><br><span class="line">   attribute_info attributes[attributes_count];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p>access_flags 表示的是成员变量的修饰符</p>
-<table>
-<thead>
-<tr>
-<th>Flag Name</th>
-<th>Value</th>
-<th>Interpretation</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>ACC_PUBLIC</code></td>
-<td>0x0001</td>
-<td>Declared <code>public</code>; may be accessed from outside its package.</td>
-</tr>
-<tr>
-<td><code>ACC_PRIVATE</code></td>
-<td>0x0002</td>
-<td>Declared <code>private</code>; accessible only within the defining class and other classes belonging to the same nest (<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-5.html#jvms-5.4.4">§5.4.4</a>).</td>
-</tr>
-<tr>
-<td><code>ACC_PROTECTED</code></td>
-<td>0x0004</td>
-<td>Declared <code>protected</code>; may be accessed within subclasses.</td>
-</tr>
-<tr>
-<td><code>ACC_STATIC</code></td>
-<td>0x0008</td>
-<td>Declared <code>static</code>.</td>
-</tr>
-<tr>
-<td><code>ACC_FINAL</code></td>
-<td>0x0010</td>
-<td>Declared <code>final</code>; never directly assigned to after object construction (JLS §17.5).</td>
-</tr>
-<tr>
-<td><code>ACC_VOLATILE</code></td>
-<td>0x0040</td>
-<td>Declared <code>volatile</code>; cannot be cached.</td>
-</tr>
-<tr>
-<td><code>ACC_TRANSIENT</code></td>
-<td>0x0080</td>
-<td>Declared <code>transient</code>; not written or read by a persistent object manager.</td>
-</tr>
-<tr>
-<td><code>ACC_SYNTHETIC</code></td>
-<td>0x1000</td>
-<td>Declared synthetic; not present in the source code.</td>
-</tr>
-<tr>
-<td><code>ACC_ENUM</code></td>
-<td>0x4000</td>
-<td>Declared as an element of an <code>enum</code>.</td>
-</tr>
-</tbody></table>
+<p>| Flag Name       | Value  | Interpretation                                               |<br>| ———————- | ——— | —————————————————————————————— |<br>| <code>ACC_PUBLIC</code>    | 0x0001 | Declared <code>public</code>; may be accessed from outside its package. |<br>| <code>ACC_PRIVATE</code>   | 0x0002 | Declared <code>private</code>; accessible only within the defining class and other classes belonging to the same nest (<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-5.html#jvms-5.4.4">§5.4.4</a>). |<br>| <code>ACC_PROTECTED</code> | 0x0004 | Declared <code>protected</code>; may be accessed within subclasses.     |<br>| <code>ACC_STATIC</code>    | 0x0008 | Declared <code>static</code>.                                           |<br>| <code>ACC_FINAL</code>     | 0x0010 | Declared <code>final</code>; never directly assigned to after object construction (JLS §17.5). |<br>| <code>ACC_VOLATILE</code>  | 0x0040 | Declared <code>volatile</code>; cannot be cached.                       |<br>| <code>ACC_TRANSIENT</code> | 0x0080 | Declared <code>transient</code>; not written or read by a persistent object manager. |<br>| <code>ACC_SYNTHETIC</code> | 0x1000 | Declared synthetic; not present in the source code.          |<br>| <code>ACC_ENUM</code>      | 0x4000 | Declared as an element of an <code>enum</code>.                         |</p>
 </li>
 <li><p>name_index 表示的是成员变量的名称</p>
 </li>
@@ -430,78 +241,9 @@
 <li><p>methods 成员方法数组</p>
 <p>method_info 成员方法对象数据结构</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">method_info &#123;</span><br><span class="line">   u2 access_flags;</span><br><span class="line">   u2 name_index;</span><br><span class="line">   u2 descriptor_index;</span><br><span class="line">   u2 attributes_count;</span><br><span class="line">   attribute_info attributes[attributes_count];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p>access_flags 成员方法的修饰符</p>
-<table>
-<thead>
-<tr>
-<th>Flag Name</th>
-<th>Value</th>
-<th>Interpretation</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>ACC_PUBLIC</code></td>
-<td>0x0001</td>
-<td>Declared <code>public</code>; may be accessed from outside its package.</td>
-</tr>
-<tr>
-<td><code>ACC_PRIVATE</code></td>
-<td>0x0002</td>
-<td>Declared <code>private</code>; accessible only within the defining class and other classes belonging to the same nest (<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-5.html#jvms-5.4.4">§5.4.4</a>).</td>
-</tr>
-<tr>
-<td><code>ACC_PROTECTED</code></td>
-<td>0x0004</td>
-<td>Declared <code>protected</code>; may be accessed within subclasses.</td>
-</tr>
-<tr>
-<td><code>ACC_STATIC</code></td>
-<td>0x0008</td>
-<td>Declared <code>static</code>.</td>
-</tr>
-<tr>
-<td><code>ACC_FINAL</code></td>
-<td>0x0010</td>
-<td>Declared <code>final</code>; must not be overridden (<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-5.html#jvms-5.4.5">§5.4.5</a>).</td>
-</tr>
-<tr>
-<td><code>ACC_SYNCHRONIZED</code></td>
-<td>0x0020</td>
-<td>Declared <code>synchronized</code>; invocation is wrapped by a monitor use.</td>
-</tr>
-<tr>
-<td><code>ACC_BRIDGE</code></td>
-<td>0x0040</td>
-<td>A bridge method, generated by the compiler.</td>
-</tr>
-<tr>
-<td><code>ACC_VARARGS</code></td>
-<td>0x0080</td>
-<td>Declared with variable number of arguments.</td>
-</tr>
-<tr>
-<td><code>ACC_NATIVE</code></td>
-<td>0x0100</td>
-<td>Declared <code>native</code>; implemented in a language other than the Java programming language.</td>
-</tr>
-<tr>
-<td><code>ACC_ABSTRACT</code></td>
-<td>0x0400</td>
-<td>Declared <code>abstract</code>; no implementation is provided.</td>
-</tr>
-<tr>
-<td><code>ACC_STRICT</code></td>
-<td>0x0800</td>
-<td>Declared <code>strictfp</code>; floating-point mode is FP-strict.</td>
-</tr>
-<tr>
-<td><code>ACC_SYNTHETIC</code></td>
-<td>0x1000</td>
-<td>Declared synthetic; not present in the source code.</td>
-</tr>
-</tbody></table>
+<p>| Flag Name          | Value  | Interpretation                                               |<br>| ————————— | ——— | —————————————————————————————— |<br>| <code>ACC_PUBLIC</code>       | 0x0001 | Declared <code>public</code>; may be accessed from outside its package. |<br>| <code>ACC_PRIVATE</code>      | 0x0002 | Declared <code>private</code>; accessible only within the defining class and other classes belonging to the same nest (<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-5.html#jvms-5.4.4">§5.4.4</a>). |<br>| <code>ACC_PROTECTED</code>    | 0x0004 | Declared <code>protected</code>; may be accessed within subclasses.     |<br>| <code>ACC_STATIC</code>       | 0x0008 | Declared <code>static</code>.                                           |<br>| <code>ACC_FINAL</code>        | 0x0010 | Declared <code>final</code>; must not be overridden (<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-5.html#jvms-5.4.5">§5.4.5</a>). |<br>| <code>ACC_SYNCHRONIZED</code> | 0x0020 | Declared <code>synchronized</code>; invocation is wrapped by a monitor use. |<br>| <code>ACC_BRIDGE</code>       | 0x0040 | A bridge method, generated by the compiler.                  |<br>| <code>ACC_VARARGS</code>      | 0x0080 | Declared with variable number of arguments.                  |<br>| <code>ACC_NATIVE</code>       | 0x0100 | Declared <code>native</code>; implemented in a language other than the Java programming language. |<br>| <code>ACC_ABSTRACT</code>     | 0x0400 | Declared <code>abstract</code>; no implementation is provided.          |<br>| <code>ACC_STRICT</code>       | 0x0800 | Declared <code>strictfp</code>; floating-point mode is FP-strict.       |<br>| <code>ACC_SYNTHETIC</code>    | 0x1000 | Declared synthetic; not present in the source code.          |</p>
 </li>
 <li><p>name_index 成员方法的名称</p>
 </li>
@@ -519,7 +261,6 @@
 <li><p>attributes[] <strong>属性数组</strong></p>
 <p>attribute_info 属性信息数据结构</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">attribute_info &#123;</span><br><span class="line">   u2 attribute_name_index;</span><br><span class="line">   u4 attribute_length;</span><br><span class="line">   u1 info[attribute_length];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <ul>
 <li><p>attribute_name_index 属性名称索引</p>
 <p>读取<code>attribute_name_index</code>值所在<strong>常量池中的名称</strong>可以得到属性名称</p>
@@ -547,10 +288,8 @@
 </li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 解析常量池数据</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IOException 数据读取异常</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">parseConstantPool</span><span class="params">()</span> <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="comment">// u2 constant_pool_count;</span></span><br><span class="line">    <span class="built_in">this</span>.poolCount = dis.readUnsignedShort();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// cp_info constant_pool[constant_pool_count-1];</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; i &lt;= poolCount - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        <span class="comment">//            cp_info &#123;</span></span><br><span class="line">        <span class="comment">//                u1 tag;</span></span><br><span class="line">        <span class="comment">//                u1 info[];</span></span><br><span class="line">        <span class="comment">//            &#125;</span></span><br><span class="line">        <span class="type">int</span>      <span class="variable">tag</span>      <span class="operator">=</span> dis.readUnsignedByte();</span><br><span class="line">        <span class="type">Constant</span> <span class="variable">constant</span> <span class="operator">=</span> Constant.getConstant(tag);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (constant == <span class="literal">null</span>) &#123;</span><br><span class="line">              <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;解析常量池异常，无法识别的常量池类型：&quot;</span> + tag);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 解析常量池对象</span></span><br><span class="line">        parseConstantItems(constant, i);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Long和Double是宽类型，占两位</span></span><br><span class="line">        <span class="keyword">if</span> (CONSTANT_LONG == constant || CONSTANT_DOUBLE == constant) &#123;</span><br><span class="line">              i++;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 链接常量池中的引用</span></span><br><span class="line">    linkConstantPool();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>有很多对象的数据结构中又引用了其他对象，为了能够直观的看到常量池ID为1的对象信息我们就必须要将所有使用<strong>索引方式链接的映射关系改成直接字符串引用</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 链接常量池中的引用</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">linkConstantPool</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">for</span> (Integer id : constantPoolMap.keySet()) &#123;</span><br><span class="line">        Map&lt;String, Object&gt; valueMap = constantPoolMap.get(id);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!valueMap.containsKey(<span class="string">&quot;value&quot;</span>)) &#123;</span><br><span class="line">            Map&lt;String, Object&gt; newMap = <span class="keyword">new</span> <span class="title class_">LinkedHashMap</span>&lt;&gt;();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">for</span> (String key : valueMap.keySet()) &#123;</span><br><span class="line">                <span class="keyword">if</span> (key.endsWith(<span class="string">&quot;Index&quot;</span>)) &#123;</span><br><span class="line">                      <span class="type">Object</span> <span class="variable">value</span> <span class="operator">=</span> recursionValue((Integer) valueMap.get(key));</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">if</span> (value != <span class="literal">null</span>) &#123;</span><br><span class="line">                        <span class="type">String</span> <span class="variable">newKey</span> <span class="operator">=</span> key.substring(<span class="number">0</span>, key.indexOf(<span class="string">&quot;Index&quot;</span>));</span><br><span class="line"></span><br><span class="line">                        newMap.put(newKey + <span class="string">&quot;Value&quot;</span>, value);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            valueMap.putAll(newMap);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 递归查找ID对应的常量池中的值</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> id 常量池ID</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 常量池中存储的值</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">private</span> Object <span class="title function_">recursionValue</span><span class="params">(Integer id)</span> &#123;</span><br><span class="line">    Map&lt;String, Object&gt; map = constantPoolMap.get(id);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (map.containsKey(<span class="string">&quot;value&quot;</span>)) &#123;</span><br><span class="line">        <span class="keyword">return</span> map.get(<span class="string">&quot;value&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (String key : map.keySet()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (key.endsWith(<span class="string">&quot;Index&quot;</span>)) &#123;</span><br><span class="line">            <span class="type">Integer</span> <span class="variable">value</span> <span class="operator">=</span> (Integer) map.get(key);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> recursionValue(value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><strong>访问标志解析</strong>：</p>
 <p><code>u2 access_flags</code></p>
 <p>直接 readUnsignedShort()</p>
@@ -561,30 +300,25 @@
 <p><strong>接口解析：</strong></p>
 <p>和上面一样，先获取接口数量，然后遍历获取所有接口名称的索引值</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// u2 interfaces_count;</span></span><br><span class="line"><span class="built_in">this</span>.interfacesCount = dis.readUnsignedShort();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 创建接口Index数组</span></span><br><span class="line"><span class="built_in">this</span>.interfaces = <span class="keyword">new</span> <span class="title class_">String</span>[interfacesCount];</span><br><span class="line"></span><br><span class="line"><span class="comment">// u2 interfaces[interfaces_count];</span></span><br><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; interfacesCount; i++) &#123;</span><br><span class="line">    <span class="type">int</span> <span class="variable">index</span> <span class="operator">=</span> dis.readUnsignedShort();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置接口名称</span></span><br><span class="line">    <span class="built_in">this</span>.interfaces[i] = (String) getConstantPoolValue(index);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><strong>成员变量/成员方法解析：</strong></p>
 <p>两者数据结构一致，所以按照相同的处理逻辑。先解析出变量/方法的总数，然后遍历解析对象的数据结构中的所有信息</p>
 <p>这里还有一个 <code>attribute_info attribute[attributes_count]</code> 需要解析</p>
 <p><strong>Java class 文件属性解析</strong></p>
 <p>属性信息表数据结构：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">u2 attributes_count;</span><br><span class="line">attribute_info attributes[attributes_count];</span><br><span class="line"></span><br><span class="line">attribute_info &#123;</span><br><span class="line">   u2 attribute_name_index;</span><br><span class="line">   u4 attribute_length;</span><br><span class="line">   u1 info[attribute_length];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>解析前面几个的流程类似，先解析属性表长度，然后遍历对attribute_info进行解析，前面 attribute_name_index 和 attribute_length 为固定长度值，直接 DataInstream 调用即可</p>
 <p>接下来解析出属性名称后（在常量池中查找）按照 JVM虚拟机规范-属性<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-4.html#jvms-4.7">https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-4.html#jvms-4.7</a> 来解析</p>
 <p>对于 <strong>ConstantValue：</strong> </p>
 <p>用于表示<code>field_info</code>中的静态变量的初始值</p>
 <p>数据结构如下: 只需要读取解析最后一个字段即可</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ConstantValue_attribute &#123;</span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length;</span><br><span class="line">    u2 constantvalue_index;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>对于 <strong>Code：</strong></p>
 <p><code>Code</code>属性用于表示<strong>成员方法</strong>的代码部分，<code>Code</code>中包含了指令集（<code>byte数组</code>），JVM调用成员方法时实际上就是执行的<code>Code</code>中的指令，而反编译工具则是把<code>Code</code>中的指令翻译成了Java代码</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Code_attribute &#123;</span><br><span class="line">    u2 attribute_name_index;</span><br><span class="line">    u4 attribute_length;</span><br><span class="line">    u2 max_stack;</span><br><span class="line">    u2 max_locals;</span><br><span class="line">    u4 code_length;</span><br><span class="line">    u1 code[code_length];</span><br><span class="line">    u2 exception_table_length;</span><br><span class="line">    &#123;   u2 start_pc;</span><br><span class="line">        u2 end_pc;</span><br><span class="line">        u2 handler_pc;</span><br><span class="line">        u2 catch_type;</span><br><span class="line">    &#125; exception_table[exception_table_length];</span><br><span class="line">    u2 attributes_count;</span><br><span class="line">    attribute_info attributes[attributes_count];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>在解析<code>Code</code>属性时<code>code_length</code>表示的是<code>Code</code>的字节长度，<code>max_stack</code>和<code>max_locals</code>是一个固定值，表示的是最大操作数栈和最大局部变量数，这两个值是在编译类方法时自动计算出来的，如果通过<code>ASM</code>修改了类方法可能会需要重新计算<code>max_stack</code>和<code>max_locals</code>。</p>
 <p>解析<code>Code</code>的指令集时需要对照<strong>指令集映射表</strong>，然后根据不同的指令实现不一样的指令处理逻辑 <a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-6.html#jvms-6.5">https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-6.html#jvms-6.5</a></p>
 <p>可视化：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">javap -verbose xxx.class</span><br></pre></td></tr></table></figure>
-
 <h5 id="Java虚拟机指令集"><a href="#Java虚拟机指令集" class="headerlink" title="Java虚拟机指令集"></a>Java虚拟机指令集</h5><ul>
 <li><p><strong>Jvm</strong></p>
 <p>首先要了解<strong>栈帧</strong>的概念</p>
@@ -603,7 +337,7 @@
 </li>
 <li><p><strong>动态链接</strong></p>
 <p>在class文件中，方法调用需要将目标方法的<strong>符号引用</strong>转换为其在内存地址中的直接引用，符号引用存在于<strong>方法区中的运行时常量池</strong>。</p>
-<p>Java虚拟机栈中，每个栈帧都包含一个指向运行时常量池中该栈所属方法的符号引用，持有这个引用的目的是为了支持方法调用过程中的**动态连接(Dynamic Linking)**。</p>
+<p>Java虚拟机栈中，每个栈帧都包含一个指向运行时常量池中该栈所属方法的符号引用，持有这个引用的目的是为了支持方法调用过程中的<strong>动态连接(Dynamic Linking)</strong>。</p>
 </li>
 <li><p><strong>方法返回</strong></p>
 <p>分为正常完成和异常完成两种</p>
@@ -611,1128 +345,19 @@
 </ul>
 </li>
 <li><p>类型/方法描述符</p>
-<table>
-<thead>
-<tr>
-<th>描述符</th>
-<th>Java类型</th>
-<th>示例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>B</code></td>
-<td><code>byte</code></td>
-<td><code>B</code></td>
-</tr>
-<tr>
-<td><code>C</code></td>
-<td><code>char</code></td>
-<td><code>C</code></td>
-</tr>
-<tr>
-<td><code>D</code></td>
-<td><code>double</code></td>
-<td><code>D</code></td>
-</tr>
-<tr>
-<td><code>F</code></td>
-<td><code>float</code></td>
-<td><code>F</code></td>
-</tr>
-<tr>
-<td><code>I</code></td>
-<td><code>int</code></td>
-<td><code>I</code></td>
-</tr>
-<tr>
-<td><code>J</code></td>
-<td><code>long</code></td>
-<td><code>J</code></td>
-</tr>
-<tr>
-<td><code>S</code></td>
-<td><code>short</code></td>
-<td><code>S</code></td>
-</tr>
-<tr>
-<td><code>Z</code></td>
-<td><code>boolean</code></td>
-<td><code>Z</code></td>
-</tr>
-<tr>
-<td><code>[</code></td>
-<td><code>数组</code></td>
-<td><code>[IJ</code></td>
-</tr>
-<tr>
-<td><code>L类名;</code></td>
-<td><code>引用类型对象**</code>**</td>
-<td><strong><code>Ljava/lang/Object;</code></strong></td>
-</tr>
-</tbody></table>
+<p>| 描述符   | Java类型           | 示例                     |<br>| ———— | ————————— | ———————————— |<br>| <code>B</code>      | <code>byte</code>             | <code>B</code>                      |<br>| <code>C</code>      | <code>char</code>             | <code>C</code>                      |<br>| <code>D</code>      | <code>double</code>           | <code>D</code>                      |<br>| <code>F</code>      | <code>float</code>            | <code>F</code>                      |<br>| <code>I</code>      | <code>int</code>              | <code>I</code>                      |<br>| <code>J</code>      | <code>long</code>             | <code>J</code>                      |<br>| <code>S</code>      | <code>short</code>            | <code>S</code>                      |<br>| <code>Z</code>      | <code>boolean</code>          | <code>Z</code>                      |<br>| <code>[</code>      | <code>数组</code>             | <code>[IJ</code>                    |<br>| <code>L类名;</code> | <code>引用类型对象**</code><strong> | </strong><code>Ljava/lang/Object;</code>** |</p>
 <p><strong>方法描述符实例：</strong></p>
-<table>
-<thead>
-<tr>
-<th>方法示例</th>
-<th>描述符</th>
-<th>描述</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><code>static&#123;...&#125;</code>，<code>static int id = 1;</code></td>
-<td>方法名：<code>&lt;clinit&gt;</code></td>
-<td><strong>静态语句块/静态变量初始化</strong></td>
-</tr>
-<tr>
-<td><code>public Test ()&#123;...&#125;</code></td>
-<td>方法名：<code>&lt;init&gt;</code>，描述符<code>()V</code></td>
-<td>构造方法</td>
-</tr>
-<tr>
-<td><code>void hello()&#123;...&#125;</code></td>
-<td><code>()V</code></td>
-<td><code>V</code>表示<code>void</code>，无返回值</td>
-</tr>
-<tr>
-<td><code>Object login(String str) &#123;...&#125;</code></td>
-<td><code>(Ljava/lang/String;)Ljava/lang/Object;</code></td>
-<td>普通方法，返回Object类型</td>
-</tr>
-<tr>
-<td><code>void login(String str) &#123;...&#125;</code></td>
-<td><code>(Ljava/lang/String;)V</code></td>
-<td>普通方法，无返回值</td>
-</tr>
-</tbody></table>
+<p>| 方法示例                            | 描述符                                   | 描述                          |<br>| —————————————————- | ———————————————————— | ——————————————- |<br>| <code>static&#123;...&#125;</code>，<code>static int id = 1;</code> | 方法名：<code>&lt;clinit&gt;</code>                       | <strong>静态语句块/静态变量初始化</strong> |<br>| <code>public Test ()&#123;...&#125;</code>               | 方法名：<code>&lt;init&gt;</code>，描述符<code>()V</code>            | 构造方法                      |<br>| <code>void hello()&#123;...&#125;</code>                 | <code>()V</code>                                    | <code>V</code>表示<code>void</code>，无返回值       |<br>| <code>Object login(String str) &#123;...&#125;</code>    | <code>(Ljava/lang/String;)Ljava/lang/Object;</code> | 普通方法，返回Object类型      |<br>| <code>void login(String str) &#123;...&#125;</code>      | <code>(Ljava/lang/String;)V</code>                  | 普通方法，无返回值            |</p>
 </li>
 <li><p>Java 虚拟机指令</p>
 <p><strong>详情：<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-6.html#jvms-6.5">https://docs.oracle.com/javase/specs/jvms/se15/html/jvms-6.html#jvms-6.5</a></strong></p>
 <p><strong>速查表：</strong></p>
-<table>
-<thead>
-<tr>
-<th>十六进制</th>
-<th>助记符</th>
-<th>指令说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>0x00</td>
-<td>nop</td>
-<td>什么都不做</td>
-</tr>
-<tr>
-<td>0x01</td>
-<td>aconst_null</td>
-<td>将null推送至栈顶</td>
-</tr>
-<tr>
-<td>0x02</td>
-<td>iconst_m1</td>
-<td>将int型-1推送至栈顶</td>
-</tr>
-<tr>
-<td>0x03</td>
-<td>iconst_0</td>
-<td>将int型0推送至栈顶</td>
-</tr>
-<tr>
-<td>0x04</td>
-<td>iconst_1</td>
-<td>将int型1推送至栈顶</td>
-</tr>
-<tr>
-<td>0x05</td>
-<td>iconst_2</td>
-<td>将int型2推送至栈顶</td>
-</tr>
-<tr>
-<td>0x06</td>
-<td>iconst_3</td>
-<td>将int型3推送至栈顶</td>
-</tr>
-<tr>
-<td>0x07</td>
-<td>iconst_4</td>
-<td>将int型4推送至栈顶</td>
-</tr>
-<tr>
-<td>0x08</td>
-<td>iconst_5</td>
-<td>将int型5推送至栈顶</td>
-</tr>
-<tr>
-<td>0x09</td>
-<td>lconst_0</td>
-<td>将long型0推送至栈顶</td>
-</tr>
-<tr>
-<td>0x0a</td>
-<td>lconst_1</td>
-<td>将long型1推送至栈顶</td>
-</tr>
-<tr>
-<td>0x0b</td>
-<td>fconst_0</td>
-<td>将float型0推送至栈顶</td>
-</tr>
-<tr>
-<td>0x0c</td>
-<td>fconst_1</td>
-<td>将float型1推送至栈顶</td>
-</tr>
-<tr>
-<td>0x0d</td>
-<td>fconst_2</td>
-<td>将float型2推送至栈顶</td>
-</tr>
-<tr>
-<td>0x0e</td>
-<td>dconst_0</td>
-<td>将double型0推送至栈顶</td>
-</tr>
-<tr>
-<td>0x0f</td>
-<td>dconst_1</td>
-<td>将double型1推送至栈顶</td>
-</tr>
-<tr>
-<td>0x10</td>
-<td>bipush</td>
-<td>将单字节的常量值(-128~127)推送至栈顶</td>
-</tr>
-<tr>
-<td>0x11</td>
-<td>sipush</td>
-<td>将一个短整型常量值(-32768~32767)推送至栈顶</td>
-</tr>
-<tr>
-<td>0x12</td>
-<td>ldc</td>
-<td>将int, float或String型常量值从常量池中推送至栈顶</td>
-</tr>
-<tr>
-<td>0x13</td>
-<td>ldc_w</td>
-<td>将int, float或String型常量值从常量池中推送至栈顶（宽索引）</td>
-</tr>
-<tr>
-<td>0x14</td>
-<td>ldc2_w</td>
-<td>将long或double型常量值从常量池中推送至栈顶（宽索引）</td>
-</tr>
-<tr>
-<td>0x15</td>
-<td>iload</td>
-<td>将指定的int型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x16</td>
-<td>lload</td>
-<td>将指定的long型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x17</td>
-<td>fload</td>
-<td>将指定的float型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x18</td>
-<td>dload</td>
-<td>将指定的double型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x19</td>
-<td>aload</td>
-<td>将指定的引用类型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x1a</td>
-<td>iload_0</td>
-<td>将第一个int型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x1b</td>
-<td>iload_1</td>
-<td>将第二个int型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x1c</td>
-<td>iload_2</td>
-<td>将第三个int型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x1d</td>
-<td>iload_3</td>
-<td>将第四个int型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x1e</td>
-<td>lload_0</td>
-<td>将第一个long型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x1f</td>
-<td>lload_1</td>
-<td>将第二个long型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x20</td>
-<td>lload_2</td>
-<td>将第三个long型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x21</td>
-<td>lload_3</td>
-<td>将第四个long型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x22</td>
-<td>fload_0</td>
-<td>将第一个float型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x23</td>
-<td>fload_1</td>
-<td>将第二个float型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x24</td>
-<td>fload_2</td>
-<td>将第三个float型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x25</td>
-<td>fload_3</td>
-<td>将第四个float型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x26</td>
-<td>dload_0</td>
-<td>将第一个double型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x27</td>
-<td>dload_1</td>
-<td>将第二个double型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x28</td>
-<td>dload_2</td>
-<td>将第三个double型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x29</td>
-<td>dload_3</td>
-<td>将第四个double型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x2a</td>
-<td>aload_0</td>
-<td>将第一个引用类型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x2b</td>
-<td>aload_1</td>
-<td>将第二个引用类型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x2c</td>
-<td>aload_2</td>
-<td>将第三个引用类型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x2d</td>
-<td>aload_3</td>
-<td>将第四个引用类型本地变量推送至栈顶</td>
-</tr>
-<tr>
-<td>0x2e</td>
-<td>iaload</td>
-<td>将int型数组指定索引的值推送至栈顶</td>
-</tr>
-<tr>
-<td>0x2f</td>
-<td>laload</td>
-<td>将long型数组指定索引的值推送至栈顶</td>
-</tr>
-<tr>
-<td>0x30</td>
-<td>faload</td>
-<td>将float型数组指定索引的值推送至栈顶</td>
-</tr>
-<tr>
-<td>0x31</td>
-<td>daload</td>
-<td>将double型数组指定索引的值推送至栈顶</td>
-</tr>
-<tr>
-<td>0x32</td>
-<td>aaload</td>
-<td>将引用型数组指定索引的值推送至栈顶</td>
-</tr>
-<tr>
-<td>0x33</td>
-<td>baload</td>
-<td>将boolean或byte型数组指定索引的值推送至栈顶</td>
-</tr>
-<tr>
-<td>0x34</td>
-<td>caload</td>
-<td>将char型数组指定索引的值推送至栈顶</td>
-</tr>
-<tr>
-<td>0x35</td>
-<td>saload</td>
-<td>将short型数组指定索引的值推送至栈顶</td>
-</tr>
-<tr>
-<td>0x36</td>
-<td>istore</td>
-<td>将栈顶int型数值存入指定本地变量</td>
-</tr>
-<tr>
-<td>0x37</td>
-<td>lstore</td>
-<td>将栈顶long型数值存入指定本地变量</td>
-</tr>
-<tr>
-<td>0x38</td>
-<td>fstore</td>
-<td>将栈顶float型数值存入指定本地变量</td>
-</tr>
-<tr>
-<td>0x39</td>
-<td>dstore</td>
-<td>将栈顶double型数值存入指定本地变量</td>
-</tr>
-<tr>
-<td>0x3a</td>
-<td>astore</td>
-<td>将栈顶引用型数值存入指定本地变量</td>
-</tr>
-<tr>
-<td>0x3b</td>
-<td>istore_0</td>
-<td>将栈顶int型数值存入第一个本地变量</td>
-</tr>
-<tr>
-<td>0x3c</td>
-<td>istore_1</td>
-<td>将栈顶int型数值存入第二个本地变量</td>
-</tr>
-<tr>
-<td>0x3d</td>
-<td>istore_2</td>
-<td>将栈顶int型数值存入第三个本地变量</td>
-</tr>
-<tr>
-<td>0x3e</td>
-<td>istore_3</td>
-<td>将栈顶int型数值存入第四个本地变量</td>
-</tr>
-<tr>
-<td>0x3f</td>
-<td>lstore_0</td>
-<td>将栈顶long型数值存入第一个本地变量</td>
-</tr>
-<tr>
-<td>0x40</td>
-<td>lstore_1</td>
-<td>将栈顶long型数值存入第二个本地变量</td>
-</tr>
-<tr>
-<td>0x41</td>
-<td>lstore_2</td>
-<td>将栈顶long型数值存入第三个本地变量</td>
-</tr>
-<tr>
-<td>0x42</td>
-<td>lstore_3</td>
-<td>将栈顶long型数值存入第四个本地变量</td>
-</tr>
-<tr>
-<td>0x43</td>
-<td>fstore_0</td>
-<td>将栈顶float型数值存入第一个本地变量</td>
-</tr>
-<tr>
-<td>0x44</td>
-<td>fstore_1</td>
-<td>将栈顶float型数值存入第二个本地变量</td>
-</tr>
-<tr>
-<td>0x45</td>
-<td>fstore_2</td>
-<td>将栈顶float型数值存入第三个本地变量</td>
-</tr>
-<tr>
-<td>0x46</td>
-<td>fstore_3</td>
-<td>将栈顶float型数值存入第四个本地变量</td>
-</tr>
-<tr>
-<td>0x47</td>
-<td>dstore_0</td>
-<td>将栈顶double型数值存入第一个本地变量</td>
-</tr>
-<tr>
-<td>0x48</td>
-<td>dstore_1</td>
-<td>将栈顶double型数值存入第二个本地变量</td>
-</tr>
-<tr>
-<td>0x49</td>
-<td>dstore_2</td>
-<td>将栈顶double型数值存入第三个本地变量</td>
-</tr>
-<tr>
-<td>0x4a</td>
-<td>dstore_3</td>
-<td>将栈顶double型数值存入第四个本地变量</td>
-</tr>
-<tr>
-<td>0x4b</td>
-<td>astore_0</td>
-<td>将栈顶引用型数值存入第一个本地变量</td>
-</tr>
-<tr>
-<td>0x4c</td>
-<td>astore_1</td>
-<td>将栈顶引用型数值存入第二个本地变量</td>
-</tr>
-<tr>
-<td>0x4d</td>
-<td>astore_2</td>
-<td>将栈顶引用型数值存入第三个本地变量</td>
-</tr>
-<tr>
-<td>0x4e</td>
-<td>astore_3</td>
-<td>将栈顶引用型数值存入第四个本地变量</td>
-</tr>
-<tr>
-<td>0x4f</td>
-<td>iastore</td>
-<td>将栈顶int型数值存入指定数组的指定索引位置</td>
-</tr>
-<tr>
-<td>0x50</td>
-<td>lastore</td>
-<td>将栈顶long型数值存入指定数组的指定索引位置</td>
-</tr>
-<tr>
-<td>0x51</td>
-<td>fastore</td>
-<td>将栈顶float型数值存入指定数组的指定索引位置</td>
-</tr>
-<tr>
-<td>0x52</td>
-<td>dastore</td>
-<td>将栈顶double型数值存入指定数组的指定索引位置</td>
-</tr>
-<tr>
-<td>0x53</td>
-<td>aastore</td>
-<td>将栈顶引用型数值存入指定数组的指定索引位置</td>
-</tr>
-<tr>
-<td>0x54</td>
-<td>bastore</td>
-<td>将栈顶boolean或byte型数值存入指定数组的指定索引位置</td>
-</tr>
-<tr>
-<td>0x55</td>
-<td>castore</td>
-<td>将栈顶char型数值存入指定数组的指定索引位置</td>
-</tr>
-<tr>
-<td>0x56</td>
-<td>sastore</td>
-<td>将栈顶short型数值存入指定数组的指定索引位置</td>
-</tr>
-<tr>
-<td>0x57</td>
-<td>pop</td>
-<td>将栈顶数值弹出 (数值不能是long或double类型的)</td>
-</tr>
-<tr>
-<td>0x58</td>
-<td>pop2</td>
-<td>将栈顶的一个（long或double类型的)或两个数值弹出（其它）</td>
-</tr>
-<tr>
-<td>0x59</td>
-<td>dup</td>
-<td>复制栈顶数值并将复制值压入栈顶</td>
-</tr>
-<tr>
-<td>0x5a</td>
-<td>dup_x1</td>
-<td>复制栈顶数值并将两个复制值压入栈顶</td>
-</tr>
-<tr>
-<td>0x5b</td>
-<td>dup_x2</td>
-<td>复制栈顶数值并将三个（或两个）复制值压入栈顶</td>
-</tr>
-<tr>
-<td>0x5c</td>
-<td>dup2</td>
-<td>复制栈顶一个（long或double类型的)或两个（其它）数值并将复制值压入栈顶</td>
-</tr>
-<tr>
-<td>0x5d</td>
-<td>dup2_x1</td>
-<td>&lt;待补充&gt;</td>
-</tr>
-<tr>
-<td>0x5e</td>
-<td>dup2_x2</td>
-<td>&lt;待补充&gt;</td>
-</tr>
-<tr>
-<td>0x5f</td>
-<td>swap</td>
-<td>将栈最顶端的两个数值互换(数值不能是long或double类型的)</td>
-</tr>
-<tr>
-<td>0x60</td>
-<td>iadd</td>
-<td>将栈顶两int型数值相加并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x61</td>
-<td>ladd</td>
-<td>将栈顶两long型数值相加并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x62</td>
-<td>fadd</td>
-<td>将栈顶两float型数值相加并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x63</td>
-<td>dadd</td>
-<td>将栈顶两double型数值相加并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x64</td>
-<td>isub</td>
-<td>将栈顶两int型数值相减并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x65</td>
-<td>lsub</td>
-<td>将栈顶两long型数值相减并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x66</td>
-<td>fsub</td>
-<td>将栈顶两float型数值相减并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x67</td>
-<td>dsub</td>
-<td>将栈顶两double型数值相减并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x68</td>
-<td>imul</td>
-<td>将栈顶两int型数值相乘并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x69</td>
-<td>lmul</td>
-<td>将栈顶两long型数值相乘并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x6a</td>
-<td>fmul</td>
-<td>将栈顶两float型数值相乘并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x6b</td>
-<td>dmul</td>
-<td>将栈顶两double型数值相乘并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x6c</td>
-<td>idiv</td>
-<td>将栈顶两int型数值相除并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x6d</td>
-<td>ldiv</td>
-<td>将栈顶两long型数值相除并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x6e</td>
-<td>fdiv</td>
-<td>将栈顶两float型数值相除并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x6f</td>
-<td>ddiv</td>
-<td>将栈顶两double型数值相除并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x70</td>
-<td>irem</td>
-<td>将栈顶两int型数值作取模运算并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x71</td>
-<td>lrem</td>
-<td>将栈顶两long型数值作取模运算并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x72</td>
-<td>frem</td>
-<td>将栈顶两float型数值作取模运算并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x73</td>
-<td>drem</td>
-<td>将栈顶两double型数值作取模运算并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x74</td>
-<td>ineg</td>
-<td>将栈顶int型数值取负并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x75</td>
-<td>lneg</td>
-<td>将栈顶long型数值取负并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x76</td>
-<td>fneg</td>
-<td>将栈顶float型数值取负并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x77</td>
-<td>dneg</td>
-<td>将栈顶double型数值取负并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x78</td>
-<td>ishl</td>
-<td>将int型数值左移位指定位数并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x79</td>
-<td>lshl</td>
-<td>将long型数值左移位指定位数并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x7a</td>
-<td>ishr</td>
-<td>将int型数值右（符号）移位指定位数并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x7b</td>
-<td>lshr</td>
-<td>将long型数值右（符号）移位指定位数并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x7c</td>
-<td>iushr</td>
-<td>将int型数值右（无符号）移位指定位数并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x7d</td>
-<td>lushr</td>
-<td>将long型数值右（无符号）移位指定位数并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x7e</td>
-<td>iand</td>
-<td>将栈顶两int型数值作“按位与”并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x7f</td>
-<td>land</td>
-<td>将栈顶两long型数值作“按位与”并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x80</td>
-<td>ior</td>
-<td>将栈顶两int型数值作“按位或”并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x81</td>
-<td>lor</td>
-<td>将栈顶两long型数值作“按位或”并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x82</td>
-<td>ixor</td>
-<td>将栈顶两int型数值作“按位异或”并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x83</td>
-<td>lxor</td>
-<td>将栈顶两long型数值作“按位异或”并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x84</td>
-<td>iinc</td>
-<td>将指定int型变量增加指定值（i++, i–, i+=2）</td>
-</tr>
-<tr>
-<td>0x85</td>
-<td>i2l</td>
-<td>将栈顶int型数值强制转换成long型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x86</td>
-<td>i2f</td>
-<td>将栈顶int型数值强制转换成float型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x87</td>
-<td>i2d</td>
-<td>将栈顶int型数值强制转换成double型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x88</td>
-<td>l2i</td>
-<td>将栈顶long型数值强制转换成int型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x89</td>
-<td>l2f</td>
-<td>将栈顶long型数值强制转换成float型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x8a</td>
-<td>l2d</td>
-<td>将栈顶long型数值强制转换成double型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x8b</td>
-<td>f2i</td>
-<td>将栈顶float型数值强制转换成int型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x8c</td>
-<td>f2l</td>
-<td>将栈顶float型数值强制转换成long型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x8d</td>
-<td>f2d</td>
-<td>将栈顶float型数值强制转换成double型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x8e</td>
-<td>d2i</td>
-<td>将栈顶double型数值强制转换成int型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x8f</td>
-<td>d2l</td>
-<td>将栈顶double型数值强制转换成long型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x90</td>
-<td>d2f</td>
-<td>将栈顶double型数值强制转换成float型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x91</td>
-<td>i2b</td>
-<td>将栈顶int型数值强制转换成byte型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x92</td>
-<td>i2c</td>
-<td>将栈顶int型数值强制转换成char型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x93</td>
-<td>i2s</td>
-<td>将栈顶int型数值强制转换成short型数值并将结果压入栈顶</td>
-</tr>
-<tr>
-<td>0x94</td>
-<td>lcmp</td>
-<td>比较栈顶两long型数值大小，并将结果（1，0，-1）压入栈顶</td>
-</tr>
-<tr>
-<td>0x95</td>
-<td>fcmpl</td>
-<td>比较栈顶两float型数值大小，并将结果（1，0，-1）压入栈顶；当其中一个数值为NaN时，将-1压入栈顶</td>
-</tr>
-<tr>
-<td>0x96</td>
-<td>fcmpg</td>
-<td>比较栈顶两float型数值大小，并将结果（1，0，-1）压入栈顶；当其中一个数值为NaN时，将1压入栈顶</td>
-</tr>
-<tr>
-<td>0x97</td>
-<td>dcmpl</td>
-<td>比较栈顶两double型数值大小，并将结果（1，0，-1）压入栈顶；当其中一个数值为NaN时，将-1压入栈顶</td>
-</tr>
-<tr>
-<td>0x98</td>
-<td>dcmpg</td>
-<td>比较栈顶两double型数值大小，并将结果（1，0，-1）压入栈顶；当其中一个数值为NaN时，将1压入栈顶</td>
-</tr>
-<tr>
-<td>0x99</td>
-<td>ifeq</td>
-<td>当栈顶int型数值等于0时跳转</td>
-</tr>
-<tr>
-<td>0x9a</td>
-<td>ifne</td>
-<td>当栈顶int型数值不等于0时跳转</td>
-</tr>
-<tr>
-<td>0x9b</td>
-<td>iflt</td>
-<td>当栈顶int型数值小于0时跳转</td>
-</tr>
-<tr>
-<td>0x9c</td>
-<td>ifge</td>
-<td>当栈顶int型数值大于等于0时跳转</td>
-</tr>
-<tr>
-<td>0x9d</td>
-<td>ifgt</td>
-<td>当栈顶int型数值大于0时跳转</td>
-</tr>
-<tr>
-<td>0x9e</td>
-<td>ifle</td>
-<td>当栈顶int型数值小于等于0时跳转</td>
-</tr>
-<tr>
-<td>0x9f</td>
-<td>if_icmpeq</td>
-<td>比较栈顶两int型数值大小，当结果等于0时跳转</td>
-</tr>
-<tr>
-<td>0xa0</td>
-<td>if_icmpne</td>
-<td>比较栈顶两int型数值大小，当结果不等于0时跳转</td>
-</tr>
-<tr>
-<td>0xa1</td>
-<td>if_icmplt</td>
-<td>比较栈顶两int型数值大小，当结果小于0时跳转</td>
-</tr>
-<tr>
-<td>0xa2</td>
-<td>if_icmpge</td>
-<td>比较栈顶两int型数值大小，当结果大于等于0时跳转</td>
-</tr>
-<tr>
-<td>0xa3</td>
-<td>if_icmpgt</td>
-<td>比较栈顶两int型数值大小，当结果大于0时跳转</td>
-</tr>
-<tr>
-<td>0xa4</td>
-<td>if_icmple</td>
-<td>比较栈顶两int型数值大小，当结果小于等于0时跳转</td>
-</tr>
-<tr>
-<td>0xa5</td>
-<td>if_acmpeq</td>
-<td>比较栈顶两引用型数值，当结果相等时跳转</td>
-</tr>
-<tr>
-<td>0xa6</td>
-<td>if_acmpne</td>
-<td>比较栈顶两引用型数值，当结果不相等时跳转</td>
-</tr>
-<tr>
-<td>0xa7</td>
-<td>goto</td>
-<td>无条件跳转</td>
-</tr>
-<tr>
-<td>0xa8</td>
-<td>jsr</td>
-<td>跳转至指定16位offset位置，并将jsr下一条指令地址压入栈顶</td>
-</tr>
-<tr>
-<td>0xa9</td>
-<td>ret</td>
-<td>返回至本地变量指定的index的指令位置（一般与jsr, jsr_w联合使用）</td>
-</tr>
-<tr>
-<td>0xaa</td>
-<td>tableswitch</td>
-<td>用于switch条件跳转，case值连续（可变长度指令）</td>
-</tr>
-<tr>
-<td>0xab</td>
-<td>lookupswitch</td>
-<td>用于switch条件跳转，case值不连续（可变长度指令）</td>
-</tr>
-<tr>
-<td>0xac</td>
-<td>ireturn</td>
-<td>从当前方法返回int</td>
-</tr>
-<tr>
-<td>0xad</td>
-<td>lreturn</td>
-<td>从当前方法返回long</td>
-</tr>
-<tr>
-<td>0xae</td>
-<td>freturn</td>
-<td>从当前方法返回float</td>
-</tr>
-<tr>
-<td>0xaf</td>
-<td>dreturn</td>
-<td>从当前方法返回double</td>
-</tr>
-<tr>
-<td>0xb0</td>
-<td>areturn</td>
-<td>从当前方法返回对象引用</td>
-</tr>
-<tr>
-<td>0xb1</td>
-<td>return</td>
-<td>从当前方法返回void</td>
-</tr>
-<tr>
-<td>0xb2</td>
-<td>getstatic</td>
-<td>获取指定类的静态域，并将其值压入栈顶</td>
-</tr>
-<tr>
-<td>0xb3</td>
-<td>putstatic</td>
-<td>为指定的类的静态域赋值</td>
-</tr>
-<tr>
-<td>0xb4</td>
-<td>getfield</td>
-<td>获取指定类的实例域，并将其值压入栈顶</td>
-</tr>
-<tr>
-<td>0xb5</td>
-<td>putfield</td>
-<td>为指定的类的实例域赋值</td>
-</tr>
-<tr>
-<td>0xb6</td>
-<td>invokevirtual</td>
-<td>调用实例方法</td>
-</tr>
-<tr>
-<td>0xb7</td>
-<td>invokespecial</td>
-<td>调用超类构造方法，实例初始化方法，私有方法</td>
-</tr>
-<tr>
-<td>0xb8</td>
-<td>invokestatic</td>
-<td>调用静态方法</td>
-</tr>
-<tr>
-<td>0xb9</td>
-<td>invokeinterface</td>
-<td>调用接口方法</td>
-</tr>
-<tr>
-<td>0xba</td>
-<td>–</td>
-<td></td>
-</tr>
-<tr>
-<td>0xbb</td>
-<td>new</td>
-<td>创建一个对象，并将其引用值压入栈顶</td>
-</tr>
-<tr>
-<td>0xbc</td>
-<td>newarray</td>
-<td>创建一个指定原始类型（如int, float, char…）的数组，并将其引用值压入栈顶</td>
-</tr>
-<tr>
-<td>0xbd</td>
-<td>anewarray</td>
-<td>创建一个引用型（如类，接口，数组）的数组，并将其引用值压入栈顶</td>
-</tr>
-<tr>
-<td>0xbe</td>
-<td>arraylength</td>
-<td>获得数组的长度值并压入栈顶</td>
-</tr>
-<tr>
-<td>0xbf</td>
-<td>athrow</td>
-<td>将栈顶的异常抛出</td>
-</tr>
-<tr>
-<td>0xc0</td>
-<td>checkcast</td>
-<td>检验类型转换，检验未通过将抛出ClassCastException</td>
-</tr>
-<tr>
-<td>0xc1</td>
-<td>instanceof</td>
-<td>检验对象是否是指定的类的实例，如果是将1压入栈顶，否则将0压入栈顶</td>
-</tr>
-<tr>
-<td>0xc2</td>
-<td>monitorenter</td>
-<td>获得对象的锁，用于同步方法或同步块</td>
-</tr>
-<tr>
-<td>0xc3</td>
-<td>monitorexit</td>
-<td>释放对象的锁，用于同步方法或同步块</td>
-</tr>
-<tr>
-<td>0xc4</td>
-<td>wide</td>
-<td>&lt;待补充&gt;</td>
-</tr>
-<tr>
-<td>0xc5</td>
-<td>multianewarray</td>
-<td>创建指定类型和指定维度的多维数组（执行该指令时，操作栈中必须包含各维度的长度值），并将其引用值压入栈顶</td>
-</tr>
-<tr>
-<td>0xc6</td>
-<td>ifnull</td>
-<td>为null时跳转</td>
-</tr>
-<tr>
-<td>0xc7</td>
-<td>ifnonnull</td>
-<td>不为null时跳转</td>
-</tr>
-<tr>
-<td>0xc8</td>
-<td>goto_w</td>
-<td>无条件跳转（宽索引）</td>
-</tr>
-<tr>
-<td>0xc9</td>
-<td>jsr_w</td>
-<td>跳转至指定32位offset位置，并将jsr_w下一条指令地址压入栈顶</td>
-</tr>
-</tbody></table>
+<p>| 十六进制 | 助记符          | 指令说明                                                     |<br>| ———— | ———————- | —————————————————————————————— |<br>| 0x00     | nop             | 什么都不做                                                   |<br>| 0x01     | aconst_null     | 将null推送至栈顶                                             |<br>| 0x02     | iconst_m1       | 将int型-1推送至栈顶                                          |<br>| 0x03     | iconst_0        | 将int型0推送至栈顶                                           |<br>| 0x04     | iconst_1        | 将int型1推送至栈顶                                           |<br>| 0x05     | iconst_2        | 将int型2推送至栈顶                                           |<br>| 0x06     | iconst_3        | 将int型3推送至栈顶                                           |<br>| 0x07     | iconst_4        | 将int型4推送至栈顶                                           |<br>| 0x08     | iconst_5        | 将int型5推送至栈顶                                           |<br>| 0x09     | lconst_0        | 将long型0推送至栈顶                                          |<br>| 0x0a     | lconst_1        | 将long型1推送至栈顶                                          |<br>| 0x0b     | fconst_0        | 将float型0推送至栈顶                                         |<br>| 0x0c     | fconst_1        | 将float型1推送至栈顶                                         |<br>| 0x0d     | fconst_2        | 将float型2推送至栈顶                                         |<br>| 0x0e     | dconst_0        | 将double型0推送至栈顶                                        |<br>| 0x0f     | dconst_1        | 将double型1推送至栈顶                                        |<br>| 0x10     | bipush          | 将单字节的常量值(-128~127)推送至栈顶                         |<br>| 0x11     | sipush          | 将一个短整型常量值(-32768~32767)推送至栈顶                   |<br>| 0x12     | ldc             | 将int, float或String型常量值从常量池中推送至栈顶             |<br>| 0x13     | ldc_w           | 将int, float或String型常量值从常量池中推送至栈顶（宽索引）   |<br>| 0x14     | ldc2_w          | 将long或double型常量值从常量池中推送至栈顶（宽索引）         |<br>| 0x15     | iload           | 将指定的int型本地变量推送至栈顶                              |<br>| 0x16     | lload           | 将指定的long型本地变量推送至栈顶                             |<br>| 0x17     | fload           | 将指定的float型本地变量推送至栈顶                            |<br>| 0x18     | dload           | 将指定的double型本地变量推送至栈顶                           |<br>| 0x19     | aload           | 将指定的引用类型本地变量推送至栈顶                           |<br>| 0x1a     | iload_0         | 将第一个int型本地变量推送至栈顶                              |<br>| 0x1b     | iload_1         | 将第二个int型本地变量推送至栈顶                              |<br>| 0x1c     | iload_2         | 将第三个int型本地变量推送至栈顶                              |<br>| 0x1d     | iload_3         | 将第四个int型本地变量推送至栈顶                              |<br>| 0x1e     | lload_0         | 将第一个long型本地变量推送至栈顶                             |<br>| 0x1f     | lload_1         | 将第二个long型本地变量推送至栈顶                             |<br>| 0x20     | lload_2         | 将第三个long型本地变量推送至栈顶                             |<br>| 0x21     | lload_3         | 将第四个long型本地变量推送至栈顶                             |<br>| 0x22     | fload_0         | 将第一个float型本地变量推送至栈顶                            |<br>| 0x23     | fload_1         | 将第二个float型本地变量推送至栈顶                            |<br>| 0x24     | fload_2         | 将第三个float型本地变量推送至栈顶                            |<br>| 0x25     | fload_3         | 将第四个float型本地变量推送至栈顶                            |<br>| 0x26     | dload_0         | 将第一个double型本地变量推送至栈顶                           |<br>| 0x27     | dload_1         | 将第二个double型本地变量推送至栈顶                           |<br>| 0x28     | dload_2         | 将第三个double型本地变量推送至栈顶                           |<br>| 0x29     | dload_3         | 将第四个double型本地变量推送至栈顶                           |<br>| 0x2a     | aload_0         | 将第一个引用类型本地变量推送至栈顶                           |<br>| 0x2b     | aload_1         | 将第二个引用类型本地变量推送至栈顶                           |<br>| 0x2c     | aload_2         | 将第三个引用类型本地变量推送至栈顶                           |<br>| 0x2d     | aload_3         | 将第四个引用类型本地变量推送至栈顶                           |<br>| 0x2e     | iaload          | 将int型数组指定索引的值推送至栈顶                            |<br>| 0x2f     | laload          | 将long型数组指定索引的值推送至栈顶                           |<br>| 0x30     | faload          | 将float型数组指定索引的值推送至栈顶                          |<br>| 0x31     | daload          | 将double型数组指定索引的值推送至栈顶                         |<br>| 0x32     | aaload          | 将引用型数组指定索引的值推送至栈顶                           |<br>| 0x33     | baload          | 将boolean或byte型数组指定索引的值推送至栈顶                  |<br>| 0x34     | caload          | 将char型数组指定索引的值推送至栈顶                           |<br>| 0x35     | saload          | 将short型数组指定索引的值推送至栈顶                          |<br>| 0x36     | istore          | 将栈顶int型数值存入指定本地变量                              |<br>| 0x37     | lstore          | 将栈顶long型数值存入指定本地变量                             |<br>| 0x38     | fstore          | 将栈顶float型数值存入指定本地变量                            |<br>| 0x39     | dstore          | 将栈顶double型数值存入指定本地变量                           |<br>| 0x3a     | astore          | 将栈顶引用型数值存入指定本地变量                             |<br>| 0x3b     | istore_0        | 将栈顶int型数值存入第一个本地变量                            |<br>| 0x3c     | istore_1        | 将栈顶int型数值存入第二个本地变量                            |<br>| 0x3d     | istore_2        | 将栈顶int型数值存入第三个本地变量                            |<br>| 0x3e     | istore_3        | 将栈顶int型数值存入第四个本地变量                            |<br>| 0x3f     | lstore_0        | 将栈顶long型数值存入第一个本地变量                           |<br>| 0x40     | lstore_1        | 将栈顶long型数值存入第二个本地变量                           |<br>| 0x41     | lstore_2        | 将栈顶long型数值存入第三个本地变量                           |<br>| 0x42     | lstore_3        | 将栈顶long型数值存入第四个本地变量                           |<br>| 0x43     | fstore_0        | 将栈顶float型数值存入第一个本地变量                          |<br>| 0x44     | fstore_1        | 将栈顶float型数值存入第二个本地变量                          |<br>| 0x45     | fstore_2        | 将栈顶float型数值存入第三个本地变量                          |<br>| 0x46     | fstore_3        | 将栈顶float型数值存入第四个本地变量                          |<br>| 0x47     | dstore_0        | 将栈顶double型数值存入第一个本地变量                         |<br>| 0x48     | dstore_1        | 将栈顶double型数值存入第二个本地变量                         |<br>| 0x49     | dstore_2        | 将栈顶double型数值存入第三个本地变量                         |<br>| 0x4a     | dstore_3        | 将栈顶double型数值存入第四个本地变量                         |<br>| 0x4b     | astore_0        | 将栈顶引用型数值存入第一个本地变量                           |<br>| 0x4c     | astore_1        | 将栈顶引用型数值存入第二个本地变量                           |<br>| 0x4d     | astore_2        | 将栈顶引用型数值存入第三个本地变量                           |<br>| 0x4e     | astore_3        | 将栈顶引用型数值存入第四个本地变量                           |<br>| 0x4f     | iastore         | 将栈顶int型数值存入指定数组的指定索引位置                    |<br>| 0x50     | lastore         | 将栈顶long型数值存入指定数组的指定索引位置                   |<br>| 0x51     | fastore         | 将栈顶float型数值存入指定数组的指定索引位置                  |<br>| 0x52     | dastore         | 将栈顶double型数值存入指定数组的指定索引位置                 |<br>| 0x53     | aastore         | 将栈顶引用型数值存入指定数组的指定索引位置                   |<br>| 0x54     | bastore         | 将栈顶boolean或byte型数值存入指定数组的指定索引位置          |<br>| 0x55     | castore         | 将栈顶char型数值存入指定数组的指定索引位置                   |<br>| 0x56     | sastore         | 将栈顶short型数值存入指定数组的指定索引位置                  |<br>| 0x57     | pop             | 将栈顶数值弹出 (数值不能是long或double类型的)                |<br>| 0x58     | pop2            | 将栈顶的一个（long或double类型的)或两个数值弹出（其它）      |<br>| 0x59     | dup             | 复制栈顶数值并将复制值压入栈顶                               |<br>| 0x5a     | dup_x1          | 复制栈顶数值并将两个复制值压入栈顶                           |<br>| 0x5b     | dup_x2          | 复制栈顶数值并将三个（或两个）复制值压入栈顶                 |<br>| 0x5c     | dup2            | 复制栈顶一个（long或double类型的)或两个（其它）数值并将复制值压入栈顶 |<br>| 0x5d     | dup2_x1         | &lt;待补充&gt;                                                     |<br>| 0x5e     | dup2_x2         | &lt;待补充&gt;                                                     |<br>| 0x5f     | swap            | 将栈最顶端的两个数值互换(数值不能是long或double类型的)       |<br>| 0x60     | iadd            | 将栈顶两int型数值相加并将结果压入栈顶                        |<br>| 0x61     | ladd            | 将栈顶两long型数值相加并将结果压入栈顶                       |<br>| 0x62     | fadd            | 将栈顶两float型数值相加并将结果压入栈顶                      |<br>| 0x63     | dadd            | 将栈顶两double型数值相加并将结果压入栈顶                     |<br>| 0x64     | isub            | 将栈顶两int型数值相减并将结果压入栈顶                        |<br>| 0x65     | lsub            | 将栈顶两long型数值相减并将结果压入栈顶                       |<br>| 0x66     | fsub            | 将栈顶两float型数值相减并将结果压入栈顶                      |<br>| 0x67     | dsub            | 将栈顶两double型数值相减并将结果压入栈顶                     |<br>| 0x68     | imul            | 将栈顶两int型数值相乘并将结果压入栈顶                        |<br>| 0x69     | lmul            | 将栈顶两long型数值相乘并将结果压入栈顶                       |<br>| 0x6a     | fmul            | 将栈顶两float型数值相乘并将结果压入栈顶                      |<br>| 0x6b     | dmul            | 将栈顶两double型数值相乘并将结果压入栈顶                     |<br>| 0x6c     | idiv            | 将栈顶两int型数值相除并将结果压入栈顶                        |<br>| 0x6d     | ldiv            | 将栈顶两long型数值相除并将结果压入栈顶                       |<br>| 0x6e     | fdiv            | 将栈顶两float型数值相除并将结果压入栈顶                      |<br>| 0x6f     | ddiv            | 将栈顶两double型数值相除并将结果压入栈顶                     |<br>| 0x70     | irem            | 将栈顶两int型数值作取模运算并将结果压入栈顶                  |<br>| 0x71     | lrem            | 将栈顶两long型数值作取模运算并将结果压入栈顶                 |<br>| 0x72     | frem            | 将栈顶两float型数值作取模运算并将结果压入栈顶                |<br>| 0x73     | drem            | 将栈顶两double型数值作取模运算并将结果压入栈顶               |<br>| 0x74     | ineg            | 将栈顶int型数值取负并将结果压入栈顶                          |<br>| 0x75     | lneg            | 将栈顶long型数值取负并将结果压入栈顶                         |<br>| 0x76     | fneg            | 将栈顶float型数值取负并将结果压入栈顶                        |<br>| 0x77     | dneg            | 将栈顶double型数值取负并将结果压入栈顶                       |<br>| 0x78     | ishl            | 将int型数值左移位指定位数并将结果压入栈顶                    |<br>| 0x79     | lshl            | 将long型数值左移位指定位数并将结果压入栈顶                   |<br>| 0x7a     | ishr            | 将int型数值右（符号）移位指定位数并将结果压入栈顶            |<br>| 0x7b     | lshr            | 将long型数值右（符号）移位指定位数并将结果压入栈顶           |<br>| 0x7c     | iushr           | 将int型数值右（无符号）移位指定位数并将结果压入栈顶          |<br>| 0x7d     | lushr           | 将long型数值右（无符号）移位指定位数并将结果压入栈顶         |<br>| 0x7e     | iand            | 将栈顶两int型数值作“按位与”并将结果压入栈顶                  |<br>| 0x7f     | land            | 将栈顶两long型数值作“按位与”并将结果压入栈顶                 |<br>| 0x80     | ior             | 将栈顶两int型数值作“按位或”并将结果压入栈顶                  |<br>| 0x81     | lor             | 将栈顶两long型数值作“按位或”并将结果压入栈顶                 |<br>| 0x82     | ixor            | 将栈顶两int型数值作“按位异或”并将结果压入栈顶                |<br>| 0x83     | lxor            | 将栈顶两long型数值作“按位异或”并将结果压入栈顶               |<br>| 0x84     | iinc            | 将指定int型变量增加指定值（i++, i—, i+=2）                  |<br>| 0x85     | i2l             | 将栈顶int型数值强制转换成long型数值并将结果压入栈顶          |<br>| 0x86     | i2f             | 将栈顶int型数值强制转换成float型数值并将结果压入栈顶         |<br>| 0x87     | i2d             | 将栈顶int型数值强制转换成double型数值并将结果压入栈顶        |<br>| 0x88     | l2i             | 将栈顶long型数值强制转换成int型数值并将结果压入栈顶          |<br>| 0x89     | l2f             | 将栈顶long型数值强制转换成float型数值并将结果压入栈顶        |<br>| 0x8a     | l2d             | 将栈顶long型数值强制转换成double型数值并将结果压入栈顶       |<br>| 0x8b     | f2i             | 将栈顶float型数值强制转换成int型数值并将结果压入栈顶         |<br>| 0x8c     | f2l             | 将栈顶float型数值强制转换成long型数值并将结果压入栈顶        |<br>| 0x8d     | f2d             | 将栈顶float型数值强制转换成double型数值并将结果压入栈顶      |<br>| 0x8e     | d2i             | 将栈顶double型数值强制转换成int型数值并将结果压入栈顶        |<br>| 0x8f     | d2l             | 将栈顶double型数值强制转换成long型数值并将结果压入栈顶       |<br>| 0x90     | d2f             | 将栈顶double型数值强制转换成float型数值并将结果压入栈顶      |<br>| 0x91     | i2b             | 将栈顶int型数值强制转换成byte型数值并将结果压入栈顶          |<br>| 0x92     | i2c             | 将栈顶int型数值强制转换成char型数值并将结果压入栈顶          |<br>| 0x93     | i2s             | 将栈顶int型数值强制转换成short型数值并将结果压入栈顶         |<br>| 0x94     | lcmp            | 比较栈顶两long型数值大小，并将结果（1，0，-1）压入栈顶       |<br>| 0x95     | fcmpl           | 比较栈顶两float型数值大小，并将结果（1，0，-1）压入栈顶；当其中一个数值为NaN时，将-1压入栈顶 |<br>| 0x96     | fcmpg           | 比较栈顶两float型数值大小，并将结果（1，0，-1）压入栈顶；当其中一个数值为NaN时，将1压入栈顶 |<br>| 0x97     | dcmpl           | 比较栈顶两double型数值大小，并将结果（1，0，-1）压入栈顶；当其中一个数值为NaN时，将-1压入栈顶 |<br>| 0x98     | dcmpg           | 比较栈顶两double型数值大小，并将结果（1，0，-1）压入栈顶；当其中一个数值为NaN时，将1压入栈顶 |<br>| 0x99     | ifeq            | 当栈顶int型数值等于0时跳转                                   |<br>| 0x9a     | ifne            | 当栈顶int型数值不等于0时跳转                                 |<br>| 0x9b     | iflt            | 当栈顶int型数值小于0时跳转                                   |<br>| 0x9c     | ifge            | 当栈顶int型数值大于等于0时跳转                               |<br>| 0x9d     | ifgt            | 当栈顶int型数值大于0时跳转                                   |<br>| 0x9e     | ifle            | 当栈顶int型数值小于等于0时跳转                               |<br>| 0x9f     | if_icmpeq       | 比较栈顶两int型数值大小，当结果等于0时跳转                   |<br>| 0xa0     | if_icmpne       | 比较栈顶两int型数值大小，当结果不等于0时跳转                 |<br>| 0xa1     | if_icmplt       | 比较栈顶两int型数值大小，当结果小于0时跳转                   |<br>| 0xa2     | if_icmpge       | 比较栈顶两int型数值大小，当结果大于等于0时跳转               |<br>| 0xa3     | if_icmpgt       | 比较栈顶两int型数值大小，当结果大于0时跳转                   |<br>| 0xa4     | if_icmple       | 比较栈顶两int型数值大小，当结果小于等于0时跳转               |<br>| 0xa5     | if_acmpeq       | 比较栈顶两引用型数值，当结果相等时跳转                       |<br>| 0xa6     | if_acmpne       | 比较栈顶两引用型数值，当结果不相等时跳转                     |<br>| 0xa7     | goto            | 无条件跳转                                                   |<br>| 0xa8     | jsr             | 跳转至指定16位offset位置，并将jsr下一条指令地址压入栈顶      |<br>| 0xa9     | ret             | 返回至本地变量指定的index的指令位置（一般与jsr, jsr_w联合使用） |<br>| 0xaa     | tableswitch     | 用于switch条件跳转，case值连续（可变长度指令）               |<br>| 0xab     | lookupswitch    | 用于switch条件跳转，case值不连续（可变长度指令）             |<br>| 0xac     | ireturn         | 从当前方法返回int                                            |<br>| 0xad     | lreturn         | 从当前方法返回long                                           |<br>| 0xae     | freturn         | 从当前方法返回float                                          |<br>| 0xaf     | dreturn         | 从当前方法返回double                                         |<br>| 0xb0     | areturn         | 从当前方法返回对象引用                                       |<br>| 0xb1     | return          | 从当前方法返回void                                           |<br>| 0xb2     | getstatic       | 获取指定类的静态域，并将其值压入栈顶                         |<br>| 0xb3     | putstatic       | 为指定的类的静态域赋值                                       |<br>| 0xb4     | getfield        | 获取指定类的实例域，并将其值压入栈顶                         |<br>| 0xb5     | putfield        | 为指定的类的实例域赋值                                       |<br>| 0xb6     | invokevirtual   | 调用实例方法                                                 |<br>| 0xb7     | invokespecial   | 调用超类构造方法，实例初始化方法，私有方法                   |<br>| 0xb8     | invokestatic    | 调用静态方法                                                 |<br>| 0xb9     | invokeinterface | 调用接口方法                                                 |<br>| 0xba     | —              |                                                              |<br>| 0xbb     | new             | 创建一个对象，并将其引用值压入栈顶                           |<br>| 0xbc     | newarray        | 创建一个指定原始类型（如int, float, char…）的数组，并将其引用值压入栈顶 |<br>| 0xbd     | anewarray       | 创建一个引用型（如类，接口，数组）的数组，并将其引用值压入栈顶 |<br>| 0xbe     | arraylength     | 获得数组的长度值并压入栈顶                                   |<br>| 0xbf     | athrow          | 将栈顶的异常抛出                                             |<br>| 0xc0     | checkcast       | 检验类型转换，检验未通过将抛出ClassCastException             |<br>| 0xc1     | instanceof      | 检验对象是否是指定的类的实例，如果是将1压入栈顶，否则将0压入栈顶 |<br>| 0xc2     | monitorenter    | 获得对象的锁，用于同步方法或同步块                           |<br>| 0xc3     | monitorexit     | 释放对象的锁，用于同步方法或同步块                           |<br>| 0xc4     | wide            | &lt;待补充&gt;                                                     |<br>| 0xc5     | multianewarray  | 创建指定类型和指定维度的多维数组（执行该指令时，操作栈中必须包含各维度的长度值），并将其引用值压入栈顶 |<br>| 0xc6     | ifnull          | 为null时跳转                                                 |<br>| 0xc7     | ifnonnull       | 不为null时跳转                                               |<br>| 0xc8     | goto_w          | 无条件跳转（宽索引）                                         |<br>| 0xc9     | jsr_w           | 跳转至指定32位offset位置，并将jsr_w下一条指令地址压入栈顶    |</p>
 </li>
 </ul>
 <p><strong>TODO dup的作用？</strong></p>
 <p>看下栈帧的变化，dup在里面的效果</p>
-<p>![image-20230118111219258](Java 字节码/image-20230118111219258.png)</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230118111219258.png" alt="image-20230118111219258"></p>
 <p>可以看到 new 完之后一定会接一个 invokespecial 指令，其会调用实例初始化方法<init>:()V，注意这个方法是一个实例方法，所以需要从操作数栈顶弹出一个this引用，也就是说这一步会弹出一个之前入栈的对象地址。那么第二个我就可以直接拿来用了，因为他已经是实例化好的对象。如果我们不用，<strong>那编译器也会生成dup指令，在初始化方法调用完成后再从栈顶pop出来</strong>，如果要用的话需要我们手动从局部变量表里取</init></p>
 <h5 id="Java-类字节码编辑-ASM"><a href="#Java-类字节码编辑-ASM" class="headerlink" title="Java 类字节码编辑 - ASM"></a>Java 类字节码编辑 - ASM</h5><p><img src="https://github.com/Y4tacker/JavaSec/raw/main/1.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ASM%E5%AD%A6%E4%B9%A0/img/asm-core-classes.png" alt="img"></p>
 <p>ASM提供了三个基于<code>ClassVisitor API</code>的核心API，用于生成和转换类</p>
@@ -1745,104 +370,42 @@
 <ul>
 <li><p>ClassReader</p>
 <p>用于解析类字节码，提供三种创建方式：<strong>类名、类字节码数组、类输入流对象</strong></p>
-<p>![image-20230115225203475](Java 字节码/image-20230115225203475.png)</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230115225203475.png" alt="image-20230115225203475"></p>
 </li>
 <li><p>ClassVisitor</p>
 <p>两个重要字段：api 指出了 ASM api 版本；cv 是一个 ClassVisitor 类型的数据，它的作用是将多个 ClassVisitor 串连起来</p>
-<p>![image-20230116173506490](Java 字节码/image-20230116173506490.png)</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230116173506490.png" alt="image-20230116173506490"></p>
 <p>其通常作为访问者模式中的访问者来根据顺序执行访问类结构中的不同部分，重点关注<code>visit()、visitField()、visitMethod()和visitEnd()</code></p>
 <p>有一个signature参数需要注意，它与<code>泛型</code>密切先关，例子如下：无泛型的情况下设置为null即可</p>
-<p>![image-20230116174308989](Java 字节码/image-20230116174308989.png)</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230116174308989.png" alt="image-20230116174308989"></p>
 <p><strong>常用的 Visitor 回调事件 注意参数！</strong></p>
-<table>
-<thead>
-<tr>
-<th>方法名</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>visit</td>
-<td>访问class的头部信息时，version为class版本（<strong>编译版本</strong>），access为访问修饰符，name为类名称，signature为class的签名，<strong>可能是null</strong>，superName为超类名称，interfaces为接口的名称</td>
-</tr>
-<tr>
-<td>visitAnnotation</td>
-<td>访问class的<strong>注解信息</strong>时，descriptor为签名描述信息，visible为是否运行时可见</td>
-</tr>
-<tr>
-<td>visitAttribute</td>
-<td>访问该类的属性</td>
-</tr>
-<tr>
-<td>visitInnerClass</td>
-<td>访问class中内部类的信息，而且这个内部类不一定是被访问类的成员（有可能是一段方法中的匿名内部类或者声明在一个方法中的类等等）。name为内部类的名称，outerName为内部类所在类的名称，innerName为内部类的名称</td>
-</tr>
-<tr>
-<td>visitOuterClass</td>
-<td>访问该类的外部类，仅当类具有封闭类时，才必须调用此方法。owner为拥有该类的class名称，name为包含该类的方法的名称，如果该类未包含在其封闭类的方法中，则返回null，descriptor为签名描述信息</td>
-</tr>
-<tr>
-<td>visitEnd</td>
-<td><strong>结束访问class时调用</strong></td>
-</tr>
-<tr>
-<td>visitField</td>
-<td>访问class中字段的信息，返回一个<strong>FieldVisitor</strong>用于操作字段相关的信息，access为访问修饰符，name为类名称，signature为class的签名，可能是null，descriptor为描述信息</td>
-</tr>
-<tr>
-<td>visitMethod</td>
-<td>访问class中方法的信息，返回一个MethodVisitor用于操作字段相关的信息，access为访问修饰符，name为方法名称，signature为方法的签名，可能是null，descriptor为描述信息，exceptions为异常</td>
-</tr>
-<tr>
-<td>visitModule</td>
-<td>访问对应的模块</td>
-</tr>
-<tr>
-<td>visitTypeAnnotation</td>
-<td>访问类的签名的注解</td>
-</tr>
-<tr>
-<td>visitNestHost</td>
-<td>访问类的nest host；(nest 指的一个共享私有成员变量的包名相同的class集合，nest中有一个host(主类)和多个members(成员类)，jdk11为了提供更大，更广泛的嵌套类型，并且为了补足访问控制检测不足，引进了两个新的class文件属性，nest host 和nest member,nest host中包含了一个nest members列表，用来确定其他静态nest members;nest member中包含了一个nest host属性用来确定它的nesthost;)</td>
-</tr>
-<tr>
-<td>visitNestMember</td>
-<td>访问嵌套类的nest member，只有host class被visited时才能调用该方法</td>
-</tr>
-</tbody></table>
-<p>![image-20230117203859698](Java 字节码/image-20230117203859698.png)</p>
+<p>| 方法名              | 说明                                                         |<br>| —————————- | —————————————————————————————— |<br>| visit               | 访问class的头部信息时，version为class版本（<strong>编译版本</strong>），access为访问修饰符，name为类名称，signature为class的签名，<strong>可能是null</strong>，superName为超类名称，interfaces为接口的名称 |<br>| visitAnnotation     | 访问class的<strong>注解信息</strong>时，descriptor为签名描述信息，visible为是否运行时可见 |<br>| visitAttribute      | 访问该类的属性                                               |<br>| visitInnerClass     | 访问class中内部类的信息，而且这个内部类不一定是被访问类的成员（有可能是一段方法中的匿名内部类或者声明在一个方法中的类等等）。name为内部类的名称，outerName为内部类所在类的名称，innerName为内部类的名称 |<br>| visitOuterClass     | 访问该类的外部类，仅当类具有封闭类时，才必须调用此方法。owner为拥有该类的class名称，name为包含该类的方法的名称，如果该类未包含在其封闭类的方法中，则返回null，descriptor为签名描述信息 |<br>| visitEnd            | <strong>结束访问class时调用</strong>                                      |<br>| visitField          | 访问class中字段的信息，返回一个<strong>FieldVisitor</strong>用于操作字段相关的信息，access为访问修饰符，name为类名称，signature为class的签名，可能是null，descriptor为描述信息 |<br>| visitMethod         | 访问class中方法的信息，返回一个MethodVisitor用于操作字段相关的信息，access为访问修饰符，name为方法名称，signature为方法的签名，可能是null，descriptor为描述信息，exceptions为异常 |<br>| visitModule         | 访问对应的模块                                               |<br>| visitTypeAnnotation | 访问类的签名的注解                                           |<br>| visitNestHost       | 访问类的nest host；(nest 指的一个共享私有成员变量的包名相同的class集合，nest中有一个host(主类)和多个members(成员类)，jdk11为了提供更大，更广泛的嵌套类型，并且为了补足访问控制检测不足，引进了两个新的class文件属性，nest host 和nest member,nest host中包含了一个nest members列表，用来确定其他静态nest members;nest member中包含了一个nest host属性用来确定它的nesthost;) |<br>| visitNestMember     | 访问嵌套类的nest member，只有host class被visited时才能调用该方法 |</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230117203859698.png" alt="image-20230117203859698"></p>
 <p>参数说明：</p>
 <blockquote>
 <ul>
-<li><p><code>visitField (access, name, descriptor, signature, value)</code></p>
-</li>
+<li><code>visitField (access, name, descriptor, signature, value)</code></li>
 <li><p><code>visitMethod(access, name, descriptor, signature, exceptions)</code></p>
 </li>
 <li><p><code>access</code>参数：表示当前字段或方法带有的访问标识（access flag）信息，例如<code>ACC_PUBLIC</code>、<code>ACC_STATIC</code>和<code>ACC_FINAL</code>等。</p>
 </li>
-<li><p><code>name</code>参数：表示当前字段或方法的名字。</p>
-</li>
-<li><p><code>descriptor</code>参数：表示当前字段或方法的描述符。这些描述符，与我们平时使用的Java类型是有区别的。</p>
-</li>
-<li><p><code>signature</code>参数：表示当前字段或方法是否带有泛型信息。换句话说，如果不带有泛型信息，提供一个<code>null</code>就可以了；如果带有泛型信息，就需要给它提供某一个具体的值。</p>
-</li>
-<li><p><code>value</code>参数：是<code>visitField()</code>方法的第5个参数。这个参数的取值，与当前字段是否为常量有关系。如果当前字段是一个常量，就需要给<code>value</code>参数提供某一个具体的值；如果当前字段不是常量，那么使用<code>null</code>就可以了。</p>
-</li>
-<li><p><code>exceptions</code>参数：是<code>visitMethod()</code>方法的第5个参数。这个参数的取值，与当前方法头（Method Header）中是否具有<code>throws XxxException</code>相关。</p>
-</li>
+<li><code>name</code>参数：表示当前字段或方法的名字。</li>
+<li><code>descriptor</code>参数：表示当前字段或方法的描述符。这些描述符，与我们平时使用的Java类型是有区别的。</li>
+<li><code>signature</code>参数：表示当前字段或方法是否带有泛型信息。换句话说，如果不带有泛型信息，提供一个<code>null</code>就可以了；如果带有泛型信息，就需要给它提供某一个具体的值。</li>
+<li><code>value</code>参数：是<code>visitField()</code>方法的第5个参数。这个参数的取值，与当前字段是否为常量有关系。如果当前字段是一个常量，就需要给<code>value</code>参数提供某一个具体的值；如果当前字段不是常量，那么使用<code>null</code>就可以了。</li>
+<li><code>exceptions</code>参数：是<code>visitMethod()</code>方法的第5个参数。这个参数的取值，与当前方法头（Method Header）中是否具有<code>throws XxxException</code>相关。</li>
 </ul>
 </blockquote>
 </li>
 <li><p><strong>FieldVisitor类</strong></p>
 <p>通过 ClassVisitor类的 visitField方法返回</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> FieldVisitor <span class="title function_">visitField</span><span class="params">(<span class="type">int</span> access, String name, String descriptor, String signature, Object value)</span>;</span><br><span class="line"><span class="comment">//示例</span></span><br><span class="line">&#123;</span><br><span class="line">fieldVisitor = classWriter.visitField(ACC_PUBLIC | ACC_STATIC, <span class="string">&quot;a&quot;</span>, <span class="string">&quot;I&quot;</span>, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">fieldVisitor.visitEnd();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>同样也支持一系列 visitxxx的回调</p>
 <p>这里的方法只需要关注一个<code>visitEnd()</code> 即可</p>
 </li>
 <li><p>ClassWriter 类</p>
 <p>构造函数中的参数</p>
-<p>![image-20230116175440576](Java 字节码/image-20230116175440576.png)</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230116175440576.png" alt="image-20230116175440576"></p>
 <p>使用该类生成一个 Class 文件，可以分成三个步骤：</p>
 <blockquote>
 <ul>
@@ -1854,10 +417,9 @@
 </li>
 </ul>
 <p><strong>MethodVisitor和AdviceAdapter</strong></p>
-<p><code>MethodVisitor </code> 同 <code>ClassVisitor</code>，<strong>重写</strong><code>MethodVisitor</code>类方法可获取捕获到对应的<code>visit</code>事件</p>
+<p><code>MethodVisitor</code> 同 <code>ClassVisitor</code>，<strong>重写</strong><code>MethodVisitor</code>类方法可获取捕获到对应的<code>visit</code>事件</p>
 <p>顺序如下</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">( visitParameter )* [ visitAnnotationDefault ] </span><br><span class="line">  ( visitAnnotation | visitAnnotableParameterCount | visitParameterAnnotation visitTypeAnnotation | visitAttribute )* </span><br><span class="line">  [ visitCode </span><br><span class="line">   ( visitFrame | visit&lt;i&gt;X&lt;/i&gt;Insn | visitLabel | visitInsnAnnotation | visitTryCatchBlock | visitTryCatchAnnotation | visitLocalVariable | visitLocalVariableAnnotation | visitLineNumber )* </span><br><span class="line">   visitMaxs </span><br><span class="line">  ] </span><br><span class="line">visitEnd</span><br></pre></td></tr></table></figure>
-
 <p>AdviceAdapter 的父类是 <code>GeneratorAdapter</code>和<code>LocalVariablesSorter</code></p>
 <p><code>AdviceAdapter</code>类实现了一些非常有价值的方法，如：<code>onMethodEnter</code>（方法进入时回调方法）、<code>onMethodExit</code>（方法退出时回调方法），如果我们自己实现很容易掉进坑里面，因为这两个方法都是根据条件推算出来的。比如我们如果在构造方法的第一行直接插入了我们自己的字节码就可能会发现程序一运行就会崩溃，因为Java语法中限制我们第一行代码必须是<code>super(xxx)</code>。</p>
 <p>使用<code>AdviceAdapter</code>可以直接调用<code>newLocal(type)</code>计算出<strong>本地变量存储的位置</strong>，为我们省去了许多不必要的麻烦</p>
@@ -1876,16 +438,16 @@
 </blockquote>
 <p>参数就是局部变量表和操作数栈的内容</p>
 </li>
-<li><p><code>visitIincInsn </code></p>
+<li><p><code>visitIincInsn</code></p>
 <p>处理 IINC指令：将指定int型变量增加指定值</p>
 </li>
-<li><p><code>visitVarInsn </code></p>
+<li><p><code>visitVarInsn</code></p>
 <blockquote>
 <p>Visits a local variable instruction. A local variable instruction is an instruction that loads or stores the value of a local variable</p>
 </blockquote>
 <p>就是取局部变量变的值放入操作数栈</p>
 </li>
-<li><p><code>visitMethodInsn </code></p>
+<li><p><code>visitMethodInsn</code></p>
 <blockquote>
 <p>visits a method instruction. A method instruction is an instruction that invokes a method</p>
 </blockquote>
@@ -1912,9 +474,10 @@
 </blockquote>
 <p>访问常量池索引</p>
 <p>在<code>&lt;init&gt;</code>初始化函数的构造中，this变量也需要经过一个初始化的操作，其位于局部变量表索引为0的位置</p>
-<p>![image-20230118105514531](Java 字节码/image-20230118105514531.png)</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230118105514531.png" alt="image-20230118105514531"></p>
 <p>这里说明一下构造函数方法的创建，就以最基本的空构造函数为例，由于前面说了刚开始的this变量是处于未初始化的状态，因此需要进行初始化，那么用什么方法呢。这里实际就是用的父类的构造函数，对于一般的对象，就调用父类 Object 类的构造函数即可</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// &lt;init&gt;</span><br><span class="line">public A() &#123;</span><br><span class="line">	super();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// asm</span><br><span class="line">MethodVisitor mv1 = cw.visitMethod(ACC_PUBLIC, &quot;&lt;init&gt;&quot;, &quot;()V&quot;, null, null);</span><br><span class="line">            mv1.visitCode();</span><br><span class="line">            mv1.visitVarInsn(ALOAD, 0);</span><br><span class="line">            mv1.visitMethodInsn(INVOKESPECIAL, &quot;java/lang/Object&quot;, &quot;&lt;init&gt;&quot;, &quot;()V&quot;, false);</span><br><span class="line">            mv1.visitInsn(RETURN);</span><br><span class="line">            mv1.visitMaxs(1, 1);</span><br><span class="line">            mv1.visitEnd();</span><br></pre></td></tr></table></figure></li>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// &lt;init&gt;</span><br><span class="line">public A() &#123;</span><br><span class="line">	super();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// asm</span><br><span class="line">MethodVisitor mv1 = cw.visitMethod(ACC_PUBLIC, &quot;&lt;init&gt;&quot;, &quot;()V&quot;, null, null);</span><br><span class="line">            mv1.visitCode();</span><br><span class="line">            mv1.visitVarInsn(ALOAD, 0);</span><br><span class="line">            mv1.visitMethodInsn(INVOKESPECIAL, &quot;java/lang/Object&quot;, &quot;&lt;init&gt;&quot;, &quot;()V&quot;, false);</span><br><span class="line">            mv1.visitInsn(RETURN);</span><br><span class="line">            mv1.visitMaxs(1, 1);</span><br><span class="line">            mv1.visitEnd();</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 <p><strong>Label类</strong></p>
 <blockquote>
@@ -1925,52 +488,38 @@
 </ul>
 </blockquote>
 <p>Label类中存在一个属性 <code>bytecodeOffset</code> 它用于计算相对偏移量。由于指令是索引值位置可变，我们想要固定一个跳转位置的话则需要 Label 的参与，当asm转换成byte[] 时，将通过Label与待跳转位置相减来计算出相对偏移量。</p>
-<p>![image-20230118114237744](Java 字节码/image-20230118114237744.png)</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230118114237744.png" alt="image-20230118114237744"></p>
 <p>如果要添加一个跳转位置的话，调用 <code>MethodVisitor.visitLabel(Label)</code></p>
 <p>可以用于实现选择、循环、try-catch语句</p>
 <p>生成if语句</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">if (value == 0) &#123;</span><br><span class="line">  System.out.println(&quot;0&quot;);</span><br><span class="line">&#125;</span><br><span class="line">else &#123;</span><br><span class="line">  System.out.println(&quot;not 0&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">     methodVisitor = classWriter.visitMethod(ACC_PUBLIC, &quot;test&quot;, &quot;(I)V&quot;, null, null);</span><br><span class="line">     methodVisitor.visitCode();</span><br><span class="line">     methodVisitor.visitVarInsn(ILOAD, 1);</span><br><span class="line">     Label label0 = new Label();</span><br><span class="line">     methodVisitor.visitJumpInsn(IFNE, label0);</span><br><span class="line">     methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">     methodVisitor.visitLdcInsn(&quot;0&quot;);</span><br><span class="line">     methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(Ljava/lang/String;)V&quot;, false);</span><br><span class="line">     Label label1 = new Label();</span><br><span class="line">     methodVisitor.visitJumpInsn(GOTO, label1);</span><br><span class="line">  </span><br><span class="line">     methodVisitor.visitLabel(label0);</span><br><span class="line">     methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">     methodVisitor.visitLdcInsn(&quot;not 0&quot;);</span><br><span class="line">     methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(Ljava/lang/String;)V&quot;, false);</span><br><span class="line">     methodVisitor.visitLabel(label1);</span><br><span class="line">     methodVisitor.visitInsn(RETURN);</span><br><span class="line">     methodVisitor.visitMaxs(2, 2);</span><br><span class="line">     methodVisitor.visitEnd();</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-
 <p>生成switch语句</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">switch (val) &#123;</span><br><span class="line">  case 1:</span><br><span class="line">    System.out.println(&quot;1&quot;);</span><br><span class="line">    break;</span><br><span class="line">  case 2:</span><br><span class="line">    System.out.println(&quot;2&quot;);</span><br><span class="line">    break;</span><br><span class="line">  case 3:</span><br><span class="line">    System.out.println(&quot;3&quot;);</span><br><span class="line">    break;</span><br><span class="line">  case 9:</span><br><span class="line">    System.out.println(&quot;9&quot;);</span><br><span class="line">    break;</span><br><span class="line">  default:</span><br><span class="line">    System.out.println(&quot;unknown&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">            methodVisitor = classWriter.visitMethod(ACC_PUBLIC, &quot;test&quot;, &quot;(I)V&quot;, null, null);</span><br><span class="line">            methodVisitor.visitCode();</span><br><span class="line">            methodVisitor.visitVarInsn(ILOAD, 1);</span><br><span class="line">            Label label0 = new Label();</span><br><span class="line">            Label label1 = new Label();</span><br><span class="line">            Label label2 = new Label();</span><br><span class="line">            Label label3 = new Label();</span><br><span class="line">            Label label4 = new Label();</span><br><span class="line">            methodVisitor.visitTableSwitchInsn(1, 9, label3, new Label[] &#123; label0, label1, label2, label3, label3, label3, label3, label3, label4 &#125;);</span><br><span class="line">            methodVisitor.visitLabel(label0);</span><br><span class="line">            methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">            methodVisitor.visitLdcInsn(&quot;1&quot;);</span><br><span class="line">            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(Ljava/lang/String;)V&quot;, false);</span><br><span class="line">            Label label5 = new Label();</span><br><span class="line">            methodVisitor.visitJumpInsn(GOTO, label5);</span><br><span class="line">            methodVisitor.visitLabel(label1);</span><br><span class="line">            methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">            methodVisitor.visitLdcInsn(&quot;2&quot;);</span><br><span class="line">            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(Ljava/lang/String;)V&quot;, false);</span><br><span class="line">            methodVisitor.visitJumpInsn(GOTO, label5);</span><br><span class="line">            methodVisitor.visitLabel(label2);</span><br><span class="line">            methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">            methodVisitor.visitLdcInsn(&quot;3&quot;);</span><br><span class="line">            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(Ljava/lang/String;)V&quot;, false);</span><br><span class="line">            methodVisitor.visitJumpInsn(GOTO, label5);</span><br><span class="line">            methodVisitor.visitLabel(label4);</span><br><span class="line">            methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">            methodVisitor.visitLdcInsn(&quot;9&quot;);</span><br><span class="line">            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(Ljava/lang/String;)V&quot;, false);</span><br><span class="line">            methodVisitor.visitJumpInsn(GOTO, label5);</span><br><span class="line">            methodVisitor.visitLabel(label3);</span><br><span class="line">            methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">            methodVisitor.visitLdcInsn(&quot;unknown&quot;);</span><br><span class="line">            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(Ljava/lang/String;)V&quot;, false);</span><br><span class="line">            methodVisitor.visitLabel(label5);</span><br><span class="line">            methodVisitor.visitInsn(RETURN);</span><br><span class="line">            methodVisitor.visitMaxs(2, 2);</span><br><span class="line">            methodVisitor.visitEnd();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><strong>生成for语句</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">    System.out.println(i);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  methodVisitor = classWriter.visitMethod(ACC_PUBLIC, &quot;test&quot;, &quot;()V&quot;, null, null);</span><br><span class="line">  methodVisitor.visitCode();</span><br><span class="line">  methodVisitor.visitInsn(ICONST_0);</span><br><span class="line">  methodVisitor.visitVarInsn(ISTORE, 1);</span><br><span class="line">  </span><br><span class="line">  Label label0 = new Label();</span><br><span class="line">  methodVisitor.visitLabel(label0);</span><br><span class="line">  methodVisitor.visitVarInsn(ILOAD, 1);</span><br><span class="line">  methodVisitor.visitIntInsn(BIPUSH, 10);</span><br><span class="line">  </span><br><span class="line">  Label label1 = new Label();</span><br><span class="line">  methodVisitor.visitJumpInsn(IF_ICMPGE, label1);</span><br><span class="line">  methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">  methodVisitor.visitVarInsn(ILOAD, 1);</span><br><span class="line">  methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(I)V&quot;, false);</span><br><span class="line">  methodVisitor.visitIincInsn(1, 1);</span><br><span class="line">  methodVisitor.visitJumpInsn(GOTO, label0);</span><br><span class="line">  methodVisitor.visitLabel(label1);</span><br><span class="line">  methodVisitor.visitInsn(RETURN);</span><br><span class="line">  methodVisitor.visitMaxs(2, 2);</span><br><span class="line">  methodVisitor.visitEnd();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><strong>生成try catch语句</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  System.out.println(<span class="string">&quot;try&quot;</span>);</span><br><span class="line">&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">  System.out.println(<span class="string">&quot;catch&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">            methodVisitor = classWriter.visitMethod(ACC_PUBLIC, &quot;test&quot;, &quot;(I)V&quot;, null, null);</span><br><span class="line">            methodVisitor.visitCode();</span><br><span class="line">            Label label0 = new Label();</span><br><span class="line">            Label label1 = new Label();</span><br><span class="line">            Label label2 = new Label();</span><br><span class="line">            methodVisitor.visitTryCatchBlock(label0, label1, label2, &quot;java/lang/Exception&quot;);</span><br><span class="line">            methodVisitor.visitLabel(label0);</span><br><span class="line">            methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">            methodVisitor.visitLdcInsn(&quot;try&quot;);</span><br><span class="line">            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(Ljava/lang/String;)V&quot;, false);</span><br><span class="line">            methodVisitor.visitLabel(label1);</span><br><span class="line">            Label label3 = new Label();</span><br><span class="line">            methodVisitor.visitJumpInsn(GOTO, label3);</span><br><span class="line">            methodVisitor.visitLabel(label2);</span><br><span class="line">            methodVisitor.visitVarInsn(ASTORE, 2);</span><br><span class="line">            methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">            methodVisitor.visitLdcInsn(&quot;catch&quot;);</span><br><span class="line">            methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(Ljava/lang/String;)V&quot;, false);</span><br><span class="line">            methodVisitor.visitLabel(label3);</span><br><span class="line">            methodVisitor.visitInsn(RETURN);</span><br><span class="line">            methodVisitor.visitMaxs(2, 3);</span><br><span class="line">            methodVisitor.visitEnd();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
 <p><strong>生成while语句</strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">while (true)&#123;</span><br><span class="line">  System.out.println(&quot;23333&quot;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">methodVisitor = classWriter.visitMethod(ACC_PUBLIC, &quot;test&quot;, &quot;(I)V&quot;, null, null);</span><br><span class="line">methodVisitor.visitCode();</span><br><span class="line">Label label0 = new Label();</span><br><span class="line">methodVisitor.visitLabel(label0);</span><br><span class="line">methodVisitor.visitFieldInsn(GETSTATIC, &quot;java/lang/System&quot;, &quot;out&quot;, &quot;Ljava/io/PrintStream;&quot;);</span><br><span class="line">methodVisitor.visitLdcInsn(&quot;23333&quot;);</span><br><span class="line">methodVisitor.visitMethodInsn(INVOKEVIRTUAL, &quot;java/io/PrintStream&quot;, &quot;println&quot;, &quot;(Ljava/lang/String;)V&quot;, false);</span><br><span class="line">methodVisitor.visitJumpInsn(GOTO, label0);</span><br><span class="line">methodVisitor.visitMaxs(2, 2);</span><br><span class="line">methodVisitor.visitEnd();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><strong>TODO 待解决：visitMaxs() 参数如何确定？</strong></p>
-<p>实际上并不需要注意计算，只需要当成一个占位符即可。通常情况下在创建<code>    ClassWriter</code> 都会传入 flag <code>COMPUTE_FRAMES</code> 来自动帮我们计算 max_stack 和 max_local</p>
+<p>实际上并不需要注意计算，只需要当成一个占位符即可。通常情况下在创建<code>ClassWriter</code> 都会传入 flag <code>COMPUTE_FRAMES</code> 来自动帮我们计算 max_stack 和 max_local</p>
 <p>demo：遍历一个类的基本信息</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> <span class="string">&quot;Test&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">ClassReader</span> <span class="variable">cr</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassReader</span>(className);</span><br><span class="line"></span><br><span class="line">            System.out.println(</span><br><span class="line">                    <span class="string">&quot;解析类名：&quot;</span> + cr.getClassName() + <span class="string">&quot;,父类：&quot;</span> + cr.getSuperName() +</span><br><span class="line">                            <span class="string">&quot;,实现接口：&quot;</span> + Arrays.toString(cr.getInterfaces()));</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">&quot;-----------------------------------------------------------------------------&quot;</span>);</span><br><span class="line">            <span class="comment">// 使用自定义的ClassVisitor访问者对象，访问该类文件的结构</span></span><br><span class="line"></span><br><span class="line">            cr.accept(<span class="keyword">new</span> <span class="title class_">ClassVisitor</span>(ASM9) &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">visit</span><span class="params">(<span class="type">int</span> version, <span class="type">int</span> access, String name, String signature, String superName, String[] interfaces)</span> &#123;</span><br><span class="line">                    System.out.println(</span><br><span class="line">                            <span class="string">&quot;变量修饰符：&quot;</span> + access + <span class="string">&quot;\t 类名：&quot;</span> + name + <span class="string">&quot;\t 父类名：&quot;</span> + superName +</span><br><span class="line">                                    <span class="string">&quot;\t 实现的接口：&quot;</span> + Arrays.toString(interfaces)</span><br><span class="line">                    );</span><br><span class="line">                    System.out.println(<span class="string">&quot;-----------------------------------------------------------------------------&quot;</span>);</span><br><span class="line"></span><br><span class="line">                    <span class="built_in">super</span>.visit(version, access, name, signature, superName, interfaces);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> FieldVisitor <span class="title function_">visitField</span><span class="params">(<span class="type">int</span> access, String name, String desc, String signature, Object value)</span> &#123;</span><br><span class="line">                    System.out.println(</span><br><span class="line">                            <span class="string">&quot;变量修饰符：&quot;</span> + access + <span class="string">&quot;\t 变量名称：&quot;</span> + name + <span class="string">&quot;\t 描述符：&quot;</span> + desc + <span class="string">&quot;\t 默认值：&quot;</span> + value</span><br><span class="line">                    );</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">super</span>.visitField(access, name, desc, signature, value);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> MethodVisitor <span class="title function_">visitMethod</span><span class="params">(<span class="type">int</span> access, String name, String desc, String signature, String[] exceptions)</span> &#123;</span><br><span class="line">                    System.out.println(<span class="string">&quot;方法修饰符：&quot;</span> + access + <span class="string">&quot;\t 方法名称：&quot;</span> + name + <span class="string">&quot;\t 描述符：&quot;</span> + desc +</span><br><span class="line">                            <span class="string">&quot;\t 抛出的异常：&quot;</span> + Arrays.toString(exceptions));</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">super</span>.visitMethod(access, name, desc, signature, exceptions);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, EXPAND_FRAMES);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>![image-20230116001201930](Java 字节码/image-20230116001201930.png)</p>
+<p><img src="/2023/01/18/Java%20%E5%AD%97%E8%8A%82%E7%A0%81/image-20230116001201930.png" alt="image-20230116001201930"></p>
 <p>demo：修改类名/方法名/方法修饰符</p>
 <p>利用<code>ClassWriter</code>可以实现类修改功能，如果插入了新的局部变量、字节码，需要重新计算<code>max_stack</code> 和 <code>max_locals</code>ASM为我们提供了内置的自动计算方式，只需在创建<code>ClassWriter</code>的时候传入<code>COMPUTE_FRAMES</code>即可：<code>new ClassWriter(cr, ClassWriter.COMPUTE_FRAMES);</code></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> <span class="string">&quot;asm.HelloWorld&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义修改后的类名</span></span><br><span class="line"><span class="comment">//        final String newClassName = &quot;JavaSecTestHelloWorld&quot;;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">ClassReader</span> <span class="variable">cr</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassReader</span>(className);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 创建ClassWriter对象，COMPUTE_FRAMES会自动计算 max_stack 和 max_locals</span></span><br><span class="line">            <span class="type">ClassWriter</span> <span class="variable">cw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassWriter</span>(cr, ClassWriter.COMPUTE_FRAMES);</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">&quot;-----------------------------------------------------------------------------&quot;</span>);</span><br><span class="line">            <span class="comment">// 使用自定义的ClassVisitor访问者对象，访问该类文件的结构</span></span><br><span class="line"></span><br><span class="line">            cr.accept(<span class="keyword">new</span> <span class="title class_">ClassVisitor</span>(ASM9, cw) &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">visit</span><span class="params">(<span class="type">int</span> version, <span class="type">int</span> access, String name, String signature, String superName, String[] interfaces)</span> &#123;</span><br><span class="line">                    <span class="built_in">super</span>.visit(version, access, name, signature, superName, interfaces);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> MethodVisitor <span class="title function_">visitMethod</span><span class="params">(<span class="type">int</span> access, String name, String descriptor, String signature, String[] exceptions)</span> &#123;</span><br><span class="line">                    <span class="comment">// 将 hello 方法名修改为 hi</span></span><br><span class="line">                    <span class="keyword">if</span> (name.equals(<span class="string">&quot;setTest&quot;</span>)) &#123;</span><br><span class="line">                        <span class="comment">// 修改方法访问修饰符，移除 public 属性，修改为 private</span></span><br><span class="line">                        access = access &amp; ~ACC_PUBLIC | ACC_PRIVATE;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">super</span>.visitMethod(access, <span class="string">&quot;hi&quot;</span>, descriptor, signature, exceptions);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, EXPAND_FRAMES);</span><br><span class="line"></span><br><span class="line">            <span class="type">String</span> <span class="variable">filePath</span> <span class="operator">=</span> <span class="string">&quot;D:\\ctf\\JNDI\\tool\\JNDIEXP\\src\\test\\java\\asm\\HelloWorld.class&quot;</span>;</span><br><span class="line">            <span class="type">byte</span>[] bytes = cw.toByteArray();</span><br><span class="line">            <span class="type">FileOutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(filePath);</span><br><span class="line">            outputStream.write(bytes);</span><br><span class="line">            outputStream.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
 <p>demo3 修改类方法字节码：</p>
 <p>以 <code>HelloWorld#hello()</code>方法为例，在原业务逻辑执行前打印出该方法的参数值；修改该方法的返回值</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">className</span> <span class="operator">=</span> <span class="string">&quot;asm.HelloWorld&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 定义修改后的类名</span></span><br><span class="line"><span class="comment">//        final String newClassName = &quot;JavaSecTestHelloWorld&quot;;</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">ClassReader</span> <span class="variable">cr</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassReader</span>(className);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 创建ClassWriter对象，COMPUTE_FRAMES会自动计算 max_stack 和 max_locals</span></span><br><span class="line">            <span class="type">ClassWriter</span> <span class="variable">cw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassWriter</span>(cr, ClassWriter.COMPUTE_FRAMES);</span><br><span class="line"></span><br><span class="line">            System.out.println(<span class="string">&quot;-----------------------------------------------------------------------------&quot;</span>);</span><br><span class="line">            <span class="comment">// 使用自定义的ClassVisitor访问者对象，访问该类文件的结构</span></span><br><span class="line"></span><br><span class="line">            cr.accept(<span class="keyword">new</span> <span class="title class_">ClassVisitor</span>(ASM9, cw) &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">visit</span><span class="params">(<span class="type">int</span> version, <span class="type">int</span> access, String name, String signature, String superName, String[] interfaces)</span> &#123;</span><br><span class="line">                    <span class="built_in">super</span>.visit(version, access, name, signature, superName, interfaces);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> MethodVisitor <span class="title function_">visitMethod</span><span class="params">(<span class="type">int</span> access, String name, String descriptor, String signature, String[] exceptions)</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (name.equals(<span class="string">&quot;hello&quot;</span>)) &#123;</span><br><span class="line">                        <span class="type">MethodVisitor</span> <span class="variable">mv</span> <span class="operator">=</span> <span class="built_in">super</span>.visitMethod(access, name, descriptor, signature, exceptions);</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// 创建自定义的MethodVisitor，修改原方法的字节码</span></span><br><span class="line">                        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">AdviceAdapter</span>(api, mv, access, name, descriptor) &#123;</span><br><span class="line"></span><br><span class="line">                            <span class="comment">// 获取 String的ASM Type对象</span></span><br><span class="line">                            <span class="keyword">private</span> <span class="keyword">final</span> <span class="type">Type</span> <span class="variable">stringType</span> <span class="operator">=</span> Type.getType(String.class);</span><br><span class="line"></span><br><span class="line">                            <span class="type">int</span> newArgIndex;</span><br><span class="line"></span><br><span class="line">                            <span class="meta">@Override</span></span><br><span class="line">                            <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onMethodEnter</span><span class="params">()</span> &#123;</span><br><span class="line">                                <span class="comment">// 输出 hello 方法的第一个参数，因为 hello 是非 static 方法，所以 0 是 this，第一个参数的下标应该是 1</span></span><br><span class="line">                                mv.visitFieldInsn(GETSTATIC, <span class="string">&quot;java/lang/System&quot;</span>, <span class="string">&quot;out&quot;</span>, <span class="string">&quot;Ljava/io/PrintStream;&quot;</span>);</span><br><span class="line">                                mv.visitVarInsn(ALOAD, <span class="number">1</span>);</span><br><span class="line">                                mv.visitMethodInsn(INVOKEVIRTUAL, <span class="string">&quot;java/io/PrintStream&quot;</span>, <span class="string">&quot;println&quot;</span>, <span class="string">&quot;(Ljava/lang/String;)V&quot;</span>);</span><br><span class="line"></span><br><span class="line">                                <span class="comment">// 创建一个新的局部变量，newLocal会计算出这个新局部对象的索引位置</span></span><br><span class="line">                                newArgIndex = newLocal(stringType);</span><br><span class="line">                                <span class="comment">// 将int, float或String型常量值从常量池中推送至栈顶</span></span><br><span class="line">                                mv.visitLdcInsn(<span class="string">&quot;fuck you!&quot;</span>);</span><br><span class="line">                                <span class="comment">// Generates the instruction to store the top stack value in the given local variable</span></span><br><span class="line">                                storeLocal(newArgIndex, stringType);</span><br><span class="line">                            &#125;</span><br><span class="line"></span><br><span class="line">                            <span class="meta">@Override</span></span><br><span class="line">                            <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onMethodExit</span><span class="params">(<span class="type">int</span> opcode)</span> &#123;</span><br><span class="line">                                dup();  <span class="comment">// 复制栈顶的返回值</span></span><br><span class="line"></span><br><span class="line">                                <span class="comment">// 创建一个新的局部变量，并获取索引位置</span></span><br><span class="line">                                <span class="type">int</span> <span class="variable">returnValueIndex</span> <span class="operator">=</span> newLocal(stringType);</span><br><span class="line"></span><br><span class="line">                                <span class="comment">// 将栈顶的返回值压入新生成的局部变量中</span></span><br><span class="line">                                storeLocal(returnValueIndex, stringType);</span><br><span class="line"></span><br><span class="line">                                <span class="comment">// 输出 hello 方法的返回值</span></span><br><span class="line">                                <span class="comment">// 获取指定类的静态域，并将其值压入栈顶</span></span><br><span class="line">                                mv.visitFieldInsn(GETSTATIC, <span class="string">&quot;java/lang/System&quot;</span>, <span class="string">&quot;out&quot;</span>, <span class="string">&quot;Ljava/io/PrintStream;&quot;</span>);</span><br><span class="line">                                mv.visitVarInsn(ALOAD, returnValueIndex);</span><br><span class="line">                                mv.visitMethodInsn(INVOKEVIRTUAL, <span class="string">&quot;java/io/PrintStream&quot;</span>, <span class="string">&quot;println&quot;</span>, <span class="string">&quot;(Ljava/lang/String;)V&quot;</span>);</span><br><span class="line"></span><br><span class="line">                                <span class="comment">// 压入方法进入 (onMethodEnter) 存入到局部变量的 var2值 到栈顶</span></span><br><span class="line">                                loadLocal(newArgIndex);</span><br><span class="line"></span><br><span class="line">                                <span class="comment">// 返回一个引用类型，即栈顶的var2字符串，return var2;</span></span><br><span class="line">                                <span class="comment">// 需要特别注意的是不同数据类型应当使用不同的RETURN指令</span></span><br><span class="line">                                mv.visitInsn(ARETURN);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;;</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">super</span>.visitMethod(access, <span class="string">&quot;hi&quot;</span>, descriptor, signature, exceptions);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;, EXPAND_FRAMES);</span><br><span class="line"></span><br><span class="line">            <span class="type">String</span> <span class="variable">filePath</span> <span class="operator">=</span> <span class="string">&quot;D:\\ctf\\JNDI\\tool\\JNDIEXP\\src\\test\\java\\asm\\HelloWorld.class&quot;</span>;</span><br><span class="line">            <span class="type">byte</span>[] bytes = cw.toByteArray();</span><br><span class="line">            <span class="type">FileOutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(filePath);</span><br><span class="line">            outputStream.write(bytes);</span><br><span class="line">            outputStream.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
-
 <p>demo4：动态创建Java类二进制</p>
 <p>可以使用<code>ClassWriter</code>来动态创建出一个Java类的二进制文件，然后通过<strong>自定义的类加载器</strong>就可以将我们动态生成的类加载到JVM中。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ASM2</span> <span class="keyword">implements</span> <span class="title class_">Opcodes</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">CLASS_NAME</span> <span class="operator">=</span> <span class="string">&quot;asm.TestASMHelloWorld&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">String</span> <span class="variable">CLASS_NAME_ASM</span> <span class="operator">=</span> <span class="string">&quot;asm/TestASMHelloWorld&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">byte</span>[] dump() <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="comment">// 创建 ClassWriter，用于生成类字节码</span></span><br><span class="line">        <span class="type">ClassWriter</span> <span class="variable">cw</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassWriter</span>(<span class="number">0</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建 MethodVisitor</span></span><br><span class="line">        MethodVisitor mv;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建一个字节码版本为 JDK1.7 的目标类</span></span><br><span class="line">        cw.visit(V1_7, ACC_PUBLIC + ACC_SUPER, CLASS_NAME_ASM, <span class="literal">null</span>, <span class="string">&quot;java/lang/Object&quot;</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 设置源码文件名</span></span><br><span class="line">       	 cw.visitSource(<span class="string">&quot;TestHelloWorld.java&quot;</span>, <span class="literal">null</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建一个空的构造方法，</span></span><br><span class="line">        <span class="comment">// public TestASMHelloWorld() &#123;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        &#123;</span><br><span class="line">            mv = cw.visitMethod(ACC_PUBLIC, <span class="string">&quot;&lt;init&gt;&quot;</span>, <span class="string">&quot;()V&quot;</span>, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">            mv.visitCode();</span><br><span class="line">            <span class="type">Label</span> <span class="variable">l0</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Label</span>();</span><br><span class="line">            mv.visitLabel(l0);</span><br><span class="line">            mv.visitLineNumber(<span class="number">5</span>, l0);</span><br><span class="line">            mv.visitVarInsn(ALOAD, <span class="number">0</span>);</span><br><span class="line">            mv.visitMethodInsn(INVOKESPECIAL, <span class="string">&quot;java/lang/Object&quot;</span>, <span class="string">&quot;&lt;init&gt;&quot;</span>, <span class="string">&quot;()V&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">            mv.visitInsn(RETURN);</span><br><span class="line">            <span class="type">Label</span> <span class="variable">l1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Label</span>();</span><br><span class="line">            mv.visitLabel(l1);</span><br><span class="line">            mv.visitLocalVariable(<span class="string">&quot;this&quot;</span>, <span class="string">&quot;L&quot;</span>+CLASS_NAME_ASM+<span class="string">&quot;;&quot;</span>, <span class="literal">null</span>, l0, l1, <span class="number">0</span>);</span><br><span class="line">            mv.visitMaxs(<span class="number">1</span>, <span class="number">1</span>);</span><br><span class="line">            mv.visitEnd();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建一个hello方法，</span></span><br><span class="line">        <span class="comment">// public static String hello() &#123;</span></span><br><span class="line">        <span class="comment">//     return &quot;Hello World~&quot;;</span></span><br><span class="line">        <span class="comment">// &#125;</span></span><br><span class="line">        &#123;</span><br><span class="line">            mv = cw.visitMethod(ACC_PUBLIC + ACC_STATIC, <span class="string">&quot;hello&quot;</span>, <span class="string">&quot;()Ljava/lang/String;&quot;</span>, <span class="literal">null</span>, <span class="literal">null</span>);</span><br><span class="line">            mv.visitCode();</span><br><span class="line">            <span class="type">Label</span> <span class="variable">l0</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Label</span>();</span><br><span class="line">            mv.visitLabel(l0);</span><br><span class="line">            mv.visitLineNumber(<span class="number">8</span>, l0);</span><br><span class="line">            mv.visitLdcInsn(<span class="string">&quot;Hello World~&quot;</span>);</span><br><span class="line">            mv.visitInsn(ARETURN);</span><br><span class="line">            mv.visitMaxs(<span class="number">1</span>, <span class="number">0</span>);</span><br><span class="line">            mv.visitEnd();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        cw.visitEnd();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> cw.toByteArray();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">byte</span>[] classBytes = dump();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 创建自定义类加载器，加载 ASM 创建的类字节码到 JVM</span></span><br><span class="line">        <span class="type">ClassLoader</span> <span class="variable">classLoader</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ClassLoader</span>(ASM2.class.getClassLoader()) &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> Class&lt;?&gt; findClass(String name) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">super</span>.findClass(name);</span><br><span class="line">                &#125; <span class="keyword">catch</span> (ClassNotFoundException e) &#123;</span><br><span class="line">                    <span class="keyword">return</span> defineClass(CLASS_NAME, classBytes, <span class="number">0</span>, classBytes.length);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;hello方法执行结果：&quot;</span> + classLoader.loadClass(CLASS_NAME).getMethod(<span class="string">&quot;hello&quot;</span>).invoke(<span class="literal">null</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>AdviceAdapter 用法：</p>
 <ul>
 <li><code>onMethodEnter()</code>方法：在“方法进入”的时候，添加一些代码逻辑。</li>
@@ -1985,12 +534,9 @@
 </blockquote>
 <p>demo：打印方法参数和返回值</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Analysis</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> <span class="type">int</span> age;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">Analysis</span><span class="params">(String name, <span class="type">int</span> age)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.name = name;</span><br><span class="line">        <span class="built_in">this</span>.age = age;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test</span><span class="params">(<span class="type">long</span> idCard, Object obj)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">hashCode</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">        hashCode += name.hashCode();</span><br><span class="line">        hashCode += age;</span><br><span class="line">        hashCode += (<span class="type">int</span>) (idCard % Integer.MAX_VALUE);</span><br><span class="line">        hashCode += obj.hashCode();</span><br><span class="line">        hashCode = Math.abs(hashCode);</span><br><span class="line">        System.out.println(<span class="string">&quot;Hash Code is &quot;</span> + hashCode);</span><br><span class="line">        <span class="keyword">if</span> (hashCode % <span class="number">2</span> == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;illegal&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>工具类 </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ParameterUtils</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">DateFormat</span> <span class="variable">fm</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">SimpleDateFormat</span>(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">printValueOnStack</span><span class="params">(Object value)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (value == <span class="literal">null</span>) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;    &quot;</span> + value);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (value <span class="keyword">instanceof</span> String) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;    &quot;</span> + value);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (value <span class="keyword">instanceof</span> Date) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;    &quot;</span> + fm.format(value));</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (value <span class="keyword">instanceof</span> <span class="type">char</span>[]) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;    &quot;</span> + Arrays.toString((<span class="type">char</span>[]) value));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;    &quot;</span> + value.getClass() + <span class="string">&quot;: &quot;</span> + value.toString());</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">printText</span><span class="params">(String text)</span> &#123;</span><br><span class="line">        System.out.println(text);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ClassPrintParameterVisitor</span> <span class="keyword">extends</span> <span class="title class_">ClassVisitor</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">ClassPrintParameterVisitor</span><span class="params">(<span class="type">int</span> api, ClassVisitor classVisitor)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(api, classVisitor);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> MethodVisitor <span class="title function_">visitMethod</span><span class="params">(<span class="type">int</span> access, String name, String descriptor, String signature, String[] exceptions)</span> &#123;</span><br><span class="line">        <span class="type">MethodVisitor</span> <span class="variable">mv</span> <span class="operator">=</span> <span class="built_in">super</span>.visitMethod(access, name, descriptor, signature, exceptions);</span><br><span class="line">        <span class="keyword">if</span> (mv != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">isAbstractMethod</span> <span class="operator">=</span> (access &amp; Opcodes.ACC_ABSTRACT) != <span class="number">0</span>;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">isNativeMethod</span> <span class="operator">=</span> (access &amp; Opcodes.ACC_NATIVE) != <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (!isAbstractMethod &amp;&amp; !isNativeMethod) &#123;</span><br><span class="line"></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> mv;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">MethodPrintParameterAdapter</span> <span class="keyword">extends</span> <span class="title class_">AdviceAdapter</span> &#123;</span><br><span class="line">        <span class="keyword">public</span> <span class="title function_">MethodPrintParameterAdapter</span><span class="params">(<span class="type">int</span> api, MethodVisitor methodVisitor, <span class="type">int</span> access, String name, String descriptor)</span> &#123;</span><br><span class="line">            <span class="comment">// AdviceAdapter 为 protected 类型的构造方法，因此只能子类访问</span></span><br><span class="line">            <span class="built_in">super</span>(api, methodVisitor, access, name, descriptor);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onMethodEnter</span><span class="params">()</span> &#123;</span><br><span class="line">            printMessage(<span class="string">&quot;Method Enter: &quot;</span> + getName() + methodDesc);</span><br><span class="line"></span><br><span class="line">            Type[] argumentTypes = getArgumentTypes();</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; argumentTypes.length; i++) &#123;</span><br><span class="line">                <span class="type">Type</span> <span class="variable">t</span> <span class="operator">=</span> argumentTypes[i];</span><br><span class="line">                loadArg(i);</span><br><span class="line">                box(t);</span><br><span class="line">                printValueOnStack(<span class="string">&quot;(Ljava/lang/Object;)V&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onMethodExit</span><span class="params">(<span class="type">int</span> opcode)</span> &#123;</span><br><span class="line">            printMessage(<span class="string">&quot;Method Exit: &quot;</span> + getName() + methodDesc);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (opcode == ATHROW) &#123;</span><br><span class="line">                <span class="built_in">super</span>.visitLdcInsn(<span class="string">&quot;abnormal return&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (opcode == RETURN) &#123;</span><br><span class="line">                <span class="built_in">super</span>.visitLdcInsn(<span class="string">&quot;return void&quot;</span>);</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (opcode == ARETURN) &#123;</span><br><span class="line">                dup();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">if</span> (opcode == LRETURN || opcode == DRETURN) &#123;</span><br><span class="line">                    dup2();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    dup();</span><br><span class="line">                &#125;</span><br><span class="line">                box(getReturnType());</span><br><span class="line">            &#125;</span><br><span class="line">            printValueOnStack(<span class="string">&quot;(Ljava/lang/Object;)V&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">printMessage</span><span class="params">(String str)</span> &#123;</span><br><span class="line">            <span class="built_in">super</span>.visitLdcInsn(str);</span><br><span class="line">            <span class="built_in">super</span>.visitMethodInsn(INVOKESTATIC, <span class="string">&quot;asm/ParameterUtils&quot;</span>, <span class="string">&quot;printText&quot;</span>, <span class="string">&quot;(Ljava/lang/String;)V&quot;</span>, <span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">printValueOnStack</span><span class="params">(String descriptor)</span> &#123;</span><br><span class="line">            <span class="built_in">super</span>.visitMethodInsn(INVOKESTATIC, <span class="string">&quot;asm/ParameterUtils&quot;</span>, <span class="string">&quot;printValueOnStack&quot;</span>, descriptor, <span class="literal">false</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p><strong>实现转换</strong></p>
 <h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a target="_blank" rel="noopener" href="https://github.com/Y4tacker/JavaSec/blob/main/1.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ASM%E5%AD%A6%E4%B9%A0/index.md">https://github.com/Y4tacker/JavaSec/blob/main/1.%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/ASM%E5%AD%A6%E4%B9%A0/index.md</a></p>
 <p><a target="_blank" rel="noopener" href="https://javasec.org/javase/JavaByteCode/">https://javasec.org/javase/JavaByteCode/</a></p>

