@@ -1,0 +1,2076 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="[TOC] 写在前面期末考试最终成绩 94，总评 90，说明这个笔记归纳的还算蛮成功的。一些诸如 ICMP、IGMP、IP 组播之类的知识点因为考试非重点并未记录上来，以后如果遇见再做补充  Ch1 绪论基本概念 什么是数据通信 结构&#x2F; 传输模式 &#x2F; 物理结构 点到点&#x2F;多点 &#x2F; 拓扑结构 &#x2F; 网络规模分类 覆盖范围，每种网络的大概协议标准类型 &#x2F; 协议和标准 三要素  基本概念 数据通信：在两台设">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机网络笔记">
+<meta property="og:url" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/index.html">
+<meta property="og:site_name" content="RacerZ">
+<meta property="og:description" content="[TOC] 写在前面期末考试最终成绩 94，总评 90，说明这个笔记归纳的还算蛮成功的。一些诸如 ICMP、IGMP、IP 组播之类的知识点因为考试非重点并未记录上来，以后如果遇见再做补充  Ch1 绪论基本概念 什么是数据通信 结构&#x2F; 传输模式 &#x2F; 物理结构 点到点&#x2F;多点 &#x2F; 拓扑结构 &#x2F; 网络规模分类 覆盖范围，每种网络的大概协议标准类型 &#x2F; 协议和标准 三要素  基本概念 数据通信：在两台设">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230314192833714.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230124235145466.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125003143728.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125003422324.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125003650968.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125003830906.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125213753652.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125214637453.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125214753751.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125220708226.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125221837986.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306091419399.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126003821346.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126004132590.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126004358311.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126182001923.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126182456825.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126183527043.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126184313704.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126215809352.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126215958239.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126220505334.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126220757323.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126220929118.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126221418353.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126221934784.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126222253114.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230302173610968.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230302173954523.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230302193002538.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230302193304439.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230302201151285.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126224430125.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126224637042.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230127204317173.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230127204507103.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230127204954373.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201120857798.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201122309273.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201122802446.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201153933003.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230303233757738.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230128232248648.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230128232622876.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304091322447.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304091644540.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230128232934775.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304093833986.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230128233852978.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304094900156.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304101638849.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304102525515.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306095646961.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304104539744.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304145338899.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304150844732.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230129213321059.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230129213534049.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304151758926.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304152920606.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230130195806024.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304154708183.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304160048759.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304165031775.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304165734951.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230131151929232.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304171908115.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304172038970.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304172159131.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304192652130.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230131165542477.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230131170229401.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201165816496.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304213607844.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230202230434955.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304222618471.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230202231346912.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230202231543078.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230203005928977.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201155021274.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305092652078.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201162549201.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201163029095.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305094707033.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230203005013175.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230203005403919.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305095614604.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230203010321630.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305104305217.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305111146816.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305111507898.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305111812127.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305112052464.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305113014316.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230204222919173.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305114452213.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230204224240878.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305115024698.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230204225146143.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305144312432.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305144517130.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305144730168.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305145553134.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305145811004.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305164824596.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205201029380.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305163901353.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205201504552.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205201748828.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305170005058.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305171132067.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305173828751.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305172057177.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305174423076.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305193201621.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305193927354.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305195452913.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305195502993.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205211755963.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305194654710.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205212456078.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205212629741.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305201243395.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305201926585.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305202211033.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305202659765.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206122517476.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206123406522.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206123705596.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206143103552.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206143542784.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206144855438.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206150206172.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206150452331.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206150946391.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206155751760.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206160524255.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206161017792.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206161317263.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206161451844.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306163039871.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306163047008.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306163950444.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306164002663.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230307095440142.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230307095453153.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306165209282.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306165230738.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306180421375.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306180436019.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306201749719.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306201800516.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306202645982.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306202655478.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306210557428.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306210608999.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306210818352.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306210825801.png">
+<meta property="article:published_time" content="2023-03-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-03-14T11:30:36.042Z">
+<meta property="article:author" content="RacerZ">
+<meta property="article:tag" content="基础">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230314192833714.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>计算机网络笔记</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2023/03/14/Toss%20a%20Fault%20to%20Your%20Witcher%20Applying%20Grey-box%20Coverage%20Guided%20Mutational%20Fuzzing%20to%20Detect%20SQL%20and%20Command%20Injection%20V/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/02/19/Modeling%20and%20Discovering%20Vulnerabilities%20with%20Code%20Property%20Graphs%20%E7%B2%BE%E8%AF%BB/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&text=计算机网络笔记"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&title=计算机网络笔记"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&is_video=false&description=计算机网络笔记"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=计算机网络笔记&body=Check out this article: https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&title=计算机网络笔记"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&title=计算机网络笔记"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&title=计算机网络笔记"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&title=计算机网络笔记"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&name=计算机网络笔记&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&t=计算机网络笔记"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch1-%E7%BB%AA%E8%AE%BA"><span class="toc-number"></span> <span class="toc-text">Ch1 绪论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch2-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="toc-number"></span> <span class="toc-text">Ch2 网络模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch3-%E6%95%B0%E6%8D%AE%E5%92%8C%E4%BF%A1%E5%8F%B7"><span class="toc-number"></span> <span class="toc-text">Ch3 数据和信号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch4-%E6%95%B0%E5%AD%97%E4%BC%A0%E8%BE%93"><span class="toc-number"></span> <span class="toc-text">Ch4 数字传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch5-%E6%A8%A1%E6%8B%9F%E4%BC%A0%E8%BE%93"><span class="toc-number"></span> <span class="toc-text">Ch5 模拟传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch6-%E7%89%A9%E7%90%86%E5%B1%82%E9%9D%A2%E7%9A%84%E5%B8%A6%E5%AE%BD%E5%88%A9%E7%94%A8"><span class="toc-number"></span> <span class="toc-text">Ch6 物理层面的带宽利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch7-%E7%89%A9%E7%90%86%E5%B1%82%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8"><span class="toc-number"></span> <span class="toc-text">Ch7 物理层传输介质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch8-%E4%BA%A4%E6%8D%A2"><span class="toc-number"></span> <span class="toc-text">Ch8 交换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch10-%E6%A3%80%E9%94%99%E4%B8%8E%E7%BA%A0%E9%94%99"><span class="toc-number"></span> <span class="toc-text">Ch10 检错与纠错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch11-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E6%8E%A7%E5%88%B6"><span class="toc-number"></span> <span class="toc-text">Ch11 数据链路控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch12-%E5%A4%9A%E8%B7%AF%E8%AE%BF%E9%97%AE"><span class="toc-number"></span> <span class="toc-text">Ch12 多路访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch13-%E6%9C%89%E7%BA%BF%E5%B1%80%E5%9F%9F%E7%BD%91%EF%BC%9A%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="toc-number"></span> <span class="toc-text">Ch13 有线局域网：以太网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch15-%E8%BF%9E%E6%8E%A5%E5%B1%80%E5%9F%9F%E7%BD%91%E3%80%81%E4%B8%BB%E5%B9%B2%E7%BD%91%E5%92%8C%E8%99%9A%E6%8B%9F%E5%B1%80%E5%9F%9F%E7%BD%91"><span class="toc-number"></span> <span class="toc-text">Ch15 连接局域网、主干网和虚拟局域网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch19-%E9%80%BB%E8%BE%91%E5%AF%BB%E5%9D%80"><span class="toc-number"></span> <span class="toc-text">Ch19 逻辑寻址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch20-IP%E5%8D%8F%E8%AE%AE"><span class="toc-number"></span> <span class="toc-text">Ch20 IP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch21-%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%EF%BC%8C%E5%B7%AE%E9%94%99%E6%8A%A5%E5%91%8A%E5%92%8C%E5%A4%9A%E6%92%AD"><span class="toc-number"></span> <span class="toc-text">Ch21 地址映射，差错报告和多播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch22-%E4%BC%A0%E9%80%92%E3%80%81%E8%BD%AC%E5%8F%91%E5%92%8C%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9"><span class="toc-number"></span> <span class="toc-text">Ch22 传递、转发和路由选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch23-%E8%BF%9B%E7%A8%8B%E5%88%B0%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BC%A0%E9%80%92-UDP-TCP-%E5%92%8C-SCTP"><span class="toc-number"></span> <span class="toc-text">Ch23 进程到进程的传递:UDP, TCP 和 SCTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch24-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E5%92%8C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F"><span class="toc-number"></span> <span class="toc-text">Ch24 拥塞控制和服务质量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch25-%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9F"><span class="toc-number"></span> <span class="toc-text">Ch25 域名系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch26-%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95%E3%80%81%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E4%B8%8E%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93"><span class="toc-number"></span> <span class="toc-text">Ch26 远程登录、电子邮件与文件传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch27-%E4%B8%87%E7%BB%B4%E7%BD%91%E4%B8%8E%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE"><span class="toc-number"></span> <span class="toc-text">Ch27 万维网与超文本传输协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Relevant-QA"><span class="toc-number"></span> <span class="toc-text">Relevant QA</span></a>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        计算机网络笔记
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">RacerZ</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-03-07T16:00:00.000Z" itemprop="datePublished">2023-03-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <p>[TOC]</p>
+<h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>期末考试最终成绩 94，总评 90，说明这个笔记归纳的还算蛮成功的。一些诸如 ICMP、IGMP、IP 组播之类的知识点因为考试非重点并未记录上来，以后如果遇见再做补充</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230314192833714.png" alt="image-20230314192833714"></p>
+<h2 id="Ch1-绪论"><a href="#Ch1-绪论" class="headerlink" title="Ch1 绪论"></a>Ch1 绪论</h2><p>基本概念 什么是数据通信 结构/ 传输模式 / 物理结构 点到点/多点 / 拓扑结构 / 网络规模分类 覆盖范围，每种网络的大概协议标准类型 / 协议和标准 三要素</p>
+<ul>
+<li><p><strong>基本概念</strong></p>
+<p><strong>数据通信：在两台设备之间通过诸如线缆的某种形式的传输介质进行的数据交换</strong></p>
+<p>效率四要素：传递性、准确性、及时性和抖动性</p>
+</li>
+<li><p><strong>五个组件——通信五元组</strong></p>
+<p><strong>报文 发送方 接收方 传输介质 协议</strong></p>
+</li>
+<li><p><strong>功能</strong></p>
+<ul>
+<li><strong>数据通信</strong></li>
+<li><strong>资源共享</strong>：包括硬件 软件 数据</li>
+</ul>
+</li>
+<li><p><strong>数据流传输模式：</strong></p>
+<p>单工 半双工 全双工</p>
+</li>
+<li><p>物理结构之连接类型</p>
+<ul>
+<li><strong>点对点连接</strong>：提供两台设备之间的专用的链路。链路全部的能力均为两台设备之间的传输所共用。</li>
+<li>多点连接：两台以上设备共享单一链路。分空间上共享与时间上共享</li>
+</ul>
+</li>
+<li><p>分类</p>
+<ul>
+<li><p>按分布范围分<br>从大到小 WAN MAN LAN PAN</p>
+<p><strong>每种类型网络覆盖范围，里面大概有哪些网络</strong></p>
+</li>
+<li><p>按<strong>拓扑结构</strong> <strong>这块还需要重点看</strong></p>
+<ul>
+<li>总线型<ul>
+<li>由一条较长的线缆作为<strong>主干</strong>来连接网络上的所有设备</li>
+<li>由于存在分接头信号反射的问题，因此不易进行故障的排查</li>
+</ul>
+</li>
+<li>星型<ul>
+<li>由集线器作为中央控制器，不允许设备之间有直接的连接</li>
+</ul>
+</li>
+<li>环型<ul>
+<li>每台设备只与其两侧的设备进行专用点到点连接</li>
+</ul>
+</li>
+<li>网状型<ul>
+<li>各台设备之间都有一条专用的点到点链路</li>
+</ul>
+</li>
+<li>混合型</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>协议</strong></p>
+<p><strong>核心部分</strong> 用来<strong>管理数据通信</strong>的一组规则</p>
+<ol>
+<li>语法 数据的结构或格式</li>
+<li><p>语义 每一个字段的含义，通常包括<strong>用于相互协调及差错处理的控制信息</strong></p>
+</li>
+<li><p>时序：报文发送的时间和速率</p>
+</li>
+</ol>
+</li>
+<li><p>标准化工作</p>
+<ul>
+<li><p>​    标准的分类</p>
+<ul>
+<li>法定标准（权威机构） =&gt; OSI</li>
+<li>事实标准（某些公司主流产品形成的主流） =&gt; TCP/IP</li>
+</ul>
+</li>
+<li><p>RFC 因特网标准的形式</p>
+</li>
+<li><p>相关组织</p>
+<p>国际标准化组织 ISO   OSI</p>
+<p>ITU IEEE IETF</p>
+</li>
+</ul>
+</li>
+<li><p>性能指标</p>
+<ul>
+<li><p>速率 数据传输率/比特率<br>连接在计算机网络上的主机在数字信道上传送数据位数的速率<br><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230124235145466.png" alt="image-20230124235145466"></p>
+</li>
+<li><p>带宽 原本指信号的频率极差，这里指单位时间内两点之间的<strong>最高数据率</strong><br>理想的数据传输状态</p>
+</li>
+<li><p><strong>吞吐量</strong><br><strong>单位时间</strong>内通过<strong>某个网络（或信道、接口）</strong>的数据量</p>
+<p>受网络的带宽或网络的额定速率的限制</p>
+</li>
+<li><p>时延<br>数据从网络的一端传送到另一端所需的时间 =&gt; 延迟</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125003143728.png" alt="image-20230125003143728"></p>
+</li>
+<li><p>时延带宽积 表征的就是某一段时间的数据容量</p>
+<script type="math/tex; mode=display">
+时延带宽积=传播时延\times 带宽</script><p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125003422324.png" alt="image-20230125003422324"></p>
+</li>
+<li><p>往返时延RTT</p>
+<p>从发送方发送数据开始，到发送方收到接收方的确认，总共经历的时延<br><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125003650968.png" alt="image-20230125003650968"></p>
+</li>
+<li><p>利用率</p>
+<ul>
+<li><p>信道利用率</p>
+</li>
+<li><p>网络利用率</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125003830906.png" alt="image-20230125003830906" style="zoom:50%;"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch2-网络模型"><a href="#Ch2-网络模型" class="headerlink" title="Ch2 网络模型"></a>Ch2 网络模型</h2><p>为什么需要分层，哪几层，每一层做什么，层与层之间的关联性</p>
+<ul>
+<li><p>分层结构<br><strong>为什么要分层？</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125213753652.png" alt="image-20230125213753652" style="zoom:50%;"></p>
+</li>
+</ul>
+<p>下层为上层提供服务，上层使用下层的服务（包括下面的所有服务），通过接口来说明<strong>如何使用下层的服务</strong>（屏蔽了服务的实现实现细节，仅相邻层间有接口）；对等实体与协议的定义建立在水平方向上。</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125214637453.png" alt="image-20230125214637453" style="zoom:50%;"></p>
+<p><strong>服务数据单元和协议数据单元</strong>的概念：<br>上一层的PDU作为下一层的SDU单元</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125214753751.png" alt="image-20230125214753751"></p>
+<ul>
+<li><p>OSI参考模型</p>
+<ul>
+<li><p><strong>OSI 七层</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125220708226.png" alt="image-20230125220708226" style="zoom:50%;"></p>
+<p>下面是通信过程的例子，实际体现的是数据封装和解封装的过程，上层的协议数据单元在向下进行传递时会添加控制信息，特别注意在第二层头部和尾部都会有添加，而物理层只负责传递 01 比特流</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230125221837986.png" alt="image-20230125221837986"></p>
+</li>
+<li><p>🚩各层功能和相应协议</p>
+<ul>
+<li><p>应用层<br><strong>负责向用户提供服务</strong></p>
+</li>
+<li><p>表示层<br><strong>负责翻译、加密和压缩数据</strong></p>
+<p><strong>功能一：数据格式变换</strong></p>
+<p><strong>功能二：数据加密解密</strong></p>
+<p><strong>功能三：数据压缩和恢复</strong> 传输音视频数据时</p>
+</li>
+<li><p>会话层</p>
+<p><strong>负责对话控制（允许两系统会话及会话方式控制）和同步（增加检查点或同步点）</strong></p>
+<p>向表示层实体/用户进程提供<strong>建立连接</strong>并在连接上<strong>有序</strong>地<strong>传输</strong>数据</p>
+<p>这里的建立连接是在<strong>进程层面</strong>。建立连接实际就是建立一个会话（建立同步），不同的应用程序通信之间建立不同的会话而不会相互影响</p>
+<p><strong>功能一：建立、管理、终止会话</strong></p>
+<p><strong>功能二：使用校验点可使会话在通信失效时从校验点/同步点继续恢复通信，实现数据同步</strong></p>
+</li>
+<li><p>传输层<br><strong>负责报文从一个进程到另一个进程的传递</strong></p>
+<p><strong>功能一：可靠传输、不可靠传输</strong></p>
+<p><strong>功能二：差错控制</strong></p>
+<p><strong>功能三：流量控制</strong></p>
+<p><strong>功能四：复用分用</strong><br>复用：多个应用层进程可<strong>同时</strong>使用下层的服务<br>分用：下层把收到的信息<strong>分别</strong>交付给上面应用层中相应的进程</p>
+</li>
+<li><p>网络层</p>
+<p><strong>负责将各个分组从源地址传递到目的地址</strong></p>
+<p>这里注意如果两个系统使用同一链路来连接，则通常不需要网络层</p>
+<p>分组是数据报在过长时进行分割的处理</p>
+<p><strong>功能一：路由选择</strong></p>
+<p><strong>功能二：逻辑寻址</strong></p>
+</li>
+<li><p>数据链路层</p>
+<p><strong>负责帧从一节点到下一节点传递</strong></p>
+<p>传输单位是<strong>帧</strong></p>
+<p><strong>功能一：成帧（定义帧的开始和结束）</strong></p>
+<p><strong>功能二：差错控制 </strong> 帧错+位错</p>
+<p><strong>功能三：流量控制</strong></p>
+<p><strong>功能四：访问（接入）控制</strong> <strong>控制对信道的访问</strong></p>
+</li>
+<li><p>物理层</p>
+<p><strong>负责位从一个节点到另一个节点的传递</strong></p>
+<p>传输单位是<strong>比特</strong></p>
+<p><strong>透明传输：</strong>不管数据是什么样的比特组合，都应当能在链路上传送</p>
+<p><strong>功能一：定义接口特性</strong> 指的物理等特性</p>
+<p><strong>功能二：定义传输方式</strong> 单工、半双工、全双工</p>
+<p><strong>功能三：定义传输速率</strong></p>
+<p><strong>功能四：比特同步</strong></p>
+<p><strong>功能五：比特编码</strong> 编码成电信号或光形式的规则</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>OSI 与 TCP/IP</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306091419399.png" alt="image-20230306091419399" style="zoom:50%;"></p>
+<ul>
+<li><p>TCP/IP 中最底下是主机到网络层</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126003821346.png" alt="image-20230126003821346" style="zoom:67%;"></p>
+<ul>
+<li><p>相同点</p>
+<ol>
+<li>都分层</li>
+</ol>
+</li>
+</ul>
+<ol>
+<li>基于独立的协议栈的概念<ol>
+<li>可以实现异构网络互联</li>
+</ol>
+</li>
+</ol>
+<ul>
+<li><p>不同点 </p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126004132590.png" alt="image-20230126004132590"></p>
+</li>
+</ul>
+</li>
+<li><p>5层参考模型</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126004358311.png" alt="image-20230126004358311"></p>
+</li>
+<li><p><strong>寻址</strong></p>
+<ul>
+<li><p>物理地址 - 物理层和数据链路层</p>
+</li>
+<li><p>逻辑地址 - 网络层</p>
+</li>
+<li><p>端口地址 - 传输层</p>
+<p><strong>跳到跳时物理地址将改变，但逻辑地址和端口地址保持不变</strong></p>
+</li>
+<li><p>专用地址 - 应用层</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch3-数据和信号"><a href="#Ch3-数据和信号" class="headerlink" title="Ch3 数据和信号"></a>Ch3 数据和信号</h2><p>模拟与数字数据 / 模拟信号与数据信号 / 振幅频率相位波长，频率与周期之间的关系 / 带宽 / 什么是调幅调频调相 / 衰减 失真 噪声 / 信噪比的概念和公式 / 无噪声信道和有噪声信道速率的限制</p>
+<ul>
+<li><p>数据通信基础</p>
+<p><strong>数据要进行传输，必须被转换为电磁信号</strong></p>
+<ul>
+<li><p>典型的数据通信模型        </p>
+<p>调制解调器将数字信号转换为模拟信号</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126182001923.png" alt="image-20230126182001923"></p>
+</li>
+<li><p>相关术语</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126182456825.png" alt="image-20230126182456825"></p>
+<p><strong>基带传输</strong>：数字信号不经调制直接在低通通道传送</p>
+<p><strong>带通传输</strong>：把数字信号转换成模拟信号进行传输，允许使用带通通道</p>
+</li>
+</ul>
+</li>
+<li><p><strong>码元、波特、速率、带宽</strong></p>
+<ul>
+<li><p><strong>码元</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126183527043.png" alt="image-20230126183527043"></p>
+</li>
+<li><p>速率、波特、带宽</p>
+<p>速率指传输的速率，是将数据发送到链路上的速度；区别于传播速率，后者指整个链路上进行传播的速度</p>
+<p>电平与位的表示关系：</p>
+<script type="math/tex; mode=display">
+Number\ of \ bits\ per\ level=log_2M=k</script><ol>
+<li><p>码元传输速率：单位时间数字通信系统传输的<strong>码元个数</strong>（脉冲个数或信号变化的次数），单位是<strong>波特</strong>。码元速率与进制数无关</p>
+</li>
+<li><p>信息传输速率：单位时间内数字通信系统传输的<strong>二进制码元个数（比特数）</strong></p>
+<p>关系：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126184313704.png" alt="image-20230126184313704"></p>
+</li>
+</ol>
+<p><strong>带宽</strong>：单位时间两点之间所能通过的“<strong>最高数据率</strong>”</p>
+<p>信号上的定义：<strong>复合信号最高频率与最低频率的差值</strong></p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>数据速率限制</strong></p>
+<p>影响因素：<strong>有效带宽、使用的信号电平数、通道的质量</strong>（噪声电平）</p>
+<ul>
+<li><p>奈氏准则 香农定理</p>
+<p><strong>传输减损！</strong></p>
+<ul>
+<li><p>衰减</p>
+<ul>
+<li>热转换导致能量损失，可通过放大器恢复</li>
+</ul>
+</li>
+<li><p>噪声</p>
+</li>
+<li><p>失真</p>
+<p>信号中各成分由于<strong>传播速度随频率不同</strong>而存在延迟的差异，导致接收信号相位变化</p>
+<p><strong>码间串扰</strong>：<strong>接收端</strong>收到的信号波形<strong>失去了码元之间清晰界限</strong>的现象</p>
+<p><strong>解决方案：奈奎斯特定理 给出所需的信号电平数</strong> 会出计算题 🚩</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126215809352.png" alt="image-20230126215809352"></p>
+<p>限制码元传输速率的上限，区别于香农定理，下面是极限数据传输率：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126215958239.png" alt="image-20230126215958239"></p>
+<ol>
+<li>码元传输速率存在上限</li>
+<li>信道的频带越宽（W），就可以用更高的速率进行码元的有效传输</li>
+<li>奈氏准则并未对信息传输速率给出限制</li>
+<li>想提高数据的传输速率，采用多元制的调制方法</li>
+</ol>
+</li>
+<li><p><strong>香农定理 定义了理论上的最高数据速率</strong></p>
+<p>考虑了噪声的影响，引入信噪比的概念</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126220505334.png" alt="image-20230126220505334"></p>
+<p>注意单位的不同 dB 和 S/N。如果题目中给的是<strong>以 dB 为单位</strong>的参数，先换算</p>
+<script type="math/tex; mode=display">
+信噪比(dB)=10log_{10}(S/N)</script><p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126220757323.png" alt="image-20230126220757323"></p>
+<p>结论：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126220929118.png" alt="image-20230126220929118"></p>
+</li>
+<li><p>两者区别</p>
+<p>奈氏准则针对的是信号本身特性存在的问题而提出的解决方案，香农定理考虑的是外界的噪声影响。</p>
+<p>如果题目中既提到了进制数，又提到了信噪比，就都要算，取最小值</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126221418353.png" alt="image-20230126221418353"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch4-数字传输"><a href="#Ch4-数字传输" class="headerlink" title="Ch4 数字传输"></a>Ch4 数字传输</h2><p>波形图 / 比特率 位长 数据率和信号率的关系公式 / 基带传输 低通 / 基带传输和宽带传输的区别 / 最小带宽 最大数据速率 / 编码方案</p>
+<ul>
+<li><p>编码&amp;调制</p>
+<ul>
+<li><p>数据元素和信号元素</p>
+<p>前者为信息的最小实体，后者为数字信号的最小单位</p>
+</li>
+<li><p><strong>数据速率与信号速率</strong></p>
+<p><strong>信号速率决定了数字信号的带宽</strong>，最小带宽与波特率相等；给定带宽，即可求得最大数据速率</p>
+<script type="math/tex; mode=display">
+S=c\times N\times \frac{1}{r}</script></li>
+<li><p><strong>基带信号与宽带信号的区别</strong> 可能出简答题？</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126221934784.png" alt="image-20230126221934784"></p>
+<p>宽带调制的目的是应对衰减等问题</p>
+<p>传输距离较近时采用基带传输；远时采用宽带传输</p>
+</li>
+<li><p>编码与调制</p>
+<p>区分编码与调制的区别：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126222253114.png" alt="image-20230126222253114"></p>
+</li>
+<li><p><strong>数字数据编码为数字信号</strong> 用于基带传输</p>
+<p>编码解决的问题：</p>
+<ul>
+<li><p>基线 信号功率的运行平均值</p>
+</li>
+<li><p>基线偏移 </p>
+</li>
+<li>直流分量 接近于零频率的成分</li>
+<li>自同步</li>
+</ul>
+<p><strong>线路编码方案</strong></p>
+<ul>
+<li><p>单极 NRZ 方案 </p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230302173610968.png" alt="image-20230302173610968" style="zoom:50%;"></p>
+</li>
+<li><p>极性 NRZ-L 方案和极性 NRZ-I 方案 前者存在基线偏移，都存在直流分量</p>
+<p>NRZ-L 电平决定位值；NRZ-I 电平是否跳变决定位值</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230302173954523.png" alt="image-20230302173954523" style="zoom:50%;"></p>
+</li>
+<li><p>极性 RZ</p>
+<p>两个信号变化编码一个位，所需带宽大 但没有DC直流成分问题</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230302193002538.png" alt="image-20230302193002538" style="zoom:50%;"></p>
+</li>
+<li><p><strong>曼彻斯特编码和差分曼彻斯特</strong> <strong>必考</strong></p>
+<p>曼彻斯特：位的持续时间被二等分，前半部分电平保持一个水平，后半部分变成另外一个水平</p>
+<p>差分：中间总有跳变，值在位起始位置确定</p>
+<p>最小带宽（信号速率）是 NRZ 的两倍</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230302193304439.png" alt="image-20230302193304439" style="zoom:50%;"></p>
+</li>
+<li><p>双极型方案</p>
+<p>使用三种电平</p>
+<ul>
+<li><p>AMI </p>
+<p>0电平表示0，交替正负电平表示1</p>
+</li>
+<li><p>伪三元编码</p>
+<p>1编码成0电平，0编码成正负交替电平</p>
+</li>
+</ul>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230302201151285.png" alt="image-20230302201151285" style="zoom:50%;"></p>
+<p><strong>没有 DC 成分，有同步问题</strong></p>
+</li>
+<li><p>多电平方案</p>
+<p>mBnL</p>
+<p>这里的 m 和 n 分别指的是模式长度，比如 m 个二进制位需要 n 个电平（信号模式）来表示</p>
+<p>4D-PAM5</p>
+<p>MLT-3 可能考？最后看下吧</p>
+</li>
+</ul>
+<p><strong>块编码</strong> </p>
+<p>利用冗余（增加分组的位长）来提供差错检测    </p>
+<p>三步骤：分组、置换和组合</p>
+<p><strong>扰动</strong> </p>
+<p>修改 AMI 的编码规则，改变其长0导致同步失效的问题 </p>
+<p>B8ZS：8个连续0电平会被替换成000VB0VBV表示违反，与前一非零脉冲极性相同 ；B表示双极，与前一非零脉冲极性相反</p>
+<p>HDB3</p>
+<ul>
+<li>异步传输与同步传输<ul>
+<li>异步传输：信号的时序不重要，位流组成字节单位，没有同步时钟所以需要额外增加起始和终止位，字节之间存在间隙</li>
+<li>同步传输：位流组成更长的“帧”，包含多个字节。帧内的各字节之间没有间隙</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch5-模拟传输"><a href="#Ch5-模拟传输" class="headerlink" title="Ch5 模拟传输"></a>Ch5 <strong>模拟传输</strong></h2></li>
+</ul>
+<p>三种将数字数据调制成数字信号的机制 / 模拟到模拟到转换</p>
+<ul>
+<li><p><strong>数字数据调制为模拟信号</strong></p>
+<ul>
+<li><p>幅移键控 ASK</p>
+</li>
+<li><p>频移键控 FSK</p>
+</li>
+<li><p>相移键控 PSK</p>
+</li>
+<li><p>🚩<strong>正交振幅调制 QAM （ASK + PSK）</strong></p>
+<p>状态数：相位数x幅度数</p>
+</li>
+</ul>
+</li>
+<li><p>模拟数据调制为模拟信号 </p>
+<p>目的：为了适应带通介质</p>
+<p>载波的某一参量随调制信号的振幅变化</p>
+<ul>
+<li>调幅</li>
+<li>调频</li>
+<li>调相</li>
+</ul>
+</li>
+<li><p>模拟数据编码为数字信号</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126224430125.png" alt="image-20230126224430125"></p>
+<p>三个步骤：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230126224637042.png" alt="image-20230126224637042"></p>
+<p>编码指将每个电平值对应的状态（也就是码元）用二进制位来表示</p>
+</li>
+</ul>
+</li>
+<li><p>传输方式</p>
+<ul>
+<li>并行模式 速度快 费用高 适合近距离（计算机内部）</li>
+<li>串行模式  速度慢 费用低 适合<strong>远</strong>距离</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch6-物理层面的带宽利用"><a href="#Ch6-物理层面的带宽利用" class="headerlink" title="Ch6 物理层面的带宽利用"></a>Ch6 物理层面的带宽利用</h2><p>带宽利用的方法，每种的大概原理</p>
+<ul>
+<li><p>频分复用 FDM 模拟技术 调制载波频率</p>
+</li>
+<li><p>波分复用 WDM 合并多个光信号 本质与FDM一样，差别就是这些频率非常高</p>
+</li>
+<li><p>时分复用 TDM <strong>数字复用技术</strong></p>
+<ul>
+<li><p>同步时分复用 </p>
+<p>想象成一个高速复用链路，只要将时隙送上去，速度（<strong>链路速率</strong>）即会提高为之前（<strong>单个连接数据速率</strong>）的 n 倍，n 指的是连接数。每个输入时隙进一步拼接成帧。</p>
+<p><strong>每个输出单元的持续时间是输入单元持续时间的1/n</strong></p>
+<p>每位的持续时间是帧持续时间的 1/n （n 指的是帧长）</p>
+<p>同步的特点在于每个时隙依次专用于每一个发送设备，固定。</p>
+</li>
+<li><p>统计时分复用</p>
+<p>解决空时隙问题。增加寻址信息</p>
+<p>动态分配时隙</p>
+</li>
+</ul>
+</li>
+<li><p>扩频技术</p>
+<p>与复用技术的原理类似，也是信号的组成，但是目的在于<strong>抗干扰和安全</strong>。这里组成的信号成分中包含冗余信息</p>
+<ul>
+<li><p>跳频扩频 FHSS</p>
+<p>源信号调制 M 个<strong>不同的载波频率</strong></p>
+</li>
+<li><p>直接序列扩频 DSSS</p>
+<p>每个数据位用扩展编码的 n 位代替（数字数据 =&gt; 数字信号）</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch7-物理层传输介质"><a href="#Ch7-物理层传输介质" class="headerlink" title="Ch7 物理层传输介质"></a>Ch7 物理层传输介质</h2><p>数据传输系统中在发送设备和接收设备之间的<strong>物理通路</strong></p>
+<p><strong>区别传输媒体和物理层的概念</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230127204317173.png" alt="image-20230127204317173"></p>
+<p>分类：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230127204507103.png" alt="image-20230127204507103" style="zoom:50%;"></p>
+<ol>
+<li><p>双绞线</p>
+<p><strong>两根</strong>采用一定规则并排<strong>绞合</strong>的、相互绝缘的<strong>铜导线</strong>组成 =&gt; 常用于局域网</p>
+<p>如果再加一个金属丝作屏蔽层，就是屏蔽双绞线</p>
+</li>
+<li><p>同轴电缆 =&gt; 常用于传统总线型以太网</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230127204954373.png" alt="image-20230127204954373"></p>
+<p>抗干扰能力强于双绞线</p>
+</li>
+<li><p>光纤</p>
+<p>传递光脉冲，带宽很大</p>
+<p>损耗低，适合远距离传输</p>
+</li>
+</ol>
+<h2 id="Ch8-交换"><a href="#Ch8-交换" class="headerlink" title="Ch8 交换"></a>Ch8 交换</h2><p>电路交换的三个阶段 / 数据交换过程有哪些延迟 / 虚电路的概念，基本原理 / 虚电路交换和电路交换之间的优劣</p>
+<ul>
+<li><p>三种交换方式</p>
+<ul>
+<li>电路交换 </li>
+<li>分组交换 区别 概念<ul>
+<li>数据报网</li>
+<li>虚电路网 </li>
+</ul>
+</li>
+<li>报文交换</li>
+</ul>
+</li>
+<li><p>数据交换方式</p>
+<ul>
+<li><p>电路交换</p>
+<p><strong>电路交换的三个阶段</strong></p>
+<p><strong>数据交换过程中有哪些延迟？传输延迟 + 传播延迟 + 处理延迟（忽略），对应图</strong></p>
+<p>常用于电话网络 直接传输<strong>比特流</strong></p>
+<p>为了减少带宽的浪费，所以通过<strong>多路复用技术</strong>来缓解。但是本质上会独占通信链路</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201120857798.png" alt="image-20230201120857798" style="zoom:50%;"></p>
+<p>电路交换中的中间设备（通常是交换机）会直接对发送数据进行转发，而不会检错</p>
+</li>
+<li><p>报文交换</p>
+<p>交换设备采用<strong>存储转发</strong>技术，动态分配线路</p>
+</li>
+<li><p>分组交换</p>
+<p>分组：把大的数据块分割成小的数据块</p>
+<p>相对于报文交换，<strong>存储管理更容易</strong></p>
+<p>报文交换于分组交换的对比：</p>
+<p>分组交换在计算时直接考虑最后一个分组发送完毕所需时间即可</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201122309273.png" alt="image-20230201122309273" style="zoom:50%;"></p>
+<p>三种方式对比：</p>
+<p><strong>报文交换和分组交换都是基于存储转发</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201122802446.png" alt="image-20230201122802446" style="zoom:50%;"></p>
+<ul>
+<li><p>数据报方式 （无连接服务）</p>
+<p>数据报</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201153933003.png" alt="image-20230201153933003"></p>
+</li>
+<li><p>虚电路方式（连接服务）</p>
+<p><strong>虚电路的基本原理</strong></p>
+<p><strong>电路交换与虚电路交换的优劣</strong></p>
+<p>在<strong>数据链路层</strong>实现</p>
+<p>结合数据报方式和电路交换方式 </p>
+<ul>
+<li><p>编址</p>
+<p>全局地址用于连接阶段建立虚电路标识符 VCI；后者仅具有本地的权限（<strong>定义下一个交换机和传送分组的通道应该是什么</strong>）</p>
+</li>
+<li><p>连接建立阶段</p>
+<p>分为建立请求和确认子阶段</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230303233757738.png" alt="image-20230303233757738" style="zoom:50%;"></p>
+</li>
+<li><p>🚩与电路交换之间的优劣对比</p>
+<p>电路交换：</p>
+<blockquote>
+<ol>
+<li>电路交换是在物理层，是实际的物理链路连接。</li>
+<li>通信开始前，数据传输直接以<strong>信号数据流</strong>传递，无封装过程</li>
+<li><strong>站点必须对通信时间所用的资源给以预留</strong></li>
+<li>数据传输期间<strong>没有寻址</strong>，交换机基于它们占有的频带（FDMA）或时隙（TDMA）发送数据</li>
+<li>效率较低，延迟很小</li>
+</ol>
+</blockquote>
+<p>虚电路交换：</p>
+<blockquote>
+<ol>
+<li>属于相同源端和目的端的所有分组都按同一路径传送</li>
+<li>资源按需分配，分组到达目的端可能有不同延迟</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch10-检错与纠错"><a href="#Ch10-检错与纠错" class="headerlink" title="Ch10 检错与纠错"></a>Ch10 检错与纠错</h2><ul>
+<li><p>基本概念</p>
+</li>
+<li><p>块编码 </p>
+<ul>
+<li>汉明距离的相关结论</li>
+<li>线性块编码 <ul>
+<li>汉明编码</li>
+<li>奇偶校验码</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>循环编码 计算</p>
+</li>
+<li><p>传输、网络层的校验和的计算</p>
+</li>
+<li><p>差错控制（检错编码）</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230128232248648.png" alt="image-20230128232248648" style="zoom:50%;"></p>
+<p>差错控制在数据链路层主要是解决比特错</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230128232622876.png" alt="image-20230128232622876" style="zoom:50%;"></p>
+<p><strong>基本概念：</strong></p>
+<ul>
+<li><p><strong>汉明距离</strong></p>
+<p>两个字进行异或并计算1的个数</p>
+<ul>
+<li><p><strong>检错的最小距离</strong></p>
+<p>最多可检 s 个差错：$d_{min}\geq s+1$</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304091322447.png" alt="image-20230304091322447" style="zoom:50%;"></p>
+</li>
+<li><p><strong>纠错的最小距离</strong></p>
+<p>最多纠正 t 个差错：$d_{min}=2t+1$</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304091644540.png" alt="image-20230304091644540" style="zoom:50%;"></p>
+</li>
+</ul>
+</li>
+</ul>
+<p>检错编码：</p>
+<ol>
+<li><p>奇偶校验码</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230128232934775.png" alt="image-20230128232934775" style="zoom:50%;"></p>
+<p>特点：</p>
+<p>只能检查出<strong>奇数个比特</strong>错误，检错能力为<strong>50%</strong></p>
+</li>
+<li><p><strong>CRC循环冗余码</strong></p>
+<p><strong>怎么运算？硬件实现不需要 找两道相关题练一下</strong></p>
+<p>除的过程采用异或运算，得到的是3位，1位额外位移下来加上去组成4位</p>
+<p>当最左边的位是0时，用0做除数</p>
+<p>发送端：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304093833986.png" alt="image-20230304093833986" style="zoom:50%;"></p>
+<p>接收端：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230128233852978.png" alt="image-20230128233852978"></p>
+<p>区别于可靠传输，这里只是实现了无比特差错的传递</p>
+</li>
+</ol>
+<p><strong>纠错编码——汉明编码</strong></p>
+<p><strong>发现双比特错，纠正单比特错</strong> $d_{min}=3$</p>
+<ol>
+<li><p>确定校验码的位数 r</p>
+<script type="math/tex; mode=display">
+2^r \geq k+r+1\\
+2^r \geq n+1</script><p>r 为冗余信息位，k 位信息位</p>
+</li>
+<li><p>查表计算校验子</p>
+</li>
+</ol>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304094900156.png" alt="image-20230304094900156" style="zoom:50%;"></p>
+</li>
+<li><p><strong>校验和</strong></p>
+<p>划分 求和 取反</p>
+</li>
+</ul>
+<h2 id="Ch11-数据链路控制"><a href="#Ch11-数据链路控制" class="headerlink" title="Ch11 数据链路控制"></a>Ch11 数据链路控制</h2><p><strong>非常重要！！</strong></p>
+<p><strong>没有大题，都是概念 11.1 11.2 11.3 </strong></p>
+<ul>
+<li><p>11-1 <strong>成帧</strong></p>
+<ul>
+<li><p>两种不同类型的帧</p>
+<ul>
+<li><p>固定长度 长度本身作为分隔符</p>
+</li>
+<li><p>可变长度 加入标记</p>
+<ul>
+<li><p>面向字符协议</p>
+<p>帧的开头和结尾加入1字节的标记</p>
+<p><strong>字节填充</strong>：如果数据部分出现标记字符，则用转义字符 ESC 进行填充</p>
+</li>
+<li><p>面向位协议</p>
+<p>通常使用标记 <code>01111110</code> 作为分隔符</p>
+<p><strong>位填充策略</strong>：遇到1个0后面紧跟着5 个1时便添加一个0</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>11-2 <strong>流量控制和差错控制</strong> =&gt; <strong>数据链路控制</strong></p>
+<ul>
+<li><p>流量控制</p>
+<p><strong>定义</strong>：一系列程序，用来<strong>限制</strong>发送方在等到确认之前发送的数据数量</p>
+</li>
+<li><p>差错控制 <strong>「基于自动重复请求 ARQ」</strong></p>
+</li>
+</ul>
+</li>
+<li><p>11-3 几种协议</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304101638849.png" alt="image-20230304101638849" style="zoom:50%;"></p>
+<ul>
+<li><p>无噪声通道 </p>
+<ol>
+<li><p>不使用流量控制</p>
+<p>发送方只管发</p>
+</li>
+<li><p>使用流量控制</p>
+<p><strong>「停止等待协议」</strong></p>
+<p>利用 ACK 帧的反馈确认再继续发送帧</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304102525515.png" alt="image-20230304102525515" style="zoom:50%;"></p>
+<p><strong>链路利用率：</strong></p>
+<script type="math/tex; mode=display">
+U=\frac{n\times t_{frame}}{n(2t_{prop}+t_{frame})}=\frac{1}{2a+1}</script><p><strong>「滑动窗口协议」</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306095646961.png" alt="image-20230306095646961" style="zoom:50%;"></p>
+<p>一次传输多个帧，需要利用序号作为标记，发送方和接收方均维护一个序号列表</p>
+<p><strong>链路利用率：</strong></p>
+<script type="math/tex; mode=display">
+U=\begin{cases}
+1 \ (W\geq2a+1)\\
+\frac{W}{2a+1}\ (W<2a+1)
+\end{cases}</script></li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>有噪声通道</p>
+<ol>
+<li><p>停止等待 ARQ</p>
+<p>这里差错的检测基于保留已发送帧的副本并当<strong>重传定时器到时重传</strong>这个帧来实现</p>
+<p><strong>序列号基于模2运算</strong></p>
+<p>接收方如果接收到错误帧则会直接忽略；但即使序列号不匹配，也会发送ACK再确认前一个</p>
+</li>
+<li><p>回退 N 帧 ARQ</p>
+<p>差错的检测只使用一个定时器，当<strong>第一个待处理帧</strong>的定时器到时时，发送所有的待处理帧</p>
+<p>序列号是模 $2^m$ ，这里 m 是以位为单位的序列号字段长度</p>
+<p>发送方窗口的<strong>最大尺度</strong>：$2^m-1$；接收方窗口大小为 1</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304104539744.png" alt="image-20230304104539744" style="zoom:50%;"></p>
+<p>ACK 帧可以累积确认；如果一个帧损坏了或者失序了，接收方便不响应<strong>并将丢弃所有后来的帧</strong>直到它收到一个所期待的帧</p>
+<p>不适用于有噪声链路</p>
+</li>
+<li><p>选择性重复 ARQ <strong>只重传被损坏的帧</strong></p>
+<p>发送方窗口的最大尺度：$2^{m-1}$；接收窗口大小与发送方窗口大小一样</p>
+<p>为每个发送帧都设置一个定时器，只有超时的帧才会重发；NAK 指定发送方发送期待的帧（其实也有 ACK 功能）；ACK仍累积确认，但只有在向上层交付数据的时候才会发送</p>
+</li>
+</ol>
+</li>
+</ul>
+<ul>
+<li><p><strong>高级数据链路控制协议</strong></p>
+<ul>
+<li><p>HDLC</p>
+<p><strong>面向比特</strong>的数据链路协议，具体实现了上述讨论的各种 ARQ 协议</p>
+<ul>
+<li><p>两种通用的传输方式</p>
+<ol>
+<li><p>正常响应方式</p>
+<p>一个主站发送指令，多个从站响应。可用于点到点和多点链路</p>
+</li>
+<li><p>异步平衡方式</p>
+<p>每个站点平等，用于点到点链路</p>
+</li>
+</ol>
+</li>
+<li><p>三种帧结构</p>
+<ul>
+<li>信息帧</li>
+<li>管理帧 🚩提供差错控制机制有「回退N帧ARQ」和「选择性重复ARQ」</li>
+<li>无编号帧</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>PPP</p>
+<p><strong>面向字节</strong>的<strong>点到点</strong>链路协议</p>
+<p>一些特点（类比 UDP）：</p>
+<ul>
+<li>不提供流量控制</li>
+<li>差错控制只是一个 CRC 校验，出错就丢弃</li>
+<li>无顺序编号</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch12-多路访问"><a href="#Ch12-多路访问" class="headerlink" title="Ch12 多路访问"></a>Ch12 多路访问</h2><p>原理、<strong>实际的工作方式</strong></p>
+<ul>
+<li><p>介质访问控制</p>
+<ul>
+<li><p>介质访问控制</p>
+<p>主要为了解决两对节点之间的通信不会发生相互干扰</p>
+<p>多路访问协议分为：<strong>随机访问协议、受控访问协议以及通道化协议</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304145338899.png" alt="image-20230304145338899" style="zoom:50%;"></p>
+</li>
+<li><p><strong>随机访问协议</strong> 从原理到计算</p>
+<p>所有用户均可随机发送信息，且发送时占全部带宽</p>
+<ul>
+<li><p><strong>ALOHA 协议</strong></p>
+<p><strong>「纯 ALOHA 协议」</strong></p>
+<p>思想：想发就发，随机重发</p>
+<p><strong>依赖于接收方的确认</strong></p>
+<p>这里的 $T_0$ 既包括传输时间和传播时间</p>
+<p><strong>超时周期</strong>一般指往返传输延迟的最大可能值或者平均传输时间</p>
+<p>冲突只会在<strong>接收方检测</strong>到，如果发生冲突了就和停等 ARQ 协议一样，需要重发帧</p>
+<p>超时后需要随机等待一段时间再重发，遵循的机制为「二进制指数回退」，时隙为<strong>传播的最长时间</strong></p>
+<blockquote>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304150844732.png" alt="image-20230304150844732" style="zoom:50%;"></p>
+</blockquote>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230129213321059.png" alt="image-20230129213321059"></p>
+<p><strong>纯 ALOHA 脆弱时间</strong> </p>
+<script type="math/tex; mode=display">
+2\times T_{fr}</script><p>其中 $T_{fr}$ 代表<strong>帧传输时间</strong>    </p>
+<p><strong>吞吐量（成功传输帧的平均数量）</strong> G 为一个帧传输时间内系统产生的帧的平均数量： $S=G\times e^{−2G}$</p>
+<p><strong>「时隙ALOHA协议」</strong></p>
+<p>思想：把时间分成若干个相同时隙（$T_{fr}$），每个站点只能在时隙开始时刻发送</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230129213534049.png" alt="image-20230129213534049"></p>
+<p><strong>时隙ALOHA协议的脆弱时间：$T_{fr}$</strong></p>
+<p><strong>吞吐量</strong>：$S=G \times e^{-G}$</p>
+</li>
+<li><p><strong>CSMA 协议</strong></p>
+<p><strong>思想：发送帧之前，监听信道</strong></p>
+<p>CSMA脆弱时间：$T_p$ 到最远站点的<strong>帧传播时间</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304151758926.png" alt="image-20230304151758926" style="zoom:50%;"></p>
+<p><strong>监听算法</strong></p>
+<ol>
+<li><p>1-持续 CSMA</p>
+<p>如果监听信道处于空闲状态，则直接传输数据帧；否则<strong>一直处于监听信道状态</strong>直至信道空闲</p>
+</li>
+<li><p>非持续 CSMA</p>
+<p>区别于上述点在于如果信道忙则<strong>等待一个随机时间之后再进行监听</strong></p>
+</li>
+<li><p>p-持续 CSMA</p>
+<p>若监听线路繁忙则持续侦听直到线路空闲；若线路空闲：</p>
+<blockquote>
+<p>(1) 以概率p发送；(2) 以概率(1-p)等待<strong>下一个时隙的开始</strong>并再次检测线路；</p>
+</blockquote>
+</li>
+</ol>
+</li>
+<li><p><strong>CSMA-CD</strong> 带冲突检测</p>
+<p><strong>思想：边发送边监听</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304152920606.png" alt="image-20230304152920606" style="zoom:50%;"></p>
+<p>帧传输时间 $T_{fr}$ 必须至少是最大传播时间 $T_p$ 的两倍    </p>
+<ul>
+<li><p><strong>最小帧长问题</strong> 必考</p>
+<p>希望在检测到冲突时帧还未发送结束</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230130195806024.png" alt="image-20230130195806024"></p>
+</li>
+<li><p>检测到冲突之后采用二进制指数回退策略等待重传时间</p>
+<p>区别于前面 ALOHA 的策略在于这里的时隙为 $2T_p$</p>
+</li>
+</ul>
+</li>
+<li><p>CSMA-CA 冲突避免 =&gt; 适用于无限局域网</p>
+<p>无线网络对于信号能量敏感下降</p>
+<ul>
+<li><p>工作原理 <strong>原理最重要</strong></p>
+<p><strong>帧间间隔，竞争窗口和确认</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304154708183.png" alt="image-20230304154708183" style="zoom:50%;"></p>
+<ul>
+<li><p>帧间间隔 IFS</p>
+<p>当发现通道空闲时等待的时间，可根据大小赋予不同站点优先级</p>
+</li>
+<li><p>竞争窗口</p>
+<p>将时间分割成时隙，等待时间基于二进制指数回退策略选择</p>
+<blockquote>
+<p>在竞争窗口中的<strong>每一个时隙内，通道都要被侦听</strong>；如果发现通道空闲，定时器继续，如果通道繁忙，定时器停止并在通道空闲后再继续</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>受控访问访问协议</strong> <strong>要知道一下，轮询、选择、预约</strong></p>
+<ul>
+<li><p>预约访问协议</p>
+<p>站点在发送数据之前需要预约，也是以时隙为单位。先发预约帧，再发数据帧</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304160048759.png" alt="image-20230304160048759"></p>
+</li>
+<li><p><strong>轮询访问方法</strong></p>
+<p>一个主站负责控制链路，多个从站跟随。</p>
+<p><strong>轮询：</strong>主站希望接收数据，它就询问从设备是否有数据要发送</p>
+<p><strong>选择：</strong>主设备希望发送数据，它就通知从设备准备接收</p>
+</li>
+<li><p><strong>令牌传递</strong></p>
+<p>逻辑环结构，令牌在环中循环。令牌的持有赋予站点访问通道并发送数据的权限</p>
+</li>
+</ul>
+</li>
+<li><p>通道化协议</p>
+<ul>
+<li>FDMA 频分多路访问</li>
+<li>TDMA 时分多路访问</li>
+<li>CDMA 码分多路访问</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch13-有线局域网：以太网"><a href="#Ch13-有线局域网：以太网" class="headerlink" title="Ch13 有线局域网：以太网"></a>Ch13 有线局域网：以太网</h2><p>概念 / 单波 / MAC LLC 原理 功能 /  CSMA/CD / 冲突域和广播域 什么可以划分（集线器 交换机 路由器） / 关键字眼背</p>
+<p>帧格式重要位置：源地址 目的地址 CRC校验位</p>
+<p>寻址 十六进制表示法 更多理解单播的东西 CSMA/CD工作原理 </p>
+<ul>
+<li><p>局域网 IEEE 标准</p>
+<ul>
+<li><p>LLC 逻辑链路控制层</p>
+<p><strong>流量控制、差错控制</strong>和部分成帧的职能都被集中到LLC子层中</p>
+<p>为所有 IEEE 局域网提供一个<strong>单一的</strong>数据链路控制协议</p>
+</li>
+<li><p>MAC 介质访问控制层</p>
+<p>为每个局域网<strong>定义特定的访问方法</strong></p>
+</li>
+</ul>
+</li>
+<li><p>标准以太网</p>
+<p><strong>1-持续的 CSMA/CD</strong> 是以太网介质访问方法</p>
+<p><strong>以太网不提供确认的任何机制</strong></p>
+<ul>
+<li><p>🚩<strong>IEEE 802.3 MAC 帧</strong> 熟知每个字段的功能，重点为地址 CRC 字段</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304165031775.png" alt="image-20230304165031775" style="zoom:50%;"></p>
+<blockquote>
+<ul>
+<li>前导符：7个字节（56位），1和0交替出现，通知接收系统有帧的到来并使其与输入的时钟同步，56位模式容许站点在帧的开始可以错过（miss）一些位；实际上前导符（preamble）是在<strong>物理层</strong>上加进去的，并不是帧的一部分；</li>
+<li>起始帧分界符（SFD）：10101011，说明帧的开始；</li>
+<li>目的地址（DA）：6个字节，包含目的站点或接收该分组的站点的物理地址；</li>
+<li>源地址（SA）：6个字节，包含分组的发送方的物理地址；</li>
+<li>长度/类型：最初的以太网（Ethernet-II，商业广泛使用）作为类型字段来定义使用MAC帧的上层协议，IEEE标准使用它作为<strong>长度字段</strong>来定义<strong>数据字段的字节数</strong>；</li>
+<li>数据：上一层协议封装的数据，<strong>最少46字节，最大1500字节(其余18字节)</strong>；</li>
+<li>CRC：差错检测信息，CRC-32</li>
+</ul>
+</blockquote>
+<p>🚩 MAC 帧最小长度为 64 字节，最大长度为 1518 字节</p>
+</li>
+<li><p><strong>寻址</strong></p>
+<p>6字节，利用16进制表示则共12个十六进制数</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304165734951.png" alt="image-20230304165734951" style="zoom: 33%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230131151929232.png" alt="image-20230131151929232"></p>
+<p>其中目的地址划分：</p>
+<ol>
+<li><p>🚩  单播地址 目的地址字段的<strong>第一个字节</strong>的最低位为0 =&gt; 第二个十六进制数为偶数</p>
+</li>
+<li><p>广播地址 全1</p>
+</li>
+<li><p>多播地址 目的地址字段的<strong>第一个字节</strong>的最低位为1 =&gt; 第二个十六进制数为奇数</p>
+<p>传输方式：字节从左向右 =&gt; 每一位从低位到高位</p>
+<p><strong>冲突域与广播域 给一个图来识别，什么设备可以来划分冲突域和广播域</strong></p>
+</li>
+</ol>
+</li>
+<li><p>物理层部分需要记住的关键</p>
+<p><strong>划分冲突域：</strong> 最初是通过网桥（还可以提高带宽）；之后进一步用 N 端口的交换机（带有缓冲区）来代替</p>
+<p>「10Base5」 =&gt; 总线拓扑，冲突只会发生在<strong>粗轴电缆</strong>（收发器电缆能为发送和接收提供独立的路径）</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304171908115.png" alt="image-20230304171908115" style="zoom:50%;"></p>
+<p>「10Base2」=&gt; 总线拓扑，冲突发生在<strong>细轴电缆</strong>中</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304172038970.png" alt="image-20230304172038970" style="zoom:50%;"></p>
+<p>「10Base-T」：星型拓扑结构，站点通过双绞线连接到<strong>集线器</strong>上，故冲突发生在网络集线器中</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304172159131.png" alt="image-20230304172159131" style="zoom:50%;"></p>
+<p>「10Base-F」：星型拓扑，站点使用两条光纤与网络集线器相连接</p>
+<p>快速以太网之后：半双工利用集线器连接，全双工利用带有缓冲区的交换机连接</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch15-连接局域网、主干网和虚拟局域网"><a href="#Ch15-连接局域网、主干网和虚拟局域网" class="headerlink" title="Ch15 连接局域网、主干网和虚拟局域网"></a>Ch15 连接局域网、主干网和虚拟局域网</h2><p>第一幅图要会，很重要；网桥要大概知道一下；虚拟局域网的基本概念和作用</p>
+<ul>
+<li><p><strong>连接设备</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304192652130.png" alt="image-20230304192652130" style="zoom:50%;"></p>
+<ol>
+<li><p>物理层以下：<strong>无源集线器</strong></p>
+<p>只是个<strong>连接器</strong>，是物理介质的一部分</p>
+</li>
+<li><p>物理层设备：中继器或<strong>有源集线器</strong></p>
+<p>「中继器」：可以重新生成原始的位模式，然后发送新生成的信号。<strong>并不能连接两个局域网</strong>，它连接的是一个局域网的各个分段。因此它<strong>只做转发帧，没有过滤功能</strong></p>
+<p>「有源集线器」：本质为多端口中继器，</p>
+</li>
+<li><p>物理层和数据链路层：网桥或两层交换机</p>
+<p>「网桥」：在物理层部分和功能中继器一样，在数据链路层部分具有<strong>过滤能力</strong>，即通过检查帧中的物理地址，根据内部维护的<strong>端口地址映射表</strong>来决定丢弃还是转发该帧。</p>
+<p>注意它并不会改变帧中的物理地址。</p>
+<p>「自学习算法」构建转发表（针对透明网桥）：</p>
+<blockquote>
+<p>目的地址用来做<strong>转发决定</strong>（表查找），源地址用做<strong>添加表条目和更新的目的</strong>。</p>
+</blockquote>
+<p>初始时刻如果目的地址没有记录的话就会直接转发出去，转发表在查询时先找源地址</p>
+<p>两个网桥之间会产生循环问题 =&gt; 生成树算法解决/源路由网桥解决</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230131165542477.png" alt="image-20230131165542477" style="zoom:50%;"></p>
+<p><strong>优点：</strong></p>
+<ol>
+<li>过滤通信量，增大吞吐量</li>
+<li>扩大物理范围</li>
+<li>提高了可靠性</li>
+<li>可互连使用不同协议的局域网</li>
+</ol>
+<p>「两层交换机」：多端口网桥，有缓存区。每一端口划分一个冲突域 并且可以<strong>独占传输媒体带宽</strong></p>
+</li>
+<li><p>物理层、数据链路层和网络层设备：路由器或三层交换机</p>
+<p>「路由器」：基于分组的逻辑地址路由分组</p>
+</li>
+<li><p>所有5层的设备：网关</p>
+</li>
+</ol>
+</li>
+<li><p>虚拟局域网</p>
+<p><strong>基本概念：</strong>将 LAN 划分成逻辑的、而不是物理的网段。每个 VLAN 是组织的一个工作组，由软件而非硬件定义</p>
+<p><strong>作用：</strong>创建广播域</p>
+</li>
+<li><p>冲突域和广播域</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230131170229401.png" alt="image-20230131170229401"></p>
+</li>
+</ul>
+<h2 id="Ch19-逻辑寻址"><a href="#Ch19-逻辑寻址" class="headerlink" title="Ch19 逻辑寻址"></a>Ch19 逻辑寻址</h2><p>IPV6不用看 <strong>其他都重要</strong> 以及需要知道 IPV4 到 IPV6 的过渡策略</p>
+<ul>
+<li><p><strong>标记法</strong></p>
+<p>写法：点分十进制</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201165816496.png" alt="image-20230201165816496" style="zoom:50%;"></p>
+<p>注：路由器的不同接口都有一个IP地址，因此可以连接不同的网络，划分广播域</p>
+</li>
+<li><p>💡<strong>分类寻址</strong>  </p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304213607844.png" alt="image-20230304213607844" style="zoom:50%;"></p>
+<p>其中 ABC 类地址分成了网络号和主机号</p>
+</li>
+<li><p>子网化</p>
+<p><strong>方法：掩码中增加1的位数</strong></p>
+</li>
+<li><p>无分类编址 CIDR</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230202230434955.png" alt="image-20230202230434955" style="zoom:50%;"></p>
+<p><strong>地址掩码对应的就是网络号的位数对应1，主机号位数对应0</strong></p>
+<p>最大地址：掩码的反码与给定地址进行或运算</p>
+<p><strong>限制条件：</strong></p>
+<blockquote>
+<ol>
+<li>块中的地址必须是一个接着一个连续的</li>
+<li><strong>一个块中地址的个数是2的整数次幂</strong></li>
+<li>块的<strong>起始地址</strong>(网络地址)必须能被块的个数整除</li>
+<li>子网分配时网络地址和广播地址不能够分配</li>
+</ol>
+</blockquote>
+<p><strong>表示方法：</strong></p>
+<script type="math/tex; mode=display">
+x.y.z.t /n</script><p>起始地址：通过<strong>子网掩码与 IP 地址</strong>逐位相与，通常表示为一个组织的网络地址</p>
+<p>最后地址：<strong>子网掩码取反后与 IP 地址</strong>逐位相或</p>
+<p>地址的个数：$2^{32-n}$</p>
+</li>
+<li><p>网络地址转换 NAT</p>
+<p>专用地址：在组织机构内部唯一，但在全世界范围内并不唯一。路由器不能转发<strong>将这些地址作为目的地址</strong>的分组</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230304222618471.png" alt="image-20230304222618471" style="zoom:50%;"></p>
+<p>增加端口列来扩充可发往同一目的地址分组的内部主机数</p>
+</li>
+<li><p>构成超网</p>
+<p><strong>将多个子网聚合成一个较大的子网</strong></p>
+<p>方法：将网络前缀缩短，掩码减少1的位数</p>
+<p><strong>最长前缀匹配</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230202231346912.png" alt="image-20230202231346912"></p>
+</li>
+</ul>
+<p>注意CIDR的子网号是可以全0全1的（主机号的还是不能全0全1）</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230202231543078.png" alt="image-20230202231543078"></p>
+<ul>
+<li><p><strong>IPV6地址表示形式</strong>：</p>
+<p>16字节，128位</p>
+<p>一般形式 冒号十六进制形式</p>
+<p><strong>对比 MAC 物理地址：48位 -&gt; 6字节</strong></p>
+<p><strong>注： 一个部分（两个冒号之间的4个数字）中开始的一些0可以省略，末尾的0不能被省略</strong></p>
+<p>压缩形式</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230203005928977.png" alt="image-20230203005928977" style="zoom:50%;"></p>
+</li>
+</ul>
+<h2 id="Ch20-IP协议"><a href="#Ch20-IP协议" class="headerlink" title="Ch20 IP协议"></a>Ch20 IP协议</h2><p><strong>都重要</strong></p>
+<ul>
+<li><p>IP数据报格式</p>
+<p>整体：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201155021274.png" alt="image-20230201155021274"></p>
+<p>🚩<strong>格式：</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305092652078.png" alt="image-20230305092652078" style="zoom:50%;"></p>
+<blockquote>
+<ol>
+<li>版本（VER）4 位, 协议的版本号，IPv4 为4</li>
+<li>头部长度。4位，以4字节定义数据报头部的总长度。20-60字节 =&gt; 5-15</li>
+<li>服务。8位</li>
+<li>总长度。定义了包括头部在内的数据报的总长度，单位为字节。进而引出 数据长度=总长度-头部长度=总长度-HLEN*4</li>
+<li>生存时间（TTL）8bits，用来控制一个数据报所通过路由器的最大跳数</li>
+<li>协议。8bits，定义了使用此IPv4层服务的高层协议。</li>
+<li>校验和。16bits, 只对头部校验。</li>
+<li>源地址。32bits，源到目的数据传输期间，源地址必须保持不变。</li>
+<li>目的地址。32bits IPv4地址，源到目的数据传输期间，保持不变。</li>
+</ol>
+</blockquote>
+<p>可选字段：0-40B （60-20） 用来支持排错、测量以及安全措施</p>
+<p><strong>填充：把首部补成 4B 的整数倍</strong></p>
+</li>
+<li><p>分片</p>
+<ul>
+<li><p><strong>最大传送单元 MTU</strong> 指数据链路层协议对应帧中数据字段的最大长度</p>
+<p>链路层数据帧可<strong>封装数据</strong>的上限</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201162549201.png" alt="image-20230201162549201" style="zoom:50%;"></p>
+</li>
+<li><p>IP数据包格式中用于分片的字段</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230201163029095.png" alt="image-20230201163029095"></p>
+<p>这里的偏移量是<strong>从数据报的数据部分的第一个字节</strong>开始算的</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305094707033.png" alt="image-20230305094707033" style="zoom:50%;"></p>
+<p>重组分组策略：</p>
+<ol>
+<li>第一个分段的偏移字段值为 0</li>
+<li>将第一个分段长度除以 8，其结果就是第二个分段的偏移值</li>
+<li>将第一个和第二个分段的总长度除以 8，其结果为第三个分段的偏移值</li>
+<li>继续以上过程，最后一个分段的 MF位 的值为 0</li>
+</ol>
+</li>
+</ul>
+</li>
+<li><p>IPV6</p>
+<p>选项部分挪到了有效载荷当中，基本首部长度固定</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230203005013175.png" alt="image-20230203005013175" style="zoom:50%;"></p>
+</li>
+</ul>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230203005403919.png" alt="image-20230203005403919" style="zoom:50%;"></p>
+<p><strong>优缺点对比</strong></p>
+<p>IPV4 的缺点：</p>
+<blockquote>
+<ol>
+<li>地址耗尽</li>
+<li>不保证<strong>最小时延传输策略</strong>和<strong>资源预留</strong></li>
+<li>不提供<strong>加密和鉴别</strong></li>
+</ol>
+</blockquote>
+<p>IPV6 的优点：</p>
+<blockquote>
+<ol>
+<li>更大的地址空间，128位</li>
+<li>更好的头部格式</li>
+<li>新的选项</li>
+<li>允许扩充</li>
+<li>支持资源分配，使用流标号机制</li>
+<li>支持更多的安全性</li>
+</ol>
+</blockquote>
+<ul>
+<li><p><strong>IPv6 向 IPv4 过渡的策略</strong>：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305095614604.png" alt="image-20230305095614604" style="zoom:50%;"></p>
+</li>
+</ul>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230203010321630.png" alt="image-20230203010321630" style="zoom:50%;"></p>
+<p>「头部转换」：与隧道技术类似，但前者只是临时的协议封装。头部转换会彻底转换头部格式以使得接收方能够正确识别</p>
+<p><strong>重点：路由选择、路由表的构造</strong></p>
+<p><strong>根据网络的拓扑结构画出路由表 （子网 超网 路由聚合）</strong></p>
+<p><strong>子网划分后构造带有子网结构的路由表</strong></p>
+<p><strong>给一个MAC帧/TCP报文/IP报文，能够解析出来，知道首部尾部的作用（分值高！）</strong></p>
+<h2 id="Ch21-地址映射，差错报告和多播"><a href="#Ch21-地址映射，差错报告和多播" class="headerlink" title="Ch21 地址映射，差错报告和多播"></a>Ch21 地址映射，差错报告和多播</h2><p>地址映射 ARP RARP 在做什么 基本原理 非重点</p>
+<ul>
+<li><p>地址映射</p>
+<p>「ARP」逻辑地址到物理地址的映射</p>
+<p><strong>过程：</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305104305217.png" alt="image-20230305104305217" style="zoom:50%;"></p>
+<p>「RARP」物理地址到逻辑地址映射 （C/S模式）</p>
+<p><strong>过程：</strong></p>
+<blockquote>
+<ol>
+<li>先创建一个 RARP 请求，并在本地网络上广播；</li>
+<li>在本地网络上知道所有IP地址的另一个机器就用 RARP 回答来应答</li>
+</ol>
+</blockquote>
+</li>
+</ul>
+<h2 id="Ch22-传递、转发和路由选择"><a href="#Ch22-传递、转发和路由选择" class="headerlink" title="Ch22 传递、转发和路由选择"></a>Ch22 传递、转发和路由选择</h2><p>22.1 22.2 22.3 大题小题都有 RIP最重要！！！</p>
+<p><strong>定义</strong> </p>
+<ul>
+<li><p>传递：网络层负责用<strong>底层物理网络</strong>处理分组</p>
+</li>
+<li><p>转发：将分组路由到它的目的端</p>
+<ul>
+<li><p>下一跳方法</p>
+</li>
+<li><p>路由方法 保留完整的路由信息</p>
+<p>减小和使路由表查找过程简化的技术：特定网络方法</p>
+<p>仅用<strong>一个项目</strong>来定义这个目的网络本身的地址</p>
+</li>
+<li><p>转发过程</p>
+<p>利用无类寻址，<strong>需要依靠掩码来找网络地址</strong>，因此路由表安排为四列</p>
+<p>路由选择策略采用<strong>最长掩码匹配原则</strong></p>
+</li>
+</ul>
+</li>
+<li><p>考点：根据网络拓扑构造路由表</p>
+<p>「基本」</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305111146816.png" alt="image-20230305111146816" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305111507898.png" alt="image-20230305111507898" style="zoom:50%;"></p>
+<p>「地址聚合」：通过取共同前缀，有效减小路由表的长度</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305111812127.png" alt="image-20230305111812127" style="zoom:50%;"></p>
+<p><strong>遵循原则：</strong>「最长掩码匹配」</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305112052464.png" alt="image-20230305112052464" style="zoom:50%;"></p>
+</li>
+<li><p>路由算法</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305113014316.png" alt="image-20230305113014316" style="zoom:50%;"></p>
+</li>
+<li><p>RIP 协议与距离向量算法</p>
+<p>最佳路由指定的代价是<strong>最小距离的路径</strong></p>
+<p>维护的是一组距离，最短路径</p>
+</li>
+</ul>
+<p>RIP协议和谁交换？多久交换一次？交换什么？</p>
+<ol>
+<li>仅和邻站交换信息</li>
+<li><p>交换的信息是自己的路由表，具体来讲只共享表的前两列</p>
+</li>
+<li><p>每30秒交换一次路由信息，然后路由器根据新信息更新路由表。</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230204222919173.png" alt="image-20230204222919173"></p>
+</li>
+</ol>
+<p><strong>🚩距离向量算法更新操作：</strong> </p>
+<blockquote>
+<ol>
+<li><strong>接收节点（如A）在表的第二列</strong>中的每一个值加上它与发送节点（如C）之间代价值</li>
+<li>如果接收节点（如A）要更新自己的表为发来的任何一行的信息，接收节点（如A）需要把发送节点（如C）加入作为第三列，也就是<strong>发送节点（如C）作为路由的下一列</strong></li>
+<li>接收节点（如A）将修改过的接收到的表与它的旧表进行逐行比较：<ol>
+<li>如果<strong>下一个节点</strong>项目不同，则接收节点（如A）选取具有最小代价的行；如果最小代价相同，<strong>则保持旧的</strong>；</li>
+<li>如果下一个节点项相同，则接收点（如A）选取新行</li>
+</ol>
+</li>
+</ol>
+</blockquote>
+<p>一个细节是只要<strong>相同的目的网络对应的下一跳一致</strong>，不管距离是否变化，都要更新；不是则更新距离小的</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305114452213.png" alt="image-20230305114452213" style="zoom:50%;"></p>
+<p>exp:</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230204224240878.png" alt="image-20230204224240878" style="zoom:50%;"></p>
+<p><strong>存在的问题</strong>：<strong>「两个节点循环系统的不稳定性」</strong></p>
+<blockquote>
+<p>A与X之间链路突然断开，在B收到A的更新前，A收到来自B的更新，系统就会不稳定</p>
+</blockquote>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305115024698.png" alt="image-20230305115024698" style="zoom:50%;"></p>
+<p>本质在于两个节点之间路由表的更新时间不同导致，“好消息传的块，坏消息传的慢”。并且遵循了如果同一目的地址，下一跳节点相同的话直接用新的路由原则</p>
+<p><strong>解决方案：</strong></p>
+<ol>
+<li>定义无穷大，RIP 协议将16定义为无穷大</li>
+<li><strong>分割范围</strong> 仅发送表的一部分。如果节点B认为通过A到达X是最佳路径，则节点B不需要向节点A通知这一部分信息。后者则之后会删除该项</li>
+<li><strong>分割范围与毒性逆转</strong> 节点B依旧可通知X的值，但如果接收节点是A，则用<strong>无穷大距离</strong>作为警告“不要使用这个值，我知道的这个路径来自你</li>
+</ol>
+<p>「基于距离向量路由选择的 RIP 协议」</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 路由表结构</span><br><span class="line">目的端：目的网络地址</span><br><span class="line">度量：到达目的端的链路个数，即跳数</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>OSPF 协议与链路状态路由选择</p>
+<p>每一个节点拥有<strong>该区域的全部拓扑结构</strong></p>
+<p>交换的度量是可以自定义的</p>
+<p>发送的信息为「链路状态分组 LSP」，包括<strong>节点的标识，链路的清单，序列号，寿命</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230204225146143.png" alt="image-20230204225146143"></p>
+<p>这里注意在洪泛法中，接收到 LSP 的每个节点会根据寿命字段与已有副本进行比较，用新的并从除接收接口之外全部转发出去</p>
+<p>🚩Dijkstra算法建立最短路径树</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305144312432.png" alt="image-20230305144312432" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305144517130.png" alt="image-20230305144517130" style="zoom:50%;"></p>
+</li>
+</ul>
+<p>OSPF的区域：自治区内进一步分划分<strong>主干区域和普通区域</strong></p>
+<p><strong>OSPF 链路类型：</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305144730168.png" alt="image-20230305144730168" style="zoom:50%;"></p>
+<blockquote>
+<ol>
+<li><strong>点到点链路：</strong>点到点连接两个路由器</li>
+<li><strong>过渡链路：</strong>连接多个路由器的网络</li>
+<li><strong>残桩链路：</strong>只连接到一个路由器的网络</li>
+<li><strong>虚链路：</strong>当两个路由器之间的连接断开时，网络管理员就在它们之间用一条更长的路径，可能经过好几个路由器，创建一条虚链路</li>
+</ol>
+</blockquote>
+<p>OSPF分组：直接用<strong>IP数据报</strong>传送</p>
+<ul>
+<li><p><strong>路径向量</strong>路由选择与BGP 协议 （外部网关协议）</p>
+<p>基于路径-向量选择，原理与距离向量路由类似，只不过这里是AS和AS之间的互连，需要一个<strong>代言节点</strong>出示以AS为单位的路由表。同时注意路由表的内容是AS的路径</p>
+<p>🚩路径向量路由算法建立路由表三个过程：</p>
+<blockquote>
+<ol>
+<li><p>初始化 当前每个代言节点只知道其 AS 内部节点的可达性</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305145553134.png" alt="image-20230305145553134" style="zoom:50%;"></p>
+</li>
+<li><p>共享 代言节点与其邻站的代言节点共享路由表</p>
+</li>
+<li><p>更新 更新包括<strong>不在表中的节点</strong>以及其<strong>自治系统与发送方的自治系统</strong>之间的路径</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305145811004.png" alt="image-20230305145811004" style="zoom:50%;"></p>
+</li>
+</ol>
+</blockquote>
+</li>
+<li><p>🚩三种协议的对比</p>
+<p>|   RIP    | 基于UDP     | 应用程序 |<br>| :———: | —————- | ———— |<br>| <strong>OSPF</strong> | <strong>基于IP</strong>  |          |<br>| <strong>BGP</strong>  | <strong>基于TCP</strong> | 应用程序 |</p>
+</li>
+</ul>
+<h2 id="Ch23-进程到进程的传递-UDP-TCP-和-SCTP"><a href="#Ch23-进程到进程的传递-UDP-TCP-和-SCTP" class="headerlink" title="Ch23 进程到进程的传递:UDP, TCP 和 SCTP"></a>Ch23 进程到进程的传递:UDP, TCP 和 SCTP</h2><p>UDP /  TCP！！ 里面的报文结构 三次握手 流量控制（<strong>滑动窗口</strong>） 差错控制 / 注重细节</p>
+<ul>
+<li><p>传输层利用端口号来区分主机上的不同进程</p>
+<p>常见熟知端口号：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305164824596.png" alt="image-20230305164824596" style="zoom:50%;"></p>
+</li>
+<li><p><strong>「套接字地址」</strong> 唯一定义主机的进程</p>
+<p>格式：<code>IP地址：端口号</code> 主机IP地址与端口号的组合，识别具体主机中的具体进程</p>
+</li>
+<li><p><strong>复用和分离</strong></p>
+<p><strong>复用：</strong>应用层 =&gt; 多个进程需要发送分组 复用时不同进程的报文通过端口号来区分</p>
+<p><strong>分离：</strong> 网络层 =&gt; 多个进程需要接收分组 分离时根据端口号将每个报文传递到适当的进程</p>
+</li>
+<li><p>UDP 协议</p>
+<ul>
+<li><p>概述</p>
+<p>「无连接不可靠的传输层协议」</p>
+<p>面向报文：对应用层交付下来的报文既不合并也不拆分，一次完整传输</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205201029380.png" alt="image-20230205201029380" style="zoom:50%;"></p>
+</li>
+<li><p>UDP首部格式</p>
+<p>检验和包括首部和数据字段</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305163901353.png" alt="image-20230305163901353" style="zoom:50%;"></p>
+<blockquote>
+<ol>
+<li>源端口号：源主机上运行的进程端口号，16位长，0~65535.源主机是客户端，一般是临时端口号，服务器则是熟知端口号。</li>
+<li>目的端口号：目的主机上运行的端口号。16位长。</li>
+<li>总长度：16位，定义用户数据报的总长度。UDP长度=IP长度-IP头部长度</li>
+<li>校验和：用来校验<strong>整个数据报</strong>出现的差错</li>
+</ol>
+</blockquote>
+</li>
+<li><p>UDP校验</p>
+<p>伪首部类似IP数据报的首部，第三字段固定全0，只用于计算校验和（发送和接送时均需要）</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205201504552.png" alt="image-20230205201504552"></p>
+<p>如何计算？</p>
+<p>一行<strong>4字节排列</strong>，最后一行填充补齐</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205201748828.png" alt="image-20230205201748828" style="zoom:50%;"></p>
+</li>
+</ul>
+</li>
+<li><p><strong>TCP协议</strong></p>
+<ul>
+<li><p>特点 「面向连接的、可靠的、面向流的传输层协议」</p>
+<ol>
+<li><p>全双工通信 每一方 TCP 都有发送和接收缓冲区</p>
+</li>
+<li><p>面向连接的服务 建立一种<strong>面向字节流</strong>的环境</p>
+</li>
+<li><p>可靠的服务 使用确认机制</p>
+</li>
+<li><p>🚩序号系统 指的是字节序号。</p>
+<p>「字节序号」：TCP 为每个连接中传输的所有数据字节编号，独立可不从0开始，随机选择起始点</p>
+<p>「序号」：TCP 对发送的每一个段分配一个序号。每个段的序号是<strong>这个段中的第一个字节的序号</strong></p>
+<p>「确认号」：累加的，并且定义了通信一方预期接收的<strong>下一字节</strong>的编号</p>
+</li>
+</ol>
+</li>
+<li><p>TCP报文段首部格式</p>
+<p>首部长度需要满足4字节的整数倍，因此选项部分需要填充</p>
+<p>数据偏移字段实际就是首部长度（固定+选项）</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305170005058.png" alt="image-20230305170005058" style="zoom:50%;"></p>
+<blockquote>
+<ol>
+<li><p>源端口地址：16位字段。表示发送该段的应用程序的端口号。</p>
+</li>
+<li><p>目的端口地址：16位字段。表示接收该段的应用程序的端口号。</p>
+</li>
+<li><p>序列号：<strong>32位字段</strong>。段中数据的第一字节编号。</p>
+</li>
+<li><p>确认号：<strong>32位字段</strong>。定义了段的接收方期望从对方接收的字节号。已接收序号 x之前的数据，它就将确认序号定义为 <code>x+1</code>.</p>
+</li>
+<li><p>头部长度：4位字段。<strong>以4字节为单位</strong>，指明TCP头部的长度 (20-60 Bytes)</p>
+</li>
+<li><p>保留：6位字段。保留将来使用</p>
+</li>
+<li><p>控制：6种，同一时间可设置一位或多位</p>
+</li>
+<li><p>窗口大小：16位字段。定义对方必须维持的窗口大小（<strong>以字节为单位</strong>）。通常称为接收窗口，由<strong>接收方确定</strong>，发送方服从接收方支配。</p>
+</li>
+<li><p>校验和：16位字段</p>
+</li>
+<li><p>紧急指示符：16位。当紧急标志设置时才有效。<strong>将此数据加到序号上得出此段数据部分中最后一个紧急字节</strong>。</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305171132067.png" alt="image-20230305171132067" style="zoom:50%;"></p>
+</li>
+</ol>
+</blockquote>
+<p><strong>几个重要的控制位：</strong></p>
+<blockquote>
+<ul>
+<li><p>紧急位 URG</p>
+<p>赋予优先级，需要配合<strong>紧急指针字段</strong>来指示紧急数据<strong>末尾</strong>在报文段当中的位置</p>
+</li>
+<li><p>确认位 ACK</p>
+</li>
+<li><p>推送位 PSH （针对接收方）</p>
+<p>可配合URG，尽快交付给上层应用进程</p>
+</li>
+<li><p>同步位 SYN</p>
+<p>表示连接请求/接受报文</p>
+</li>
+<li><p>终止位 FIN</p>
+<p>释放连接时</p>
+</li>
+</ul>
+</blockquote>
+<p>注：<strong>通常发送的字段序列号由 确认号+窗口大小确定</strong></p>
+</li>
+<li><p>🚩<strong>TCP 连接的三个过程</strong></p>
+<ol>
+<li><p>连接建立</p>
+<p>🚩<strong>TCP三步握手</strong> </p>
+</li>
+</ol>
+<blockquote>
+<p>1️⃣ 客户发送第一个段是 SYN 段。SYN 字段被设置，用于序列号同步，<strong>占用一个序列号</strong>。<strong>SYN 段不携带数据，但它占用一个序列号。</strong></p>
+<p>2️⃣ SYN 和 ACK 段。两个目的：是<strong>另一方通信的 SYN 段（表示连接接受）</strong>，并用<strong>ACK 标志作为第一个 SYN 的确认</strong>。SYN+ACK 段不携带数据，但<strong>占用一个序列号</strong>。</p>
+<p>3️⃣ ACK段。使用 ACK 标志和确认序号字段来确认收到了第二个段。注意：<strong>这个段的序列号与 SYN 段中的序列号相同</strong>。ACK 没有<strong>占用任何序列号</strong>。</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305173828751.png" alt="image-20230305173828751" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305172057177.png" alt="image-20230305172057177" style="zoom:50%;"></p>
+</blockquote>
+<p>注：单 ACK 是不占用序号的</p>
+<ol>
+<li><p><strong>数据传输</strong> 可使用数据捎带确认</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305174423076.png" alt="image-20230305174423076" style="zoom:50%;"></p>
+</li>
+<li><p>TCP的连接释放</p>
+<p><strong>「三次握手」</strong>：</p>
+<blockquote>
+<p>1️⃣ 客户端发起 FIN 段，<strong>可包含客户机要发送的最后一块数据</strong>。如果不携带数据，则该段占用一个序列号。</p>
+<p>2️⃣ 服务器端收到后，发送 FIN+ACK 段，接收来自客户端 FIN 段，同时告知另一连接关闭。<strong>可携带来自服务器的最后一块数据</strong>。如果不携带数据，则该段占用一个序列号</p>
+<p>3️⃣ 客户机发送 ACK 段。证实它接收到来自服务器 FIN 段。包含确认号，它是接收到来自服务器 FIN 段的序号加1.<strong>不携带数据也不占用序列号</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305193201621.png" alt="image-20230305193201621" style="zoom:50%;"></p>
+</blockquote>
+<p><strong>「四次挥手」（半关闭）</strong>：</p>
+<blockquote>
+<p><strong>区别点</strong>：客户端发出 FIN 段，服务器发送 ACK 确认半关闭；服务器处理完数据后，发送 FIN 段，由客户端 ACK 来确认</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305193927354.png" alt="image-20230305193927354" style="zoom:50%;"></p>
+</blockquote>
+</li>
+</ol>
+<p>半关闭状态指一方不再发送数据，但还可以继续接收数据</p>
+</li>
+<li><p><strong>TCP差错控制</strong></p>
+<p>可靠：保证接收方进程从缓存区读出的字节流与发送方发出的字节流是完全一样的</p>
+<p><strong>🚩实现可靠传输的机制：</strong></p>
+<ol>
+<li><p><strong>校验和</strong></p>
+<p>与UDP的差错校验一致。通过增加伪首部字段通过二进制求和的方式来计算校验和来比对数据是否出错</p>
+</li>
+<li><p><strong>确认</strong></p>
+<p>确认信息可以捎带数据信息</p>
+<p>每一个确认ACK在发送之前都会启动一个计时器以确定是否还有其他数据段到达</p>
+<p>对于非按序到达的报文段，接收方并不会丢失，而是先缓存下来，并通过确认报文段来指示发送方重传对应的失序报文</p>
+</li>
+<li><p><strong>重传</strong> <strong>差错控制机制的核心</strong></p>
+<p>「超时重传」：TCP的发送方在<strong>规定的时间</strong>内没有收到确认就要重传已发送的报文段</p>
+<p>如何确定规定的时间也就是重传时间呢？</p>
+<p>采用自适应算法，动态改变重传时间RTTs（加权平均往返时间：从发送到确认）</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305195452913.png" alt="image-20230305195452913" style="zoom:50%;"></p>
+<p>「<strong>冗余ACK</strong>」：每当比期望序号大的失序报文段到达时，发送一个<strong>冗余ACK</strong>，指明下一个期待字节的序号 三个重复的ACK就发生重传。（这里为了解决等待过久的问题，想要提前获知是否需要重传）</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305195502993.png" alt="image-20230305195502993" style="zoom:50%;"></p>
+</li>
+</ol>
+<p>窗口问题，SR GBN这些类似数据链路层的协议还要看书复习 <strong>会考大题！！</strong></p>
+</li>
+<li><p><strong>TCP流量控制</strong></p>
+<p>利用<strong>滑动窗口机制</strong>实现流量控制 窗口大小<strong>单位为字节</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205211755963.png" alt="image-20230205211755963"></p>
+<p>「三种活动」：张开、合拢、收缩（如图发送方窗口）</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305194654710.png" alt="image-20230305194654710" style="zoom:50%;"></p>
+<p>exp：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205212456078.png" alt="image-20230205212456078" style="zoom:50%;"></p>
+<p>能继续发数据的依据取决于接收窗口是否为 0</p>
+<p>解决 ACK 确认报文段丢失导致接收窗口改变情况不得知陷入“死锁”局面</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230205212629741.png" alt="image-20230205212629741" style="zoom:50%;"></p>
+<h2 id="Ch24-拥塞控制和服务质量"><a href="#Ch24-拥塞控制和服务质量" class="headerlink" title="Ch24 拥塞控制和服务质量"></a>Ch24 拥塞控制和服务质量</h2><p>拥塞控制（慢启动 快恢复）</p>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>「拥塞」</strong>：网络中的载荷，即发送到网络中的分组数量，超过了网络的容量，即网络中能处理的分组数量，就可能发生拥塞</p>
+<ul>
+<li><p>拥塞控制与流量控制的区别：</p>
+<p> 流量控制是<strong>点对点</strong>之间的问题，发生问题就知道在对应的发送结点过快导致接收方的接收窗口来不及收；而对于拥塞控制而言是<strong>全局性</strong>问题导致的网络堵塞问题</p>
+</li>
+<li><p><strong>拥塞控制分类</strong></p>
+<p> <img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305201243395.png" alt="image-20230305201243395" style="zoom:50%;"></p>
+</li>
+</ul>
+<ul>
+<li><p>🚩<strong>TCP 拥塞控制</strong></p>
+<ul>
+<li><p><strong>「慢速启动：指数增加」</strong></p>
+<blockquote>
+<p>注：MSS 最大报文段长度</p>
+<p>MSS 应用于 TCP 协议中，代表的是<strong>单个 TCP 报文的可传输的最大数据长度</strong>。MSS 的大小，和通信中的另一个参数 MTU 息息相关。</p>
+</blockquote>
+<p>拥塞窗口大小按指数规律增长（每一传输轮次）直至达到阈值</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305201926585.png" alt="image-20230305201926585" style="zoom:50%;"></p>
+<p>加性增加阶段：每次整个窗口所有段都被确认时，拥塞窗口才能增加1</p>
+<p>乘性减小的发生时机：重传计时器到或者接收到了3个ACK</p>
+</li>
+<li><p><strong>「拥塞避免：加性增加」</strong></p>
+<p>整个窗口的所有段都被确认时，拥塞窗口才增加1，直至检测到拥塞</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305202211033.png" alt="image-20230305202211033" style="zoom:50%;"></p>
+</li>
+<li><p><strong>「拥塞检测：乘性减小」</strong></p>
+<p>依据的重传机制：</p>
+<ol>
+<li><p>重传计时器到时</p>
+<blockquote>
+<p>1️⃣ 设置阈值为<strong>当前拥塞窗口大小的一半</strong>；</p>
+<p>2️⃣ 设置cwnd为1个段的大小；</p>
+<p>3️⃣ 启动<strong>慢速启动阶段</strong>。</p>
+</blockquote>
+</li>
+<li><p>收到3个 ACK 时</p>
+<blockquote>
+<p>1️⃣ 设置阈值为<strong>当前拥塞窗口的一半</strong>；</p>
+<p>2️⃣ <strong>设置cwnd为阈值</strong>；</p>
+<p>3️⃣ 启动<strong>拥塞避免阶段</strong>。</p>
+</blockquote>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230305202659765.png" alt="image-20230305202659765" style="zoom:50%;"></p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch25-域名系统"><a href="#Ch25-域名系统" class="headerlink" title="Ch25 域名系统"></a>Ch25 域名系统</h2><p>工作原理 / 两种解析方式</p>
+<ul>
+<li><p><strong>域名空间</strong> 树结构</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206122517476.png" alt="image-20230206122517476" style="zoom:50%;"></p>
+<p>根对应顶级域名前头的隐藏点</p>
+</li>
+<li><p>域名服务器</p>
+<p>查询请求顺序：</p>
+<p>本地域名 =&gt; 根域名 =&gt; 顶级域名 =&gt; 权限域名 =&gt; …</p>
+<p>区的概念：DNS服务器实际管辖的范围，取决于划分方式。每个区对应一个权限域名服务器</p>
+<p><strong>DNS在区域传输的时候使用TCP协议，其他时候使用UDP协议</strong></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206123406522.png" alt="image-20230206123406522" style="zoom:50%;"></p>
+<p><strong>域名解析过程：</strong></p>
+<ul>
+<li><p>递归解析</p>
+<p>每个查询服务器或者请求转发并等待响应，或者做出响应</p>
+</li>
+<li><p>迭代解析</p>
+<p>每个服务器或者返回解析结果，或者返回另一个认为可以解析的服务器地址给客户端，由客户端重新发起新的请求</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206123705596.png" alt="image-20230206123705596" style="zoom:50%;"></p>
+<p>为了减缓本地域名服务器的负载，加入高速缓存来存储最近查询的域名解析结果（包括中间查询结果）</p>
+<p>本机当中也会存储高速缓存（从本地域名服务器中下载）</p>
+</li>
+<li><p><strong>熟知端口号</strong> 53  基于TCP/UDP</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch26-远程登录、电子邮件与文件传输"><a href="#Ch26-远程登录、电子邮件与文件传输" class="headerlink" title="Ch26 远程登录、电子邮件与文件传输"></a>Ch26 远程登录、电子邮件与文件传输</h2><p>telnet / pop3 smtp 是什么 / FTP基本概念</p>
+<ul>
+<li><p><strong>远程登录</strong></p>
+<p>「TELNET 」：终端网络，客户/服务器应用程序</p>
+</li>
+<li><p><strong>FTP 文件传输协议</strong></p>
+<p>一般来讲熟知端口21用于控制连接，熟知端口20用于数据连接</p>
+<p>从属进程负责单个用户的请求</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206143103552.png" alt="image-20230206143103552" style="zoom:50%;"></p>
+<p>从属进程包括控制进程和数据传输进程</p>
+<p><strong>控制连接会在整个会话中保持打开</strong>，数据连接的状态取决于数据是否传送完毕</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206143542784.png" alt="image-20230206143542784" style="zoom:50%;"></p>
+<p>主动连接：服务器端<strong>主动告诉</strong>客户端数据连接端口 20 </p>
+<p>被动方式：客户端向服务端发送命令请求数据连接的端口号 （大于1024）</p>
+</li>
+<li><p><strong>电子邮件</strong></p>
+<ul>
+<li><strong>组成结构</strong> 用户代理  邮件服务器  协议</li>
+</ul>
+<ol>
+<li><p>用户代理调用<strong>报文传送代理</strong>（MTA），利用 <strong>SMTP 协议</strong> 将报文从客户端推向服务端，这里包括两部分：从本地用户传到邮件服务器，以及从发送方邮件服务器传到接收方邮件服务器。</p>
+</li>
+<li><p>接着接收方的用户代理调用<strong>报文访问代理（MAA）</strong>，利用 <strong>POP3/IMAP 协议</strong>从接收方邮件服务器拉回报文至本地</p>
+</li>
+</ol>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206144855438.png" alt="image-20230206144855438" style="zoom:50%;"></p>
+<p><strong>通用因特网邮件扩充 MIME</strong> 基于SMTP协议功能上的扩展</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206150206172.png" alt="image-20230206150206172" style="zoom:50%;"></p>
+<ul>
+<li><p>邮局协议 POP3</p>
+<p>服务的执行环节在从接收端邮件服务器当中读取邮件</p>
+<p>建立在TCP连接 熟知端口号为 110</p>
+<p>服务端：接收端邮件服务器</p>
+</li>
+<li><p>网际报文存取协议 IMAP</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206150452331.png" alt="image-20230206150452331" style="zoom:50%;"></p>
+<h2 id="Ch27-万维网与超文本传输协议"><a href="#Ch27-万维网与超文本传输协议" class="headerlink" title="Ch27 万维网与超文本传输协议"></a>Ch27 万维网与超文本传输协议</h2></li>
+</ul>
+</li>
+</ul>
+<p>cookie的概念 / HTTP协议 / WWW协议</p>
+<ul>
+<li><p>概述</p>
+<p>无数个网络站点和网页的集合，存储着不同形式的资源</p>
+<p>如何对资源进行寻址？ <strong>统一资源定位符URL</strong>唯一标识</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206150946391.png" alt="image-20230206150946391" style="zoom:50%;"></p>
+<p>资源的传送通过 HTTP 协议来规定</p>
+<p><strong>熟知端口号：80</strong></p>
+</li>
+<li><p>超文本传输协议 HTTP</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206155751760.png" alt="image-20230206155751760" style="zoom:50%;"></p>
+</li>
+<li><p>HTTP协议的特点</p>
+<p>这里注意HTTP协议是无状态的；且通信之前不需要事先建立HTTP连接，但由于是<strong>基于 TCP</strong> 作为传输层协议，因此需要建立 TCP 连接</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206160524255.png" alt="image-20230206160524255" style="zoom:50%;"></p>
+</li>
+<li><p>HTTP连接方式</p>
+<p><strong>非持久连接和持久连接</strong></p>
+<p>前者即每次通信都需要先TCP三次握手，时间消耗上比较大</p>
+<p>后者只需建立一次TCP三次握手</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206161017792.png" alt="image-20230206161017792" style="zoom:50%;"></p>
+<p>非流水线与流水线式连接：后者即可以同时发送多个请求报文，减少发送过程中的空闲时间</p>
+</li>
+<li><p>HTTP报文结构</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206161317263.png" alt="image-20230206161317263" style="zoom:50%;"></p>
+<p>状态码：</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230206161451844.png" alt="image-20230206161451844" style="zoom:50%;"></p>
+</li>
+<li><p>Cookie</p>
+<p>服务端将客户端的信息存储在 Cookie 字符串或文件中，回传给客户端。客户端将其存储在对应目录中</p>
+</li>
+</ul>
+<h2 id="Relevant-QA"><a href="#Relevant-QA" class="headerlink" title="Relevant QA"></a>Relevant QA</h2><ul>
+<li><p>Ch8</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306163039871.png" alt="image-20230306163039871" style="zoom:50%;"></p>
+</li>
+</ul>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306163047008.png" alt="image-20230306163047008" style="zoom:50%;"></p>
+<ul>
+<li><p>Ch13 </p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306163950444.png" alt="image-20230306163950444" style="zoom:50%;"></p>
+</li>
+</ul>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306164002663.png" alt="image-20230306164002663" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230307095440142.png" alt="image-20230307095440142" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230307095453153.png" alt="image-20230307095453153" style="zoom:33%;"></p>
+<ul>
+<li><p>Ch15</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306165209282.png" alt="image-20230306165209282" style="zoom:50%;"></p>
+</li>
+</ul>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306165230738.png" alt="image-20230306165230738" style="zoom:50%;"></p>
+<ul>
+<li>Ch19</li>
+</ul>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306180421375.png" alt="image-20230306180421375" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306180436019.png" alt="image-20230306180436019" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306201749719.png" alt="image-20230306201749719" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306201800516.png" alt="image-20230306201800516" style="zoom:50%;"></p>
+<ul>
+<li><p>Ch22</p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306202645982.png" alt="image-20230306202645982" style="zoom:50%;"></p>
+</li>
+</ul>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306202655478.png" alt="image-20230306202655478" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306210557428.png" alt="image-20230306210557428" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306210608999.png" alt="image-20230306210608999" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306210818352.png" alt="image-20230306210818352" style="zoom:50%;"></p>
+<p><img src="/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/image-20230306210825801.png" alt="image-20230306210825801" style="zoom:50%;"></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch1-%E7%BB%AA%E8%AE%BA"><span class="toc-number"></span> <span class="toc-text">Ch1 绪论</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch2-%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B"><span class="toc-number"></span> <span class="toc-text">Ch2 网络模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch3-%E6%95%B0%E6%8D%AE%E5%92%8C%E4%BF%A1%E5%8F%B7"><span class="toc-number"></span> <span class="toc-text">Ch3 数据和信号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch4-%E6%95%B0%E5%AD%97%E4%BC%A0%E8%BE%93"><span class="toc-number"></span> <span class="toc-text">Ch4 数字传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch5-%E6%A8%A1%E6%8B%9F%E4%BC%A0%E8%BE%93"><span class="toc-number"></span> <span class="toc-text">Ch5 模拟传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch6-%E7%89%A9%E7%90%86%E5%B1%82%E9%9D%A2%E7%9A%84%E5%B8%A6%E5%AE%BD%E5%88%A9%E7%94%A8"><span class="toc-number"></span> <span class="toc-text">Ch6 物理层面的带宽利用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch7-%E7%89%A9%E7%90%86%E5%B1%82%E4%BC%A0%E8%BE%93%E4%BB%8B%E8%B4%A8"><span class="toc-number"></span> <span class="toc-text">Ch7 物理层传输介质</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch8-%E4%BA%A4%E6%8D%A2"><span class="toc-number"></span> <span class="toc-text">Ch8 交换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch10-%E6%A3%80%E9%94%99%E4%B8%8E%E7%BA%A0%E9%94%99"><span class="toc-number"></span> <span class="toc-text">Ch10 检错与纠错</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch11-%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E6%8E%A7%E5%88%B6"><span class="toc-number"></span> <span class="toc-text">Ch11 数据链路控制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch12-%E5%A4%9A%E8%B7%AF%E8%AE%BF%E9%97%AE"><span class="toc-number"></span> <span class="toc-text">Ch12 多路访问</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch13-%E6%9C%89%E7%BA%BF%E5%B1%80%E5%9F%9F%E7%BD%91%EF%BC%9A%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="toc-number"></span> <span class="toc-text">Ch13 有线局域网：以太网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch15-%E8%BF%9E%E6%8E%A5%E5%B1%80%E5%9F%9F%E7%BD%91%E3%80%81%E4%B8%BB%E5%B9%B2%E7%BD%91%E5%92%8C%E8%99%9A%E6%8B%9F%E5%B1%80%E5%9F%9F%E7%BD%91"><span class="toc-number"></span> <span class="toc-text">Ch15 连接局域网、主干网和虚拟局域网</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch19-%E9%80%BB%E8%BE%91%E5%AF%BB%E5%9D%80"><span class="toc-number"></span> <span class="toc-text">Ch19 逻辑寻址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch20-IP%E5%8D%8F%E8%AE%AE"><span class="toc-number"></span> <span class="toc-text">Ch20 IP协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch21-%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84%EF%BC%8C%E5%B7%AE%E9%94%99%E6%8A%A5%E5%91%8A%E5%92%8C%E5%A4%9A%E6%92%AD"><span class="toc-number"></span> <span class="toc-text">Ch21 地址映射，差错报告和多播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch22-%E4%BC%A0%E9%80%92%E3%80%81%E8%BD%AC%E5%8F%91%E5%92%8C%E8%B7%AF%E7%94%B1%E9%80%89%E6%8B%A9"><span class="toc-number"></span> <span class="toc-text">Ch22 传递、转发和路由选择</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch23-%E8%BF%9B%E7%A8%8B%E5%88%B0%E8%BF%9B%E7%A8%8B%E7%9A%84%E4%BC%A0%E9%80%92-UDP-TCP-%E5%92%8C-SCTP"><span class="toc-number"></span> <span class="toc-text">Ch23 进程到进程的传递:UDP, TCP 和 SCTP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch24-%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6%E5%92%8C%E6%9C%8D%E5%8A%A1%E8%B4%A8%E9%87%8F"><span class="toc-number"></span> <span class="toc-text">Ch24 拥塞控制和服务质量</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch25-%E5%9F%9F%E5%90%8D%E7%B3%BB%E7%BB%9F"><span class="toc-number"></span> <span class="toc-text">Ch25 域名系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch26-%E8%BF%9C%E7%A8%8B%E7%99%BB%E5%BD%95%E3%80%81%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6%E4%B8%8E%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93"><span class="toc-number"></span> <span class="toc-text">Ch26 远程登录、电子邮件与文件传输</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch27-%E4%B8%87%E7%BB%B4%E7%BD%91%E4%B8%8E%E8%B6%85%E6%96%87%E6%9C%AC%E4%BC%A0%E8%BE%93%E5%8D%8F%E8%AE%AE"><span class="toc-number"></span> <span class="toc-text">Ch27 万维网与超文本传输协议</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Relevant-QA"><span class="toc-number"></span> <span class="toc-text">Relevant QA</span></a>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&text=计算机网络笔记"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&title=计算机网络笔记"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&is_video=false&description=计算机网络笔记"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=计算机网络笔记&body=Check out this article: https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&title=计算机网络笔记"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&title=计算机网络笔记"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&title=计算机网络笔记"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&title=计算机网络笔记"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&name=计算机网络笔记&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/03/08/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C%E7%AC%94%E8%AE%B0/&t=计算机网络笔记"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    RacerZ
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
