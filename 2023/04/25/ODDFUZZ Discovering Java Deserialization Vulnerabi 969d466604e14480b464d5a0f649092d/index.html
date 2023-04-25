@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="ODDFUZZ: Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing Introduction   现有技术的存在的问题挑战：  静态分析难以在精确度和召回率之间进行平衡，Java 运行时多态特性导致任意的重写方法都能用在调用链上，在分析时不可避免地盲目枚举可能的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记">
+<meta property="og:url" content="https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/index.html">
+<meta property="og:site_name" content="RacerZ">
+<meta property="og:description" content="ODDFUZZ: Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing Introduction   现有技术的存在的问题挑战：  静态分析难以在精确度和召回率之间进行平衡，Java 运行时多态特性导致任意的重写方法都能用在调用链上，在分析时不可避免地盲目枚举可能的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%201.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%202.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%203.png">
+<meta property="og:image" content="https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%204.png">
+<meta property="article:published_time" content="2023-04-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-04-25T02:07:05.747Z">
+<meta property="article:author" content="RacerZ">
+<meta property="article:tag" content="软件漏洞分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="Previous post" href="/2077/07/07/paper/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="Next post" href="/2023/04/10/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%A4%8D%E4%B9%A0-%E6%A0%88%E5%92%8C%E9%98%9F%E5%88%97%E7%AF%87%2048420399d0014e07ac9760f1e579f6d8/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">Previous post</span>
+      <span id="i-next" class="info" style="display:none;">Next post</span>
+      <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-share" class="info" style="display:none;">Share post</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&text=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&title=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&is_video=false&description=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记&body=Check out this article: https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&title=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&title=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&title=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&title=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&name=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&t=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ODDFUZZ-Discovering-Java-Deserialization-Vulnerabilities-via-Structure-Aware-Directed-Greybox-Fuzzing"><span class="toc-number">1.</span> <span class="toc-text">ODDFUZZ: Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">RacerZ</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-04-24T16:00:00.000Z" itemprop="datePublished">2023-04-25</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E8%BD%AF%E4%BB%B6%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90/" rel="tag">软件漏洞分析</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="ODDFUZZ-Discovering-Java-Deserialization-Vulnerabilities-via-Structure-Aware-Directed-Greybox-Fuzzing"><a href="#ODDFUZZ-Discovering-Java-Deserialization-Vulnerabilities-via-Structure-Aware-Directed-Greybox-Fuzzing" class="headerlink" title="ODDFUZZ: Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing"></a>ODDFUZZ: Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing</h1><ul>
+<li><p>Introduction</p>
+<p>  现有技术的存在的问题挑战：</p>
+<ol>
+<li>静态分析难以在精确度和召回率之间进行平衡，Java 运行时多态特性导致任意的重写方法都能用在调用链上，在分析时不可避免地盲目枚举可能的调用链就极容易遇到路径爆炸问题</li>
+<li><p>现存 fuzz 思路的无效性：</p>
+<ol>
+<li>注入的对象 payload 拥有多级类层次结构及其属性应该满足一定的控制流或数据流约束，fuzz 对此没有先验知识。</li>
+<li>fuzz 是基于覆盖指导，以代码覆盖率为指标，而不是以目标 sink 点为指向</li>
+</ol>
+<p>思路：</p>
+</li>
+</ol>
+<ul>
+<li>执行轻量级的污点分析，识别可能的候选调用链</li>
+<li>对这些调用链的数据约束建模成树，并利用它来执行具有结构意识的 fuzzing</li>
+<li><p>采用 step-forward mutation strategy 和 a hybrid feedback fuzz策略</p>
+<p>（基于 Java fuzz 框架 JQF 实现的）</p>
+</li>
+<li><p>Background</p>
+<ul>
+<li><p>反序列化机制</p>
+<p>  序列化和反序列化的机制支持字节流的形式跨平台传输数据以及永久性存储，同时保存每一个对象所具有的属性</p>
+<p>  反序列化 open 的特性支持能够调用多态特性的方法，以及支持基于反射调用的行为，使得路径更加多样化</p>
+</li>
+<li><p>POP 链：反序列化的利用机制</p>
+<p>  攻击者可以去操纵数据流和控制流</p>
+</li>
+<li><p>威胁模型：</p>
+<p>  假设：目标 Java 应用存在攻击者可控的反序列化入口点</p>
+<ol>
+<li>构建好的序列化对象会注入到这些不受信任的入口点</li>
+<li>目标应用会反序列化对象并自动调用攻击者可控的调用链</li>
+<li><p>注入的序列化对象当中的恶意 payload 将会流入安全敏感的调用点 sink</p>
+<p>防御机制一般就是黑白名单，可被绕过</p>
+<p><img src="/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled.png" alt="Untitled"></p>
+</li>
+</ol>
+</li>
+<li><p>定向灰盒 fuzzing</p>
+<p>  为什么用基于定向的不用基于覆盖的?</p>
+<p>  工作流程：静态分析阶段；fuzzing loop 阶段</p>
+<p>  <img src="/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%201.png" alt="Untitled"></p>
+<p>  能使得 distance 变小的新种子将会被保留下来用于下一轮 fuzz</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>Motivation</p>
+<p>  当前最先进的调用链查询工具 GadgetInspertor 只能检测出很少的可利用调用链，想要能获得更高的召回率（识别更多潜在调用链）以及精度（证实更多可利用的调用链），需要处理三个挑战：</p>
+<p>  A. 运行时多态问题</p>
+<p>  virtual 方法调用无法基于声明类型来决定具体的函数。</p>
+<p>  最基本的就是利用 CHA 算法直接找出所有显式和因式方法调用，然而会收到路径爆炸问题的影响；</p>
+<p>  现有技术：</p>
+<p>  GadgetInspector 可以计算从方法参数到返回值和方法调用的数据流，并根据 类继承层次结构 和 方法重写层次结构 枚举所有可用的方法；但是其未考虑运行时多态性，攻击者可控属性可以从一个受污染的参数传播到其未被跟踪的子类参数，从而产生漏报。</p>
+<p>  B. 结构化输入如何构建</p>
+<p>  构建的输入需要满足语法（生成的对象是可以序列化/反序列化的）和语义（生成的序列化对象符合调用链的控制流和数据流约束）的要求</p>
+<p>  现有技术：基于生成的 fuzzing。</p>
+<p>  SerHybrid 通过执行指针分析生成<strong>堆访问路径</strong>（符合数据流约束，可以知道流经到 sink 点的变量所指向的对象堆访问路径），为未出现在堆路径中的字段属性分配随机值，以根据它们的类型生成有效的注入对象以供执行，根据<strong>它们的类型</strong>生成有效的注入对象以供执行。</p>
+<p>  <img src="/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%202.png" alt="Untitled"></p>
+<p>  缺陷在于控制流约束的实现并不高效，字段属性被分配随机值，很难去给这些受到控制流约束的字段赋予恰当的值（对象）</p>
+<p>  C. 以目标为导向的 fuzzing</p>
+<p>  代码覆盖率的变化并不能使得更近 sink 点，因为控制流稍微变化，都可以改变代码的覆盖率，但是可能会离 sink 点越来越远</p>
+<p>  <img src="/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%203.png" alt="Untitled"></p>
+<p>  现有技术：基于目标 fuzzing，</p>
+<p>  DGF 优先调度能使得执行路径更靠近目标点的种子</p>
+<p>  更靠近怎么测量？利用种子执行路径上所有基本块的距离的算术平均值</p>
+<p>  缺陷：这样的种子距离可能存在<strong>偏差</strong>，可能并不完全对应于预期执行的gadget 链的执行路径，因为并不是<strong>每个块</strong>都会驱动种子对象执行到在已确定的链中期望的目标 sink。此外，不同种子对象的执行跟踪可能会有很大差异，并且只能在运行时得知，因为对种子对象属性的修改可能会<strong>激活多个gadget</strong>的执行。因此，期望能得到一种能有效评估生成注入对象质量的基于目标的 fuzz 反馈机制</p>
+</li>
+<li><p>ODDFuzz 设计</p>
+<p>  A. 整体</p>
+<p>  两部分模块组成：</p>
+<ul>
+<li>Identifier 模块，利用待测试程序的编译文件作为输入实行轻量级的污点分析，自动化枚举所有潜在的调用链</li>
+<li><p>Validator 模块，基于识别出的潜在调用链构建语法上有效的注入对象作为种子来 fuzz; fuzz loop 结合前向突变策略和混合的反馈机制（种子距离 + 调用链覆盖率）指导突变注入对象朝预期的 sink 点移动；当生成的注入对象到达 sink 点时，就报告产生了可利用的调用链</p>
+<p><img src="/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%204.png" alt="Untitled"></p>
+<p>B.污点分析部分</p>
+<p>构建可利用 gadget 的前提：攻击可控的污点对象是否能从入口点 source 传播到 sink 函数。</p>
+<p>如果可利用的 gadget 存在，那么一定存在这样一条调用路径。</p>
+<p>提出：<strong>轻量级基于摘要的污点分析</strong></p>
+<p><strong>第一步，生成方法摘要信息</strong></p>
+</li>
+</ul>
+<ol>
+<li>抽离出所有 classpath 上方法的参数和 this 变量作为摘要</li>
+<li><p>追踪每个方法中变量之间的信息流传播，主要关注：</p>
+<ul>
+<li>赋值</li>
+<li>load x = o.f</li>
+<li>store o.f = x</li>
+<li><p>Call</p>
+<p>与参数有数据依赖关系的变量也会加入到方法的摘要当中</p>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<pre><code>**第二步，调用链识别**
+
+1. 指定可利用 magic（source 16) 方法和安全敏感调用点（sink 30） 列表
+
+    ![Untitled](ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%205.png)
+
+2. 基于之前计算得到的方法摘要信息，识别怀疑的 gadget
+
+    一旦遇到一个 magic method 在 PUT 的 classpath 当中，就从这点开始执行深度遍历DFS，基于摘要信息来串联可利用的 gadgets
+
+    为了避免死循环，设置候选调用链的最大长度作为阈值。
+
+    如何处理多态特性？当遇到 call 函数的 caller 是被污点标记的对象时，就执行 CHA。其余和普通的基于调用图的污点分析一致
+
+    知道遇到 sink 函数，或者调用链遇到阈值就停止。
+
+
+C. 结构感知的定向灰盒模糊 fuzzing
+
+![Untitled](ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%206.png)
+
+- 结构化的种子生产
+
+    必要条件：
+
+    1. 设计嵌套对象层次结构，以反映给定 gadget 链的执行流程
+    2. 赋予多级子对象恰当的属性值以便使其能到达 sink 点
+
+    挑战：精心设计复杂对象结构的属性布局需求对于传统的 fuzzing 方案十分吃力
+
+    解决方案：采用分层的数据结构 **属性树，其中根结点代表具有1个或多个gadget 的类对象**
+
+    构建模块：`input generator`
+
+    具体步骤：
+
+    1. 初始化每个 gadget 中涉及到的类，利用反射获取所有的成员属性以构建属性树。
+    2. 如果其中一个属性是另一个属性树根节点代表的对象或者继承的对象，并且该对象为 gadget 链中的下一节点，那么我们就合并两棵树。
+    3. 类似地，如果其中一个属性是个接口类，而另一棵树的根节点是其实现，那么也将其进行合并
+    4. 直至不再有分离但是有关联的属性树存在，迭代结束
+
+    ![Untitled](ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/Untitled%207.png)
+
+    接着，fuzzer 就会遍历属性树将其初始化为注入对象，对于对于没有后继的节点就直接设置为 `null`
+
+- 具有导向性的种子选择
+
+    由于注入对象的调用路径动态时决定，导致整个突变策略是 sink-unawareness。如果没有清晰的反馈信息来指导将会陷入语义的盲目性，降低 fuzzer 的性能。
+</code></pre>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">Home</a></li>
+         
+          <li><a href="/about/">About</a></li>
+         
+          <li><a href="/archives/">Writing</a></li>
+         
+          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ODDFUZZ-Discovering-Java-Deserialization-Vulnerabilities-via-Structure-Aware-Directed-Greybox-Fuzzing"><span class="toc-number">1.</span> <span class="toc-text">ODDFUZZ: Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&text=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&title=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&is_video=false&description=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记&body=Check out this article: https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&title=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&title=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&title=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&title=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&name=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/04/25/ODDFUZZ%20Discovering%20Java%20Deserialization%20Vulnerabi%20969d466604e14480b464d5a0f649092d/&t=《ODDFUZZ Discovering Java Deserialization Vulnerabilities via Structure-Aware Directed Greybox Fuzzing》论文笔记"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2023
+    RacerZ
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">Home</a></li><!--
+     --><!--
+       --><li><a href="/about/">About</a></li><!--
+     --><!--
+       --><li><a href="/archives/">Writing</a></li><!--
+     --><!--
+       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
