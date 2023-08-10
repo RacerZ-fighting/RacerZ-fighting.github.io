@@ -1,239 +1,70 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="SSRF开始啦 题面如图，经典开场    先来看看curl_setopt里面的选项设置 12CURLOPT_HEADER						启用时会将头文件的信息作为数据流输出。CURLOPT_RETURNTRANSFER			true 将curl_exec()获取的信息以字符串返回，而不是直接输出。 ​    当前目录存在flag.php(不过为啥扫不出来呜呜呜)，但是需要以本地用户身份去访问  自然">
-<meta property="og:type" content="article">
-<meta property="og:title" content="CTFSHOW-SSRF">
-<meta property="og:url" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="SSRF开始啦 题面如图，经典开场    先来看看curl_setopt里面的选项设置 12CURLOPT_HEADER						启用时会将头文件的信息作为数据流输出。CURLOPT_RETURNTRANSFER			true 将curl_exec()获取的信息以字符串返回，而不是直接输出。 ​    当前目录存在flag.php(不过为啥扫不出来呜呜呜)，但是需要以本地用户身份去访问  自然">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910120744221.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910141631405.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910142215676.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910142639372.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143138686.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143403933.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143811876.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910150752256.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910163128708.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910165330719.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910165533193.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910170056762.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910172218728.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910173812376.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910174159454.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911152919392.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153115379.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153357321.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153951473.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911154542502.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911155335451.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911155707008.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911164336348.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911164904049.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911165147977.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911170248972.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911170610197.png">
-<meta property="article:published_time" content="2022-09-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-11T16:53:07.564Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="ctfshow">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910120744221.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>CTFSHOW-SSRF</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>CTFSHOW-SSRF | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2022/09/21/CTF-SHOW%20%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2022/09/11/CTF-SHOW%20XSS%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&text=CTFSHOW-SSRF"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-SSRF"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&is_video=false&description=CTFSHOW-SSRF"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=CTFSHOW-SSRF&body=Check out this article: https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-SSRF"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-SSRF"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-SSRF"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-SSRF"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&name=CTFSHOW-SSRF&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&t=CTFSHOW-SSRF"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        CTFSHOW-SSRF
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-09-10T16:00:00.000Z" itemprop="datePublished">2022-09-11</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/ctfshow/" rel="tag">ctfshow</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <ol>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>CTFSHOW-SSRF</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2022-09-10T16:00:00.000Z" id="date"> 2022-09-11</time></div></span><br><span>Last Update: <div class="control"><time datetime="2022-09-11T16:53:07.564Z" id="updated"> 2022-09-12</time></div></span></div></div><hr><div id="post-content"><ol>
 <li><p>SSRF开始啦</p>
 <p>题面如图，经典开场</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910120744221.png" alt="image-20220910120744221" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910120744221.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910120744221.png" alt="image-20220910120744221" style="zoom:50%;"></p>
 </li>
 </ol>
 <p>先来看看<code>curl_setopt</code>里面的选项设置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">CURLOPT_HEADER						启用时会将头文件的信息作为数据流输出。</span><br><span class="line">CURLOPT_RETURNTRANSFER			true 将curl_exec()获取的信息以字符串返回，而不是直接输出。</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">CURLOPT_HEADER						启用时会将头文件的信息作为数据流输出。<br>CURLOPT_RETURNTRANSFER			true 将curl_exec()获取的信息以字符串返回，而不是直接输出。<br></code></pre></td></tr></table></figure>
 <p>​    当前目录存在flag.php(不过为啥扫不出来呜呜呜)，但是需要以本地用户身份去访问</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910141631405.png" alt="image-20220910141631405"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910141631405.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910141631405.png" alt="image-20220910141631405"></p>
 <p>自然就是利用SSRF伪造服务器身份去本地访问他就行，协议就是最常见的http</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url=http://localhost/flag.php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">url=http://localhost/flag.php<br></code></pre></td></tr></table></figure>
 <ol>
 <li><p><strong>ssrf开始啦</strong> 限制内网IP</p>
 <p>题面如图，flag依然在于flag.php中，并且题目限制了url必须为http或http，以及黑名单过滤localhost/127.0.0.1</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910142215676.png" alt="image-20220910142215676" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910142215676.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910142215676.png" alt="image-20220910142215676" style="zoom:50%;"></p>
 <p>看下<code>parse_url</code>怎么弄的</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910142639372.png" alt="image-20220910142639372"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910142639372.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910142639372.png" alt="image-20220910142639372"></p>
 </li>
 </ol>
 <p>这里用到了之前的一个知识点，<strong>更改IP地址写法</strong></p>
 <p><a target="_blank" rel="noopener" href="http://www.jsons.cn/ipnum/">http://www.jsons.cn/ipnum/</a> 或者转换成其他进制也可以</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url=http://2130706433/flag.php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">url=http://2130706433/flag.php<br></code></pre></td></tr></table></figure>
 <ol>
 <li><p>ssrf开始啦 限制内网IP</p>
 <p>题面如图，flag依然在于flag.php中</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143138686.png" alt="image-20220910143138686" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143138686.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143138686.png" alt="image-20220910143138686" style="zoom:50%;"></p>
 </li>
 </ol>
 <p>截取的更短了，上面的可以继续打</p>
 <p>或者<strong>题目环境为linux，所以0.0.0.0等价于127.0.0.1</strong></p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143403933.png" alt="image-20220910143403933"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url=http://0.0.0.0/flag.php</span><br></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143403933.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143403933.png" alt="image-20220910143403933"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">url=http://0.0.0.0/flag.php<br></code></pre></td></tr></table></figure>
 <ol>
 <li><p>ssrf开始啦 限制内网IP 禁止30x跳转</p>
 <p>题面如图，flag依然在于flag.php中</p>
 </li>
 </ol>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143811876.png" alt="image-20220910143811876" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143811876.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910143811876.png" alt="image-20220910143811876" style="zoom:50%;"></p>
 <p>也就是直接过滤了0和1，不过过滤句号是什么鬼…</p>
 <p>这里利用了DNS重绑定或者302跳转</p>
 <p><a target="_blank" rel="noopener" href="https://blog.gm7.org/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/01.%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/02.WEB%E6%BC%8F%E6%B4%9E/12.SSRF/01.DNS%E9%87%8D%E7%BB%91%E5%AE%9A.html">https://blog.gm7.org/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/01.%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/02.WEB%E6%BC%8F%E6%B4%9E/12.SSRF/01.DNS%E9%87%8D%E7%BB%91%E5%AE%9A.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.gm7.org/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/01.%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/02.WEB%E6%BC%8F%E6%B4%9E/12.SSRF/SSRF.html#%E7%9F%AD%E5%9C%B0%E5%9D%80--302%E8%B7%B3%E8%BD%AC-%E7%BB%95%E8%BF%87">https://blog.gm7.org/%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93/01.%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/02.WEB%E6%BC%8F%E6%B4%9E/12.SSRF/SSRF.html#%E7%9F%AD%E5%9C%B0%E5%9D%80--302%E8%B7%B3%E8%BD%AC-%E7%BB%95%E8%BF%87</a></p>
 <p>对于DNS重绑定，这里不太好弄因为没域名。不过wp上他们找到了一个存在的值为127.0.0.1的A记录</p>
 <p><code>http://sudo.cc/</code>。我这里就用302跳转的办法，先向我的ip发起请求，然后跳转回flag文件处</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910150752256.png" alt="image-20220910150752256" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910150752256.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910150752256.png" alt="image-20220910150752256" style="zoom:50%;"></p>
 <p>然后访问</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url=http://43.140.198.45:81</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">url=http://43.140.198.45:81<br></code></pre></td></tr></table></figure>
 <p>尴尬了，应该是<code>url_parse</code>解析的缘故，那就用上面的吧</p>
 <ol>
 <li><p>ssrf开始啦 限制内网IP</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910163128708.png" alt="image-20220910163128708" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910163128708.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910163128708.png" alt="image-20220910163128708" style="zoom:50%;"></p>
 </li>
 </ol>
 <p>这回是限制域名部分的长度，不过之前的过滤倒是没啦</p>
@@ -241,29 +72,29 @@
 <p>这里穿插一个本机ip/127.0.0.1/0.0.0.0的区别</p>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/HuiShouGuoQu/p/13445881.html">https://www.cnblogs.com/HuiShouGuoQu/p/13445881.html</a></p>
 <p>而且127.0.0.1是可以缩写成127.1</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910165330719.png" alt="image-20220910165330719" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910165330719.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910165330719.png" alt="image-20220910165330719" style="zoom:50%;"></p>
 <p>所以即可用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">url=http://127.1/flag.php</span><br><span class="line">或者</span><br><span class="line">url=http://0/flag.php</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">url=http://127.1/flag.php<br>或者<br>url=http://0/flag.php<br></code></pre></td></tr></table></figure>
 <ol>
 <li><p>ssrf开始啦 限制内网IP</p>
 <p>限制域名长度到3</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910165533193.png" alt="image-20220910165533193" style="zoom:50%;"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url=http://0/flag.php</span><br></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910165533193.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910165533193.png" alt="image-20220910165533193" style="zoom:50%;"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">url=http://0/flag.php<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>ssrf开始啦 限制内网IP</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910170056762.png" alt="image-20220910170056762"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910170056762.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910170056762.png" alt="image-20220910170056762"></p>
 </li>
 </ol>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">gethostbyname()		成功时返回 IPv4 地址，失败时原封不动返回 hostname 字符串。</span><br><span class="line">filter_var() 返回过滤后的数据，如果过滤失败则返回 false</span><br><span class="line">查看其中的选定过滤器</span><br><span class="line">FILTER_VALIDATE_INT			</span><br><span class="line">	Validates value as integer, optionally from the specified range, and converts to 	int on success.String values are trimmed using trim() before comparison.</span><br><span class="line"></span><br><span class="line">FILTER_FLAG_NO_PRIV_RANGE </span><br><span class="line">	Fails validation for the following private IPv4 ranges: 10.0.0.0/8, 172.16.0.0/12 and 192.168.0.0/16.  要求值不是 RFC 指定的私域 IP</span><br><span class="line">	</span><br><span class="line">FILTER_FLAG_NO_RES_RANGE</span><br><span class="line">	Fails validation for the following reserved IPv4 ranges: 0.0.0.0/8, 169.254.0.0/16, 127.0.0.0/8 and 240.0.0.0/4. 要求值不在保留的 IP 范围内</span><br><span class="line">我们使用前面的那一套环路地址应该是触发了127.0.0.0/8这个限制</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">gethostbyname()		成功时返回 IPv4 地址，失败时原封不动返回 hostname 字符串。<br>filter_var() 返回过滤后的数据，如果过滤失败则返回 false<br>查看其中的选定过滤器<br>FILTER_VALIDATE_INT			<br>	Validates value as integer, optionally from the specified range, and converts to 	int on success.String values are trimmed using trim() before comparison.<br><br>FILTER_FLAG_NO_PRIV_RANGE <br>	Fails validation for the following private IPv4 ranges: 10.0.0.0/8, 172.16.0.0/12 and 192.168.0.0/16.  要求值不是 RFC 指定的私域 IP<br>	<br>FILTER_FLAG_NO_RES_RANGE<br>	Fails validation for the following reserved IPv4 ranges: 0.0.0.0/8, 169.254.0.0/16, 127.0.0.0/8 and 240.0.0.0/4. 要求值不在保留的 IP 范围内<br>我们使用前面的那一套环路地址应该是触发了127.0.0.0/8这个限制<br></code></pre></td></tr></table></figure>
 <p>淦，涉及啦一些网段的知识还没搞懂    </p>
 <p>绕过用的就是之前的302条转或DNS重绑定，后者本质其实就是域名所有者可以随时修改解析的IP，对于浏览器来说，<strong>两次访问的都是同一域名</strong>，是符合浏览器的同源策略的，但是第二次访问解析到其他IP，调用到了其他资源。感觉还有点条件竞争，就是第一次解析的ip绕过if限制，然后之后再去访问的时候就解析到了其他ip上。直接上<a target="_blank" rel="noopener" href="http://ceye.io/profile">线上网站</a>吧</p>
 <p>在最后添加解析IP指向环路地址和设置一个任意地址</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910172218728.png" alt="image-20220910172218728" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910172218728.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910172218728.png" alt="image-20220910172218728" style="zoom:50%;"></p>
 <p>多POST的几次，可以看到前面输出的是8.8.8.8绕过if，但是后面其实访问了127.0.0.1</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910173812376.png" alt="image-20220910173812376" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910173812376.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910173812376.png" alt="image-20220910173812376" style="zoom:50%;"></p>
 <ol>
 <li><p>ssrf开始啦 限制内网IP</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910174159454.png" alt="image-20220910174159454" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910174159454.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220910174159454.png" alt="image-20220910174159454" style="zoom:50%;"></p>
 </li>
 </ol>
 <p>这回换了个思路，也就是必须得是<code>http://ctf.xxxxshow</code>的才可以去访问</p>
@@ -271,186 +102,63 @@
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/tr1ple/p/11137159.html">https://www.cnblogs.com/tr1ple/p/11137159.html</a> 给出了一些总结</p>
 <p>自己也实践一下寻找一下这个函数的匹配规律</p>
 <p>从解释上就已经可以看到，这个函数相对来讲是不安全的</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911152919392.png" alt="image-20220911152919392"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911152919392.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911152919392.png" alt="image-20220911152919392"></p>
 <p>先给出一个较为完整、正常的解析</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153115379.png" alt="image-20220911153115379" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153115379.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153115379.png" alt="image-20220911153115379" style="zoom:50%;"></p>
 <p>从这里可以得出结论：<code>//</code>后会解析到host；<code>/</code>后会解析到path</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153357321.png" alt="image-20220911153357321" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153357321.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153357321.png" alt="image-20220911153357321" style="zoom:50%;"></p>
 <p>特别地，如果<code>//</code>先跟到是<code>?</code>那么就会优先被解析到query，而不是path</p>
 <p>还有一个特殊的<code>@</code>,会解析最后一个@跟到字符串作为host</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153951473.png" alt="image-20220911153951473" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153951473.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911153951473.png" alt="image-20220911153951473" style="zoom:50%;"></p>
 <p>所以对于这道题，我们的目的是解析到<code>host</code>为<code>localhost</code>，<code>path</code>为<code>/flag.php</code></p>
 <p>题目的限制为<code>http://ctf.xxxshow</code></p>
 <p>所以首先通过<code>@</code>来替换掉host，让前面的<code>ctf.xxx</code>变成user；对于后面结尾的<code>show</code>，可以通过放在query处</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911154542502.png" alt="image-20220911154542502" style="zoom:50%;"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url=http://ctf.xxx@localhost/flag.php?show</span><br></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911154542502.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911154542502.png" alt="image-20220911154542502" style="zoom:50%;"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">url=http://ctf.xxx@localhost/flag.php?show<br></code></pre></td></tr></table></figure>
 <ol>
 <li><p><strong>打无密码的mysql gopher协议</strong></p>
 <p>题目给出了提示：无密码的mysql是什么意思? ssrf在什么地方呢</p>
 <p>先来分析一下题目，前端源码上看到了输入框的传递url，提交的数据会被发送至check.php。然后这里有个隐藏参数<code>returl</code>，修改一下参数值看看有无回显    </p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911155335451.png" alt="image-20220911155335451"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911155335451.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911155335451.png" alt="image-20220911155335451"></p>
 <p>存在回显，证实了确实有ssrf在参数点returl上</p>
 </li>
 </ol>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911155707008.png" alt="image-20220911155707008"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911155707008.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911155707008.png" alt="image-20220911155707008"></p>
 <p>关于mysql与ssrf</p>
 <p><a target="_blank" rel="noopener" href="https://paper.seebug.org/510/">https://paper.seebug.org/510/</a></p>
 <p>gopher协议基本格式，主要都是基于tcp协议</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gopher://&lt;host&gt;:&lt;port&gt;/&lt;gopher-path&gt;_后接TCP数据流</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">gopher://&lt;host&gt;:&lt;port&gt;/&lt;gopher-path&gt;_后接TCP数据流<br></code></pre></td></tr></table></figure>
 <p>这个工具已经帮我们整理好了格式<a target="_blank" rel="noopener" href="https://github.com/tarunkant/Gopherus">https://github.com/tarunkant/Gopherus</a></p>
 <p>用python2写的，mac上不知道为啥pip不见了</p>
 <p>直接用工具生成写一句话木马的payload </p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911164336348.png" alt="image-20220911164336348"></p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911164904049.png" alt="image-20220911164904049" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911164336348.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911164336348.png" alt="image-20220911164336348"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911164904049.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911164904049.png" alt="image-20220911164904049" style="zoom:50%;"></p>
 <p>这里需要注意的是还需要将payload进行二次编码，因为在传输到服务器后会进行一次解码，会导致转义</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911165147977.png" alt="image-20220911165147977" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911165147977.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911165147977.png" alt="image-20220911165147977" style="zoom:50%;"></p>
 <p>然后蚁剑连上就行</p>
 <ol>
 <li><p>打redis</p>
 <p>题目直接给出了源码</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911170248972.png" alt="image-20220911170248972" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911170248972.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911170248972.png" alt="image-20220911170248972" style="zoom:50%;"></p>
 </li>
 </ol>
 <p>ssrf参数点url，攻击内网redis</p>
-<p><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911170610197.png" alt="image-20220911170610197"></p>
+<p class='item-img' data-src='/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911170610197.png'><img src="/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/image-20220911170610197.png" alt="image-20220911170610197"></p>
 <p>直接打就行，后面依然连蚁剑</p>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&text=CTFSHOW-SSRF"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-SSRF"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&is_video=false&description=CTFSHOW-SSRF"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=CTFSHOW-SSRF&body=Check out this article: https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-SSRF"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-SSRF"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-SSRF"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&title=CTFSHOW-SSRF"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&name=CTFSHOW-SSRF&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/09/11/CTF-SHOW%20SSRF%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/&t=CTFSHOW-SSRF"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2022/09/21/CTF-SHOW%20%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">← Next CTFSHOW-命令执行</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2022/09/11/CTF-SHOW%20XSS%E5%81%9A%E9%A2%98%E8%AE%B0%E5%BD%95/">CTFSHOW-XSS Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

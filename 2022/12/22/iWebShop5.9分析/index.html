@@ -1,369 +1,81 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="写在前面这个是代码审计练习分析的第八篇文章，阳了几天断更了，最近恢复了些状态开始重新计划 这篇分析iWebShop5.9 漏洞分析整个命令执行的利用需要结合SQL注入、任意文件删除和命令执行拼接漏洞 后台添加一个商户账户  访问商户对应的商家管理页面，url如下   添加一个普通的商品，方便后续SQL注入的利用  然后回到后台利用经典的数据库备份功能，备份关键的三个表iwebphp.iwebsho">
-<meta property="og:type" content="article">
-<meta property="og:title" content="跟着Y4师傅学代码审计-iWebShop开源商城系统">
-<meta property="og:url" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="写在前面这个是代码审计练习分析的第八篇文章，阳了几天断更了，最近恢复了些状态开始重新计划 这篇分析iWebShop5.9 漏洞分析整个命令执行的利用需要结合SQL注入、任意文件删除和命令执行拼接漏洞 后台添加一个商户账户  访问商户对应的商家管理页面，url如下   添加一个普通的商品，方便后续SQL注入的利用  然后回到后台利用经典的数据库备份功能，备份关键的三个表iwebphp.iwebsho">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162511626.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162600151.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162729280.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162835289.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222163027447.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222163607211.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222165823570.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222171803655.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222172421246.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173520933.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173537058.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173906891.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174249405.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222182406651.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222182538739.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174448824.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174620139.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174841997.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222183012808.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222175316700.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222180632230.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222181058352.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222181322392.png">
-<meta property="article:published_time" content="2022-12-21T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-12-22T10:35:17.943Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="代码审计">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162511626.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>跟着Y4师傅学代码审计-iWebShop开源商城系统</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>跟着Y4师傅学代码审计-iWebShop开源商城系统 | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2022/12/27/tabby%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&text=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&title=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&is_video=false&description=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=跟着Y4师傅学代码审计-iWebShop开源商城系统&body=Check out this article: https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&title=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&title=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&title=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&title=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&name=跟着Y4师傅学代码审计-iWebShop开源商城系统&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&t=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        跟着Y4师傅学代码审计-iWebShop开源商城系统
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-12-21T16:00:00.000Z" itemprop="datePublished">2022-12-22</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" rel="tag">代码审计</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>这个是代码审计练习分析的第八篇文章，阳了几天断更了，最近恢复了些状态开始重新计划</p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>跟着Y4师傅学代码审计-iWebShop开源商城系统</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2022-12-21T16:00:00.000Z" id="date"> 2022-12-22</time></div></span><br><span>Last Update: <div class="control"><time datetime="2022-12-22T10:35:17.943Z" id="updated"> 2022-12-22</time></div></span></div></div><hr><div id="post-content"><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>这个是代码审计练习分析的第八篇文章，阳了几天断更了，最近恢复了些状态开始重新计划</p>
 <p>这篇分析iWebShop5.9</p>
 <h4 id="漏洞分析"><a href="#漏洞分析" class="headerlink" title="漏洞分析"></a>漏洞分析</h4><p>整个命令执行的利用需要结合SQL注入、任意文件删除和命令执行拼接漏洞</p>
 <p>后台添加一个商户账户</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162511626.png" alt="image-20221222162511626"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162511626.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162511626.png" alt="image-20221222162511626"></p>
 <p>访问商户对应的商家管理页面，url如下</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162600151.png" alt="image-20221222162600151"></p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162729280.png" alt="image-20221222162729280"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162600151.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162600151.png" alt="image-20221222162600151"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162729280.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162729280.png" alt="image-20221222162729280"></p>
 <p>添加一个普通的商品，方便后续SQL注入的利用</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162835289.png" alt="image-20221222162835289"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162835289.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222162835289.png" alt="image-20221222162835289"></p>
 <p>然后回到后台利用经典的数据库备份功能，备份关键的三个表<code>iwebphp.iwebshop_goods_photo_relation</code> <code>iwebphp.iwebshop_goods_photo</code> 以及 <code>iwebphp.iwebshop_goods</code></p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222163027447.png" alt="image-20221222163027447"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222163027447.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222163027447.png" alt="image-20221222163027447"></p>
 <p>下载好备份sql文件，我们可以在其上增加一些利用信息，关注<code>iwebshop_goods_photo</code> 表的img字段，我们在其上可以选中任意文件。另外需要注意id之间的关系</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222163607211.png" alt="image-20221222163607211"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222163607211.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222163607211.png" alt="image-20221222163607211"></p>
 <p>之后回到后台数据库恢复功能，上传该修改的sql文件，并执行</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222165823570.png" alt="image-20221222165823570"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222165823570.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222165823570.png" alt="image-20221222165823570"></p>
 <p>我们根据路由信息定位至<code>tools.php</code>中的<code>localUpload</code>方法，其中可以看到，对上传的文件调用<code>parseSQL()</code>方法</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222171803655.png" alt="image-20221222171803655"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222171803655.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222171803655.png" alt="image-20221222171803655"></p>
 <p>里面只判断了一个文件前两个字符，由于第一行为DROP xxx，因此默认就会执行后续语句，逐个语句去调用<code>query()</code>方法</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222172421246.png" alt="image-20221222172421246"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222172421246.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222172421246.png" alt="image-20221222172421246"></p>
 <p>可以看到其间没有任何过滤字符就执行了SQL语句，造成SQL注入漏洞</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//执行SQL</span></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">query</span>(<span class="params"><span class="variable">$sql</span></span>)</span></span><br><span class="line"><span class="function">	</span>&#123;</span><br><span class="line">		<span class="comment">//创建数据库对象</span></span><br><span class="line">		<span class="variable">$dbObj</span> = <span class="title class_">IDBFactory</span>::<span class="title function_ invoke__">getDB</span>();</span><br><span class="line">		<span class="variable">$dbObj</span>-&gt;<span class="title function_ invoke__">query</span>(<span class="variable">$sql</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs php"><span class="hljs-comment">//执行SQL</span><br>	<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">query</span>(<span class="hljs-params"><span class="hljs-variable">$sql</span></span>)</span><br><span class="hljs-function">	</span>&#123;<br>		<span class="hljs-comment">//创建数据库对象</span><br>		<span class="hljs-variable">$dbObj</span> = <span class="hljs-title class_">IDBFactory</span>::<span class="hljs-title function_ invoke__">getDB</span>();<br>		<span class="hljs-variable">$dbObj</span>-&gt;<span class="hljs-title function_ invoke__">query</span>(<span class="hljs-variable">$sql</span>);<br>	&#125;<br></code></pre></td></tr></table></figure>
 <p>之后我们回到商家管理平台，商品列表这里点击删除操作，id对应为5</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173520933.png" alt="image-20221222173520933"></p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173537058.png" alt="image-20221222173537058"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173520933.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173520933.png" alt="image-20221222173520933"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173537058.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173537058.png" alt="image-20221222173537058"></p>
 <p>根据路由定位至<code>seller.php</code>的goods_del方法，这里也是获得到参数后调用<code>del()</code></p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173906891.png" alt="image-20221222173906891"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173906891.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222173906891.png" alt="image-20221222173906891"></p>
 <p>跟进后可以看到，其首先会从<code>goods_photo_relation</code>表中根据id=5查出关联信息，进一步由于我们这里关联了photo_id，因此从<code>goods_photo</code>查出了img字段的内容，也就是任意文件的地址，我们这里为了进一步构成RCE，因此选择<code>install/install.lock</code>文件，后面可以看到会对img的内容调用<code>unlink</code>方法</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174249405.png" alt="image-20221222174249405"></p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222182406651.png" alt="image-20221222182406651"></p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222182538739.png" alt="image-20221222182538739"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174249405.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174249405.png" alt="image-20221222174249405"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222182406651.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222182406651.png" alt="image-20221222182406651"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222182538739.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222182538739.png" alt="image-20221222182538739"></p>
 <p>在unlink方法中我们便看到了删除文件操作，期间也未对文件名作过滤，这里便构成了任意删除文件漏洞</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174448824.png" alt="image-20221222174448824"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174448824.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174448824.png" alt="image-20221222174448824"></p>
 <p>删除lock文件之后再去访问<code>install/index.php</code>便可造成系统重装，我们看看这里的利用</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174620139.png" alt="image-20221222174620139"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174620139.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174620139.png" alt="image-20221222174620139"></p>
 <p>根据路由定位至<code>install/include/function.php</code>方法，其中<code>install_sql()</code>方法中看到，这里有个<code>create_config()</code>，写入配置文件的操作，而且写入对象还是php文件，是否可以利用呢？跟入该方法</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174841997.png" alt="image-20221222174841997"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174841997.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222174841997.png" alt="image-20221222174841997"></p>
 <p>可以看到也是没过滤就直接写入updateData变量内容，而该变量的值又由用户传入。只不过这里写入的时候是按照数组键值对的方式写入，应该是该框架针对配置项的一种安排方式。我们可以通过提前闭合语句的方式来造成RCE，毕竟是PHP文件，这里只要稍稍测试来闭合一下引号和括号即可</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222183012808.png" alt="image-20221222183012808"></p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222175316700.png" alt="image-20221222175316700"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222183012808.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222183012808.png" alt="image-20221222183012808"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222175316700.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222175316700.png" alt="image-20221222175316700"></p>
 <p>这里可以看到<code>config/config.php</code>文件中的格式，我们根据前面数组的括号数量提前闭合即可</p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222180632230.png" alt="image-20221222180632230"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222180632230.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222180632230.png" alt="image-20221222180632230"></p>
 <p>payload</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db_address=localhost%3A3306&amp;db_user=root&amp;db_pwd=root&amp;db_name=testcms&#x27;,&#x27;evil&#x27;=&gt;phpinfo()))))?&gt;</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222181058352.png" alt="image-20221222181058352"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">db_address=localhost%3A3306&amp;db_user=root&amp;db_pwd=root&amp;db_name=testcms&#x27;,&#x27;evil&#x27;=&gt;phpinfo()))))?&gt;<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222181058352.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222181058352.png" alt="image-20221222181058352"></p>
 <p>需要再配合文件删除漏洞删掉config下的.htaccess文件</p>
 <p>再去访问<code>config/config.php</code></p>
-<p><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222181322392.png" alt="image-20221222181322392"></p>
+<p class='item-img' data-src='/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222181322392.png'><img src="/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/image-20221222181322392.png" alt="image-20221222181322392"></p>
 <h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a target="_blank" rel="noopener" href="https://y4tacker.blog.csdn.net/article/details/118029055">https://y4tacker.blog.csdn.net/article/details/118029055</a></p>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&text=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&title=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&is_video=false&description=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=跟着Y4师傅学代码审计-iWebShop开源商城系统&body=Check out this article: https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&title=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&title=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&title=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&title=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&name=跟着Y4师傅学代码审计-iWebShop开源商城系统&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/12/22/iWebShop5.9%E5%88%86%E6%9E%90/&t=跟着Y4师傅学代码审计-iWebShop开源商城系统"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2022/12/27/tabby%E5%8E%9F%E7%90%86%E5%AD%A6%E4%B9%A0/">← Next tabby 原理学习</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2022/12/16/TreeCMS%E5%88%86%E6%9E%90/">跟着Y4师傅学代码审计-BigTreeCMS Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%88%86%E6%9E%90"><span class="toc-number">2.</span> <span class="toc-text">漏洞分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

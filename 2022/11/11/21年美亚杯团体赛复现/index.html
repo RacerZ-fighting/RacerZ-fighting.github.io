@@ -1,308 +1,31 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="案情背景 几天后，“大路建设”旗下有一家名为“元材原料”的材料供应子公司，该公司发现几名员工的个人财务资料在网上遭公开发布。为了员工安全，主管决定报警求助。经警方调查发现黑客入侵的手法与“大路建设”的案件十分相似，因此引起调查人员怀疑两起案件有所关联。 经调查后，警方拘捕了“常威”和“特普”两名本地男子，怀疑他们与本案有关。警方在搜查他们的住宅及公司后，扣押了数台数码设备，请分析以下电子数据并重建">
-<meta property="og:type" content="article">
-<meta property="og:title" content="21年美亚杯电子数据取证团队赛复现">
-<meta property="og:url" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="案情背景 几天后，“大路建设”旗下有一家名为“元材原料”的材料供应子公司，该公司发现几名员工的个人财务资料在网上遭公开发布。为了员工安全，主管决定报警求助。经警方调查发现黑客入侵的手法与“大路建设”的案件十分相似，因此引起调查人员怀疑两起案件有所关联。 经调查后，警方拘捕了“常威”和“特普”两名本地男子，怀疑他们与本案有关。警方在搜查他们的住宅及公司后，扣押了数台数码设备，请分析以下电子数据并重建">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109091512360.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109092018328.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109092719094.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094418105.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094610056.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094954913.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109095532253.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109100543078.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109100907729.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109101208357.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109111324848.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112019285.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112115151.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112259416.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112645691.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109113905553.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109114937902.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109115825418.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109160413231.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161922434.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109160716602.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161209270.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161348279.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162443331.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162349273.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162925451.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163034704.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163406442.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163556444.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163752926.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163802825.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109171121713.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109171144238.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109172653325.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109172854888.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109173145193.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109174018481.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109174646506.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175331240.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175443933.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175635007.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175951975.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184259577.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184324151.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184512322.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184721962.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109185247062.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109185930855.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109190253958.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109190740274.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109191545467.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109192120278.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109192526200.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109193716032.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109193852101.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109194643320.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109194826900.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109195317956.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200139535.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200338114.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200450440.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109201132418.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109210859033.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109210941098.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144231388.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144251518.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144853060.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145039215.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145116893.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145645624.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110151613388.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110160228657.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110154928966.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155007698.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155238308.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155721680.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155814644.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110161504937.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110163053723.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110163917171.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110164410753.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110165417663.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110165732095.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170346709.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170546190.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170641979.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170813506.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110171907655.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110190552956.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110191328642.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110191507219.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192501360.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192821887.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192852785.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193253974.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193632465.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193838829.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193945094.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195223170.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195634861.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195826912.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110201946177.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110202048753.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110202441895.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110203038958.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210123543.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210623100.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210724578.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210933733.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110211548273.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110214425365.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215000052.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215259191.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215512652.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110224833962.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110230815960.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110232539612.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110233415470.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234345362.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234531259.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234839761.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110235209917.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110235303189.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111000015112.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111001013347.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002337429.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002630904.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002751231.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002804240.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003040673.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003645502.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003758854.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004718429.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004842116.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004922416.png">
-<meta property="article:published_time" content="2022-11-10T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-10T16:54:02.575Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="电子数据取证">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109091512360.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>21年美亚杯电子数据取证团队赛复现</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>21年美亚杯电子数据取证团队赛复现 | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2022/11/14/ctfshow-XXE/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2022/11/10/xstream%E4%B8%8Etabby/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&text=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&is_video=false&description=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=21年美亚杯电子数据取证团队赛复现&body=Check out this article: https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&name=21年美亚杯电子数据取证团队赛复现&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&t=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E6%83%85%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">案情背景</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        21年美亚杯电子数据取证团队赛复现
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-11-10T16:00:00.000Z" itemprop="datePublished">2022-11-11</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81/" rel="tag">电子数据取证</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h4 id="案情背景"><a href="#案情背景" class="headerlink" title="案情背景"></a>案情背景</h4><blockquote>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>21年美亚杯电子数据取证团队赛复现</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2022-11-10T16:00:00.000Z" id="date"> 2022-11-11</time></div></span><br><span>Last Update: <div class="control"><time datetime="2022-11-10T16:54:02.575Z" id="updated"> 2022-11-11</time></div></span></div></div><hr><div id="post-content"><h4 id="案情背景"><a href="#案情背景" class="headerlink" title="案情背景"></a>案情背景</h4><blockquote>
 <p>几天后，“大路建设”旗下有一家名为“元材原料”的材料供应子公司，该公司发现几名员工的个人财务资料在网上遭公开发布。为了员工安全，主管决定报警求助。经警方调查发现黑客入侵的手法与“大路建设”的案件十分相似，因此引起调查人员怀疑两起案件有所关联。</p>
 <p>经调查后，警方拘捕了“常威”和“特普”两名本地男子，怀疑他们与本案有关。警方在搜查他们的住宅及公司后，扣押了数台数码设备，请分析以下电子数据并重建电子数据痕迹，以确认“常威”和“特普”在本案中是否有违法犯罪，并还原事件经过。</p>
 </blockquote>
 <ol>
 <li>[填空题]工地职员A计算机的修复密钥标识符是什么？(请以大写英文及阿拉伯数字输入答案，不要输入”-“)(1分)[填空题]</li>
 </ol>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109091512360.png" alt="image-20221109091512360"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109091512360.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109091512360.png" alt="image-20221109091512360"></p>
 <p>230C1BB3-106A-4E4E-BF5D-3D10961585D4</p>
 <ol>
 <li><p>[填空题]工地职员A计算机的修复密钥解除锁定是什么？(请以数字输入答案，不要输入”-“)(1分)[填空题]</p>
 <p>资格赛中我们看到了Alex的FTP服务器上是存在BitLocker文件的，其中文件夹3是职员A的</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109092018328.png" alt="image-20221109092018328"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109092018328.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109092018328.png" alt="image-20221109092018328"></p>
 <p>483714-461582-060962-373351-019646-502348-309628-684431</p>
 </li>
 <li><p>[单选题]工地职员A的计算机被什么程式加密？(1分)</p>
@@ -318,7 +41,7 @@
 <p>B.中学</p>
 <p>C.幼儿园</p>
 <p>D.大学</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109092719094.png" alt="image-20221109092719094"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109092719094.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109092719094.png" alt="image-20221109092719094"></p>
 <p>历史记录可以看到应该是幼儿园 C</p>
 </li>
 <li><p>[多选题]工地职员A并没有打开过哪一个档案？(2分)</p>
@@ -328,23 +51,23 @@
 <p>D.Staff2.xlsx</p>
 <p>E.BTCaddress.bmp</p>
 <p>在访问痕迹和时间轴中关于Staff的只有1，然后BTC也出现过，所以ABD</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094418105.png" alt="image-20221109094418105"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094418105.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094418105.png" alt="image-20221109094418105"></p>
 </li>
 <li><p>[填空题]工地职员A的计算机被<strong>远程</strong>控制了多少分钟？(请以阿拉伯数字回答)(2分)[填空题]</p>
 <p>由资格赛我们已经知道了是由teamViewer控制的，看下连接时间 11分钟</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094610056.png" alt="image-20221109094610056"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094610056.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094610056.png" alt="image-20221109094610056"></p>
 </li>
 <li><p>[单选题]工地职员A的计算机被加密后，被要求存入的虚疑货币是什么？(1分)</p>
 <p>A.比特币现金</p>
 <p>B.比特币</p>
 <p>C.以太币</p>
 <p>D.泰达币</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094954913.png" alt="image-20221109094954913"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094954913.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109094954913.png" alt="image-20221109094954913"></p>
 <p>就是B</p>
 </li>
 <li><p>[填空题]在工地职员A的计算机曾经打开过的Excel档案中，有多少人有可能在法律部门工作？(请以阿拉伯数字回答)(1分)[填空题]</p>
 <p>指的是Staff1.xlsx，筛选出是Legal的，共22个</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109095532253.png" alt="image-20221109095532253"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109095532253.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109095532253.png" alt="image-20221109095532253"></p>
 </li>
 <li><p>[多选题]工地职员B的计算机在什么日期和时间被<strong>黑客控制</strong>？(2分)</p>
 <p>A.2021-10-19</p>
@@ -353,17 +76,17 @@
 <p>D.05:55:50(UTC+8:00)</p>
 <p>E.18:40:06(UTC+8:00)</p>
 <p>日期上好像不太对？ E</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109100543078.png" alt="image-20221109100543078"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109100543078.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109100543078.png" alt="image-20221109100543078"></p>
 </li>
 <li><p>[填空题]工地职员B的计算机的MACAddress是什么?(请以大写英文及数字输入答案)(1分)[填空题]</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109100907729.png" alt="image-20221109100907729"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109100907729.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109100907729.png" alt="image-20221109100907729"></p>
 </li>
 </ol>
 <p>00-0C-29-E2-53-2D</p>
 <ol>
 <li><p>[填空题]工地职员B的计算机用户FaFa的<strong>ProfileID</strong>是什么？(请以大写英文及数字输入答案，不要输入”-“)(1分)[填空题]</p>
 <p>指的是产品<em>ID</em> </p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109101208357.png" alt="image-20221109101208357"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109101208357.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109101208357.png" alt="image-20221109101208357"></p>
 </li>
 <li><p>[填空题]工地职员B的办公室计算机的<strong>WindowsCDKey</strong>是什么？(请以大写英文及数字输入答案，不要输入”-“)(1分)[填空题]</p>
 <p>指的是Windows 的产品密钥。注册表里应该有，不过需要仿真</p>
@@ -371,7 +94,7 @@
 <p>注册表的位置 <strong>C:\Windows\System32\config</strong> SOFTWARE 和 SYSTEM</p>
 <p>利用取证大师进行解析</p>
 <p>然后定位路径 <strong>HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion找到SoftwareProtectionPlatform</strong>找到<strong>BackupProductKeyDefault</strong></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109111324848.png" alt="image-20221109111324848"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109111324848.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109111324848.png" alt="image-20221109111324848"></p>
 </li>
 <li><p>[单选题]检查过工地职员B的计算机登录档后(<strong>WindowRegistry</strong>)，计算机感染了什么恶意软件？(2分)</p>
 <p>A.Adware</p>
@@ -387,7 +110,7 @@
 <p>D.蓝芽传入</p>
 <p>E.Direct-link</p>
 <p>C 浏览器下载记录中有</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112019285.png" alt="image-20221109112019285"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112019285.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112019285.png" alt="image-20221109112019285"></p>
 </li>
 <li><p>[多选题]工地职员B的计算机中被加密硬盘内的图片中，人物中衣着有什么颜色？(2分)</p>
 <p>A.黄色</p>
@@ -396,37 +119,37 @@
 <p>D.蓝色</p>
 <p>E.绿色</p>
 <p>打开图片辨识一下即可，一眼鱿鱼游戏hhh。 BE</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112115151.png" alt="image-20221109112115151"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112115151.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112115151.png" alt="image-20221109112115151"></p>
 </li>
 <li><p>[填空题]工地职员B的计算机有多少个磁盘分区？(请以阿拉伯数字输入答案)(1分)[填空题]</p>
 <p>5个</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112259416.png" alt="image-20221109112259416"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112259416.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112259416.png" alt="image-20221109112259416"></p>
 </li>
 <li><p>[填空题]工地职员B的计算机硬盘分割表是什么？(答案请以首字母大写作答)(2分)[填空题]</p>
-<p>指的是硬盘分区类型<br>XWAYS直接看 GPT<br><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112645691.png" alt="image-20221109112645691"></p>
+<p>指的是硬盘分区类型<br>XWAYS直接看 GPT<br class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112645691.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109112645691.png" alt="image-20221109112645691"></p>
 </li>
 <li><p>[填空题]在工地职员B的计算机<strong>EventLog</strong>中最后登入时services.exe的<strong>ProcessID</strong>是什么？(请以阿拉伯数字输入)(3分)[填空题]</p>
 <p>在日志分析-安全-登录分析中可以看到</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109113905553.png" alt="image-20221109113905553"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109113905553.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109113905553.png" alt="image-20221109113905553"></p>
 </li>
 </ol>
 <p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaozi/p/14263955.html">https://www.cnblogs.com/xiaozi/p/14263955.html</a> 日志识别分析</p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/zhulinu/article/details/52747984">https://blog.csdn.net/zhulinu/article/details/52747984</a></p>
 <p>这两条对应进程ID和进程名，也就是636</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109114937902.png" alt="image-20221109114937902"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109114937902.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109114937902.png" alt="image-20221109114937902"></p>
 <ol>
 <li><p>[填空题]甚么IP曾经上传档案到网页服务器?(请以阿拉伯数字回答，不用输入”.“)(2分)[填空题]</p>
 <p>看日志，先看服务器中间件是啥</p>
 <p>有个xampp快捷搭建网站的软件，里面存在apache中间件</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109115825418.png" alt="image-20221109115825418"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109115825418.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109115825418.png" alt="image-20221109115825418"></p>
 <p><strong>apache常见路径</strong>：/var/log/apache/access.log /var/log/apache2/access.log /etc/httpd/logs/access_log</p>
 <p>上传文件定位POST请求，关键词upload</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109160413231.png" alt="image-20221109160413231"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109160413231.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109160413231.png" alt="image-20221109160413231"></p>
 <p>为了确认，看下这个<code>uploader.php</code></p>
 <p>这个网站在单独的目录/xampp/htdocs/www.yuenchoi.com.hk/，</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161922434.png" alt="image-20221109161922434"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161922434.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161922434.png" alt="image-20221109161922434"></p>
 <p>可以看到文件会上传到C:/xampp/htdocs/www.yuenchoi.com.hk/目录下</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109160716602.png" alt="image-20221109160716602"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109160716602.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109160716602.png" alt="image-20221109160716602"></p>
 <p>定位这个Ip 203.145.94.120</p>
 </li>
 <li><p>[多选题]承上题，以下哪试档案曾被<strong>上传</strong>到网页服务器?(3分)</p>
@@ -435,15 +158,15 @@
 <p>C.b6778k-9.0.php</p>
 <p>D.b374k-2.5.php</p>
 <p>E.d374k-2.5.php</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161209270.png" alt="image-20221109161209270"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161209270.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161209270.png" alt="image-20221109161209270"></p>
 </li>
 </ol>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161348279.png" alt="image-20221109161348279"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162443331.png" alt="image-20221109162443331"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161348279.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109161348279.png" alt="image-20221109161348279"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162443331.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162443331.png" alt="image-20221109162443331"></p>
 <p>其中C 虽然在目录下存在，但是日志没出现过，可能没有</p>
 <p>很明显测试了一下文件上传后缀 ABD</p>
 <p>或者直接看当前目录下的jpg和php文件</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162349273.png" alt="image-20221109162349273"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162349273.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162349273.png" alt="image-20221109162349273"></p>
 <ol>
 <li><p>[单选题]入侵者可能使用甚么漏洞进行入侵网页服务器?(1分)</p>
 <p>A.文件上传漏洞</p>
@@ -458,8 +181,8 @@
 <p>C.Mary</p>
 <p>D.May</p>
 <p>E.Colin</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162925451.png" alt="image-20221109162925451"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163034704.png" alt="image-20221109163034704"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162925451.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109162925451.png" alt="image-20221109162925451"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163034704.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163034704.png" alt="image-20221109163034704"></p>
 <p>AC</p>
 </li>
 <li><p>[多选题]在网页服务器中，哪个是可疑档案?它如何取得计算机控制权?(3分)</p>
@@ -470,27 +193,27 @@
 <p>E:透过PuTTY(远程登录工具)取得计算机控制权</p>
 <p>文件上传合理怀疑webshell，看一下上传文件的内容</p>
 <p>B 一个木马 因此D</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163406442.png" alt="image-20221109163406442"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163406442.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163406442.png" alt="image-20221109163406442"></p>
 </li>
 <li><p>[填空题]在网页服务器中，运行可疑档案需要密码，其密码的哈希值(<strong>HashValue</strong>)是甚么?(请以英文全大写及阿拉伯数字回答)(3分)[填空题]</p>
 <p>密码经过了md5哈希，0de664ecd2be02cdd54234a0d1229b43</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163556444.png" alt="image-20221109163556444"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163556444.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163556444.png" alt="image-20221109163556444"></p>
 </li>
 <li><p>[单选题]    在网页服务器中，可疑档案的<strong>译码函数</strong>是甚么?(2分)</p>
 <p>A.unzip_file(‘$x,$y’)</p>
 <p>B.gzdecode(base64_decode($x))</p>
 <p>C.gzinflate(base64_decode($x))</p>
 <p>D.以上皆否</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163752926.png" alt="image-20221109163752926"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163802825.png" alt="image-20221109163802825"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163752926.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163752926.png" alt="image-20221109163752926"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163802825.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109163802825.png" alt="image-20221109163802825"></p>
 <p>简单的字符串拼接，C</p>
 </li>
 <li><p>[填空题]解压后的脚本档的档案大小是多少?(请以字节及阿拉伯数字回答)(3分)[填空题]</p>
 <p>直接跑一下输出并存到文件中去</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109171121713.png" alt="image-20221109171121713"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109171121713.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109171121713.png" alt="image-20221109171121713"></p>
 </li>
 </ol>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109171144238.png" alt="image-20221109171144238"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109171144238.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109171144238.png" alt="image-20221109171144238"></p>
 <p>这解压出来都不一样啊也，官方wp是用的自己的取证小程序</p>
 <ol>
 <li><p>[多选题]    解压后的脚本文件内有甚么功能?(3分)</p>
@@ -500,9 +223,9 @@
 <p>D.加密文件</p>
 <p>E.重新命名文件<br>两个思路，要么直接github搜一下这个脚本</p>
 <p>可以 ABE</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109172653325.png" alt="image-20221109172653325"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109172653325.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109172653325.png" alt="image-20221109172653325"></p>
 <p>要么自己本地跑一下看看</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109172854888.png" alt="image-20221109172854888"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109172854888.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109172854888.png" alt="image-20221109172854888"></p>
 </li>
 <li><p>[单选题]    解压后的脚本含有压缩功能，当中使用的<strong>解压方法</strong>是甚么?(2分)</p>
 <p>A.PclZip.php</p>
@@ -510,7 +233,7 @@
 <p>C.ZipArchive()</p>
 <p>D.以上皆否</p>
 <p>全局搜索关键词即可 C</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109173145193.png" alt="image-20221109173145193"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109173145193.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109173145193.png" alt="image-20221109173145193"></p>
 </li>
 <li><p>[多选题]特普的电话中一张于<strong>2021年09月30日10:45:12</strong>拍摄的相片包含以下哪些字?(1分)</p>
 <p>A.精忠</p>
@@ -518,7 +241,7 @@
 <p>C.忠诚</p>
 <p>D.勇毅</p>
 <p>图片太多了，按照时间线来找吧</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109174018481.png" alt="image-20221109174018481"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109174018481.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109174018481.png" alt="image-20221109174018481"></p>
 </li>
 </ol>
 <p>扫个码，忠诚勇毅 CD</p>
@@ -529,11 +252,11 @@
 <p>C.85264795287@s.whatsapp.net</p>
 <p><a href="mailto:D.85231882226@s.whatsapp.net">D.85231882226@s.whatsapp.net</a></p>
 <p>在联系人中定位数据库</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109174646506.png" alt="image-20221109174646506"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109174646506.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109174646506.png" alt="image-20221109174646506"></p>
 </li>
 </ol>
 <p>在<code>wa_contacts</code>表 AD</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175331240.png" alt="image-20221109175331240"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175331240.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175331240.png" alt="image-20221109175331240"></p>
 <ol>
 <li><p>[单选题]特普电话的热点分享密码是什么?(1分)</p>
 <p>A.12345678</p>
@@ -541,7 +264,7 @@
 <p>C.Jioijo4542554</p>
 <p>D.DakPouHome</p>
 <p>B</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175443933.png" alt="image-20221109175443933"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175443933.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175443933.png" alt="image-20221109175443933"></p>
 </li>
 <li><p>[多选题]特普于经纬度22.278843,114.165783，没有做什么?(2分)</p>
 <p>A.拍影片</p>
@@ -549,7 +272,7 @@
 <p>C.使用googlemap</p>
 <p>D.在Whatsapp中分享实时位置</p>
 <p>就拍了个照片 ACD</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175635007.png" alt="image-20221109175635007"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175635007.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175635007.png" alt="image-20221109175635007"></p>
 </li>
 <li><p>[多选题]特普于电话中安装了一个可疑软件(版本为<strong>2020033001</strong>)，跟据该可疑软件的<strong>安装档</strong>，下列哪项描述正确?(2分)</p>
 <p>A.软件名称是安全防护</p>
@@ -557,10 +280,10 @@
 <p>C.软件签名(signAlgorithm)以SHA512withRSA加密</p>
 <p>D.封包名称(<strong>packageName</strong>)是org.chromium.webapk.a5b80edf82b436506_v2</p>
 <p>从版本可以定位 是个apk</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175951975.png" alt="image-20221109175951975"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175951975.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109175951975.png" alt="image-20221109175951975"></p>
 <p>拖到雷电里看看 A</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184259577.png" alt="image-20221109184259577"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184324151.png" alt="image-20221109184324151"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184259577.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184259577.png" alt="image-20221109184259577"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184324151.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184324151.png" alt="image-20221109184324151"></p>
 </li>
 <li><p>[多选题]特普于电话中安装了一个可疑软件(版本为2020033001)，跟据该可疑软件的安装档，可疑软件中涉及以下安全许可?(2分)</p>
 <p>A.android.permission.READ_SMS读取短信内容</p>
@@ -569,22 +292,22 @@
 <p>D.android.permission.BLUETOOTH使用蓝牙</p>
 <p>E.android.permission.CLEAR_APP_CACHE清除应用缓存</p>
 <p>ACB</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184512322.png" alt="image-20221109184512322"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184512322.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184512322.png" alt="image-20221109184512322"></p>
 </li>
 <li><p>[填空题]特普可能在电话中被可疑软件窃取了的<strong>验证码是什么</strong>?(请以英文全大写及阿拉伯数字回答)(2分)[填空题]</p>
 <p>去短信里找一下 113476</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184721962.png" alt="image-20221109184721962"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184721962.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109184721962.png" alt="image-20221109184721962"></p>
 <p>谨慎一点可以分析下源码看看apk的功能实现</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109185247062.png" alt="image-20221109185247062"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109185930855.png" alt="image-20221109185930855"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109185247062.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109185247062.png" alt="image-20221109185247062"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109185930855.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109185930855.png" alt="image-20221109185930855"></p>
 </li>
 <li><p>[填空题]    特普的计算机可能中了病毒，病毒的加壳(Packing)方法是甚么?(请以英文全大写作答)(2分)[填空题]</p>
 <p>超到逆向了。。</p>
 <p>先找到病毒是哪个</p>
 <p>在Downloads目录下</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109190253958.png" alt="image-20221109190253958"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109190253958.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109190253958.png" alt="image-20221109190253958"></p>
 <p>UPX</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109190740274.png" alt="image-20221109190740274"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109190740274.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109190740274.png" alt="image-20221109190740274"></p>
 </li>
 <li><p>特普的计算机可能中了病毒，病毒的编译工具是甚么?(2分)</p>
 <p>A.GCC</p>
@@ -592,15 +315,15 @@
 <p>C.TCC</p>
 <p>D.MicrosoftVisualC/C++</p>
 <p>切换扫描器即可出，或者脱壳后再看 D</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109191545467.png" alt="image-20221109191545467"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109191545467.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109191545467.png" alt="image-20221109191545467"></p>
 </li>
 <li><p>[填空题]特普的计算机可能中了病毒，病毒的<strong>编译者</strong>使用可能使用的<strong>账户名称</strong>是甚么?(请以英文全大写作答)(3分)[填空题]</p>
 <p>这个就得拖一下壳了</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upx.exe -d xxx</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109192120278.png" alt="image-20221109192120278"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">upx.exe -d xxx<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109192120278.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109192120278.png" alt="image-20221109192120278"></p>
 <p>然后直接用strings搜关键字即可</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">strings malware.exe | grep &quot;C:\&quot;</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109192526200.png" alt="image-20221109192526200"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">strings malware.exe | grep &quot;C:\&quot;<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109192526200.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109192526200.png" alt="image-20221109192526200"></p>
 <p>这里可以看到Release发行的关键词，所以应该是gpgf</p>
 </li>
 <li><p>[单选题]    特普的计算机可能中了病毒，病毒的自我复制位置是甚么?(2分)</p>
@@ -617,8 +340,8 @@
 <p>D.HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\LogonUI\Background</p>
 <p>这个应该是修改的注册表信息</p>
 <p>这三个可能有关</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109193716032.png" alt="image-20221109193716032">    <img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109193852101.png" alt="image-20221109193852101"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109194643320.png" alt="image-20221109194643320"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109193716032.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109193716032.png" alt="image-20221109193716032">    <img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109193852101.png" alt="image-20221109193852101"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109194643320.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109194643320.png" alt="image-20221109194643320"></p>
 <p>对应的是D</p>
 </li>
 <li><p>[多选题]    特普的计算机可能中了病毒，病毒留下了ASCIIART(ASCII艺术,文字图)，以下哪个不是病毒留下?(3分)</p>
@@ -627,7 +350,7 @@
 <p>C.HOWAREYOU</p>
 <p>D.GOODBYE</p>
 <p>ACD</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109194826900.png" alt="image-20221109194826900"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109194826900.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109194826900.png" alt="image-20221109194826900"></p>
 </li>
 <li><p>[单选题]    特普的计算机可能中了病毒，病毒<strong>扰乱</strong>文件目标文件名是甚么?(2分)</p>
 <p>A.C:\Users\<profile>\Documents\target.txt</profile></p>
@@ -635,7 +358,7 @@
 <p>C.C:\c.txt</p>
 <p>D.C:\temp.txt</p>
 <p>不会，瞎蒙的 A</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109195317956.png" alt="image-20221109195317956"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109195317956.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109195317956.png" alt="image-20221109195317956"></p>
 </li>
 <li><p>[单选题]    特普的计算机可能中了病毒，病毒扰乱文件方法是甚么?(3分)</p>
 <p>A.+3</p>
@@ -647,11 +370,11 @@
 <li><p>[填空题]    特普的计算机中，哪一个是<strong>FTKImager.exe</strong>的程式编号(PID)?(请阿拉伯数字回答)(1分)[填空题]</p>
 <p>到内存取证部分了</p>
 <p>先查硬件架构</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Group (including individual)\Meiya Cup 2021 (all)\image\DaK Pou\Dak Pou Windows_memdump\Vtm-computer-memdump.mem&quot; imageinfo</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200139535.png" alt="image-20221109200139535"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">volatility.exe -f &quot;A:\Group (including individual)\Meiya Cup 2021 (all)\image\DaK Pou\Dak Pou Windows_memdump\Vtm-computer-memdump.mem&quot; imageinfo<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200139535.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200139535.png" alt="image-20221109200139535"></p>
 <p>查进程号</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Group (including individual)\Meiya Cup 2021 (all)\image\DaK Pou\Dak Pou Windows_memdump\Vtm-computer-memdump.mem&quot; --profile=Win10x86 pslist | findstr FTK</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200338114.png" alt="image-20221109200338114"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">volatility.exe -f &quot;A:\Group (including individual)\Meiya Cup 2021 (all)\image\DaK Pou\Dak Pou Windows_memdump\Vtm-computer-memdump.mem&quot; --profile=Win10x86 pslist | findstr FTK<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200338114.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200338114.png" alt="image-20221109200338114"></p>
 </li>
 </ol>
 <p>6136</p>
@@ -664,12 +387,12 @@
 <p>E.10:43:09</p>
 <p>F.10:43:25</p>
 <p>直接查进程号即可 CE</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200450440.png" alt="image-20221109200450440"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200450440.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109200450440.png" alt="image-20221109200450440"></p>
 </li>
 <li><p>[填空题]特普的计算机曾经以<strong>FTP</strong>对外.“)连接，连接的IP是?(请以阿拉伯数字回答，不用输入”.”)(2分)[填空题]</p>
 <p>查看网络连接情况</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">volatility.exe -f &quot;A:\Group (including individual)\Meiya Cup 2021 (all)\image\DaK Pou\Dak Pou Windows_memdump\Vtm-computer-memdump.mem&quot; --profile=Win10x86 netscan</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109201132418.png" alt="image-20221109201132418"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">volatility.exe -f &quot;A:\Group (including individual)\Meiya Cup 2021 (all)\image\DaK Pou\Dak Pou Windows_memdump\Vtm-computer-memdump.mem&quot; --profile=Win10x86 netscan<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109201132418.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109201132418.png" alt="image-20221109201132418"></p>
 </li>
 </ol>
 <p>无法准确定位</p>
@@ -693,25 +416,25 @@
 </li>
 <li><p>[填空题]常威手机中的<strong>Telegram</strong>有可能是在<strong>2021年9月24日</strong><strong>_</strong>时<strong>44分58秒</strong>(UTC+8)首次下载的。(请以阿拉伯数字输入答案)(2分)[填空题]</p>
 <p>12</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109210859033.png" alt="image-20221109210859033"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109210859033.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109210859033.png" alt="image-20221109210859033"></p>
 </li>
 <li><p>[填空题]常威手机曾经连接的无人机名称是什么?(请以英文全大写及阿拉伯数字回答)(1分)[填空题]</p>
 <p>SSPARK</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109210941098.png" alt="image-20221109210941098"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109210941098.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221109210941098.png" alt="image-20221109210941098"></p>
 </li>
 <li><p>[填空题]常威手机中，档案“<strong>dji1633936161416.mp4</strong>”的<strong>解像度</strong>是<strong><strong><strong>____</strong></strong></strong>(例如是1920x1280，请输入19201280)。(1分)[填空题]</p>
 <p>指的就是分辨率吧，全局搜索</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144231388.png" alt="image-20221110144231388"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144231388.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144231388.png" alt="image-20221110144231388"></p>
 </li>
 </ol>
 <p>导出查看 1280720</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144251518.png" alt="image-20221110144251518"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144251518.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144251518.png" alt="image-20221110144251518"></p>
 <ol>
 <li><p>[填空题]常威手机中，发现于网络上下载的软件“<strong>安心出行</strong>”<strong>安装档</strong>的哈希值(MD5)是?(请以英文全大写及阿拉伯数字回答)(2分)[填空题]</p>
 <p>安心出行在安装的程序中有两个，结合前面的题我们知道就是那个base.apk</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144853060.png" alt="image-20221110144853060"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144853060.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110144853060.png" alt="image-20221110144853060"></p>
 <p>导出，直接雷电app就有md5 81c342665d9a8d4d02b0fbb7033167b5</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145039215.png" alt="image-20221110145039215"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145039215.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145039215.png" alt="image-20221110145039215"></p>
 </li>
 <li><p>[多选题]常威手机中执行软件“安心出行”(版本2.1.3)中涉及以下<strong>安全许可</strong>?(2分)</p>
 <p>A.android.permission.ACCESS_WIFI_STATE获取WiFi状态</p>
@@ -720,7 +443,7 @@
 <p>D.android.permission.CONTROL_LOCATION_UPDATES控制定位更新</p>
 <p>E.ndroid.permission.CAMERA拍照权限</p>
 <p>EC</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145116893.png" alt="image-20221110145116893"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145116893.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145116893.png" alt="image-20221110145116893"></p>
 </li>
 <li><p>[多选题]常威手机中软件“安心出行”(<strong>版本2.1.3</strong>)的安装档(.apk)中，哪个不是它的签名算法?(3分)</p>
 <p>A.MD5withRSA</p>
@@ -728,7 +451,7 @@
 <p>C.SHA256withDSA</p>
 <p>D.MD5withDSA</p>
 <p>ACD</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145645624.png" alt="image-20221110145645624"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145645624.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110145645624.png" alt="image-20221110145645624"></p>
 </li>
 <li><p>[多选题]于常威的手机中执行软件“安心出行”(<strong>版本1</strong>)可能会连接至哪一个网站?(2分)</p>
 <p>A.<a target="_blank" rel="noopener" href="https://back-home-****.pages.dev">https://back-home-****.pages.dev</a></p>
@@ -736,8 +459,8 @@
 <p>C.org.chromium.<strong>**</strong>.a5b80edf82b436506_v2</p>
 <p>D.<a target="_blank" rel="noopener" href="https://back-home-****.pages.dev/manifest.json">https://back-home-****.pages.dev/manifest.json</a></p>
 <p>这里做错了，可以看到这里指的是<strong>版本1</strong>的安心出行</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110151613388.png" alt="image-20221110151613388"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110160228657.png" alt="image-20221110160228657"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110151613388.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110151613388.png" alt="image-20221110151613388"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110160228657.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110160228657.png" alt="image-20221110160228657"></p>
 <p>A</p>
 </li>
 <li><p>[单选题]    在常威苹果手提计算机,用户开机密码是什么?(提示：常威USB设备中可能有相关数据)(3分)</p>
@@ -746,27 +469,27 @@
 <p>C.Co<em>kkfid</em>dd</p>
 <p>D.App<em>is</em>won</p>
 <p>已经说在USB设备中有相关数据了，那就先看USB，直接挂上去之后啥都没有，xways提示存在假分区。试一下数据恢复，然后关键词搜一下。取证大师没有X-WAYS恢复的效果好</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110154928966.png" alt="image-20221110154928966"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110154928966.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110154928966.png" alt="image-20221110154928966"></p>
 </li>
 <li><p>[填空题]    在常威U盘内有多少<strong>磁盘分隔区</strong>?(请以阿拉伯数字回答)(2分)[填空题]</p>
 <p>3</p>
 </li>
 </ol>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155007698.png" alt="image-20221110155007698"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155007698.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155007698.png" alt="image-20221110155007698"></p>
 <ol>
 <li><p>[填空题]    在常威U盘内有多少份excel文件?(请以阿拉伯数字回答)(1分)[填空题]</p>
 <p>3</p>
 </li>
 </ol>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155238308.png" alt="image-20221110155238308"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155238308.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155238308.png" alt="image-20221110155238308"></p>
 <ol>
 <li><p>[填空题]    在常威U盘内,内含有多少个客户数据?(请以阿拉伯数字回答)(1分)[填空题]</p>
 <p>存在客户资料的excel文件</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155721680.png" alt="image-20221110155721680"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155721680.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155721680.png" alt="image-20221110155721680"></p>
 <p>有50个客户资料</p>
 </li>
 </ol>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155814644.png" alt="image-20221110155814644"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155814644.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110155814644.png" alt="image-20221110155814644"></p>
 <ol>
 <li><p>[多选题]以下哪个客户数据储存在常威U盘内？(3分)</p>
 <p>A.jmuat1@reference.com</p>
@@ -782,16 +505,16 @@
 <p>C.MacOS10.11.4andMacOS11.6</p>
 <p>D.以上皆非</p>
 <p>首先给的是个aff4镜像文件，我们需要先进行转换成E01文件，利用x-ways制作E01</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110161504937.png" alt="image-20221110161504937"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110161504937.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110161504937.png" alt="image-20221110161504937"></p>
 </li>
 </ol>
 <p>然后取证大师进行挂载</p>
 <p>然后进行FileVault2解密，重新进行自动取证即可</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110163053723.png" alt="image-20221110163053723"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110163053723.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110163053723.png" alt="image-20221110163053723"></p>
 <p>​    <img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110163917171.png" alt="image-20221110163917171"></p>
 <p>上一个版本可以在<code>Data:/root/private/var/db/PreviousSystemVersion.plist</code>中看到</p>
 <p>或者直接全局搜索关键词<code>version</code></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110164410753.png" alt="image-20221110164410753"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110164410753.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110164410753.png" alt="image-20221110164410753"></p>
 <p>A</p>
 <ol>
 <li><p>[多选题]    常威MAC计算机的<strong>系统事件</strong>纪录内哪个卷标(Flag)是关于<strong>储存档案</strong>于计算机?(3分)</p>
@@ -809,11 +532,11 @@
 <p>C.central2</p>
 <p>D.Hongkong1</p>
 <p>通过密钥串定位</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110165417663.png" alt="image-20221110165417663"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110165417663.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110165417663.png" alt="image-20221110165417663"></p>
 </li>
 </ol>
 <p>或者在<code>Data:/root/Library/Preferences/com.apple.wifi.known-network.plist</code>中（不过还得解码）</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110165732095.png" alt="image-20221110165732095"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110165732095.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110165732095.png" alt="image-20221110165732095"></p>
 <ol>
 <li><p>[单选题]    常威MAC计算机的使用者甚么时候将”隔空投送”(<strong>airdrop</strong>)转换至<strong>任何人模式</strong>?(2分)</p>
 <p>A.2021-10-2116:52:48(UTC+8)</p>
@@ -824,8 +547,8 @@
 </li>
 <li><p>[填空题]常威MAC计算机的<strong>APFS</strong>储存容器的<strong>文件签名</strong>是<strong>____</strong>，偏移值为<strong>__</strong>(例如NTFS及64，请输入NTFS64)。(2分)[填空题]</p>
 <p>什么是APFS，有点像LVM？</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170346709.png" alt="image-20221110170346709"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170546190.png" alt="image-20221110170546190"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170346709.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170346709.png" alt="image-20221110170346709"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170546190.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170546190.png" alt="image-20221110170546190"></p>
 </li>
 </ol>
 <p>NXSB 偏移量为32（十进制）</p>
@@ -836,11 +559,11 @@
 <p>C.6</p>
 <p>D.7</p>
 <p>应该是5个，不能算上Chris</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170641979.png" alt="image-20221110170641979"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170641979.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170641979.png" alt="image-20221110170641979"></p>
 </li>
 <li><p>[填空题]    常威MAC计算机的使用者上一次关闭浏览器时，<strong>正在浏览多少个网页</strong>?(请以阿拉伯数字回答)(3分)[填空题]</p>
 <p>10</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170813506.png" alt="image-20221110170813506"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170813506.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110170813506.png" alt="image-20221110170813506"></p>
 </li>
 <li><p>[多选题]    常威MAC计算机中以下哪个档案并不是<strong>iPhone</strong>所拍摄的图片?(2分)</p>
 <p>A.IMG_0002</p>
@@ -849,7 +572,7 @@
 <p>D.IMG_0005</p>
 <p>E.IMG_0006</p>
 <p>AD不存在</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110171907655.png" alt="image-20221110171907655"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110171907655.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110171907655.png" alt="image-20221110171907655"></p>
 </li>
 <li><p>[多选题]    在常威的矿机没有进行哪种<strong>加密货币掘矿</strong>?(2分)</p>
 <p>A.Bitcoin</p>
@@ -860,14 +583,14 @@
 <p><strong>常用挖矿软件：</strong> phoenixminer和nbminer</p>
 <p>能在矿机中搜到phoenixminer</p>
 <p>找一下log 在<code>/var/log</code>目录下，猜的没看懂日志，ACDE</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110190552956.png" alt="image-20221110190552956"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110190552956.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110190552956.png" alt="image-20221110190552956"></p>
 </li>
 <li><p>[填空题]    在常威矿机有几张<strong>显示适配器</strong>进行掘矿?(请以阿拉伯数字回答)(1分)[填空题]</p>
 <p>找配置文件 <code>\hive\miners\phoenixminer\h-manifest.conf</code></p>
 <p>里面提到了日志输出的位置</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110191328642.png" alt="image-20221110191328642"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110191328642.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110191328642.png" alt="image-20221110191328642"></p>
 <p>就是刚才找的日志文件，只显示了两个GPU</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110191507219.png" alt="image-20221110191507219"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110191507219.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110191507219.png" alt="image-20221110191507219"></p>
 </li>
 <li><p>[单选题]在常威矿机<strong><em>\</em>,hiveOS**</strong>操作系统是什么版本?(1分)</p>
 <p>A.5.4.0<strong>*</strong></p>
@@ -877,7 +600,7 @@
 <p>E.15.1.2<strong>*</strong></p>
 <p>查看<code>/etc/hiveos-release</code></p>
 <p>A</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192501360.png" alt="image-20221110192501360"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192501360.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192501360.png" alt="image-20221110192501360"></p>
 </li>
 <li><p>[多选题]在常威矿机中,哪个不是收取掘矿收益的加密货币钱包地址?(1分)</p>
 <p>A.0xE365625f4<strong>537151304ceba7C7D9dF0C7E829</strong></p>
@@ -886,8 +609,8 @@
 <p>D.0x7335c<strong>20f9533d9cc825e2a6e80821fd44e27f8</strong></p>
 <p>E.0x00<strong>000089705f4136b4a59731680a88f895303</strong></p>
 <p>学会准确搜索关键词，刚开始在日志里找。应该直接全局搜索wallet</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192821887.png" alt="image-20221110192821887"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192852785.png" alt="image-20221110192852785"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192821887.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192821887.png" alt="image-20221110192821887"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192852785.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110192852785.png" alt="image-20221110192852785"></p>
 </li>
 </ol>
 <p>因此 BCDE都不是</p>
@@ -900,16 +623,16 @@
 <p>E.heg97em**wm</p>
 <p>这简直就是爆搜配置啊，在<code>\rig.conf</code>中</p>
 <p>A</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193253974.png" alt="image-20221110193253974"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193253974.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193253974.png" alt="image-20221110193253974"></p>
 </li>
 <li><p>[填空题]在常威矿机中,用于掘矿<strong>Nvidia显示适配器</strong>所使用的<strong>驱动程式</strong>使用什么版本?(请以英文全大写及阿拉伯数字回答)(1分)[填空题]</p>
 <p>一般在日志开头都会输出相关环境信息 460.91.03</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193632465.png" alt="image-20221110193632465"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193632465.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193632465.png" alt="image-20221110193632465"></p>
 <p>或者在</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/share/nvidia/nvidia-application-profiles-460.91.03-rc</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">/usr/share/nvidia/nvidia-application-profiles-460.91.03-rc<br></code></pre></td></tr></table></figure>
 </li>
 </ol>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193838829.png" alt="image-20221110193838829"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193838829.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193838829.png" alt="image-20221110193838829"></p>
 <ol>
 <li><p>[多选题]在常威矿机中,用于掘矿显示适配器<strong>型号</strong>包括什么?(2分)</p>
 <p>A.GeForceRTX3060</p>
@@ -919,7 +642,7 @@
 <p>E.GeForceGTX3070</p>
 <p>还是在日志中（很重要！！！</p>
 <p>AB</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193945094.png" alt="image-20221110193945094"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193945094.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110193945094.png" alt="image-20221110193945094"></p>
 </li>
 <li><p>[多选题]在常威矿机,哪一天没有进行掘矿?(2分)</p>
 <p>A.2021-10-06</p>
@@ -930,17 +653,17 @@
 <p>日志中只存在A选项，所以BCDE</p>
 </li>
 <li><p>[填空题]常威的无人机中的飞航纪录<strong><strong>_</strong></strong>.<strong>DAT</strong>可见到于<strong>2021年10月11日1505</strong>时的GPS地点。(请以英文全大写及阿拉伯数字回答)(1分)[填空题]</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195223170.png" alt="image-20221110195223170"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195223170.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195223170.png" alt="image-20221110195223170"></p>
 </li>
 <li><p>[单选题]常威的无人机于2021年10月11日15:07:51时之间所在的地点是什么?(1分)</p>
 <p>A.22.269299,114.200486</p>
 <p>B.22.269353,114.287267</p>
 <p>C.22.346855,114.289552</p>
 <p>D.22.269293,114.201278</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195634861.png" alt="image-20221110195634861"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195634861.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195634861.png" alt="image-20221110195634861"></p>
 </li>
 <li><p>[填空题]常威的无人机哪一个档案有<strong>最后降落时间</strong>的数据(请以英文全大写及阿拉伯数字回答,不用输入”.”)？(1分)[填空题]</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195826912.png" alt="image-20221110195826912"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195826912.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110195826912.png" alt="image-20221110195826912"></p>
 </li>
 <li><p>[多选题]常威的手机中哪一个是由<strong>常威的无人机</strong>于<strong>2021年10月11日</strong>所拍摄的图像文件?(2分)</p>
 <p>A.Containers货柜</p>
@@ -948,15 +671,15 @@
 <p>C.bicycle单车</p>
 <p>D.Mountain山</p>
 <p>先定位到无人机的设备位置，然后定位其对应的目录</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110201946177.png" alt="image-20221110201946177"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110202048753.png" alt="image-20221110202048753"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110201946177.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110201946177.png" alt="image-20221110201946177"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110202048753.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110202048753.png" alt="image-20221110202048753"></p>
 <p>ABD</p>
 </li>
 <li><p>[填空题]常威的手机中显示常威的无人机DJIGO4的版本是4.3.___?(请以阿拉伯数字回答)(1分)[填空题]</p>
 <p>怎么找？如何操作无人机？用手机相应的软件，于是去找相关的安装程序.</p>
 <p>或者下一题也有提示</p>
 <p>4.3.37</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110202441895.png" alt="image-20221110202441895"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110202441895.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110202441895.png" alt="image-20221110202441895"></p>
 </li>
 <li><p>.[多选题]常威的手机中所安装的DJIGO4软件中，以下哪个database没有显示临时禁飞区?(2分)</p>
 <p>A.Filesflysafe_app.db</p>
@@ -964,16 +687,16 @@
 <p>C.Flysafe_app_dynamic_areas.db</p>
 <p>D.Flysafe_polygon_1860.db</p>
 <p>只要C中有显示 所以ABD</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110203038958.png" alt="image-20221110203038958"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110203038958.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110203038958.png" alt="image-20221110203038958"></p>
 </li>
 <li><p>[填空题]常威的手机中在<strong><strong>__</strong></strong>.db可知道DJIGO4的<strong>登入电子邮件</strong>(请以英文全大写及阿拉伯数字回答)(1分)[填空题]</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210123543.png" alt="image-20221110210123543"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210123543.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210123543.png" alt="image-20221110210123543"></p>
 <p>这里还有一个localappstate.db</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210623100.png" alt="image-20221110210623100"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210623100.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210623100.png" alt="image-20221110210623100"></p>
 </li>
 <li><p>[填空题]常威的手机中在<strong><strong>__</strong></strong>.db包含了名为server_timestamp的资料(请以英文全大写及阿拉伯数字回答)(1分)[填空题]</p>
 <p>这个有印象!  flysafe_app_dynamic_areas</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210724578.png" alt="image-20221110210724578"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210724578.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210724578.png" alt="image-20221110210724578"></p>
 </li>
 <li><p>[单选题]常威利用Windows计算机中的VMKali进行<strong>攻击和收取受害人电话的数据</strong>，请找出常威的VM存放地址(2分)</p>
 <p>A.Users\ChrisPaul\Desktop\安全防护Malware\Kali-Linux-2020.2a-amd64_2.vmwarevm</p>
@@ -982,7 +705,7 @@
 <p>D.\Users\ChrisPaul\Documents\VirtualMachines</p>
 <p>有两个kali，都解析一下看看，或者先看看后面的题</p>
 <p>A</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210933733.png" alt="image-20221110210933733"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210933733.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110210933733.png" alt="image-20221110210933733"></p>
 </li>
 <li><p>[单选题]常威在收集数据后储存数据于Windows计算机一个名为”text2.txt”的档案中，随后他将档案移往”\home\kali\Desktop\project\”中,下述哪个档案可以证明这一点?</p>
 <p>i)    \root.bash_history</p>
@@ -992,12 +715,12 @@
 <p>C.两个也可以</p>
 <p>D.两个也不可以</p>
 <p>然后利用取证大师的<strong>虚拟磁盘解析</strong></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110211548273.png" alt="image-20221110211548273"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110211548273.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110211548273.png" alt="image-20221110211548273"></p>
 </li>
 </ol>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110214425365.png" alt="image-20221110214425365"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110214425365.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110214425365.png" alt="image-20221110214425365"></p>
 <p>证实了85题路径下确实存在test2.txt，ii中不存在移动该条指令的命令记录</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215000052.png" alt="image-20221110215000052"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215000052.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215000052.png" alt="image-20221110215000052"></p>
 <p>i不知道为啥没有</p>
 <ol>
 <li><p>[单选题]常威Windows计算机中哪一个程式/档案有可能用作收取受害人电话上的数据?(3分)</p>
@@ -1007,8 +730,8 @@
 <p>D.\home\kali\Desktop\server.js</p>
 <p>从上条命令可以定位server.js，所以定位该文件。通过历史记录定位即可</p>
 <p>C</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215259191.png" alt="image-20221110215259191"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215512652.png" alt="image-20221110215512652"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215259191.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215259191.png" alt="image-20221110215259191"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215512652.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110215512652.png" alt="image-20221110215512652"></p>
 </li>
 <li><p>[多选题]常威Windows计算机中显示常威<strong>第一次偷取受害人电话数据</strong>有机会是在哪一个日子及时间登入Kali系统?(2分)</p>
 <p>A.2021-09-27</p>
@@ -1022,7 +745,7 @@
 <p>单独执行 <strong>last</strong> 指令，它会读取位于 /var/log/目录下，名称为 wtmp 的文件，并把该文件记录登录的用户名，全部显示出来。</p>
 </blockquote>
 <p><code>-f</code> 参数可以指定文件</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110224833962.png" alt="image-20221110224833962"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110224833962.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110224833962.png" alt="image-20221110224833962"></p>
 <p>AF</p>
 </li>
 <li><p>[多选题]常威<strong>Windows计算机</strong>中以下哪一个檔案的<strong>哈希值</strong>(MD5)能证明<strong>常威</strong>曾<strong>开启存有客户数据</strong>的档案?(2分)</p>
@@ -1032,9 +755,9 @@
 <p>D.3128604B4A9EC1D37418942555F6B08A</p>
 <p>E.FB5EF33EDEA8ECB5BF07C5DF5332D29F</p>
 <p>客户数据的档案应该指的就是project同目录下的客户资料的xlsx</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110230815960.png" alt="image-20221110230815960"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110230815960.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110230815960.png" alt="image-20221110230815960"></p>
 <p>一般快捷方式为<strong>.ink</strong>的形式，我们直接全局搜索客户资料 C</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110232539612.png" alt="image-20221110232539612"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110232539612.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110232539612.png" alt="image-20221110232539612"></p>
 </li>
 <li><p>[单选题]常威Windows计算机中，哪一个档案可以找到USB装置<strong>初次连接</strong>的时间?(1分)</p>
 <p>A.C:\Windows\setupapi.log</p>
@@ -1042,15 +765,15 @@
 <p>C.C:\Windows\INF\setupapi.setup.log</p>
 <p>D.C:\Windows\INF\setupapi.dev.log</p>
 <p>这种直接搜关键词</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110233415470.png" alt="image-20221110233415470"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110233415470.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110233415470.png" alt="image-20221110233415470"></p>
 </li>
 <li><p>[单选题]常威Windows计算机接驳了一个3D打印机，以下哪一个哈希值是属于上述打印机的驱动程式文件中的安装信息文件<strong>(INF檔</strong>)?(提示：关键词包含<strong>CH341</strong>)(3分)</p>
 <p>题目提示了关键词，全局搜<strong>CH341</strong></p>
 <p><code>setup.dev.log</code> 是 windows 的设备安装日志，存储在<code>%systemroot%/INF/</code>目录下</p>
 <p>或者在上述日志文件中也可以找到</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234345362.png" alt="image-20221110234345362"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234345362.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234345362.png" alt="image-20221110234345362"></p>
 <p>定位到源文件，计算哈希 C</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234531259.png" alt="image-20221110234531259"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234531259.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234531259.png" alt="image-20221110234531259"></p>
 <p>A.1348FA38956<strong>*</strong>1770D7C3E63545BC</p>
 <p>B.DBC4F08F835<strong>*</strong>FF95420B352B506A</p>
 <p>C.35E7C67A652<strong>*</strong>611EDE19C37241C5</p>
@@ -1058,7 +781,7 @@
 </li>
 <li><p>[填空题]    续上题，上述<strong>安装信息文件</strong>的<strong>版本日期是什么</strong>?(请以阿拉伯数字，及以下格式回答，例:2019年3月4日，请回答20190304)(1分)[填空题]</p>
 <p>20190130</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234839761.png" alt="image-20221110234839761"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234839761.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110234839761.png" alt="image-20221110234839761"></p>
 </li>
 <li><p>[多选题]常威Windows计算机安装了一些与3D打印机有关的软件，有可能是以下哪个?(1分)</p>
 <p>A.UltimakerCura</p>
@@ -1066,8 +789,8 @@
 <p>C.Simplify3D</p>
 <p>D.CrealitySlicer</p>
 <p>关键词3D</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110235209917.png" alt="image-20221110235209917"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110235303189.png" alt="image-20221110235303189"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110235209917.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110235209917.png" alt="image-20221110235209917"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110235303189.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221110235303189.png" alt="image-20221110235303189"></p>
 </li>
 </ol>
 <p>AD</p>
@@ -1078,7 +801,7 @@
 <p>C.\Users\ChrisPaul\AppData\Roaming\CrealitySlicer\4.8\CrealitySlicer.cfg</p>
 <p>D.\Users\ChrisPaul\AppData\Roaming\CrealitySlicer\4.8\CrealitySlicer.log</p>
 <p>路径都给了，直接找 D</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111000015112.png" alt="image-20221111000015112"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111000015112.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111000015112.png" alt="image-20221111000015112"></p>
 </li>
 <li><p>[多选题]续上题，哪一个<strong>3d立体模块(.stl)</strong>曾用切片软件CrealitySlicer开启?(2分)</p>
 <p>A.clip_sideb.stl</p>
@@ -1092,15 +815,15 @@
 <li><p>[填空题]哪一个是Wai_Linux1.E01鉴证映像中<strong>LinuxLVM</strong>磁盘分区的长度?(请以阿拉伯数字回答)(1分)[填空题]</p>
 <p>火眼绕密码失败，尝试 手动仿真。首先取证大师验一下操作系统</p>
 <p>是个kali-linux</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111001013347.png" alt="image-20221111001013347"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111001013347.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111001013347.png" alt="image-20221111001013347"></p>
 <p>需要绕密码参考  <a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_44953600/article/details/110402058">https://blog.csdn.net/weixin_44953600/article/details/110402058</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002337429.png" alt="image-20221111002337429"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">fdisk -l<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002337429.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002337429.png" alt="image-20221111002337429"></p>
 <p>119,495,155,712</p>
 </li>
 <li><p>[填空题]常威LINUX计算机安装在<strong>逻辑卷管理</strong>(LogicalVolumeManager)的磁盘分区上,哪一个是卷组(Volumegroup)的通用<strong>唯一标识符</strong>(UUID)?(请以英文全大写及阿拉伯数字回答，不用输入”-“)(1分)[填空题]</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vgdisplay</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002630904.png" alt="image-20221111002630904"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">vgdisplay<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002630904.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002630904.png" alt="image-20221111002630904"></p>
 </li>
 <li><p>[多选题]续上题，哪一个是逻辑卷(LogicalVolume)设定的名字?(2分)</p>
 <p>A. swap</p>
@@ -1108,20 +831,20 @@
 <p>C. va</p>
 <p>D. home</p>
 <p>ABD</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002751231.png" alt="image-20221111002751231"></p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002804240.png" alt="image-20221111002804240"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002751231.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002751231.png" alt="image-20221111002751231"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002804240.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111002804240.png" alt="image-20221111002804240"></p>
 </li>
 <li><p>[单选题]常威LINUX计算机曾试用挖矿程式”<strong>T-Rex</strong>“，在<strong>相关脚本</strong>(script)中哪一个是<strong>工人(worker)</strong>的名称?(1分)</p>
 <p>定位T-Rex脚本位置，通过历史记录</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003040673.png" alt="image-20221111003040673"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003040673.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003040673.png" alt="image-20221111003040673"></p>
 </li>
 </ol>
 <p>t-rex是个二进制文件，看看底下那个sh</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003645502.png" alt="image-20221111003645502"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003645502.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003645502.png" alt="image-20221111003645502"></p>
 <p>都有rig0的出现</p>
 <ol>
 <li><p>[填空题]LINUX系统中利用fdisk指令下，下列哪一个是”<strong>exFAT</strong>“的<strong>磁盘分区</strong>类型编号(Partitiontypeid)?(请以英文全大写及阿拉伯数字回答)(1分)[填空题]</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003758854.png" alt="image-20221111003758854"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003758854.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111003758854.png" alt="image-20221111003758854"></p>
 <p>也没有exFAT呀</p>
 </li>
 <li><p>[单选题]在Linux的环境下，以下哪一个指令用于激活扫描到的<strong>卷组</strong>(Volumegroup)(1分)</p>
@@ -1142,154 +865,31 @@
 <p>D</p>
 </li>
 <li><p>[填空题]常威LINUX计算机逻辑滚动条(LogicalVolume)路径“vg/home”使用了甚么<strong>系统</strong>建立?(请以英文全大写回答)(2分)[填空题]</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004718429.png" alt="image-20221111004718429"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004718429.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004718429.png" alt="image-20221111004718429"></p>
 </li>
 <li><p>[填空题]常威LINUX计算机逻辑滚动条(LogicalVolume)路径“vg/root”的<strong>CurrentLE</strong>是什么?(请以阿拉伯数字回答)(1分)[填空题]</p>
 <p>5120</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004842116.png" alt="image-20221111004842116"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004842116.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004842116.png" alt="image-20221111004842116"></p>
 </li>
 <li><p>[填空题]常威LINUX计算机扇区群组(Volumegroup)的TotalPE是甚么?(请以阿拉伯数字回答)(1分)[填空题]</p>
-<p><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004922416.png" alt="image-20221111004922416"></p>
+<p class='item-img' data-src='/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004922416.png'><img src="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/image-20221111004922416.png" alt="image-20221111004922416"></p>
 </li>
 </ol>
 <p>43752</p>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E6%83%85%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">案情背景</span></a></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&text=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&is_video=false&description=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=21年美亚杯电子数据取证团队赛复现&body=Check out this article: https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&title=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&name=21年美亚杯电子数据取证团队赛复现&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/&t=21年美亚杯电子数据取证团队赛复现"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2022/11/14/ctfshow-XXE/">← Next CTFSHOW-XXE</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2022/11/10/xstream%E4%B8%8Etabby/">XStream与tabby Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E6%83%85%E8%83%8C%E6%99%AF"><span class="toc-number">1.</span> <span class="toc-text">案情背景</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

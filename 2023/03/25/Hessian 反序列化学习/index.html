@@ -1,185 +1,19 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="Hessian 反序列化学习 简单了解下 Hessian  Hessian 是一种动态类型、二进制序列化和 Web 服务协议，旨在用于面向对象的传输。 「Hessian」的简单使用：  基于 servlet：  配置 server 端 只需要继承 HessianServlet 即可 123456public class HelloServlet extends HessianServlet imp">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Hessian 反序列化浅析">
-<meta property="og:url" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="Hessian 反序列化学习 简单了解下 Hessian  Hessian 是一种动态类型、二进制序列化和 Web 服务协议，旨在用于面向对象的传输。 「Hessian」的简单使用：  基于 servlet：  配置 server 端 只需要继承 HessianServlet 即可 123456public class HelloServlet extends HessianServlet imp">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230324200000065.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325104642710.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325105730932.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325105413649.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110023231.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110221025.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110633707.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110912426.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325111328423.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325111949534.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325112712517.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113053304.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113430375.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113646892.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114303396.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114532585.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114717350.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114945563.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325150645916.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325150745378.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325151041483.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325155444971.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325155803374.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325162035549.png">
-<meta property="article:published_time" content="2023-03-24T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-03-27T14:56:37.413Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="Java安全">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230324200000065.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>Hessian 反序列化浅析</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Hessian 反序列化浅析 | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2023/03/31/Finding%20Application%20Errors%20and%20Security%20Flaws%20Using%20PQL%20a%20Program%20Query%20Language%20%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2023/03/14/Toss%20a%20Fault%20to%20Your%20Witcher%20Applying%20Grey-box%20Coverage%20Guided%20Mutational%20Fuzzing%20to%20Detect%20SQL%20and%20Command%20Injection%20V/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&text=Hessian 反序列化浅析"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&title=Hessian 反序列化浅析"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&is_video=false&description=Hessian 反序列化浅析"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Hessian 反序列化浅析&body=Check out this article: https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&title=Hessian 反序列化浅析"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&title=Hessian 反序列化浅析"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&title=Hessian 反序列化浅析"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&title=Hessian 反序列化浅析"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&name=Hessian 反序列化浅析&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&t=Hessian 反序列化浅析"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hessian-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">Hessian 反序列化学习</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#0x1-Rome"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">0x1. Rome</span></a></li></ol></li></ol></li></ol></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        Hessian 反序列化浅析
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2023-03-24T16:00:00.000Z" itemprop="datePublished">2023-03-25</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/Java%E5%AE%89%E5%85%A8/" rel="tag">Java安全</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h2 id="Hessian-反序列化学习"><a href="#Hessian-反序列化学习" class="headerlink" title="Hessian 反序列化学习"></a>Hessian 反序列化学习</h2><ul>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>Hessian 反序列化浅析</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2023-03-24T16:00:00.000Z" id="date"> 2023-03-25</time></div></span><br><span>Last Update: <div class="control"><time datetime="2023-03-27T14:56:37.413Z" id="updated"> 2023-03-27</time></div></span></div></div><hr><div id="post-content"><h2 id="Hessian-反序列化学习"><a href="#Hessian-反序列化学习" class="headerlink" title="Hessian 反序列化学习"></a>Hessian 反序列化学习</h2><ul>
 <li><p>简单了解下 Hessian </p>
 <p>Hessian 是一种动态类型、二进制序列化和 Web 服务协议，旨在用于面向对象的传输。</p>
 <p><strong>「Hessian」的简单使用</strong>：</p>
@@ -188,18 +22,18 @@
 <ul>
 <li><p>配置 server 端</p>
 <p>只需要继承 HessianServlet 即可</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloServlet</span> <span class="keyword">extends</span> <span class="title class_">HessianServlet</span> <span class="keyword">implements</span> <span class="title class_">Greeting</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">sayHello</span><span class="params">(HashMap o)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;hello&quot;</span> + o.toString();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloServlet</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">HessianServlet</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Greeting</span> &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">sayHello</span><span class="hljs-params">(HashMap o)</span> &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;hello&quot;</span> + o.toString();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>web.xml 如下:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>helloServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>HelloServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">    </span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>helloServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/hello<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">servlet</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>helloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">servlet-class</span>&gt;</span>HelloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-class</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">servlet</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">servlet-mapping</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">servlet-name</span>&gt;</span>helloServlet<span class="hljs-tag">&lt;/<span class="hljs-name">servlet-name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">url-pattern</span>&gt;</span>/hello<span class="hljs-tag">&lt;/<span class="hljs-name">url-pattern</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">servlet-mapping</span>&gt;</span><br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>配置客户端：</strong></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">url</span> <span class="operator">=</span> <span class="string">&quot;http://localhost:8080/hello&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="type">HessianProxyFactory</span> <span class="variable">factory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HessianProxyFactory</span>();</span><br><span class="line">        <span class="type">Greeting</span> <span class="variable">greeting</span> <span class="operator">=</span> (Greeting) factory.create(Greeting.class, url);</span><br><span class="line"></span><br><span class="line">        <span class="type">HashMap</span> <span class="variable">o</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HashMap</span>&lt;&gt;();</span><br><span class="line">        o.put(<span class="string">&quot;a&quot;</span>, <span class="string">&quot;a&quot;</span>);</span><br><span class="line"></span><br><span class="line">        System.out.println(<span class="string">&quot;Hessian Call: &quot;</span> + greeting.sayHello(o));</span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230324200000065.png" alt="image-20230324200000065"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">url</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;http://localhost:8080/hello&quot;</span>;<br><br>        <span class="hljs-type">HessianProxyFactory</span> <span class="hljs-variable">factory</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HessianProxyFactory</span>();<br>        <span class="hljs-type">Greeting</span> <span class="hljs-variable">greeting</span> <span class="hljs-operator">=</span> (Greeting) factory.create(Greeting.class, url);<br><br>        <span class="hljs-type">HashMap</span> <span class="hljs-variable">o</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashMap</span>&lt;&gt;();<br>        o.put(<span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;a&quot;</span>);<br><br>        System.out.println(<span class="hljs-string">&quot;Hessian Call: &quot;</span> + greeting.sayHello(o));<br><br>    &#125;<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230324200000065.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230324200000065.png" alt="image-20230324200000065"></p>
 </li>
 </ul>
 </li>
 <li><p>基于 spring 项目</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325104642710.png" alt="image-20230325104642710"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325104642710.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325104642710.png" alt="image-20230325104642710"></p>
 </li>
 </ol>
 </li>
@@ -208,9 +42,9 @@
 <li><p>Servlet 部分</p>
 <p><code>HessianServlet</code> 继承自 <code>HttpServlet</code> 实现了 init 和 service 等方法</p>
 <p><code>init</code> 部分对成员变量进行的初始化操作</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325105730932.png" alt="image-20230325105730932"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325105730932.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325105730932.png" alt="image-20230325105730932"></p>
 <p>其中在进行类加载时采用的自定义 loadClass 方法</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325105413649.png" alt="image-20230325105413649" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325105413649.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325105413649.png" alt="image-20230325105413649" style="zoom:50%;"></p>
 <p>这里使用自定义类加载机制的原因：</p>
 <blockquote>
 <ul>
@@ -219,7 +53,7 @@
 </ul>
 </blockquote>
 <p><code>service</code> 部分处理逻辑：</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110023231.png" alt="image-20230325110023231" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110023231.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110023231.png" alt="image-20230325110023231" style="zoom:50%;"></p>
 <ol>
 <li>请求仅支持 POST 方法，否则返回 500</li>
 <li>获取请求中的 id 或 ejbid 参数并赋值给 objectId</li>
@@ -227,38 +61,38 @@
 <li>invoke 调用处理逻辑</li>
 </ol>
 <p>跟进看 invoke，会根据参数 objectId 决定调用哪个</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110221025.png" alt="image-20230325110221025" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110221025.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110221025.png" alt="image-20230325110221025" style="zoom:50%;"></p>
 <p>再看 HessianSkeleton 这个类，其继承于 AbstractSkeleton ，负责对 Hessian 提供的服务进行封装。先看下 AbstractSkeleton 所作工作：抽离出 apiClass 中的所有方法，针对每个方法依次将 <code>&lt;方法名, 方法&gt;</code> 以及 <code>&lt;方法名__&lt;参数长度&gt;, 方法&gt;</code> 放入 <code>_methodMap</code> 当中</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110633707.png" alt="image-20230325110633707" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110633707.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110633707.png" alt="image-20230325110633707" style="zoom:50%;"></p>
 <p>而对于 HessianSkeleton，初始化时将服务对象封装在 <code>_service</code> 字段</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110912426.png" alt="image-20230325110912426" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110912426.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325110912426.png" alt="image-20230325110912426" style="zoom:50%;"></p>
 <p>然后再看 invoke 方法逻辑，这里会先读取协议头部字段，根据头部值来决定使用哪种输入输出流类型，之后调用 <code>invoke(_service, in, out)</code></p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325111328423.png" alt="image-20230325111328423" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325111328423.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325111328423.png" alt="image-20230325111328423" style="zoom:50%;"></p>
 <p>跟进后，可以看到首先读取方法名和参数长度，构建之前的自定义签名并查找该方法。之后利用反序列化参数值，反射调用 servie 对象的方法并将结果写回返回流</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325111949534.png" alt="image-20230325111949534" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325111949534.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325111949534.png" alt="image-20230325111949534" style="zoom:50%;"></p>
 </li>
 <li><p>Spring 部分</p>
 <p>处理逻辑基本上和 Servlet 的是一样的，另外这里也重写了类加载器</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325112712517.png" alt="image-20230325112712517" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325112712517.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325112712517.png" alt="image-20230325112712517" style="zoom:50%;"></p>
 </li>
 <li><p>序列化与反序列化流程</p>
 <p>「序列化」：<code>Hessian2Output#writeObject()</code>，这里会根据对象类型来调用具体的 serializer 的 writeObject 方法。对于自定义类默认是 <code>UnsafeSerializer</code></p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113053304.png" alt="image-20230325113053304" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113053304.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113053304.png" alt="image-20230325113053304" style="zoom:50%;"></p>
 <p>我们查看 <code>UnsafeSerializer#writeObject()</code> ，可以看到先调用了 <code>writeObjectBegin()</code></p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113430375.png" alt="image-20230325113430375" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113430375.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113430375.png" alt="image-20230325113430375" style="zoom:50%;"></p>
 <p>这里对于 1.0 和 2.0 版本的 Hessian 处理是不同的</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113646892.png" alt="image-20230325113646892" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113646892.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325113646892.png" alt="image-20230325113646892" style="zoom:50%;"></p>
 <blockquote>
 <p>Hessian 2.0 中将会调用 <code>writeDefinition20</code> 和 <code>Hessian2Output#writeObjectBegin</code> 方法写入自定义数据，就不再将其标记为 Map 类型</p>
 </blockquote>
 <p>「反序列化」：<code>Hessian2Input#readObject()</code>，会根据读取的标识位调用不同实现类来处理</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114303396.png" alt="image-20230325114303396" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114303396.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114303396.png" alt="image-20230325114303396" style="zoom:50%;"></p>
 <p>与序列化时一样，Hessian 2.0 以前对于自定义类将以 map 类型标记，因此在反序列化时也会按照 map 类型来读取</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114532585.png" alt="image-20230325114532585" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114532585.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114532585.png" alt="image-20230325114532585" style="zoom:50%;"></p>
 <p>实际调用的是 <code>MapDeserializer#readMap()</code>，会循环遍历反序列化内容，并将结果 put 进创建的 map 中</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114717350.png" alt="image-20230325114717350" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114717350.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114717350.png" alt="image-20230325114717350" style="zoom:50%;"></p>
 <p>对于 <code>Hessian 2.0</code> 则用 <code>UnsafeDeserializer#readObject</code> 来处理。<code>instantiate</code> 方法直接用  Unsafe 类静态方法创建的实例；之后反序列化读取 field 值</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114945563.png" alt="image-20230325114945563" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114945563.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325114945563.png" alt="image-20230325114945563" style="zoom:50%;"></p>
 </li>
 </ul>
 </li>
@@ -267,12 +101,12 @@
 <p>之后遍历反序列化 key 和 value 并放入 map，对比一下这两种类的 put 操作：</p>
 <ol>
 <li><p>HashMap put 时会触发 key 的 hashCode() 方法</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325150645916.png" alt="image-20230325150645916" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325150645916.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325150645916.png" alt="image-20230325150645916" style="zoom:50%;"></p>
 </li>
 <li><p>TreeMap put 时会触发 key 的 compareTo 方法</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325150745378.png" alt="image-20230325150745378" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325150745378.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325150745378.png" alt="image-20230325150745378" style="zoom:50%;"></p>
 <p>其次还有一个限制在于对于 transient 和 static 修饰的成员变量，是不会参与到反序列化流程中的，具体原因可见 <code>UnsafeSerializer#introspect()</code> ，在遇到这两个字段的变量时会直接忽略</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325151041483.png" alt="image-20230325151041483" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325151041483.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325151041483.png" alt="image-20230325151041483" style="zoom:50%;"></p>
 </li>
 </ol>
 <p>总结限制如下：</p>
@@ -286,11 +120,11 @@
 </li>
 <li><p><strong>Gadget</strong></p>
 <h5 id="0x1-Rome"><a href="#0x1-Rome" class="headerlink" title="0x1. Rome"></a>0x1. Rome</h5><p>该条利用链的核心在于 <code>ToStringBean#toString()</code> 方法，可以任意调用无参 getter 方法，那么就可以配合 <code>JdbcRowSetImpl#getDatabaseMetaData()</code> 实现 JNDI 注入</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325155444971.png" alt="image-20230325155444971" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325155444971.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325155444971.png" alt="image-20230325155444971" style="zoom:50%;"></p>
 <p>外层封装利用的是 EqualsBean 和 HashMap ，触发点在 HashMap put 操作上</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325155803374.png" alt="image-20230325155803374" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325155803374.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325155803374.png" alt="image-20230325155803374" style="zoom:50%;"></p>
 <p>如果不出网的话这个 gadget 就无了，并且 <code>TemplatesImpl</code> 也是行不通的，因为这里的 <code>_tfactory</code> 字段被 transient 所修饰</p>
-<p><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325162035549.png" alt="image-20230325162035549" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325162035549.png'><img src="/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/image-20230325162035549.png" alt="image-20230325162035549" style="zoom:50%;"></p>
 <p>因此接下来的利用思路就是要么找二次反序列化，要么找不被 transient 修饰的且可直接利用(代码执行/命令执行)的函数</p>
 </li>
 <li><p>参考链接</p>
@@ -298,143 +132,20 @@
 <p>[2]<a target="_blank" rel="noopener" href="https://y4tacker.github.io/2022/03/21/year/2022/3/2022%E8%99%8E%E7%AC%A6CTF-Java%E9%83%A8%E5%88%86/#%E6%AD%A3%E6%96%87">https://y4tacker.github.io/2022/03/21/year/2022/3/2022%E8%99%8E%E7%AC%A6CTF-Java%E9%83%A8%E5%88%86/#%E6%AD%A3%E6%96%87</a></p>
 </li>
 </ul>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hessian-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">Hessian 反序列化学习</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#0x1-Rome"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">0x1. Rome</span></a></li></ol></li></ol></li></ol></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&text=Hessian 反序列化浅析"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&title=Hessian 反序列化浅析"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&is_video=false&description=Hessian 反序列化浅析"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Hessian 反序列化浅析&body=Check out this article: https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&title=Hessian 反序列化浅析"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&title=Hessian 反序列化浅析"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&title=Hessian 反序列化浅析"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&title=Hessian 反序列化浅析"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&name=Hessian 反序列化浅析&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/03/25/Hessian%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0/&t=Hessian 反序列化浅析"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2023/03/31/Finding%20Application%20Errors%20and%20Security%20Flaws%20Using%20PQL%20a%20Program%20Query%20Language%20%E8%AE%BA%E6%96%87%E7%AC%94%E8%AE%B0/">← Next 《Finding Application Errors and Security Flaws Using PQL a Program Query Language》论文笔记</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/03/14/Toss%20a%20Fault%20to%20Your%20Witcher%20Applying%20Grey-box%20Coverage%20Guided%20Mutational%20Fuzzing%20to%20Detect%20SQL%20and%20Command%20Injection%20V/">《Toss a Fault to Your Witcher - Applying Grey-box Coverage Guided Mutational Fuzzing to Detect SQL and Command Injection Vulnerabilities》论文笔记 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hessian-%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">Hessian 反序列化学习</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#0x1-Rome"><span class="toc-number">1.0.0.1.</span> <span class="toc-text">0x1. Rome</span></a></li></ol></li></ol></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

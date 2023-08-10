@@ -1,243 +1,86 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="写在前面记录Yakit这个工具的使用学习以及Yakit语法脚本exp的编写，黑盒开搞！ Yak中的常见库使用教程 字符串工具库 str 渗透测试可能需要使用的函数  判断一个字符串密码强弱 1234println(str.IsStrongPassword(&quot;abcdefghijk&quot;))       &#x2F;&#x2F; falseprintln(str.IsStrongPassword(&amp;qu">
-<meta property="og:type" content="article">
-<meta property="og:title" content="Yakit单兵作战武器文档速查">
-<meta property="og:url" content="https://racerz-fighting.github.io/2023/01/12/Yakit/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="写在前面记录Yakit这个工具的使用学习以及Yakit语法脚本exp的编写，黑盒开搞！ Yak中的常见库使用教程 字符串工具库 str 渗透测试可能需要使用的函数  判断一个字符串密码强弱 1234println(str.IsStrongPassword(&quot;abcdefghijk&quot;))       &#x2F;&#x2F; falseprintln(str.IsStrongPassword(&amp;qu">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228193840819.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228193922215.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228194021247.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228194339011.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228194419611.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228194449111.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228194512450.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228200325318.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228202552974.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228202712619.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228203142388.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228203344981.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228205356779.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221229115750664.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221229120754471.png">
-<meta property="article:published_time" content="2023-01-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T09:39:12.462Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="渗透测试">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/01/12/Yakit/image-20221228193840819.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>Yakit单兵作战武器文档速查</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Yakit单兵作战武器文档速查 | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2023/01/11/JNDI/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/01/12/Yakit/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&text=Yakit单兵作战武器文档速查"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&title=Yakit单兵作战武器文档速查"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&is_video=false&description=Yakit单兵作战武器文档速查"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Yakit单兵作战武器文档速查&body=Check out this article: https://racerz-fighting.github.io/2023/01/12/Yakit/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&title=Yakit单兵作战武器文档速查"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&title=Yakit单兵作战武器文档速查"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&title=Yakit单兵作战武器文档速查"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&title=Yakit单兵作战武器文档速查"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&name=Yakit单兵作战武器文档速查&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/12/Yakit/&t=Yakit单兵作战武器文档速查"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Yak%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%BA%93%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">Yak中的常见库使用教程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        Yakit单兵作战武器文档速查
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2023-01-11T16:00:00.000Z" itemprop="datePublished">2023-01-12</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="tag">渗透测试</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>记录Yakit这个工具的使用学习以及Yakit语法脚本exp的编写，黑盒开搞！</p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>Yakit单兵作战武器文档速查</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2023-01-11T16:00:00.000Z" id="date"> 2023-01-12</time></div></span><br><span>Last Update: <div class="control"><time datetime="2023-01-12T09:39:12.462Z" id="updated"> 2023-01-12</time></div></span></div></div><hr><div id="post-content"><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>记录Yakit这个工具的使用学习以及Yakit语法脚本exp的编写，黑盒开搞！</p>
 <h4 id="Yak中的常见库使用教程"><a href="#Yak中的常见库使用教程" class="headerlink" title="Yak中的常见库使用教程"></a>Yak中的常见库使用教程</h4><ul>
 <li><p>字符串工具库 str</p>
 <p>渗透测试可能需要使用的函数</p>
 <ol>
 <li><p>判断一个字符串密码强弱</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">println(str.IsStrongPassword(&quot;abcdefghijk&quot;))       // false</span><br><span class="line">println(str.IsStrongPassword(&quot;abc#52G&quot;))           // false</span><br><span class="line">println(str.IsStrongPassword(&quot;abcdefgh.G1ijk&quot;))    // true</span><br><span class="line">println(str.IsStrongPassword(&quot;abcdefghij.$t2Tk&quot;))  // true</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">println(str.IsStrongPassword(&quot;abcdefghijk&quot;))       // false<br>println(str.IsStrongPassword(&quot;abc#52G&quot;))           // false<br>println(str.IsStrongPassword(&quot;abcdefgh.G1ijk&quot;))    // true<br>println(str.IsStrongPassword(&quot;abcdefghij.$t2Tk&quot;))  // true<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>把域名或者IP+端口拼成一个网络地址</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">println(str.HostPort(&quot;192.168.1.1&quot;, 80))</span><br><span class="line">println(str.HostPort(&quot;192.168.1.1&quot;, &quot;80&quot;))</span><br><span class="line">println(str.HostPort(&quot;example.com&quot;, 80))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">println(str.HostPort(&quot;192.168.1.1&quot;, 80))<br>println(str.HostPort(&quot;192.168.1.1&quot;, &quot;80&quot;))<br>println(str.HostPort(&quot;example.com&quot;, 80))<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>让IPV4退化成一个C段地址</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">printTwoResult(str.IPv4ToCClassNetwork(&quot;example.com&quot;))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">printTwoResult(str.IPv4ToCClassNetwork(&quot;example.com&quot;))<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>判断一个字符串是不是IPV4</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">println(str.IsIPv4(&quot;127.0.0.1&quot;))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">println(str.IsIPv4(&quot;127.0.0.1&quot;))<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>判断一个字符串是不是IPV6</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">println(str.IsIPv6(&quot;127.0.0.1&quot;))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">println(str.IsIPv6(&quot;127.0.0.1&quot;))<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>把字符串（URL/Addr）中的主机和端口解析出来</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">printHostPortErr(str.ParseStringToHostPort(&quot;example.com:80&quot;))</span><br><span class="line">printHostPortErr(str.ParseStringToHostPort(&quot;127.0.0.1:80&quot;))</span><br><span class="line">printHostPortErr(str.ParseStringToHostPort(&quot;https://example.com&quot;))</span><br><span class="line">printHostPortErr(str.ParseStringToHostPort(&quot;http://example.com&quot;))</span><br><span class="line">printHostPortErr(str.ParseStringToHostPort(&quot;http://example.com:8082&quot;))</span><br><span class="line">printHostPortErr(str.ParseStringToHostPort(&quot;example.com&quot;))</span><br><span class="line">printHostPortErr(str.ParseStringToHostPort(&quot;example&quot;))</span><br><span class="line">printHostPortErr(str.ParseStringToHostPort(&quot;127.0.0.1&quot;))</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">OUTPUT:</span><br><span class="line"></span><br><span class="line">Host: example.com Port: 80</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">printHostPortErr(str.ParseStringToHostPort(&quot;example.com:80&quot;))<br>printHostPortErr(str.ParseStringToHostPort(&quot;127.0.0.1:80&quot;))<br>printHostPortErr(str.ParseStringToHostPort(&quot;https://example.com&quot;))<br>printHostPortErr(str.ParseStringToHostPort(&quot;http://example.com&quot;))<br>printHostPortErr(str.ParseStringToHostPort(&quot;http://example.com:8082&quot;))<br>printHostPortErr(str.ParseStringToHostPort(&quot;example.com&quot;))<br>printHostPortErr(str.ParseStringToHostPort(&quot;example&quot;))<br>printHostPortErr(str.ParseStringToHostPort(&quot;127.0.0.1&quot;))<br><br>/*<br>OUTPUT:<br><br>Host: example.com Port: 80<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>把以<code>,</code>分割的字符串解析成主机信息，可解析内容为网段、IP、域名等。一般用于<strong>解析扫描目标主机</strong>。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">println(str.ParseStringToHosts(&quot;baidu.com,127.0.0.1,192.168.1.2/28&quot;))</span><br><span class="line">// OUTPUT</span><br><span class="line">// [baidu.com 127.0.0.1 192.168.1.0 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4 192.168.1.5 192.168.1.6 192.168.1.7 192.168.1.8 192.168.1.9 192.168.1.10 192.168.1.11 192.168.1.12 192.168.1.13 192.168.1.14 192.168.1.15]</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">println(str.ParseStringToHosts(&quot;baidu.com,127.0.0.1,192.168.1.2/28&quot;))<br>// OUTPUT<br>// [baidu.com 127.0.0.1 192.168.1.0 192.168.1.1 192.168.1.2 192.168.1.3 192.168.1.4 192.168.1.5 192.168.1.6 192.168.1.7 192.168.1.8 192.168.1.9 192.168.1.10 192.168.1.11 192.168.1.12 192.168.1.13 192.168.1.14 192.168.1.15]<br><br></code></pre></td></tr></table></figure>
 </li>
 <li><p>把字符串按行来分隔</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dump(str.ParseStringToLines(&quot;123123123\nasdfasdf\nwfhiuqwe\nasdfasdf\r\nasdfasdf&quot;))</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">dump(str.ParseStringToLines(&quot;123123123\nasdfasdf\nwfhiuqwe\nasdfasdf\r\nasdfasdf&quot;))<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>把字符串（端口和端口的集合例如<code>22,3306,8080-8088</code>）解析成单独端口</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">println(str.ParseStringToPorts(&quot;22,3306,80-82,8080-8083&quot;))</span><br><span class="line">println(str.ParseStringToPorts(&quot;8080-8083&quot;))</span><br><span class="line">println(str.ParseStringToPorts(&quot;22,xx&quot;))</span><br><span class="line">println(str.ParseStringToPorts(&quot;127.0.0.1/28&quot;))</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">OUTPUT:</span><br><span class="line"></span><br><span class="line">[22 80 81 82 3306 8080 8081 8082 8083]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">println(str.ParseStringToPorts(&quot;22,3306,80-82,8080-8083&quot;))<br>println(str.ParseStringToPorts(&quot;8080-8083&quot;))<br>println(str.ParseStringToPorts(&quot;22,xx&quot;))<br>println(str.ParseStringToPorts(&quot;127.0.0.1/28&quot;))<br><br>/*<br>OUTPUT:<br><br>[22 80 81 82 3306 8080 8081 8082 8083]<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>把字符串（网络地址）转变为可能的标准格式的Url</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">println(str.ParseStringToUrls(&quot;www.baidu.com&quot;))</span><br><span class="line">println(str.ParseStringToUrls(&quot;example.com&quot;))</span><br><span class="line">println(str.ParseStringToUrls(&quot;example.com:80&quot;))</span><br><span class="line">println(str.ParseStringToUrls(&quot;sdfaasdgasd&quot;))</span><br><span class="line">println(str.ParseStringToUrls(&quot;127.0.1.1&quot;))</span><br><span class="line">println(str.ParseStringToUrls(&quot;192.168.1.3:443&quot;))</span><br><span class="line">println(str.ParseStringToUrls(&quot;192.168.1.3:80&quot;))</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">OUTPUT:</span><br><span class="line"></span><br><span class="line">[https://www.baidu.com http://www.baidu.com]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">println(str.ParseStringToUrls(&quot;www.baidu.com&quot;))<br>println(str.ParseStringToUrls(&quot;example.com&quot;))<br>println(str.ParseStringToUrls(&quot;example.com:80&quot;))<br>println(str.ParseStringToUrls(&quot;sdfaasdgasd&quot;))<br>println(str.ParseStringToUrls(&quot;127.0.1.1&quot;))<br>println(str.ParseStringToUrls(&quot;192.168.1.3:443&quot;))<br>println(str.ParseStringToUrls(&quot;192.168.1.3:80&quot;))<br><br>/*<br>OUTPUT:<br><br>[https://www.baidu.com http://www.baidu.com]<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>把字符串（网络地址）转变为可能的标准格式的Url（可能以<code>www</code>作为域名开头）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">println(str.ParseStringToUrlsWith3W(&quot;example.com&quot;))</span><br><span class="line">println(str.ParseStringToUrlsWith3W(&quot;example.com:80&quot;))</span><br><span class="line">println(str.ParseStringToUrlsWith3W(&quot;sdfaasdgasd&quot;))</span><br><span class="line">[https://example.com https://www.example.com http://example.com http://www.example.com]</span><br><span class="line">[http://example.com http://www.example.com]</span><br><span class="line">[https://sdfaasdgasd https://www.sdfaasdgasd http://sdfaasdgasd http://www.sdfaasdgasd]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">println(str.ParseStringToUrlsWith3W(&quot;example.com&quot;))<br>println(str.ParseStringToUrlsWith3W(&quot;example.com:80&quot;))<br>println(str.ParseStringToUrlsWith3W(&quot;sdfaasdgasd&quot;))<br>[https://example.com https://www.example.com http://example.com http://www.example.com]<br>[http://example.com http://www.example.com]<br>[https://sdfaasdgasd https://www.sdfaasdgasd http://sdfaasdgasd http://www.sdfaasdgasd]<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>随机生成一个指定长度的随机字符串，可作为密码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fn str.RandSecret(var_1: int): string</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">fn str.RandSecret(var_1: int): string<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>随机生成一个指定长度字符串</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fn str.RandStr(var_1: int): string</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">fn str.RandStr(var_1: int): string<br></code></pre></td></tr></table></figure>
 </li>
 </ol>
 </li>
 <li><p>编码解码库 codec</p>
 <ol>
 <li><p>不可见字符打印编码（ASCII）</p>
-<p><img src="/2023/01/12/Yakit/image-20221228193840819.png" alt="image-20221228193840819"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228193840819.png'><img src="/2023/01/12/Yakit/image-20221228193840819.png" alt="image-20221228193840819"></p>
 </li>
 <li><p>Base64编码解码</p>
-<p><img src="/2023/01/12/Yakit/image-20221228193922215.png" alt="image-20221228193922215"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228193922215.png'><img src="/2023/01/12/Yakit/image-20221228193922215.png" alt="image-20221228193922215"></p>
 </li>
 <li><p>HTML实体编码 </p>
-<p><img src="/2023/01/12/Yakit/image-20221228194021247.png" alt="image-20221228194021247"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228194021247.png'><img src="/2023/01/12/Yakit/image-20221228194021247.png" alt="image-20221228194021247"></p>
 </li>
 <li><p>Url 编码</p>
-<p><img src="/2023/01/12/Yakit/image-20221228194339011.png" alt="image-20221228194339011"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228194339011.png'><img src="/2023/01/12/Yakit/image-20221228194339011.png" alt="image-20221228194339011"></p>
 <p>只编码需要编码的字符/字符串？</p>
-<p><img src="/2023/01/12/Yakit/image-20221228194419611.png" alt="image-20221228194419611"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228194419611.png'><img src="/2023/01/12/Yakit/image-20221228194419611.png" alt="image-20221228194419611"></p>
 </li>
 <li><p><strong>双URL编码，常用于XSS</strong></p>
-<p><img src="/2023/01/12/Yakit/image-20221228194449111.png" alt="image-20221228194449111"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228194449111.png'><img src="/2023/01/12/Yakit/image-20221228194449111.png" alt="image-20221228194449111"></p>
 </li>
 <li><p>十六进制编码</p>
 <p>如果这个十六进制字符串需要在 mysql 中展示，记得加 <code>0x</code> 前缀</p>
-<p><img src="/2023/01/12/Yakit/image-20221228194512450.png" alt="image-20221228194512450"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228194512450.png'><img src="/2023/01/12/Yakit/image-20221228194512450.png" alt="image-20221228194512450"></p>
 </li>
 <li><p>AES/DES加密编解码</p>
 </li>
@@ -250,18 +93,18 @@
 <p>exp</p>
 <ol>
 <li><p>创建文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// file.OpenFile(var1: string, mode: int, perm: int)</span><br><span class="line">// 创建简单的文件</span><br><span class="line">f, err := file.OpenFile(&quot;_testFile.txt&quot;, file.O_CREATE|file.O_RDWR, 0777)</span><br><span class="line">die(err)</span><br><span class="line">f.Write(&quot;we write some Message \n\n\n\n\nasdfahsdfasdf Now\n&quot;)</span><br><span class="line">f.Close()</span><br><span class="line"></span><br><span class="line">// 像 cat 一样，把文件打印出来到屏幕上</span><br><span class="line">file.Cat(&quot;_testFile.txt&quot;)</span><br><span class="line"></span><br><span class="line">// 移除文件</span><br><span class="line">file.Rm(&quot;_testFile.txt&quot;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs yak">// file.OpenFile(var1: string, mode: int, perm: int)<br>// 创建简单的文件<br>f, err := file.OpenFile(&quot;_testFile.txt&quot;, file.O_CREATE|file.O_RDWR, 0777)<br>die(err)<br>f.Write(&quot;we write some Message \n\n\n\n\nasdfahsdfasdf Now\n&quot;)<br>f.Close()<br><br>// 像 cat 一样，把文件打印出来到屏幕上<br>file.Cat(&quot;_testFile.txt&quot;)<br><br>// 移除文件<br>file.Rm(&quot;_testFile.txt&quot;)<br></code></pre></td></tr></table></figure>
 <p>创建临时文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// file.TempFile(dir: string)</span><br><span class="line">// 创建一个临时文件</span><br><span class="line">f, err := file.TempFile(&quot;&quot;)</span><br><span class="line">die(err)</span><br><span class="line">println(&quot;我们创建了一个临时文件：&quot;, f.Name())</span><br><span class="line"></span><br><span class="line">// 往临时文件中写一个字符串</span><br><span class="line">println(&quot;写入一点随机字符串&quot;)</span><br><span class="line">f.Write(&quot;asdfasdf&quot;)</span><br><span class="line"></span><br><span class="line">// 记得脚本结束要关闭文件</span><br><span class="line">defer f.Close()</span><br><span class="line"></span><br><span class="line">// 我们验证我们的内容写成功了没？</span><br><span class="line">raw,  err := file.ReadFile(f.Name())</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">println(&quot;我们写入的文件内容为：&quot;)</span><br><span class="line"></span><br><span class="line">// 展示写的结果</span><br><span class="line">dump(raw)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">// file.TempFile(dir: string)<br>// 创建一个临时文件<br>f, err := file.TempFile(&quot;&quot;)<br>die(err)<br>println(&quot;我们创建了一个临时文件：&quot;, f.Name())<br><br>// 往临时文件中写一个字符串<br>println(&quot;写入一点随机字符串&quot;)<br>f.Write(&quot;asdfasdf&quot;)<br><br>// 记得脚本结束要关闭文件<br>defer f.Close()<br><br>// 我们验证我们的内容写成功了没？<br>raw,  err := file.ReadFile(f.Name())<br>die(err)<br><br>println(&quot;我们写入的文件内容为：&quot;)<br><br>// 展示写的结果<br>dump(raw)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>文件删除</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// file.Remove 或者 file.Rm</span><br><span class="line">fileName = &quot;target-filename.txt&quot;</span><br><span class="line">file.Remove(fileName)</span><br><span class="line">file.Rm(fileName)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">// file.Remove 或者 file.Rm<br>fileName = &quot;target-filename.txt&quot;<br>file.Remove(fileName)<br>file.Rm(fileName)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>文件移动</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">file.Rename(oldName, newName string)</span><br><span class="line">file.Mv(oldName: string, newName)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">file.Rename(oldName, newName string)<br>file.Mv(oldName: string, newName)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>文件按行读写</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">f, err := file.Open(&quot;12_fileio.yak&quot;)</span><br><span class="line">die(err)</span><br><span class="line">dump(f.ReadLines())</span><br><span class="line">f.Close()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">f, err := file.Open(&quot;12_fileio.yak&quot;)<br>die(err)<br>dump(f.ReadLines())<br>f.Close()<br></code></pre></td></tr></table></figure>
 </li>
 </ol>
 </li>
@@ -272,9 +115,9 @@
 <ol>
 <li><p><code>re.Match</code></p>
 <p>检查字符串</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">// 我们构建一个 match</span><br><span class="line">pattern := `matchThis(.*?)txt`</span><br><span class="line"></span><br><span class="line">// 我们随便写一个字符串</span><br><span class="line">result := re.Match(pattern, `</span><br><span class="line">asdfas sdfa sdfa</span><br><span class="line">dsfasdfk;iopu34</span><br><span class="line">matchMatchMatchmatchThisasdfnkaopjryqeryjklijklojkloptxt</span><br><span class="line">`)</span><br><span class="line">if !result &#123;</span><br><span class="line">    die(&quot;failed to match re:&quot;)</span><br><span class="line">&#125;</span><br><span class="line">printf(&quot;pattern: %v 匹配成功\n&quot;, pattern)</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">OUTPUT:</span><br><span class="line"></span><br><span class="line">pattern: matchThis(.*?)txt 匹配成功</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">// 我们构建一个 match<br>pattern := `matchThis(.*?)txt`<br><br>// 我们随便写一个字符串<br>result := re.Match(pattern, `<br>asdfas sdfa sdfa<br>dsfasdfk;iopu34<br>matchMatchMatchmatchThisasdfnkaopjryqeryjklijklojkloptxt<br>`)<br>if !result &#123;<br>    die(&quot;failed to match re:&quot;)<br>&#125;<br>printf(&quot;pattern: %v 匹配成功\n&quot;, pattern)<br><br>/*<br>OUTPUT:<br><br>pattern: matchThis(.*?)txt 匹配成功<br>*/<br></code></pre></td></tr></table></figure>
 <p>检查字节流</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">pattern := `matchThis(.*?)txt`</span><br><span class="line">result := re.Match(pattern, []byte(`</span><br><span class="line">asdfas sdfa sdfa</span><br><span class="line">dsfasdfk;iopu34</span><br><span class="line">matchMatchMatchmatchThisasdfnkaopjryqeryjklijklojkloptxt</span><br><span class="line">`))</span><br><span class="line">if !result &#123;</span><br><span class="line">    die(&quot;failed to match re:&quot;)</span><br><span class="line">&#125;</span><br><span class="line">printf(&quot;pattern: %v 匹配成功\n&quot;, pattern)</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">OUTPUT:</span><br><span class="line"></span><br><span class="line">pattern: matchThis(.*?)txt 匹配成功</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">pattern := `matchThis(.*?)txt`<br>result := re.Match(pattern, []byte(`<br>asdfas sdfa sdfa<br>dsfasdfk;iopu34<br>matchMatchMatchmatchThisasdfnkaopjryqeryjklijklojkloptxt<br>`))<br>if !result &#123;<br>    die(&quot;failed to match re:&quot;)<br>&#125;<br>printf(&quot;pattern: %v 匹配成功\n&quot;, pattern)<br><br>/*<br>OUTPUT:<br><br>pattern: matchThis(.*?)txt 匹配成功<br>*/<br></code></pre></td></tr></table></figure>
 </li>
 </ol>
 </li>
@@ -282,9 +125,9 @@
 <p><a target="_blank" rel="noopener" href="https://www.yaklang.io/docs/buildinlibs/lib_os">https://www.yaklang.io/docs/buildinlibs/lib_os</a></p>
 </li>
 <li><p>TCP 网络连接库 tcp</p>
-<p><img src="/2023/01/12/Yakit/image-20221228200325318.png" alt="image-20221228200325318"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228200325318.png'><img src="/2023/01/12/Yakit/image-20221228200325318.png" alt="image-20221228200325318"></p>
 <p>exp</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">// 设置日志的级别，方便我们看到 TCP 库的一些信息输出</span><br><span class="line">loglevel(&quot;info&quot;)</span><br><span class="line"></span><br><span class="line">// 启动一个 TCP 服务器，在 Goroutine 中异步启动</span><br><span class="line">go fn&#123;</span><br><span class="line">    tcp.Serve(&quot;127.0.0.1&quot;, 8085, tcp.serverCallback(func(conn) &#123;</span><br><span class="line">        println(&quot;真正的 TCP 服务器收到一个连接：&quot;, conn.RemoteAddr())</span><br><span class="line">        bytes, err := conn.RecvLen(4)</span><br><span class="line">        if err != nil &#123;</span><br><span class="line">            conn.Close()</span><br><span class="line">            return</span><br><span class="line">        &#125;</span><br><span class="line">        println(&quot;收到连接的前 4 个字符为&quot;, string(bytes))</span><br><span class="line">        println(&quot;发送一个 Hello World 给客户端&quot;)</span><br><span class="line"></span><br><span class="line">        conn.Send(&quot;你好，世界！Hello World from 127.0.0.1:8085&quot;)</span><br><span class="line">        println(&quot;发送成功了！&quot;)</span><br><span class="line">        conn.Close()</span><br><span class="line">    &#125;))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 启动一个 TCP 本地转发，把本地 9000 转发到 127.0.0.1:8085</span><br><span class="line">go fn&#123;</span><br><span class="line">    tcp.Forward(9000, &quot;127.0.0.1&quot;, 8085)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">// 启动一个 TCP 连接，直接访问本地 9000 端口</span><br><span class="line">conn, err := tcp.Connect(&quot;127.0.0.1&quot;, 9000)</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">// 发送一个消息给 9000 端口</span><br><span class="line">conn.Send(&quot;abdasdf this message from client&quot;)</span><br><span class="line"></span><br><span class="line">dump(conn.RecvStringTimeout(1))</span><br><span class="line">// 等待3秒观察日志</span><br><span class="line">sleep(3)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs yak">// 设置日志的级别，方便我们看到 TCP 库的一些信息输出<br>loglevel(&quot;info&quot;)<br><br>// 启动一个 TCP 服务器，在 Goroutine 中异步启动<br>go fn&#123;<br>    tcp.Serve(&quot;127.0.0.1&quot;, 8085, tcp.serverCallback(func(conn) &#123;<br>        println(&quot;真正的 TCP 服务器收到一个连接：&quot;, conn.RemoteAddr())<br>        bytes, err := conn.RecvLen(4)<br>        if err != nil &#123;<br>            conn.Close()<br>            return<br>        &#125;<br>        println(&quot;收到连接的前 4 个字符为&quot;, string(bytes))<br>        println(&quot;发送一个 Hello World 给客户端&quot;)<br><br>        conn.Send(&quot;你好，世界！Hello World from 127.0.0.1:8085&quot;)<br>        println(&quot;发送成功了！&quot;)<br>        conn.Close()<br>    &#125;))<br>&#125;<br><br>// 启动一个 TCP 本地转发，把本地 9000 转发到 127.0.0.1:8085<br>go fn&#123;<br>    tcp.Forward(9000, &quot;127.0.0.1&quot;, 8085)<br>&#125;<br><br>// 启动一个 TCP 连接，直接访问本地 9000 端口<br>conn, err := tcp.Connect(&quot;127.0.0.1&quot;, 9000)<br>die(err)<br><br>// 发送一个消息给 9000 端口<br>conn.Send(&quot;abdasdf this message from client&quot;)<br><br>dump(conn.RecvStringTimeout(1))<br>// 等待3秒观察日志<br>sleep(3)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>模糊测试工具库 fuzz</p>
 <ol>
@@ -292,7 +135,7 @@
 <p><code>fn fuzz.Strings(origin: string) []string</code></p>
 <p>这个函数会把<strong>核心的 <code>&#123;&#123; &#125;&#125;</code> 标签</strong>转变为需要渲染的内容</p>
 <p>exp</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">origin := &quot;&#123;&#123;int(1,3,4,80-88)&#125;&#125;&quot;</span><br><span class="line">res := fuzz.Strings(origin)</span><br><span class="line">println(&quot;需要模糊渲染的字符串为：&quot;, origin)</span><br><span class="line">println(&quot;渲染结果为：&quot;)</span><br><span class="line">dump(res)</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">OUTPUT:</span><br><span class="line"></span><br><span class="line">需要模糊渲染的字符串为： &#123;&#123;int(1,3,4,80-88)&#125;&#125;</span><br><span class="line">渲染结果为：</span><br><span class="line">([]string) (len=12 cap=12) &#123;</span><br><span class="line"> (string) (len=1) &quot;1&quot;,</span><br><span class="line"> (string) (len=1) &quot;3&quot;,</span><br><span class="line"> (string) (len=1) &quot;4&quot;,</span><br><span class="line"> (string) (len=2) &quot;80&quot;,</span><br><span class="line"> (string) (len=2) &quot;81&quot;,</span><br><span class="line"> (string) (len=2) &quot;82&quot;,</span><br><span class="line"> (string) (len=2) &quot;83&quot;,</span><br><span class="line"> (string) (len=2) &quot;84&quot;,</span><br><span class="line"> (string) (len=2) &quot;85&quot;,</span><br><span class="line"> (string) (len=2) &quot;86&quot;,</span><br><span class="line"> (string) (len=2) &quot;87&quot;,</span><br><span class="line"> (string) (len=2) &quot;88&quot;</span><br><span class="line">&#125;</span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">origin := &quot;&#123;&#123;int(1,3,4,80-88)&#125;&#125;&quot;<br>res := fuzz.Strings(origin)<br>println(&quot;需要模糊渲染的字符串为：&quot;, origin)<br>println(&quot;渲染结果为：&quot;)<br>dump(res)<br><br>/*<br>OUTPUT:<br><br>需要模糊渲染的字符串为： &#123;&#123;int(1,3,4,80-88)&#125;&#125;<br>渲染结果为：<br>([]string) (len=12 cap=12) &#123;<br> (string) (len=1) &quot;1&quot;,<br> (string) (len=1) &quot;3&quot;,<br> (string) (len=1) &quot;4&quot;,<br> (string) (len=2) &quot;80&quot;,<br> (string) (len=2) &quot;81&quot;,<br> (string) (len=2) &quot;82&quot;,<br> (string) (len=2) &quot;83&quot;,<br> (string) (len=2) &quot;84&quot;,<br> (string) (len=2) &quot;85&quot;,<br> (string) (len=2) &quot;86&quot;,<br> (string) (len=2) &quot;87&quot;,<br> (string) (len=2) &quot;88&quot;<br>&#125;<br>*/<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>fuzz 标签定义以及使用</p>
 <blockquote>
@@ -308,41 +151,41 @@
 <p>我们会把目标拆分成多个主机，支持网段，域名，IP 等。解析结果都是以 <code>,</code> 为分割的。</p>
 </blockquote>
 <p>经典配合<code>&#123;&#123;int&#125;&#125;</code>使用，批量生成URL</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">origin := &quot;http://&#123;&#123;net(176.1.0.1/28,example.com)&#125;&#125;:&#123;&#123;port(8080)&#125;&#125;/admin.php&quot;</span><br><span class="line">res := fuzz.Strings(origin)</span><br><span class="line">println(&quot;需要模糊渲染的字符串为：&quot;, origin)</span><br><span class="line">println(&quot;渲染结果为：&quot;)</span><br><span class="line">dump(res)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">origin := &quot;http://&#123;&#123;net(176.1.0.1/28,example.com)&#125;&#125;:&#123;&#123;port(8080)&#125;&#125;/admin.php&quot;<br>res := fuzz.Strings(origin)<br>println(&quot;需要模糊渲染的字符串为：&quot;, origin)<br>println(&quot;渲染结果为：&quot;)<br>dump(res)<br></code></pre></td></tr></table></figure>
 <p><code>&#123;&#123;randstr&#125;&#125;</code><strong>生成随机字符串</strong></p>
 <p>生成一个随机字符串，只包含二十六个英文字母大小写</p>
-<p><img src="/2023/01/12/Yakit/image-20221228202552974.png" alt="image-20221228202552974"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228202552974.png'><img src="/2023/01/12/Yakit/image-20221228202552974.png" alt="image-20221228202552974"></p>
 <p><code>&#123;&#123;randint&#125;&#125;</code><strong>生成随机数字</strong></p>
-<p><img src="/2023/01/12/Yakit/image-20221228202712619.png" alt="image-20221228202712619"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228202712619.png'><img src="/2023/01/12/Yakit/image-20221228202712619.png" alt="image-20221228202712619"></p>
 <p><code>&#123;&#123;char&#125;&#125;</code> <strong>指定生成单个字符</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">for _, r := range fuzz.Strings(&quot;生成一字符为:&#123;&#123;char(a-f)&#125;&#125;&quot;) &#123;</span><br><span class="line">    println(r)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">for _, r := range fuzz.Strings(&quot;生成一字符为:&#123;&#123;char(a-f)&#125;&#125;&quot;) &#123;<br>    println(r)<br>&#125;<br></code></pre></td></tr></table></figure>
 <p><code>&#123;&#123;punctuation&#125;&#125; / &#123;&#123;punc&#125;&#125;</code> Fuzz <strong>所有可见标点符号</strong></p>
 <p>将会被替换为<code>[&lt; &gt; ? , . / : &quot; ; &#39; &#123; &#125; [ ] | \ _ + - = ) ( * &amp; ^ % $ # @ !</code>]`</p>
 <p><code>&#123;&#123;rangechar&#125;&#125;</code> 制定生成任意字符</p>
 <p>有时还需要生成一些不可见字符</p>
-<p><img src="/2023/01/12/Yakit/image-20221228203142388.png" alt="image-20221228203142388"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228203142388.png'><img src="/2023/01/12/Yakit/image-20221228203142388.png" alt="image-20221228203142388"></p>
 <p>【编码标签】<code>&#123;&#123;md5&#125;&#125; &#123;&#123;sha1&#125;&#125; &#123;&#123;sha256&#125;&#125; &#123;&#123;sha512&#125;&#125;</code></p>
 <p>支持嵌套</p>
 <p>【编码标签】<code>&#123;&#123;base64&#125;&#125; &#123;&#123;hex&#125;&#125; &#123;&#123;url&#125;&#125; &#123;&#123;durl&#125;&#125; &#123;&#123;html&#125;&#125; &#123;&#123;htmlhex&#125;&#125;</code></p>
-<p><img src="/2023/01/12/Yakit/image-20221228203344981.png" alt="image-20221228203344981"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228203344981.png'><img src="/2023/01/12/Yakit/image-20221228203344981.png" alt="image-20221228203344981"></p>
 </li>
 <li><p><strong>Fuzz Http 请求</strong></p>
 <blockquote>
 <p>通过 <code>fuzz.HTTPRequest</code> 这个接口可以创建一个 HTTP 请求，这个请求可以支持 Fuzz 相关操作。</p>
 </blockquote>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">func fuzz.HTTPRequest(params: *http.Request|[]byte|string) (*FuzzHTTPRequest, error)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">func fuzz.HTTPRequest(params: *http.Request|[]byte|string) (*FuzzHTTPRequest, error)<br></code></pre></td></tr></table></figure>
 <p>exp</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">/*</span><br><span class="line">构筑 FuzzHTTPRequest</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">// 我们构建一个基础数据包，这个数据包是标准 http 请求构建的</span><br><span class="line">req, err := http.NewRequest(&quot;GET&quot;, &quot;http://127.0.0.1:8080&quot;)</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">// 我们自定义个数据包的具体内容，虽然他不标准，但是仍然可以被解析和使用，这点非常棒</span><br><span class="line">reqBody := `GET / HTTP/1.1</span><br><span class="line">Host: 127.0.0.1:8082`</span><br><span class="line"></span><br><span class="line">for _, params := range [</span><br><span class="line">    []byte(reqBody),            // 测试 []byte / []uint8 类型的数据包是否能被使用</span><br><span class="line">    reqBody,                    // 测试 string 数据包是否能被使用</span><br><span class="line">    req,                        // 测试 *http.Request 是否能被正常解析</span><br><span class="line">] &#123;</span><br><span class="line">    req, err := fuzz.HTTPRequest(params)</span><br><span class="line">    if err != nil &#123;</span><br><span class="line">        /* 如果解析失败，将会直接在这里打印出失败的原因和原来参数 */</span><br><span class="line">        println(&quot;参数错误: &quot;)</span><br><span class="line">        dump(params)</span><br><span class="line">        die(err)</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        println(str.f(&quot;接收 %v 数据包成功&quot;, type(params)))</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">/*<br>构筑 FuzzHTTPRequest<br>*/<br><br><br>// 我们构建一个基础数据包，这个数据包是标准 http 请求构建的<br>req, err := http.NewRequest(&quot;GET&quot;, &quot;http://127.0.0.1:8080&quot;)<br>die(err)<br><br>// 我们自定义个数据包的具体内容，虽然他不标准，但是仍然可以被解析和使用，这点非常棒<br>reqBody := `GET / HTTP/1.1<br>Host: 127.0.0.1:8082`<br><br>for _, params := range [<br>    []byte(reqBody),            // 测试 []byte / []uint8 类型的数据包是否能被使用<br>    reqBody,                    // 测试 string 数据包是否能被使用<br>    req,                        // 测试 *http.Request 是否能被正常解析<br>] &#123;<br>    req, err := fuzz.HTTPRequest(params)<br>    if err != nil &#123;<br>        /* 如果解析失败，将会直接在这里打印出失败的原因和原来参数 */<br>        println(&quot;参数错误: &quot;)<br>        dump(params)<br>        die(err)<br>    &#125; else &#123;<br>        println(str.f(&quot;接收 %v 数据包成功&quot;, type(params)))<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>返回值信息 <a target="_blank" rel="noopener" href="https://www.yaklang.io/docs/buildinlibs/lib_fuzz#%E6%A0%B9%E6%8D%AE%E4%B8%80%E5%A0%86-url-%E6%89%B9%E9%87%8F%E6%9E%84%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%8C%85">https://www.yaklang.io/docs/buildinlibs/lib_fuzz#%E6%A0%B9%E6%8D%AE%E4%B8%80%E5%A0%86-url-%E6%89%B9%E9%87%8F%E6%9E%84%E5%BB%BA%E6%95%B0%E6%8D%AE%E5%8C%85</a></p>
 <p>那么如何对一大批url进行批量测试？</p>
 <p>利用<code>fuzz.UrlsToHTTPRequests</code></p>
 <p>单个</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">// fuzz.UrlsToHTTPRequests 案例1</span><br><span class="line">reqGroup, err = fuzz.UrlsToHTTPRequests(&quot;http://127.0.0.1:8082&quot;)</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">// 获取 Fuzz 的结果</span><br><span class="line">reqs, err := reqGroup.Results()</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">// 展示构造后的数据包</span><br><span class="line">for _, req := range reqs &#123;</span><br><span class="line">    http.show(req)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">OUTPUT</span><br><span class="line"></span><br><span class="line">GET / HTTP/1.1</span><br><span class="line">Host: 127.0.0.1:8082</span><br><span class="line">Content-Length: 0</span><br><span class="line"></span><br><span class="line">*/</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">// fuzz.UrlsToHTTPRequests 案例1<br>reqGroup, err = fuzz.UrlsToHTTPRequests(&quot;http://127.0.0.1:8082&quot;)<br>die(err)<br><br>// 获取 Fuzz 的结果<br>reqs, err := reqGroup.Results()<br>die(err)<br><br>// 展示构造后的数据包<br>for _, req := range reqs &#123;<br>    http.show(req)<br>&#125;<br><br>/*<br>OUTPUT<br><br>GET / HTTP/1.1<br>Host: 127.0.0.1:8082<br>Content-Length: 0<br><br>*/<br></code></pre></td></tr></table></figure>
 <p>多个</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">println(&quot;----------&quot;)</span><br><span class="line">// fuzz.UrlsToHTTPRequests 案例</span><br><span class="line">urls = `http://127.0.0.1:8082</span><br><span class="line">http://127.0.0.1:8083</span><br><span class="line">http://127.0.0.1:8084</span><br><span class="line">http://127.0.0.1:8085</span><br><span class="line">`</span><br><span class="line">reqGroup, err = fuzz.UrlsToHTTPRequests(str.ParseStringToLines(urls)...)</span><br><span class="line">die(err)</span><br><span class="line">reqs, err := reqGroup.Results()</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">for _, req := range reqs &#123;</span><br><span class="line">    http.show(req)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">println(&quot;----------&quot;)<br>// fuzz.UrlsToHTTPRequests 案例<br>urls = `http://127.0.0.1:8082<br>http://127.0.0.1:8083<br>http://127.0.0.1:8084<br>http://127.0.0.1:8085<br>`<br>reqGroup, err = fuzz.UrlsToHTTPRequests(str.ParseStringToLines(urls)...)<br>die(err)<br>reqs, err := reqGroup.Results()<br>die(err)<br><br>for _, req := range reqs &#123;<br>    http.show(req)<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>优化版本</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">println(&quot;----------&quot;)</span><br><span class="line">// fuzz.UrlsToHTTPRequests 案例</span><br><span class="line">urls = `http://127.0.0.1:808&#123;&#123;int(5-8)&#125;&#125;</span><br><span class="line">http://127.0.0.1:8082`</span><br><span class="line"></span><br><span class="line">reqGroup, err = fuzz.UrlsToHTTPRequests(str.ParseStringToLines(urls)...)</span><br><span class="line">die(err)</span><br><span class="line">reqs, err := reqGroup.Results()</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">for _, req := range reqs &#123;</span><br><span class="line">    http.show(req)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/2023/01/12/Yakit/image-20221228205356779.png" alt="image-20221228205356779"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">println(&quot;----------&quot;)<br>// fuzz.UrlsToHTTPRequests 案例<br>urls = `http://127.0.0.1:808&#123;&#123;int(5-8)&#125;&#125;<br>http://127.0.0.1:8082`<br><br>reqGroup, err = fuzz.UrlsToHTTPRequests(str.ParseStringToLines(urls)...)<br>die(err)<br>reqs, err := reqGroup.Results()<br>die(err)<br><br>for _, req := range reqs &#123;<br>    http.show(req)<br>&#125;<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221228205356779.png'><img src="/2023/01/12/Yakit/image-20221228205356779.png" alt="image-20221228205356779"></p>
 </li>
 <li><p>链式调用 Fuzz一个HTTPRequest</p>
 <p><a target="_blank" rel="noopener" href="https://www.yaklang.io/docs/buildinlibs/lib_fuzz#%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8%EF%BC%9A%E5%A6%82%E4%BD%95-fuzz-%E4%B8%80%E4%B8%AA-httprequest%EF%BC%9F">https://www.yaklang.io/docs/buildinlibs/lib_fuzz#%E9%93%BE%E5%BC%8F%E8%B0%83%E7%94%A8%EF%BC%9A%E5%A6%82%E4%BD%95-fuzz-%E4%B8%80%E4%B8%AA-httprequest%EF%BC%9F</a></p>
@@ -350,7 +193,7 @@
 <li><p>批量发起Fuzz过的请求</p>
 <p><code>httpool.Pool(i *FuzzHTTPRequest|[]*http.Request, opts...) (chan map[string]interface&#123;&#125;, error)</code></p>
 <p>exp</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">// 批量发起请求</span><br><span class="line">req, err := fuzz.HTTPRequest(`GET /path-target HTTP/1.1</span><br><span class="line">Host: 127.0.0.1:8082`)</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">fReq := req.FuzzPath(&quot;/admin/admin&#123;&#123;int(1-4)&#125;&#125;.php&quot;)</span><br><span class="line">ch, err := httpool.Pool(fReq)</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">for result := range ch &#123;</span><br><span class="line">    dump(result)</span><br><span class="line">    println(&quot;-------------------------------------&quot;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">// 批量发起请求<br>req, err := fuzz.HTTPRequest(`GET /path-target HTTP/1.1<br>Host: 127.0.0.1:8082`)<br>die(err)<br><br>fReq := req.FuzzPath(&quot;/admin/admin&#123;&#123;int(1-4)&#125;&#125;.php&quot;)<br>ch, err := httpool.Pool(fReq)<br>die(err)<br><br>for result := range ch &#123;<br>    dump(result)<br>    println(&quot;-------------------------------------&quot;)<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -364,159 +207,36 @@
 <p>处理不同类型的参数值 <code>cli.String() / cli.Bool() / cli.Int</code> </p>
 </li>
 <li><p>servicescan 服务指纹扫描</p>
-<p><img src="/2023/01/12/Yakit/image-20221229115750664.png" alt="image-20221229115750664"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221229115750664.png'><img src="/2023/01/12/Yakit/image-20221229115750664.png" alt="image-20221229115750664"></p>
 </li>
 <li><p>网络空间引擎 spaceengine</p>
 <p><a target="_blank" rel="noopener" href="https://www.yaklang.io/docs/buildinlibs/lib_spacengine#%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B">https://www.yaklang.io/docs/buildinlibs/lib_spacengine#%E5%9F%BA%E7%A1%80%E4%BD%BF%E7%94%A8%E6%A1%88%E4%BE%8B</a></p>
 <p>配合servicescan 使用</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">apiKey := cli.String(&quot;token&quot;)</span><br><span class="line"></span><br><span class="line">res, err := spacengine.ShodanQuery(apiKey, &quot;jenkins&quot;, spacengine.maxRecord(100))</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">fpRes, err := servicescan.ScanFromSpaceEngine(res)</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">for result := range fpRes &#123;</span><br><span class="line">    println(result)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">apiKey := cli.String(&quot;token&quot;)<br><br>res, err := spacengine.ShodanQuery(apiKey, &quot;jenkins&quot;, spacengine.maxRecord(100))<br>die(err)<br><br>fpRes, err := servicescan.ScanFromSpaceEngine(res)<br>die(err)<br><br>for result := range fpRes &#123;<br>    println(result)<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>子域名收集</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">res, err := subdomain.Scan(&quot;b******u.com&quot; , subdomain.recursive(true ) )</span><br><span class="line">die(err)</span><br><span class="line"></span><br><span class="line">for result := range res &#123;</span><br><span class="line">    result.Show()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">res, err := subdomain.Scan(&quot;b******u.com&quot; , subdomain.recursive(true ) )<br>die(err)<br><br>for result := range res &#123;<br>    result.Show()<br>&#125;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>赋予Yak漏扫能力</p>
 <p><code>nuclei.Scan</code></p>
-<p><img src="/2023/01/12/Yakit/image-20221229120754471.png" alt="image-20221229120754471"></p>
+<p class='item-img' data-src='/2023/01/12/Yakit/image-20221229120754471.png'><img src="/2023/01/12/Yakit/image-20221229120754471.png" alt="image-20221229120754471"></p>
 </li>
 </ul>
 <h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a target="_blank" rel="noopener" href="https://www.yaklang.io/docs/buildinlibs/lib_str#f">https://www.yaklang.io/docs/buildinlibs/lib_str#f</a></p>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Yak%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%BA%93%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">Yak中的常见库使用教程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/01/12/Yakit/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&text=Yakit单兵作战武器文档速查"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&title=Yakit单兵作战武器文档速查"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&is_video=false&description=Yakit单兵作战武器文档速查"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=Yakit单兵作战武器文档速查&body=Check out this article: https://racerz-fighting.github.io/2023/01/12/Yakit/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&title=Yakit单兵作战武器文档速查"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&title=Yakit单兵作战武器文档速查"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&title=Yakit单兵作战武器文档速查"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&title=Yakit单兵作战武器文档速查"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/12/Yakit/&name=Yakit单兵作战武器文档速查&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/12/Yakit/&t=Yakit单兵作战武器文档速查"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/">← Next Soot文档学习（1）</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/">渗透的艺术——信息收集—-善用搜索引擎 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Yak%E4%B8%AD%E7%9A%84%E5%B8%B8%E8%A7%81%E5%BA%93%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B"><span class="toc-number">2.</span> <span class="toc-text">Yak中的常见库使用教程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

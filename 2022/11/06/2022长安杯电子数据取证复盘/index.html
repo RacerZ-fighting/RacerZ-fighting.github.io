@@ -1,264 +1,19 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="写在前面最终排名 81&#x2F;681 二等奖 第一次正式参加取证比赛，和队友配合不当，多有遗憾。重新复盘一下整个经过，梳理一下取证思路。 案情背景 ​    某地警方接到受害人报案称其在某虚拟币交易网站遭遇诈骗，该网站号称使用“USTD 币”购买所谓的“HT 币”，受害人充值后不但“HT币”无法提现、交易，而且手机还被恶意软件锁定勒索。警方根据受害人提供的虚拟币交易网站调取了对应的服务器镜像并对案件展开">
-<meta property="og:type" content="article">
-<meta property="og:title" content="22年长安杯电子数据取证复盘">
-<meta property="og:url" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="写在前面最终排名 81&#x2F;681 二等奖 第一次正式参加取证比赛，和队友配合不当，多有遗憾。重新复盘一下整个经过，梳理一下取证思路。 案情背景 ​    某地警方接到受害人报案称其在某虚拟币交易网站遭遇诈骗，该网站号称使用“USTD 币”购买所谓的“HT 币”，受害人充值后不但“HT币”无法提现、交易，而且手机还被恶意软件锁定勒索。警方根据受害人提供的虚拟币交易网站调取了对应的服务器镜像并对案件展开">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104111252937.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112327590.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112656554.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112919228.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113016760.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113054324.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113323152.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113417108.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113642837.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113847257.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104114018399.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104114431787.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104115128222.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104152058149.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154813728.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154825084.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154842556.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154927956.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155037606.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155607001.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155706887.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104160648209.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104160444804.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161128636.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161332029.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161614477.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162608208.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162713623.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162847693.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104163755460.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183651956.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104164724230.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104170254638.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104170850643.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104171230331.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104184919850.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104171458984.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183326111.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183359183.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183745851.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185506549.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185635103.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185845601.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104190404574.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104190225779.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193000955.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193307353.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193654177.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202528769.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202726093.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202842433.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203010631.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203601351.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203809964.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104210229225.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104210630411.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104211035133.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104212600227.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104212950810.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213028054.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213215957.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213631595.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213858451.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214541272.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214651476.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214846874.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104220135335.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104230147505.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104230427331.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104231444487.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104231655847.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104232624214.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233218741.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233539701.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233730193.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105151439716.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105152424387.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153556236.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153726154.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153948024.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105154058242.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105155408528.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105155822945.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160016570.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160103800.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160402983.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165048798.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183551344.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183847956.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183847956.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183954122.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184554721.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184717404.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184531501.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165256712.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165514745.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165606961.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105171139112.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106050532180.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106050903845.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106051009626.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106051914531.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106052132590.png">
-<meta property="article:published_time" content="2022-11-05T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-06T01:21:52.666Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="电子数据取证">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104111252937.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>22年长安杯电子数据取证复盘</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>22年长安杯电子数据取证复盘 | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2022/11/06/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E4%B8%AA%E4%BA%BA%E8%B5%9B%E5%A4%8D%E7%8E%B0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2022/11/05/neo4j/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&text=22年长安杯电子数据取证复盘"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&title=22年长安杯电子数据取证复盘"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&is_video=false&description=22年长安杯电子数据取证复盘"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=22年长安杯电子数据取证复盘&body=Check out this article: https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&title=22年长安杯电子数据取证复盘"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&title=22年长安杯电子数据取证复盘"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&title=22年长安杯电子数据取证复盘"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&title=22年长安杯电子数据取证复盘"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&name=22年长安杯电子数据取证复盘&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&t=22年长安杯电子数据取证复盘"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E6%83%85%E8%83%8C%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">案情背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%90%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-number">3.</span> <span class="toc-text">检材一部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jar%E5%8C%85%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">jar包分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E9%83%A8%E5%88%86"><span class="toc-number">5.</span> <span class="toc-text">前端部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%902%E9%83%A8%E5%88%86"><span class="toc-number">6.</span> <span class="toc-text">检材2部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%90%E4%B8%89%E9%83%A8%E5%88%86"><span class="toc-number">7.</span> <span class="toc-text">检材三部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%90%E5%9B%9B%E9%83%A8%E5%88%86"><span class="toc-number">8.</span> <span class="toc-text">检材四部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EXE%E9%83%A8%E5%88%86"><span class="toc-number">9.</span> <span class="toc-text">EXE部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#APK%E9%83%A8%E5%88%86"><span class="toc-number">10.</span> <span class="toc-text">APK部分</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        22年长安杯电子数据取证复盘
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-11-05T16:00:00.000Z" itemprop="datePublished">2022-11-06</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81/" rel="tag">电子数据取证</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>最终排名 81/681 二等奖</p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>22年长安杯电子数据取证复盘</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2022-11-05T16:00:00.000Z" id="date"> 2022-11-06</time></div></span><br><span>Last Update: <div class="control"><time datetime="2022-11-06T01:21:52.666Z" id="updated"> 2022-11-06</time></div></span></div></div><hr><div id="post-content"><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>最终排名 81/681 二等奖</p>
 <p>第一次正式参加取证比赛，和队友配合不当，多有遗憾。重新复盘一下整个经过，梳理一下取证思路。</p>
 <h4 id="案情背景"><a href="#案情背景" class="headerlink" title="案情背景"></a>案情背景</h4><blockquote>
 <p>​    某地警方接到受害人报案称其在某虚拟币交易网站遭遇诈骗，该网站号称使用“USTD 币”购买所谓的“HT 币”，受害人充值后不但“HT币”无法提现、交易，而且手机还被恶意软件锁定勒索。警方根据受害人提供的虚拟币交易网站调取了对应的服务器镜像并对案件展开侦查。</p>
@@ -270,7 +25,7 @@
 <ol>
 <li><p>检材1的SHA256值为</p>
 <p>将检材1.e01文件拖入火眼当中并选择计算哈希，算法为SHA256</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104111252937.png" alt="image-20221104111252937"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104111252937.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104111252937.png" alt="image-20221104111252937"></p>
 <p>9E48BB2CAE5C1D93BAF572E3646D2ECD26080B70413DC7DC4131F88289F49E34</p>
 <p><strong>PS：</strong>这次长安杯两个服务器检材当中历史记录包含了众多有用信息，所以挂载之后第一时间一定要先查看一下历史记录看看都有过什么操作，大致推断一下这个检材是干什么用的</p>
 <p>我们将<code>~/.bash_history</code>存放历史记录的文件导出，查看</p>
@@ -280,49 +35,49 @@
 <blockquote>
 <p><strong>nohup</strong> 英文全称 no hang up（不挂起），用于在系统后台不挂断地运行命令，退出终端不会影响程序的运行。</p>
 </blockquote>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112327590.png" alt="image-20221104112327590"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112327590.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112327590.png" alt="image-20221104112327590"></p>
 <p>（2）在<code>/web/app/admin</code>目录下，另有npm启动命令。还可以看到一系列vue文件，大致可以推断出这里有网站，且以前端VUE后端java某个框架为架构（在比赛时还以为是nodejs搭建的，一直在找后端代码在哪里…）</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112656554.png" alt="image-20221104112656554"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112656554.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112656554.png" alt="image-20221104112656554"></p>
 <p>（3）在比赛时没注意这里有一个启动脚本，可以一键启动网站的，便于我们重构网站，但是它给删了。</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112919228.png" alt="image-20221104112919228"></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113016760.png" alt="image-20221104113016760"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112919228.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104112919228.png" alt="image-20221104112919228"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113016760.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113016760.png" alt="image-20221104113016760"></p>
 </li>
 <li><p>分析检材1，搭建该服务器的技术员IP地址是多少？用该地址解压检材2</p>
 <p>当时的思路是，首先先查看了一下检材一镜像对应的ip</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ipconfig</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113054324.png" alt="image-20221104113054324"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">ipconfig<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113054324.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113054324.png" alt="image-20221104113054324"></p>
 <p>得到<code>172.16.80.133</code></p>
 <p>搭建该服务器的技术员可能是远程连接上来的，我们看看本机开启了哪些服务</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -anpt</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113323152.png" alt="image-20221104113323152"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">netstat -anpt<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113323152.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113323152.png" alt="image-20221104113323152"></p>
 </li>
 </ol>
 <p>可以看到端口22开启了ssh服务，所以可以直接连上来。通过last验证</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113417108.png" alt="image-20221104113417108"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113417108.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113417108.png" alt="image-20221104113417108"></p>
 <p>于是得到了检材2的解压密码 <code>172.16.80.100</code></p>
 <ol>
 <li><p>检材1中，操作系统发行版本号为</p>
 <p>查看文件<code>/etc/centos-release</code>即可得到</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113642837.png" alt="image-20221104113642837"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113642837.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113642837.png" alt="image-20221104113642837"></p>
 <p>7.5.1804</p>
 </li>
 <li><p>检材1系统中，网卡绑定的静态IP地址为</p>
 <p>这里我当时是查看网卡里面写的，位于<code>/etc/sysconfig/network-scripts</code></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113847257.png" alt="image-20221104113847257"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113847257.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104113847257.png" alt="image-20221104113847257"></p>
 <p>查看<code>ifcfg-ens33</code>即可得到网卡配置信息</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104114018399.png" alt="image-20221104114018399"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104114018399.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104114018399.png" alt="image-20221104114018399"></p>
 <p>172.16.80.133</p>
 </li>
 <li><p>检材1中，网站jar包所存放的目录是</p>
 <p>这个我们在历史记录里已经确定了，位于<code>/web/app</code>下</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104114431787.png" alt="image-20221104114431787"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104114431787.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104114431787.png" alt="image-20221104114431787"></p>
 <h4 id="jar包分析"><a href="#jar包分析" class="headerlink" title="jar包分析"></a>jar包分析</h4></li>
 <li><p>检材1中，监听7000端口的进程对应文件名为</p>
 <p><strong>方法1</strong>：当时一个个查看了一下jar包中的配置文件，最终定位到<code>cloud.jar</code></p>
 <p>从jar包的启动文件可以看出是springboot框架，配置文件在<code>application.properties</code></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104115128222.png" alt="image-20221104115128222"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104115128222.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104115128222.png" alt="image-20221104115128222"></p>
 <p><strong>方法2</strong>：最快速的方法其实就是将jar包全启动起来，然后查看哪个监听的端口是7000就好了</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104152058149.png" alt="image-20221104152058149"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104152058149.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104152058149.png" alt="image-20221104152058149"></p>
 </li>
 <li><p>检材1中，网站管理后台页面调用的用户表(admin)里的密码字段加密方式为?</p>
 </li>
@@ -330,47 +85,47 @@
 </li>
 </ol>
 <p>后端定位jar包到<code>admin-api.jar</code>，查看配置文件。这里能看到数据库的配置（mysql、mongodb、redis）</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154813728.png" alt="image-20221104154813728"></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154825084.png" alt="image-20221104154825084"></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154842556.png" alt="image-20221104154842556"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154813728.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154813728.png" alt="image-20221104154813728"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154825084.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154825084.png" alt="image-20221104154825084"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154842556.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154842556.png" alt="image-20221104154842556"></p>
 <p>然后发现了可疑的md5 key，推断加密算法可能是md5</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154927956.png" alt="image-20221104154927956"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154927956.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104154927956.png" alt="image-20221104154927956"></p>
 <p>因为还没重构出网站，所以我当时还去看了前端代码。结合前端接口我们可以进一步定位controller验证后台登录加密算法</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155037606.png" alt="image-20221104155037606"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155037606.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155037606.png" alt="image-20221104155037606"></p>
 <p>位于<code>/controller/system/EmployeeController#doLogin()</code></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155607001.png" alt="image-20221104155607001"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155607001.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155607001.png" alt="image-20221104155607001"></p>
 <p>看下<code>md5Key</code>是什么，验证猜想正确</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155706887.png" alt="image-20221104155706887"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155706887.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104155706887.png" alt="image-20221104155706887"></p>
 <h4 id="前端部分"><a href="#前端部分" class="headerlink" title="前端部分"></a>前端部分</h4><ol>
 <li><p>检材1中，网站<strong>前台页面</strong>里给出的APK的下载地址是</p>
 <p>前台页面的前端在<code>/web/app/web</code>下，其实历史记录中给出了如何跑起来，当时对前后端分离架构还不是很理解。去盲翻前端页面，还真在<code>src/App.vue</code>下找到了一个apk链接，但实际上已经是注释掉了，”二维码链接已修改”</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104160648209.png" alt="image-20221104160648209"></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104160444804.png" alt="image-20221104160444804"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104160648209.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104160648209.png" alt="image-20221104160648209"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104160444804.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104160444804.png" alt="image-20221104160444804"></p>
 <p>于是启动测试一下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161128636.png" alt="image-20221104161128636"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">npm run dev<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161128636.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161128636.png" alt="image-20221104161128636"></p>
 <p>访问虚拟机3000端口，可以在得到一张二维码图片，扫描即可得到二维码中的apk下载地址</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161332029.png" alt="image-20221104161332029"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161332029.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161332029.png" alt="image-20221104161332029"></p>
 </li>
 </ol>
 <p><a target="_blank" rel="noopener" href="https://pan.forensix.cn/f/c45ca511c7f2469090ad/?dl=1">https://pan.forensix.cn/f/c45ca511c7f2469090ad/?dl=1</a></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161614477.png" alt="image-20221104161614477"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161614477.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104161614477.png" alt="image-20221104161614477"></p>
 <p>得到一个apk文件我们先保存下来</p>
 <ol>
 <li><p>检材1中，网站管理<strong>后台页面</strong>对应的网络端口为</p>
 <p>原来是问的前端启动的端口，后端是在6010（admin-api.jar）</p>
 <p>对于后台的前端我们同样测试一下</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162608208.png" alt="image-20221104162608208"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm run dev</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162713623.png" alt="image-20221104162713623"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162608208.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162608208.png" alt="image-20221104162608208"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">npm run dev<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162713623.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162713623.png" alt="image-20221104162713623"></p>
 <p>访问虚拟机9090端口，可以验证</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162847693.png" alt="image-20221104162847693"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162847693.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104162847693.png" alt="image-20221104162847693"></p>
 </li>
 </ol>
 <p>比赛的时候被坑了，我在config配置里看到的是8090。这里是因为npm启动时是直接启动的web-pack打包文件，而非源码（这中间可能会有修改的地方）</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104163755460.png" alt="image-20221104163755460"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104163755460.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104163755460.png" alt="image-20221104163755460"></p>
 <p>或者在检材2中我们可以在浏览器浏览记录里找到后台登录时对应的访问端口</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183651956.png" alt="image-20221104183651956"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183651956.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183651956.png" alt="image-20221104183651956"></p>
 <h4 id="检材2部分"><a href="#检材2部分" class="headerlink" title="检材2部分"></a>检材2部分</h4><blockquote>
 <p>检材2：根据IP地址落地及后续侦查，抓获了搭建网站的技术员，扣押了其个人电脑并制作镜像“检材2”，分析所有掌握的检材回答下列问题</p>
 </blockquote>
@@ -378,105 +133,105 @@
 <ol>
 <li><p>检材2中，windows账户Web King的登录密码是</p>
 <p>火眼仿真看一下账户信息</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104164724230.png" alt="image-20221104164724230"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104164724230.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104164724230.png" alt="image-20221104164724230"></p>
 <p>135790</p>
 </li>
 <li><p>检材2中，除检材1以外，还远程连接过哪个IP地址？并用该地址解压检材3</p>
 <p>xshell中可以查看连接会话记录，里面存在两条，另一条就是检材3对应的ip地址<code>172.16.80.133</code></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104170254638.png" alt="image-20221104170254638"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104170254638.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104170254638.png" alt="image-20221104170254638"></p>
 </li>
 <li><p>检材2中，powershell中输入的最后一条命令是</p>
 <p>这里存在一个干扰项，就是在火眼分析中的系统SSH 历史输入命令。实际上，仔细看下都是linux命令，对应的是windows下wsl子系统中的命令历史记录，而非powershell中的历史记录，需要特别辨析。</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104170850643.png" alt="image-20221104170850643"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104170850643.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104170850643.png" alt="image-20221104170850643"></p>
 </li>
 </ol>
 <p>powershell的历史记录位于<code>分区6\Users\Web King\AppData\Roaming\Microsoft\Windows\PowerShell\PSReadLine</code>下</p>
 <p>查看便可得到 <code>ipconfig</code></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104171230331.png" alt="image-20221104171230331"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104171230331.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104171230331.png" alt="image-20221104171230331"></p>
 <p>还有一种更直接的方法就是火眼仿真中直接在powershell里按方向键上即可直接得到最后一条历史命令</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104184919850.png" alt="image-20221104184919850"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104184919850.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104184919850.png" alt="image-20221104184919850"></p>
 <ol>
 <li><p>检材2中，下载的涉案网站源代码文件名为 </p>
 <p>在Chrome浏览器的下载历史记录当中有对应几个zip包，以及对应的下载来源</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104171458984.png" alt="image-20221104171458984"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104171458984.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104171458984.png" alt="image-20221104171458984"></p>
 </li>
 </ol>
 <p>我们之前在检材一中<code>/web/app/admin</code>和<code>/web/app/web</code>下分别有一个README.md文件，里面对应着github项目下的README.md，通过比对项目<code>https://github.com/sengeiou/ZTuoExchange_framework</code>，可以定位文件就是ZTuoExchange_framework-master.zip</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183326111.png" alt="image-20221104183326111"> </p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183326111.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183326111.png" alt="image-20221104183326111"> </p>
 <p>同时在github上我们也找到了网站的架构图</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183359183.png" alt="image-20221104183359183"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183359183.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183359183.png" alt="image-20221104183359183"></p>
 <ol>
 <li><p>检材2中，网站管理后台root账号的密码为</p>
 <p>在登录之后有保存的密码遗留 密码即root</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183745851.png" alt="image-20221104183745851"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183745851.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104183745851.png" alt="image-20221104183745851"></p>
 </li>
 <li><p>检材2中，技术员<strong>使用</strong>的WSL子系统发行版本是</p>
 <p><strong>静态分析方法</strong>：WSL位置一般在<code>C:\Users\xxx\AppData\Local\Packages\CanonicalGroupLimited.xxx_79rhkp1fndgsc\LocalState\rootfs</code>下，实际查看会发现有两个版本，其中20.04版本明显文件数量有多很多</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185506549.png" alt="image-20221104185506549"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185506549.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185506549.png" alt="image-20221104185506549"></p>
 <p>并且在20.04版本下的<code>rootfs</code>根文件系统中可以找到清晰的linux目录结构，而在22.04中是不存在的，也就是并未实际使用。</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185635103.png" alt="image-20221104185635103"><strong>动态仿真方法</strong>：能直观的看到就直观看，打开wsl就能看到</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185845601.png" alt="image-20221104185845601"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185635103.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185635103.png" alt="image-20221104185635103"><strong>动态仿真方法</strong>：能直观的看到就直观看，打开wsl就能看到</p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185845601.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104185845601.png" alt="image-20221104185845601"></p>
 </li>
 <li><p>检材2中，运行的数据库服务版本号是</p>
 <p>在wsl历史命令当中可以看到有对mysql数据库的操作</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104190404574.png" alt="image-20221104190404574"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104190404574.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104190404574.png" alt="image-20221104190404574"></p>
 <p>在火眼数据库解析当中可以看到8.0.30</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104190225779.png" alt="image-20221104190225779"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104190225779.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104190225779.png" alt="image-20221104190225779"></p>
 </li>
 <li><p>上述数据库debian-sys-maint用户的初始密码是</p>
 <p>首先什么是<code>debian-sys-maint</code>用户？</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">正如它的字面意思（Debian System Matainence），Debian系统对MySQL维护用的，你可以理解为通过系统的某个“非常规”程序对Mysql进行备份恢复等行为时，改程序所使用的登录Mysql的账户。 ——你应该可以理解吧？你手工维护的时候同样需要用某账户登入Mysql再操作的——系统的程序也一样需要这么做，只是它通过这个账户免去了你手工操作的“麻烦”，加深了系统复杂度，让你更加难以理解mysql和Linux的工作原理。 原则上Linux系统本身与MySQL无需任何直接或间接的接触，你大可以删除，维护时使用网上大家最常用的方法来维护（这类方法可以适用于安装在任何系统上的Mysql，而此账户所对应的“便捷”方法——正如他的名字一样，仅适用于Debian）</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">正如它的字面意思（Debian System Matainence），Debian系统对MySQL维护用的，你可以理解为通过系统的某个“非常规”程序对Mysql进行备份恢复等行为时，改程序所使用的登录Mysql的账户。 ——你应该可以理解吧？你手工维护的时候同样需要用某账户登入Mysql再操作的——系统的程序也一样需要这么做，只是它通过这个账户免去了你手工操作的“麻烦”，加深了系统复杂度，让你更加难以理解mysql和Linux的工作原理。 原则上Linux系统本身与MySQL无需任何直接或间接的接触，你大可以删除，维护时使用网上大家最常用的方法来维护（这类方法可以适用于安装在任何系统上的Mysql，而此账户所对应的“便捷”方法——正如他的名字一样，仅适用于Debian）<br></code></pre></td></tr></table></figure>
 <p>在windows中我们是找不到mysql相关的服务的，因为通过历史记录可以看到它是运行在wsl子系统当中</p>
 <p>它的默认密码存放在wsl子系统的<code>/etc/mysql/debian.cnf</code>中</p>
 <p>查看可知初始密码ZdQfi7vaXjHZs75M</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193000955.png" alt="image-20221104193000955"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193000955.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193000955.png" alt="image-20221104193000955"></p>
 </li>
 <li><p>检材3服务器<strong>root账号</strong>的密码是</p>
 <p>在wsl历史记录当中可以看到本机有ssh连接检材3的信息，密码就是 h123456</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193307353.png" alt="image-20221104193307353"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193307353.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193307353.png" alt="image-20221104193307353"></p>
 </li>
 </ol>
 <p>其中我们再浏览一下本机可以在D盘找到一些脚本文件，这里已经可以看到在检材1中被删掉的start_web.sh，有助于我们重构网站，留住备份。（团队比赛时一定要和队友说明！）</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193654177.png" alt="image-20221104193654177"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193654177.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104193654177.png" alt="image-20221104193654177"></p>
 <h4 id="检材三部分"><a href="#检材三部分" class="headerlink" title="检材三部分"></a>检材三部分</h4><blockquote>
 <p>检材3：根据网站前端和技术员个人电脑上的线索，发现了网站后端所在的服务器IP并再次调证取得“检材3”，分析所有掌握的检材回答下列问题</p>
 </blockquote>
 <p><strong>ip地址：172.16.80.128</strong></p>
 <p>检材仿真之后，首先第一时间还是浏览历史记录</p>
 <p>（1）简单看下有zookeeper服务</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202528769.png" alt="image-20221104202528769"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202528769.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202528769.png" alt="image-20221104202528769"></p>
 <p>（2）有docker服务，并且使用了docker-compose插件</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202726093.png" alt="image-20221104202726093"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202726093.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202726093.png" alt="image-20221104202726093"></p>
 <p>（3) 在<code>/web</code>目录下存在启动脚本<code>start.sh</code>，这个我们在检材2里也找到了。同检材1一样，这个启动脚本也被删掉了</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202842433.png" alt="image-20221104202842433"></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203010631.png" alt="image-20221104203010631"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202842433.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104202842433.png" alt="image-20221104202842433"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203010631.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203010631.png" alt="image-20221104203010631"></p>
 <p>（4）docker启动了mysql服务</p>
 <ol>
 <li><p>检材3中，监听33050端口的程序名（program name）为</p>
 <p>我们先启动docker服务</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">service docker start</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">service docker start<br></code></pre></td></tr></table></figure>
 <p>然后查看网络服务监听状态</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -lnpt</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203601351.png" alt="image-20221104203601351"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">netstat -lnpt<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203601351.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203601351.png" alt="image-20221104203601351"></p>
 <p>可知程序名为docker-proxy</p>
 </li>
 <li><p>除MySQL外，该网站还依赖以下哪种数据库</p>
 <p>在历史记录当中我们是可以看到还有redis和mongo</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203809964.png" alt="image-20221104203809964"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203809964.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104203809964.png" alt="image-20221104203809964"></p>
 <p>当然结合检材1的java配置以及我们在github上找到的架构图都是可以判断出的</p>
 </li>
 <li><p>检材3中，MySQL数据库root账号的密码是</p>
 <p><strong>方法1</strong>：在检材1的<code>admin-api.jar</code>配置文件当中，我们是看到了mysql的连接配置信息，直接得到<code>shhl7001</code></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104210229225.png" alt="image-20221104210229225"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104210229225.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104210229225.png" alt="image-20221104210229225"></p>
 <p><strong>方法2</strong>：查看docker-compose配置文件</p>
 <p>通过历史记录看到位于目录<code>/data/mysql/</code>下</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104210630411.png" alt="image-20221104210630411"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104210630411.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104210630411.png" alt="image-20221104210630411"></p>
 </li>
 <li><p>检材3中，MySQL数据库在容器内部的数据目录为</p>
 <p>从上一题的docker-compose.yml配置文件当中可以看到外部数据映射到了<code>/var/lib/mysql</code>目录下</p>
 <p>或者可以通过查看docker配置判断</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">docker ps</span><br><span class="line"># 8eda4cb0b452   mysql:5.7.32</span><br><span class="line">docker inspect 8eda4cb0b452</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104211035133.png" alt="image-20221104211035133"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">docker ps<br># 8eda4cb0b452   mysql:5.7.32<br>docker inspect 8eda4cb0b452<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104211035133.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104211035133.png" alt="image-20221104211035133"></p>
 </li>
 <li><p>涉案网站调用的MySQL数据库名为</p>
 <p>同样在检材1的<code>admin-api.jar</code>配置文件中jdbcUrl为<code>spring.datasource.url=jdbc:mysql://172.16.80.128:33050/b1?characterEncoding=utf-8</code></p>
@@ -485,77 +240,77 @@
 <li><p>勒索者在数据库中修改了多少个用户的手机号？</p>
 <p>我们直接在容器外部查看相应日志，对应目录<code>/data/mysql/db</code></p>
 <p>首先我们找到了8eda4cb0b452.log日志文件，其次发现b1数据库被删掉了，我们把从检材2中找到的b1文件夹复原</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104212600227.png" alt="image-20221104212600227"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104212600227.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104212600227.png" alt="image-20221104212600227"></p>
 <p>然后打开日志文件，可以看到大量的sql执行语句。通过关键词<code>update</code>可以查看到修改用户的相关信息</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104212950810.png" alt="image-20221104212950810"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104212950810.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104212950810.png" alt="image-20221104212950810"></p>
 <p>但是有个坑点在于用户登录时也会出现update数据的操作，需要排除</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213028054.png" alt="image-20221104213028054"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213028054.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213028054.png" alt="image-20221104213028054"></p>
 <p>所以总共有效数据为3条</p>
 <ol>
 <li><p>勒索者在数据库中删除的用户数量为</p>
 <p>同理，全局搜索<code>delete</code>关键词，总共28条数据</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213215957.png" alt="image-20221104213215957"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213215957.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213215957.png" alt="image-20221104213215957"></p>
 </li>
 </ol>
 </li>
 <li><p>还原被破坏的数据库，分析除技术员以外，还有哪个IP地址登录过管理后台网站？用该地址解压检材4</p>
 <p>接下来就是需要网站重构了，我们将检材2中的启动脚本和数据库放到对应的检材目录中</p>
 <p>在检材中，更新docker内的数据库</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213631595.png" alt="image-20221104213631595"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">docker-compose up -d<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213631595.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213631595.png" alt="image-20221104213631595"></p>
 <p>在<code>/web</code>下，首先赋予启动脚本执行权限</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chmod 777 start.sh</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">chmod 777 start.sh<br></code></pre></td></tr></table></figure>
 <p>然后启动脚本</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh start.sh</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213858451.png" alt="image-20221104213858451"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sh start.sh<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213858451.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104213858451.png" alt="image-20221104213858451"></p>
 <p>然后在检材1中<code>/web/app</code>下相同操作</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214541272.png" alt="image-20221104214541272"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214541272.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214541272.png" alt="image-20221104214541272"></p>
 <p>访问网站验证，重构成功！</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214651476.png" alt="image-20221104214651476"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214651476.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214651476.png" alt="image-20221104214651476"></p>
 <p>接下来就是连接数据库查看，在admin表中可以看到 <code>172.16.80.197</code></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214846874.png" alt="image-20221104214846874"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214846874.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104214846874.png" alt="image-20221104214846874"></p>
 </li>
 <li><p>还原全部被删改数据，用户id为500的注册会员的HT币钱包地址为</p>
 <p>在<code>member_wallet</code>表中，可以看到地址cee631121c2ec9232f3a2f028ad5c89b</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104220135335.png" alt="image-20221104220135335"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104220135335.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104220135335.png" alt="image-20221104220135335"></p>
 </li>
 <li><p>还原全部被删改数据，共有多少名用户的会员等级为’LV3’</p>
 <p>首先定位会员等级的字段在哪里</p>
 <p>可以看到在<code>member_grade</code>表中，等级分别对应着同数字的id</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104230147505.png" alt="image-20221104230147505"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104230147505.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104230147505.png" alt="image-20221104230147505"></p>
 <p>在<code>member</code>表中存在字段<code>member_grade_id</code>，应该就是与之对应的</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104230427331.png" alt="image-20221104230427331"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104230427331.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104230427331.png" alt="image-20221104230427331"></p>
 <p>这块需要注意之前在日志中看到用户数据有28条是被删除了的，所以我们需要将对应的数据恢复</p>
 <p>数据表中显示最后一条数据id是972，因此我们从973条数据开始恢复</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104231444487.png" alt="image-20221104231444487"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104231444487.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104231444487.png" alt="image-20221104231444487"></p>
 </li>
 </ol>
 <p>然后在表中去查询即可</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from member where member_grade_id</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104231655847.png" alt="image-20221104231655847"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">select count(*) from member where member_grade_id<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104231655847.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104231655847.png" alt="image-20221104231655847"></p>
 <ol>
 <li><p>还原全部被删改数据，哪些用户ID没有充值记录</p>
 <p>首先定位充值记录信息在<code>member_transaction</code>表中可以看到交易记录</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104232624214.png" alt="image-20221104232624214"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104232624214.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104232624214.png" alt="image-20221104232624214"></p>
 <p>联合<code>member</code>表，我们就可以定位哪些用户ID没有充值记录</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select member.id from member where member.id not in (select distinct (member_transaction.member_id) from member_transaction);</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233218741.png" alt="image-20221104233218741"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">select member.id from member where member.id not in (select distinct (member_transaction.member_id) from member_transaction);<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233218741.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233218741.png" alt="image-20221104233218741"></p>
 </li>
 </ol>
 <p>得到318 989</p>
 <ol>
 <li><p>还原全部被删改数据，2022年10月17日总计产生多少笔交易记录？</p>
 <p>还是在<code>member_transaction</code>表，我们的交易时间对应的字段是<code>create_time</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select count(*) from member_transaction where create_time like &#x27;%2022-10-17%&#x27;;</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233539701.png" alt="image-20221104233539701"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">select count(*) from member_transaction where create_time like &#x27;%2022-10-17%&#x27;;<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233539701.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233539701.png" alt="image-20221104233539701"></p>
 </li>
 </ol>
 <p>共计1000条</p>
 <ol>
 <li><p>还原全部被删改数据，该网站中充值的USDT总额为</p>
 <p>还是在<code>member_transaction</code>表，我们计算一下总额即可，对应<code>amount</code>字段</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select SUM(amount) from member_transaction;</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233730193.png" alt="image-20221104233730193"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">select SUM(amount) from member_transaction;<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233730193.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221104233730193.png" alt="image-20221104233730193"></p>
 <p>也就是408228</p>
 </li>
 </ol>
@@ -563,266 +318,143 @@
 <p>检材4.根据前期侦查分析，通过技术手段找到了幕后老板，并对其使用的安卓模拟器“检材4”进行了固定。分析所有掌握的检材，回答下列问题</p>
 </blockquote>
 <p>成功解压后得到了一个.npak格式的文件</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105151439716.png" alt="image-20221105151439716"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105151439716.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105151439716.png" alt="image-20221105151439716"></p>
 <p>经过百度查询可知是V6.0.2.0版本夜神模拟器的备份文件，通过解压可以查看其中的内置备份文件，并存在vmdk后缀文件</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105152424387.png" alt="image-20221105152424387"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105152424387.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105152424387.png" alt="image-20221105152424387"></p>
 <ol>
 <li><p>嫌疑人使用的安卓模拟器软件名称是</p>
 <p>夜神模拟器</p>
 </li>
 <li><p>检材4中，“老板”的阿里云账号是</p>
 <p>在微信聊天记录里可以找到，往后看我们也能了解到前三个检材背后的剧情，这天聊着聊着就不对劲了。。。</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153556236.png" alt="image-20221105153556236"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153556236.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153556236.png" alt="image-20221105153556236"></p>
 </li>
 <li><p>检材4中安装的VPN工具的软件名称是</p>
 <p>同样在应用列表可以直接看到 v2rayNG</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153726154.png" alt="image-20221105153726154"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153726154.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153726154.png" alt="image-20221105153726154"></p>
 </li>
 <li><p>上述VPN工具中记录的节点IP是</p>
 <p>38.68.135.18</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153948024.png" alt="image-20221105153948024"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153948024.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105153948024.png" alt="image-20221105153948024"></p>
 </li>
 <li><p>检材4中，录屏软件安装时间为</p>
 <p>在应用列表中出现了两个无名软件，其中一个的包名十分可疑 <code>com.jiadi.luping</code></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105154058242.png" alt="image-20221105154058242"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105154058242.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105154058242.png" alt="image-20221105154058242"></p>
 <p>为了求证，我们可以在<code>分区4\data\com.jiadi.luping\databases</code>下查看其数据库信息，定位<code>record.db</code>，同时我们看到还存在<code>wal</code>和<code>shm</code>后缀的文件，这里要简单提到sqlite预写日志的工作方式</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105155408528.png" alt="image-20221105155408528"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105155408528.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105155408528.png" alt="image-20221105155408528"></p>
 <blockquote>
 <p>原始内容保留在数据库文件中，而更改将附加到单独的WAL文件中。甲<a target="_blank" rel="noopener" href="https://www.sqlite.net.cn/lang_transaction.html">COMMIT</a>当指示一个提交一个特殊的记录被追加到WAL发生。因此，即使不写入原始数据库也可以进行COMMIT，这允许读者在更改同时提交到WAL的同时继续从原始未更改的数据库进行操作。可以将多个事务附加到单个WAL文件的末尾。</p>
 </blockquote>
 <p>因此如果我们要浏览完整的数据信息，需要同时将这三个文件在同一个目录当中再去打开数据库文件</p>
 <p>可以看到里面确实存放着录屏录像的一些文件</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105155822945.png" alt="image-20221105155822945"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105155822945.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105155822945.png" alt="image-20221105155822945"></p>
 <p>回到本题，安装时间即2022/10/19 10:50:27</p>
 </li>
 <li><p>上述录屏软件中名为“s_20221019105129”的录像，在模拟器存储中对应的原始文件名为</p>
 <p>在上面<code>record.db</code>数据库文件的<code>RecordFile</code>表中可以找到记录信息</p>
 <p><code>0c2f5dd4a9bc6f34873fb3c0ee9b762b98e8c46626410be7191b11710117a12d</code></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160016570.png" alt="image-20221105160016570"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160016570.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160016570.png" alt="image-20221105160016570"></p>
 </li>
 <li><p>上述录屏软件登录的手机号是</p>
 <p>在<code>AccountInfo</code>表中的mobile字段即登录的手机号 18645091802</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160103800.png" alt="image-20221105160103800"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160103800.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160103800.png" alt="image-20221105160103800"></p>
 </li>
 <li><p>检材4中，<strong>发送</strong>勒索邮件的邮箱地址为</p>
 <p>在比赛时队友写成接收地址了。。一定要细心审题</p>
 <p>在QQ邮箱的收件箱中可以看到两封勒索邮件 <code>skterran@163.com</code></p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160402983.png" alt="image-20221105160402983"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160402983.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105160402983.png" alt="image-20221105160402983"></p>
 </li>
 </ol>
 <h4 id="EXE部分"><a href="#EXE部分" class="headerlink" title="EXE部分"></a>EXE部分</h4><blockquote>
 <p>分析所有掌握的检材，找到勒索邮件中被加密的文档和对应的加/解密程序，并回答下列问题</p>
 </blockquote>
 <p>在检材二的D盘存在两个可疑文件，其中一个是加密文档，另一个是解密程序，与第二封邮件内容相对应</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165048798.png" alt="image-20221105165048798"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165048798.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165048798.png" alt="image-20221105165048798"></p>
 <ol>
 <li><p>分析加密程序，编译该加密程序使用的语言是</p>
 <p>使用exeinfope查看exe发现程序是pyinstaller生成的可执行文件，于是得出编译该加密程序使用的语言是python</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183551344.png" alt="image-20221105183551344"> </p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183551344.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183551344.png" alt="image-20221105183551344"> </p>
 </li>
 <li><p>分析加密程序，它会加密哪些扩展名的文件？</p>
 <p>阅读代码即可发现在run_finall函数中会对<code>.txt</code>,<code>.jpg</code>,<code>.xls</code>,<code>.docx</code>四种文件进行加密</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183847956.png" alt="image-20221105183847956"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183847956.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183847956.png" alt="image-20221105183847956"></p>
 </li>
 <li><p>分析加密程序，是通过什么算法对文件进行加密的？</p>
 <p>阅读代码即可发现在run_finall函数中最后调用了XORCBC类的encrypt方法进行了加密</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183847956.png" alt="image-20221105183847956"> </p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183847956.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183847956.png" alt="image-20221105183847956"> </p>
 <p>而该encrypt方法对数据进行了异或运算</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183954122.png" alt="image-20221105183954122"> </p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183954122.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105183954122.png" alt="image-20221105183954122"> </p>
 </li>
 <li><p>分析加密程序，其使用的非对称加密方式公钥后5位为？</p>
 <p>同样可以在代码中发现publickey如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pubkey = &#x27;-----BEGIN PUBLIC KEY-----\nMIIBIzANBgkqhkiG9w0BAQEFAAOCARAAMIIBCwKCAQEAx5JF4elVDBaakgGeDSxI\nCO1LyyZ6B2TgR4DNYiQoB1zAyWPDwektaCfnvNeHURBrw++HvbuNMoQNdOJNZZVo\nbHVZh+rCI4MwAh+EBFUeT8Dzja4ZlU9E7jufm69TQS0PSseIiU/4Byd2i9BvIbRn\nHLFZvi/VXphGeW0qVeHkQ3Ll6hJ2fUGhTsuGLc1XXHfiZ4RbJY/AMnjYPy9CaYzi\nSOT4PCf/O12Kuu9ZklsIAihRPl10SmM4IRnVhZYYpXedAyTcYCuUiI4c37F5GAhz\nRDFn9IQ6YQRjlLjuOX8WB6H4NbnKX/kd0GsQP3Zbogazj/z7OM0Y3rv3T8mtF6/I\nkwIEHoau+w==\n-----END PUBLIC KEY-----\n&#x27;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">pubkey = &#x27;-----BEGIN PUBLIC KEY-----\nMIIBIzANBgkqhkiG9w0BAQEFAAOCARAAMIIBCwKCAQEAx5JF4elVDBaakgGeDSxI\nCO1LyyZ6B2TgR4DNYiQoB1zAyWPDwektaCfnvNeHURBrw++HvbuNMoQNdOJNZZVo\nbHVZh+rCI4MwAh+EBFUeT8Dzja4ZlU9E7jufm69TQS0PSseIiU/4Byd2i9BvIbRn\nHLFZvi/VXphGeW0qVeHkQ3Ll6hJ2fUGhTsuGLc1XXHfiZ4RbJY/AMnjYPy9CaYzi\nSOT4PCf/O12Kuu9ZklsIAihRPl10SmM4IRnVhZYYpXedAyTcYCuUiI4c37F5GAhz\nRDFn9IQ6YQRjlLjuOX8WB6H4NbnKX/kd0GsQP3Zbogazj/z7OM0Y3rv3T8mtF6/I\nkwIEHoau+w==\n-----END PUBLIC KEY-----\n&#x27;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>被加密文档中，FLAG1的值是</p>
 <p>同样对decrypt_file.exe进行解包与反编译后发现解密需要的密码明文写在了程序中</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184554721.png" alt="image-20221105184554721"> </p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184554721.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184554721.png" alt="image-20221105184554721"> </p>
 <p>执行decrypt_file.exe并输入密码</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184717404.png" alt="image-20221105184717404"> </p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184717404.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184717404.png" alt="image-20221105184717404"> </p>
 <p>得到解密后的文档,FLAG就在文档中</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184531501.png" alt="image-20221105184531501"> </p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184531501.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105184531501.png" alt="image-20221105184531501"> </p>
 </li>
 </ol>
 <h4 id="APK部分"><a href="#APK部分" class="headerlink" title="APK部分"></a>APK部分</h4><blockquote>
 <p>分析所有掌握的检材，找到报案人描述的加密勒索apk程序，分析并回答下列问题</p>
 </blockquote>
 <p>加密勒索apk程序我们在检材1的二维码链接中可以下载得到</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165256712.png" alt="image-20221105165256712"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165256712.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165256712.png" alt="image-20221105165256712"></p>
 <ol>
 <li><p>恶意APK程序的包名为</p>
 <p>直接利用雷电APP智能分析就能查看</p>
 <p> cn.forensix.changancup</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165514745.png" alt="image-20221105165514745"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165514745.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165514745.png" alt="image-20221105165514745"></p>
 </li>
 <li><p>APK调用的权限包括</p>
 <p>在静态权限当中可以查看</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165606961.png" alt="image-20221105165606961"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165606961.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105165606961.png" alt="image-20221105165606961"></p>
 </li>
 <li><p>解锁第一关所使用的FLAG2值为</p>
 <p>雷电模拟器安装上apk，打开软件查看。很好，模拟器被锁了。</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105171139112.png" alt="image-20221105171139112"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105171139112.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221105171139112.png" alt="image-20221105171139112"></p>
 <p>将其脱壳，反编译。然后查看代码，先全局搜索一下关键词<code>FLAG</code></p>
 <p>大致看下逻辑，其中OnClick函数这里有个明显的字符串对比，trim2是我们的输入</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106050532180.png" alt="image-20221106050532180"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106050532180.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106050532180.png" alt="image-20221106050532180"></p>
 </li>
 <li><p>解锁第二关所使用的FLAG3值为</p>
 <p>接上题，注意到</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106050903845.png" alt="image-20221106050903845"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106050903845.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106050903845.png" alt="image-20221106050903845"></p>
 <p>追踪App.OooO0O0.OooO0oo，发现在这里被初始化</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106051009626.png" alt="image-20221106051009626"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106051009626.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106051009626.png" alt="image-20221106051009626"></p>
 </li>
 </ol>
 <p>尝试用frida进行hook，模拟器先把frida-server开起来（注意不要给ZTuoExchange root权限），跑脚本<code>frida -U -l hook.js &quot;ZTuoExchange&quot;</code></p>
 <blockquote>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/WXjzcccc/article/details/127609236">https://blog.csdn.net/WXjzcccc/article/details/127609236</a></p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">setImmediate(function () &#123;</span><br><span class="line">    Java.perform(function () &#123;</span><br><span class="line">        var app = Java.use(<span class="string">&quot;cn.forensix.cab.App&quot;</span>);  // 指定类</span><br><span class="line">        var OooO0oo = app.<span class="keyword">class</span>.getField(<span class="string">&quot;OooO0oo&quot;</span>);  // 指定属性</span><br><span class="line">        var OooO0O0 = app.<span class="keyword">class</span>.getField(<span class="string">&quot;OooO0O0&quot;</span>).get(null);  // 获取已实例化的对象</span><br><span class="line">        console.log(OooO0oo.get(OooO0O0));</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">setImmediate(function () &#123;<br>    Java.perform(function () &#123;<br>        var app = Java.use(<span class="hljs-string">&quot;cn.forensix.cab.App&quot;</span>);  // 指定类<br>        var OooO0oo = app.<span class="hljs-keyword">class</span>.getField(<span class="hljs-string">&quot;OooO0oo&quot;</span>);  // 指定属性<br>        var OooO0O0 = app.<span class="hljs-keyword">class</span>.getField(<span class="hljs-string">&quot;OooO0O0&quot;</span>).get(null);  // 获取已实例化的对象<br>        console.log(OooO0oo.get(OooO0O0));<br>    &#125;);<br>&#125;)<br></code></pre></td></tr></table></figure>
 <ol>
 <li>解锁第三关所需的KEY值由ASCII可显示字符组成，请请分析获取该KEY值</li>
 </ol>
 <p>关键的验证</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106051914531.png" alt="image-20221106051914531"></p>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106051914531.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106051914531.png" alt="image-20221106051914531"></p>
 <p>查看该函数声明，要求字符串长度为24，4个一组，分成6组操作。其中try块里会触发unused异常，真正的验证逻辑在catch块中。可以把需要用到的操作拿出来，每4个进行爆破。</p>
-<p><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106052132590.png" alt="image-20221106052132590"></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Main</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">int</span>[] OooO0oO = &#123;<span class="number">1197727163</span>, <span class="number">1106668241</span>, <span class="number">312918615</span>, <span class="number">1828680913</span>, <span class="number">1668105995</span>, <span class="number">1728985987</span>&#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> n=<span class="number">0</span>; n&lt;<span class="number">6</span>; n++) &#123;</span><br><span class="line">            <span class="type">boolean</span> <span class="variable">flag</span> <span class="operator">=</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0x20</span>; i &lt; <span class="number">0x7f</span>; i++) &#123;</span><br><span class="line">                <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0x20</span>; j &lt; <span class="number">0x7f</span>; j++) &#123;</span><br><span class="line">                    <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">k</span> <span class="operator">=</span> <span class="number">0x20</span>; k &lt; <span class="number">0x7f</span>; k++) &#123;</span><br><span class="line">                        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">l</span> <span class="operator">=</span> <span class="number">0x20</span>; l &lt; <span class="number">0x7f</span>; l++) &#123;</span><br><span class="line">                            <span class="type">long</span> <span class="variable">tmp</span> <span class="operator">=</span> (<span class="type">long</span>) (i &lt;&lt; <span class="number">16</span>);</span><br><span class="line">                            tmp |= (<span class="type">long</span>) (j &lt;&lt; <span class="string">&#x27;\b&#x27;</span>);</span><br><span class="line">                            tmp |= (<span class="type">long</span>) (k &lt;&lt; <span class="number">24</span>);</span><br><span class="line">                            tmp |= (<span class="type">long</span>) l;</span><br><span class="line"></span><br><span class="line">                            <span class="keyword">if</span> (((OooO(tmp, <span class="number">4294967296L</span>)[<span class="number">0</span>] % <span class="number">4294967296L</span>) + <span class="number">4294967296L</span>) % <span class="number">4294967296L</span> == ((<span class="type">long</span>) OooO0oO[n])) &#123;</span><br><span class="line">                                System.out.print((<span class="type">char</span>) i);</span><br><span class="line">                                System.out.print((<span class="type">char</span>) j);</span><br><span class="line">                                System.out.print((<span class="type">char</span>) k);</span><br><span class="line">                                System.out.print((<span class="type">char</span>) l);</span><br><span class="line">                                flag = <span class="literal">true</span>;</span><br><span class="line">                                <span class="keyword">break</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line">                        <span class="keyword">if</span> (flag)</span><br><span class="line">                            <span class="keyword">break</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">if</span> (flag)</span><br><span class="line">                        <span class="keyword">break</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span> (flag)</span><br><span class="line">                    <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="type">boolean</span> <span class="title function_">OooO0O0</span><span class="params">(String str)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (str.length() != <span class="number">24</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">long</span>[] jArr = <span class="keyword">new</span> <span class="title class_">long</span>[<span class="number">6</span>];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; i &lt; str.length() / <span class="number">4</span>; i++) &#123;</span><br><span class="line">         <span class="type">int</span> <span class="variable">i2</span> <span class="operator">=</span> i * <span class="number">4</span>;</span><br><span class="line">         jArr[i] = (<span class="type">long</span>) (str.charAt(i2) &lt;&lt; <span class="number">16</span>);</span><br><span class="line">         jArr[i] = jArr[i] | ((<span class="type">long</span>) (str.charAt(i2 + <span class="number">1</span>) &lt;&lt; <span class="string">&#x27;\b&#x27;</span>));</span><br><span class="line">         jArr[i] = jArr[i] | ((<span class="type">long</span>) (str.charAt(i2 + <span class="number">2</span>) &lt;&lt; <span class="number">24</span>));</span><br><span class="line">         jArr[i] = ((<span class="type">long</span>) str.charAt(i2 + <span class="number">3</span>)) | jArr[i];</span><br><span class="line"><span class="comment">//         PrintStream printStream = System.out;</span></span><br><span class="line"><span class="comment">//         printStream.println(&quot;buildKey:i:&quot; + i + &quot;,value:&quot; + jArr[i]);</span></span><br><span class="line">         &#125;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">int</span>[] iArr = &#123;<span class="number">1197727043</span>, <span class="number">1106668192</span>, <span class="number">312918557</span>, <span class="number">1828680848</span>, <span class="number">1668105873</span>, <span class="number">1728985862</span>&#125;;</span><br><span class="line">            Object[] objArr = &#123;<span class="string">&#x27;x&#x27;</span>, <span class="string">&#x27;1&#x27;</span>, <span class="string">&#x27;:&#x27;</span>, <span class="string">&#x27;A&#x27;</span>, <span class="string">&#x27;z&#x27;</span>, <span class="string">&#x27;&#125;&#x27;</span>&#125;;</span><br><span class="line">            <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i3</span> <span class="operator">=</span> <span class="number">0</span>; i3 &lt; <span class="number">6</span>; i3++) &#123;</span><br><span class="line">                <span class="keyword">if</span> (((<span class="type">long</span>) iArr[i3]) - jArr[i3] != ((<span class="type">long</span>) ((Integer) objArr[i3]).intValue())) &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception unused) &#123;</span><br><span class="line">             <span class="keyword">for</span> (<span class="type">int</span> <span class="variable">i4</span> <span class="operator">=</span> <span class="number">0</span>; i4 &lt; <span class="number">6</span>; i4++) &#123;</span><br><span class="line">                 <span class="keyword">if</span> (((OooO(jArr[i4], <span class="number">4294967296L</span>)[<span class="number">0</span>] % <span class="number">4294967296L</span>) + <span class="number">4294967296L</span>) % <span class="number">4294967296L</span> != ((<span class="type">long</span>) <span class="built_in">this</span>.OooO0oO[i4])) &#123;</span><br><span class="line">                     <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">                 &#125;</span><br><span class="line">             &#125;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">     <span class="keyword">private</span> <span class="keyword">static</span> <span class="type">long</span>[] OooO(<span class="type">long</span> j, <span class="type">long</span> j2) &#123;</span><br><span class="line">         <span class="keyword">if</span> (j == <span class="number">0</span>) &#123;</span><br><span class="line">             <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">long</span>[]&#123;<span class="number">0</span>, <span class="number">1</span>&#125;;</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="type">long</span>[] OooO = OooO(j2 % j, j);</span><br><span class="line">         <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">long</span>[]&#123;((j2 / j) * OooO[<span class="number">0</span>]) + OooO[<span class="number">1</span>], OooO[<span class="number">0</span>]&#125;;</span><br><span class="line">     &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106052132590.png'><img src="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/image-20221106052132590.png" alt="image-20221106052132590"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Main</span> &#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">int</span>[] OooO0oO = &#123;<span class="hljs-number">1197727163</span>, <span class="hljs-number">1106668241</span>, <span class="hljs-number">312918615</span>, <span class="hljs-number">1828680913</span>, <span class="hljs-number">1668105995</span>, <span class="hljs-number">1728985987</span>&#125;;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> n=<span class="hljs-number">0</span>; n&lt;<span class="hljs-number">6</span>; n++) &#123;<br>            <span class="hljs-type">boolean</span> <span class="hljs-variable">flag</span> <span class="hljs-operator">=</span> <span class="hljs-literal">false</span>;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x20</span>; i &lt; <span class="hljs-number">0x7f</span>; i++) &#123;<br>                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">j</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x20</span>; j &lt; <span class="hljs-number">0x7f</span>; j++) &#123;<br>                    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">k</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x20</span>; k &lt; <span class="hljs-number">0x7f</span>; k++) &#123;<br>                        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">l</span> <span class="hljs-operator">=</span> <span class="hljs-number">0x20</span>; l &lt; <span class="hljs-number">0x7f</span>; l++) &#123;<br>                            <span class="hljs-type">long</span> <span class="hljs-variable">tmp</span> <span class="hljs-operator">=</span> (<span class="hljs-type">long</span>) (i &lt;&lt; <span class="hljs-number">16</span>);<br>                            tmp |= (<span class="hljs-type">long</span>) (j &lt;&lt; <span class="hljs-string">&#x27;\b&#x27;</span>);<br>                            tmp |= (<span class="hljs-type">long</span>) (k &lt;&lt; <span class="hljs-number">24</span>);<br>                            tmp |= (<span class="hljs-type">long</span>) l;<br><br>                            <span class="hljs-keyword">if</span> (((OooO(tmp, <span class="hljs-number">4294967296L</span>)[<span class="hljs-number">0</span>] % <span class="hljs-number">4294967296L</span>) + <span class="hljs-number">4294967296L</span>) % <span class="hljs-number">4294967296L</span> == ((<span class="hljs-type">long</span>) OooO0oO[n])) &#123;<br>                                System.out.print((<span class="hljs-type">char</span>) i);<br>                                System.out.print((<span class="hljs-type">char</span>) j);<br>                                System.out.print((<span class="hljs-type">char</span>) k);<br>                                System.out.print((<span class="hljs-type">char</span>) l);<br>                                flag = <span class="hljs-literal">true</span>;<br>                                <span class="hljs-keyword">break</span>;<br>                            &#125;<br>                        &#125;<br>                        <span class="hljs-keyword">if</span> (flag)<br>                            <span class="hljs-keyword">break</span>;<br>                    &#125;<br>                    <span class="hljs-keyword">if</span> (flag)<br>                        <span class="hljs-keyword">break</span>;<br>                &#125;<br>                <span class="hljs-keyword">if</span> (flag)<br>                    <span class="hljs-keyword">break</span>;<br>            &#125;<br>        &#125;<br>     &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">boolean</span> <span class="hljs-title function_">OooO0O0</span><span class="hljs-params">(String str)</span> &#123;<br>        <span class="hljs-keyword">if</span> (str.length() != <span class="hljs-number">24</span>) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        <span class="hljs-type">long</span>[] jArr = <span class="hljs-keyword">new</span> <span class="hljs-title class_">long</span>[<span class="hljs-number">6</span>];<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i &lt; str.length() / <span class="hljs-number">4</span>; i++) &#123;<br>         <span class="hljs-type">int</span> <span class="hljs-variable">i2</span> <span class="hljs-operator">=</span> i * <span class="hljs-number">4</span>;<br>         jArr[i] = (<span class="hljs-type">long</span>) (str.charAt(i2) &lt;&lt; <span class="hljs-number">16</span>);<br>         jArr[i] = jArr[i] | ((<span class="hljs-type">long</span>) (str.charAt(i2 + <span class="hljs-number">1</span>) &lt;&lt; <span class="hljs-string">&#x27;\b&#x27;</span>));<br>         jArr[i] = jArr[i] | ((<span class="hljs-type">long</span>) (str.charAt(i2 + <span class="hljs-number">2</span>) &lt;&lt; <span class="hljs-number">24</span>));<br>         jArr[i] = ((<span class="hljs-type">long</span>) str.charAt(i2 + <span class="hljs-number">3</span>)) | jArr[i];<br><span class="hljs-comment">//         PrintStream printStream = System.out;</span><br><span class="hljs-comment">//         printStream.println(&quot;buildKey:i:&quot; + i + &quot;,value:&quot; + jArr[i]);</span><br>         &#125;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">int</span>[] iArr = &#123;<span class="hljs-number">1197727043</span>, <span class="hljs-number">1106668192</span>, <span class="hljs-number">312918557</span>, <span class="hljs-number">1828680848</span>, <span class="hljs-number">1668105873</span>, <span class="hljs-number">1728985862</span>&#125;;<br>            Object[] objArr = &#123;<span class="hljs-string">&#x27;x&#x27;</span>, <span class="hljs-string">&#x27;1&#x27;</span>, <span class="hljs-string">&#x27;:&#x27;</span>, <span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;z&#x27;</span>, <span class="hljs-string">&#x27;&#125;&#x27;</span>&#125;;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i3</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i3 &lt; <span class="hljs-number">6</span>; i3++) &#123;<br>                <span class="hljs-keyword">if</span> (((<span class="hljs-type">long</span>) iArr[i3]) - jArr[i3] != ((<span class="hljs-type">long</span>) ((Integer) objArr[i3]).intValue())) &#123;<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125; <span class="hljs-keyword">catch</span> (Exception unused) &#123;<br>             <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> <span class="hljs-variable">i4</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>; i4 &lt; <span class="hljs-number">6</span>; i4++) &#123;<br>                 <span class="hljs-keyword">if</span> (((OooO(jArr[i4], <span class="hljs-number">4294967296L</span>)[<span class="hljs-number">0</span>] % <span class="hljs-number">4294967296L</span>) + <span class="hljs-number">4294967296L</span>) % <span class="hljs-number">4294967296L</span> != ((<span class="hljs-type">long</span>) <span class="hljs-built_in">this</span>.OooO0oO[i4])) &#123;<br>                     <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                 &#125;<br>             &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>        &#125;<br>    &#125;<br><br>     <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-type">long</span>[] OooO(<span class="hljs-type">long</span> j, <span class="hljs-type">long</span> j2) &#123;<br>         <span class="hljs-keyword">if</span> (j == <span class="hljs-number">0</span>) &#123;<br>             <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">long</span>[]&#123;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>&#125;;<br>         &#125;<br>         <span class="hljs-type">long</span>[] OooO = OooO(j2 % j, j);<br>         <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">long</span>[]&#123;((j2 / j) * OooO[<span class="hljs-number">0</span>]) + OooO[<span class="hljs-number">1</span>], OooO[<span class="hljs-number">0</span>]&#125;;<br>     &#125;<br> &#125;<br></code></pre></td></tr></table></figure>
 <p>答案：<code>a_asd./1imc2)dd1234]_+=+</code></p>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E6%83%85%E8%83%8C%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">案情背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%90%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-number">3.</span> <span class="toc-text">检材一部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jar%E5%8C%85%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">jar包分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E9%83%A8%E5%88%86"><span class="toc-number">5.</span> <span class="toc-text">前端部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%902%E9%83%A8%E5%88%86"><span class="toc-number">6.</span> <span class="toc-text">检材2部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%90%E4%B8%89%E9%83%A8%E5%88%86"><span class="toc-number">7.</span> <span class="toc-text">检材三部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%90%E5%9B%9B%E9%83%A8%E5%88%86"><span class="toc-number">8.</span> <span class="toc-text">检材四部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EXE%E9%83%A8%E5%88%86"><span class="toc-number">9.</span> <span class="toc-text">EXE部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#APK%E9%83%A8%E5%88%86"><span class="toc-number">10.</span> <span class="toc-text">APK部分</span></a></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&text=22年长安杯电子数据取证复盘"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&title=22年长安杯电子数据取证复盘"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&is_video=false&description=22年长安杯电子数据取证复盘"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=22年长安杯电子数据取证复盘&body=Check out this article: https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&title=22年长安杯电子数据取证复盘"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&title=22年长安杯电子数据取证复盘"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&title=22年长安杯电子数据取证复盘"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&title=22年长安杯电子数据取证复盘"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&name=22年长安杯电子数据取证复盘&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/&t=22年长安杯电子数据取证复盘"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2022/11/10/xstream%E4%B8%8Etabby/">← Next XStream与tabby</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2022/11/06/21%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E4%B8%AA%E4%BA%BA%E8%B5%9B%E5%A4%8D%E7%8E%B0/">21年美亚杯电子数据取证竞赛复现 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A1%88%E6%83%85%E8%83%8C%E6%99%AF"><span class="toc-number">2.</span> <span class="toc-text">案情背景</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%90%E4%B8%80%E9%83%A8%E5%88%86"><span class="toc-number">3.</span> <span class="toc-text">检材一部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#jar%E5%8C%85%E5%88%86%E6%9E%90"><span class="toc-number">4.</span> <span class="toc-text">jar包分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E9%83%A8%E5%88%86"><span class="toc-number">5.</span> <span class="toc-text">前端部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%902%E9%83%A8%E5%88%86"><span class="toc-number">6.</span> <span class="toc-text">检材2部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%90%E4%B8%89%E9%83%A8%E5%88%86"><span class="toc-number">7.</span> <span class="toc-text">检材三部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A3%80%E6%9D%90%E5%9B%9B%E9%83%A8%E5%88%86"><span class="toc-number">8.</span> <span class="toc-text">检材四部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#EXE%E9%83%A8%E5%88%86"><span class="toc-number">9.</span> <span class="toc-text">EXE部分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#APK%E9%83%A8%E5%88%86"><span class="toc-number">10.</span> <span class="toc-text">APK部分</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

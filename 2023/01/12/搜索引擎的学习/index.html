@@ -1,162 +1,19 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="写在前面渗透信息收集当中最关键的一步是利用好搜索引擎来获取敏感的信息，为后续账号弱口令和字典的制作提供参考，得好好学学 网络空间测绘溯源技术 行为测绘   不同的群体，可能表现出基本的独有的特征，当我们能掌握到这个特征，那么我们就能尽可能识别出这个群体里的所有个体，而这些所谓的行为特征在网络空间测绘里表现出的是这个设备各个端口协议里的banner特征    在这些自定义过程中不同的群体又可能表现出">
-<meta property="og:type" content="article">
-<meta property="og:title" content="渗透的艺术——信息收集—-善用搜索引擎">
-<meta property="og:url" content="https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="写在前面渗透信息收集当中最关键的一步是利用好搜索引擎来获取敏感的信息，为后续账号弱口令和字典的制作提供参考，得好好学学 网络空间测绘溯源技术 行为测绘   不同的群体，可能表现出基本的独有的特征，当我们能掌握到这个特征，那么我们就能尽可能识别出这个群体里的所有个体，而这些所谓的行为特征在网络空间测绘里表现出的是这个设备各个端口协议里的banner特征    在这些自定义过程中不同的群体又可能表现出">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230102170512288.png">
-<meta property="article:published_time" content="2023-01-11T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-01-12T09:38:04.296Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="渗透测试">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230102170512288.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>渗透的艺术——信息收集—-善用搜索引擎</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>渗透的艺术——信息收集—-善用搜索引擎 | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2023/01/17/Soot%E5%AD%A6%E4%B9%A0/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2023/01/12/Yakit/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&text=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&title=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&is_video=false&description=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=渗透的艺术——信息收集—-善用搜索引擎&body=Check out this article: https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&title=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&title=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&title=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&title=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&name=渗透的艺术——信息收集—-善用搜索引擎&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&t=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E6%B5%8B%E7%BB%98%E6%BA%AF%E6%BA%90%E6%8A%80%E6%9C%AF"><span class="toc-number">2.</span> <span class="toc-text">网络空间测绘溯源技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fofa%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">Fofa的简单使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Google-Hack"><span class="toc-number">4.</span> <span class="toc-text">Google Hack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Github%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">5.</span> <span class="toc-text">Github信息搜集</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        渗透的艺术——信息收集—-善用搜索引擎
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2023-01-11T16:00:00.000Z" itemprop="datePublished">2023-01-12</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/%E6%B8%97%E9%80%8F%E6%B5%8B%E8%AF%95/" rel="tag">渗透测试</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>渗透信息收集当中最关键的一步是利用好搜索引擎来获取敏感的信息，为后续账号弱口令和字典的制作提供参考，得好好学学</p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>渗透的艺术——信息收集—-善用搜索引擎</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2023-01-11T16:00:00.000Z" id="date"> 2023-01-12</time></div></span><br><span>Last Update: <div class="control"><time datetime="2023-01-12T09:38:04.296Z" id="updated"> 2023-01-12</time></div></span></div></div><hr><div id="post-content"><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>渗透信息收集当中最关键的一步是利用好搜索引擎来获取敏感的信息，为后续账号弱口令和字典的制作提供参考，得好好学学</p>
 <h4 id="网络空间测绘溯源技术"><a href="#网络空间测绘溯源技术" class="headerlink" title="网络空间测绘溯源技术"></a>网络空间测绘溯源技术</h4><ul>
 <li><p><strong>行为测绘</strong></p>
 <blockquote>
@@ -182,33 +39,33 @@
 </ul>
 <h4 id="Fofa的简单使用"><a href="#Fofa的简单使用" class="headerlink" title="Fofa的简单使用"></a>Fofa的简单使用</h4><ul>
 <li><p>逻辑运算符</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&amp;&amp; ：表示逻辑与</span><br><span class="line">|| ：表示逻辑或</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">&amp;&amp; ：表示逻辑与<br>|| ：表示逻辑或<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>查找指定应用的IP</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app=&quot;xxx&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">app=&quot;xxx&quot;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>查找使用指定协议的IP</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protocol=&quot;xxx&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">protocol=&quot;xxx&quot;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>查找开放端口的IP</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">port=&quot;3389&quot;</span><br><span class="line">ports=&quot;1433,3306,3389&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">port=&quot;3389&quot;<br>ports=&quot;1433,3306,3389&quot;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>查找IP或网段的信息</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#查找指定ip的信息</span><br><span class="line">ip=&quot;220.181.38.148&quot;   </span><br><span class="line">#查找指定网段的信息</span><br><span class="line">ip=&quot;220.181.38.0/24&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#查找指定ip的信息<br>ip=&quot;220.181.38.148&quot;   <br>#查找指定网段的信息<br>ip=&quot;220.181.38.0/24&quot;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>查找使用指定css或js的网站</p>
 <p>找到这个框架特有的<strong>css或js文件</strong>，然后将该css或js的<strong>路径</strong>复制粘贴到 Fofa进行查找</p>
 </li>
 <li><p>其他</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">#查找title含有管理后台的ip</span><br><span class="line">title=&quot;管理后台&quot;     </span><br><span class="line">#查找响应头含有thinkphp的ip</span><br><span class="line">header=&quot;thinkphp&quot;   </span><br><span class="line">#查找响应包含有thinkphp的ip</span><br><span class="line">body=&quot;管理后台&quot;      </span><br><span class="line">#查找指定根域的所有子域</span><br><span class="line">domain=&quot;baidu.com&quot;  </span><br><span class="line">#查找域名中带有指定词的ip 从 url 中搜索&quot;test&quot;,注意搜索要用host作为名称</span><br><span class="line">host=&quot;test&quot;         </span><br><span class="line">#查找中国境内的ip，主要结合其他语句一起 搜索指定国家(编码)的资产</span><br><span class="line">country=CN </span><br><span class="line">city=&quot;Beijing&quot;      # 搜索指定城市的资产.例: 搜索指定城市的资产.</span><br><span class="line">region=&quot;Zhejiang&quot;   # 搜索指定行政区的资产.例: 搜索指定行政区的资产</span><br><span class="line">#搜索证书(如https证书、imaps证书等)中含有&quot;phpinfo.me&quot;关键词的网站和IP</span><br><span class="line">cert=&quot;phpinfo.me&quot; </span><br><span class="line"># 搜索使用此icon的资产</span><br><span class="line">icon_hash=&quot;-xxxx&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#查找title含有管理后台的ip<br>title=&quot;管理后台&quot;     <br>#查找响应头含有thinkphp的ip<br>header=&quot;thinkphp&quot;   <br>#查找响应包含有thinkphp的ip<br>body=&quot;管理后台&quot;      <br>#查找指定根域的所有子域<br>domain=&quot;baidu.com&quot;  <br>#查找域名中带有指定词的ip 从 url 中搜索&quot;test&quot;,注意搜索要用host作为名称<br>host=&quot;test&quot;         <br>#查找中国境内的ip，主要结合其他语句一起 搜索指定国家(编码)的资产<br>country=CN <br>city=&quot;Beijing&quot;      # 搜索指定城市的资产.例: 搜索指定城市的资产.<br>region=&quot;Zhejiang&quot;   # 搜索指定行政区的资产.例: 搜索指定行政区的资产<br>#搜索证书(如https证书、imaps证书等)中含有&quot;phpinfo.me&quot;关键词的网站和IP<br>cert=&quot;phpinfo.me&quot; <br># 搜索使用此icon的资产<br>icon_hash=&quot;-xxxx&quot;<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 <p>如何扩大资产搜索范围？</p>
 <p>搜索的时候<strong>拆分title</strong>来搜索可以获得更多的搜索结果和更大的搜索范围，但是可能会带来脏数据，需要我们人工辨别是否为目标所属资产</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">title=&quot;XX市XX医院&quot; =&gt; </span><br><span class="line">title=&quot;XX市&quot; &amp;&amp; title=&quot;XX医院&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">title=&quot;XX市XX医院&quot; =&gt; <br>title=&quot;XX市&quot; &amp;&amp; title=&quot;XX医院&quot;<br></code></pre></td></tr></table></figure>
 <p>API<strong>接口的特殊姿势</strong></p>
 <p>可以得到</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1. IP资产</span><br><span class="line">2. 关联相关IP段</span><br><span class="line">3. 端口扫描</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1. IP资产<br>2. 关联相关IP段<br>3. 端口扫描<br></code></pre></td></tr></table></figure>
 <p><strong>证书的特殊姿势</strong></p>
 <p>可以得到很多关联域名</p>
 <h4 id="Google-Hack"><a href="#Google-Hack" class="headerlink" title="Google Hack"></a>Google Hack</h4><ul>
@@ -216,10 +73,10 @@
 <ul>
 <li><p>使用正确的谷歌地址</p>
 <p>针对不同国家资源关联性，可以在其后加上国家的后缀，例如</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">google.co.uk 英国</span><br><span class="line">google.fr 法国</span><br><span class="line">google.co.in 印度</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">google.co.uk 英国<br>google.fr 法国<br>google.co.in 印度<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>轻松知道一个单词的意思</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">define: xxx</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">define: xxx<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -253,9 +110,9 @@
 <ul>
 <li><p>基础信息收集</p>
 <p><strong>子域名查询</strong> 利用<code>*</code>来进行泛查询</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:*.example.com -www.example.com</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:*.example.com -www.example.com<br></code></pre></td></tr></table></figure>
 <p>C段查询</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:18.18.18.*</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:18.18.18.*<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>敏感文件收集</p>
 <p><strong>备份文件</strong></p>
@@ -274,213 +131,90 @@
 <p>常见<strong>单页备份文件</strong>扩展名 bkf、bkp、bak、old、backup</p>
 <p><strong>配置文件</strong></p>
 <p>为了避免搜到一些模板配置文件或者默认配置文件，增加一些限定：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. 过滤掉单词 sample example test how to tutorial</span><br><span class="line">2. -cvs 过滤掉CVS库</span><br><span class="line">site:example.com filetype:cnf my.cnf -cvs -example</span><br><span class="line"></span><br><span class="line">site:example.com inurl:config &quot;fetch =+refs/heads/*:refs/remotes/origin/*&quot;</span><br><span class="line">site:example.com inurl:configuration.php intext:&quot;class JConfig &#123;&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1. 过滤掉单词 sample example test how to tutorial<br>2. -cvs 过滤掉CVS库<br>site:example.com filetype:cnf my.cnf -cvs -example<br><br>site:example.com inurl:config &quot;fetch =+refs/heads/*:refs/remotes/origin/*&quot;<br>site:example.com inurl:configuration.php intext:&quot;class JConfig &#123;&quot;<br></code></pre></td></tr></table></figure>
 <p><strong>日志文件</strong></p>
 <p>通常以<code>log</code>结尾</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">site:example.com filetype:log inurl:log</span><br><span class="line">site:example.com ext:log log</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com filetype:log inurl:log<br>site:example.com ext:log log<br></code></pre></td></tr></table></figure>
 <p><strong>数据库文件</strong></p>
 <p>结尾如: <code>sql dbf mdb wdb</code></p>
 <p>对于二进制格式的文件，google不能理解，因此这里用inurl而不是filetype</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:db|backupdb...</span><br><span class="line">数据库转储：</span><br><span class="line">site:example.com intext:&quot;Dumping data for table&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com inurl:db|backupdb...<br>数据库转储：<br>site:example.com intext:&quot;Dumping data for table&quot;<br></code></pre></td></tr></table></figure>
 <p><strong>样例文件</strong></p>
 <blockquote>
 <p>web服务器软件经常会在 web 目录里存有手册和文档一起提供给用户，这些文件告诉用户如何进行使用或理解。这些文件将会带来一些安全风险</p>
 </blockquote>
 <p>例如一些vpn软件手册中可能会存在默认密码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intitle:&quot;apache tomcat/&quot; &quot;Apache Tomcat examples&quot;</span><br><span class="line">site:example.com inurl:/examples/jsp/snp/snoop.jsp</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intitle:&quot;apache tomcat/&quot; &quot;Apache Tomcat examples&quot;<br>site:example.com inurl:/examples/jsp/snp/snoop.jsp<br></code></pre></td></tr></table></figure>
 <p><strong>其他敏感文件</strong></p>
 <p>以robots.txt为例</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:&quot;robot.txt&quot; intext:disallow filetype:txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com inurl:&quot;robot.txt&quot; intext:disallow filetype:txt<br></code></pre></td></tr></table></figure>
 <p>注册表</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com filetype: reg HKEY_CURRENT_USER username</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com filetype: reg HKEY_CURRENT_USER username<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>敏感目录收集</p>
 <p><strong>目录遍历的位置</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intitle:index .of &quot;parent directory&quot;</span><br><span class="line">site:example.com intitle:index .of name size</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intitle:index .of &quot;parent directory&quot;<br>site:example.com intitle:index .of name size<br></code></pre></td></tr></table></figure>
 <p><strong>查看指定目录的遍历</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intitle:index .of inurl:admin</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intitle:index .of inurl:admin<br></code></pre></td></tr></table></figure>
 <p><strong>查找服务器软件名、版本号、操作系统相关信息</strong>，还是从intitle入手</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intitle:index .of &quot;Application Data/Microsoft/Credentials&quot;</span><br><span class="line"></span><br><span class="line">site:example.com intitle:index .of etc|.sh_history|.bash_history|passwd|people.lst|htpasswd|...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intitle:index .of &quot;Application Data/Microsoft/Credentials&quot;<br><br>site:example.com intitle:index .of etc|.sh_history|.bash_history|passwd|people.lst|htpasswd|...<br></code></pre></td></tr></table></figure>
 <p><strong>临时文件目录</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:tmp|temp|cache...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com inurl:tmp|temp|cache...<br></code></pre></td></tr></table></figure>
 <p><strong>登录位置查询</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"># 利用 intext</span><br><span class="line">site:example.com intext:管理|后台|登陆|用户名|密码|帐号|注册|admin|login|manage|manager|register|houtai|guanli|forgotten</span><br><span class="line"># 利用 inurl</span><br><span class="line">site:example.com inurl:admin|login|manage|manager|register|prelogin|logincheck</span><br><span class="line"># 利用版权信息、指纹信息</span><br><span class="line">site:example.com intext:&quot;Powered by&quot;</span><br><span class="line">site:example.com intext:&quot;XX科技&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># 利用 intext<br>site:example.com intext:管理|后台|登陆|用户名|密码|帐号|注册|admin|login|manage|manager|register|houtai|guanli|forgotten<br># 利用 inurl<br>site:example.com inurl:admin|login|manage|manager|register|prelogin|logincheck<br># 利用版权信息、指纹信息<br>site:example.com intext:&quot;Powered by&quot;<br>site:example.com intext:&quot;XX科技&quot;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>敏感信息收集</p>
 <p><strong>收集错误消息</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:&quot;sql syntax near&quot;|&quot;syntax error has occurred&quot;| &quot;incorrect syntax near&quot;|&quot;unexpected end of SQL command&quot;|&quot;mysql_connect()&quot;| &quot;mysql_query()&quot;|&quot;Warning: pg_connect()&quot;</span><br><span class="line"># 另一种间接搜索方式，即通过错误消息泄露出来的如服务器敏感路径来间接查找报错位置</span><br><span class="line">site:example.com intext:&quot;/var/lib/&quot;|&quot;/var/www/&quot;|&quot;D:\&quot;|&quot;C:\&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intext:&quot;sql syntax near&quot;|&quot;syntax error has occurred&quot;| &quot;incorrect syntax near&quot;|&quot;unexpected end of SQL command&quot;|&quot;mysql_connect()&quot;| &quot;mysql_query()&quot;|&quot;Warning: pg_connect()&quot;<br># 另一种间接搜索方式，即通过错误消息泄露出来的如服务器敏感路径来间接查找报错位置<br>site:example.com intext:&quot;/var/lib/&quot;|&quot;/var/www/&quot;|&quot;D:\&quot;|&quot;C:\&quot;<br></code></pre></td></tr></table></figure>
 <p><strong>用户名、密码和其他秘密信息</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:(password|passcode|pass|密码) intext:(username|userid|user|用户|账户)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intext:(password|passcode|pass|密码) intext:(username|userid|user|用户|账户)<br></code></pre></td></tr></table></figure>
 <p>更多情况出现在网站提供的doc操作手册当中</p>
 <p><strong>电子邮箱地址查找</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:邮箱|邮件|email|e-mail</span><br><span class="line">site:example.com intext:&quot;@qq.com&quot;|&quot;@163.com&quot;...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intext:邮箱|邮件|email|e-mail<br>site:example.com intext:&quot;@qq.com&quot;|&quot;@163.com&quot;...<br></code></pre></td></tr></table></figure>
 <p><strong>电话号码</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:电话|手机号|联系方式|请拨打...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intext:电话|手机号|联系方式|请拨打...<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>Office文档收集</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">site:example.com filetype:doc &quot;密码&quot;</span><br><span class="line">site:example.com filetype:xls|xlxs &quot;密码&quot;</span><br><span class="line">site:example.com filetype:doc intitle:&quot;管理&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com filetype:doc &quot;密码&quot;<br>site:example.com filetype:xls|xlxs &quot;密码&quot;<br>site:example.com filetype:doc intitle:&quot;管理&quot;<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>功能性站点收集</p>
 <p><strong>文件上传</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:upload|upfile|saveup intext:提交|确定|上传</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com inurl:upload|upfile|saveup intext:提交|确定|上传<br></code></pre></td></tr></table></figure>
 <p><strong>文件下载</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:download|downfile intext:下载</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com inurl:download|downfile intext:下载<br></code></pre></td></tr></table></figure>
 <p><strong>文件读取</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com inurl:&quot;path=&quot;|&quot;readfile=&quot;|&quot;file=&quot;|&quot;url=&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com inurl:&quot;path=&quot;|&quot;readfile=&quot;|&quot;file=&quot;|&quot;url=&quot;<br></code></pre></td></tr></table></figure>
 <p><strong>留言评论</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:提交|确定|评论</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intext:提交|确定|评论<br></code></pre></td></tr></table></figure>
 <p><strong>个人空间</strong>（检查越权、存储型XSS）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:个人信息管理|会员|个人空间 OR inurl:member|zone</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intext:个人信息管理|会员|个人空间 OR inurl:member|zone<br></code></pre></td></tr></table></figure>
 </li>
 <li><p><strong>博彩、广告、反共言论查询</strong></p>
 <p>其目的是被挂了博彩等页面的网站可能是被入侵过的，可以利用证据来搜寻相关利用漏洞</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">site:example.com intext:博彩|澳门|反共|色情|百家乐|轮盘|时时彩|荷官|香港彩|娱乐城|性爱|大陆|共匪|楼凤|外围|良家|一夜情|交友|上门服务</span><br><span class="line"></span><br><span class="line">site:example.com intext:裸聊|找小姐|返水|自拍|六合彩|同城交友|丝袜|少妇|小姐|狼友|桑拿|夜生活|真人娱乐|真钱|娱乐城|免费试玩|随时结算</span><br><span class="line"></span><br><span class="line">site:example.com intext:老虎机|真人娱乐|返点|德州扑克|棋牌|进入直播|游戏账号|&quot;VIP俱乐部&quot;|菠菜...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">site:example.com intext:博彩|澳门|反共|色情|百家乐|轮盘|时时彩|荷官|香港彩|娱乐城|性爱|大陆|共匪|楼凤|外围|良家|一夜情|交友|上门服务<br><br>site:example.com intext:裸聊|找小姐|返水|自拍|六合彩|同城交友|丝袜|少妇|小姐|狼友|桑拿|夜生活|真人娱乐|真钱|娱乐城|免费试玩|随时结算<br><br>site:example.com intext:老虎机|真人娱乐|返点|德州扑克|棋牌|进入直播|游戏账号|&quot;VIP俱乐部&quot;|菠菜...<br></code></pre></td></tr></table></figure>
 <p>一些语料库 <a target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting/1earn/blob/master/1earn/Security/RedTeam/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/%E7%A9%BA%E9%97%B4%E6%B5%8B%E7%BB%98.md#%E8%AF%AD%E6%96%99%E6%94%B6%E9%9B%86">https://github.com/RacerZ-fighting/1earn/blob/master/1earn/Security/RedTeam/%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86/%E7%A9%BA%E9%97%B4%E6%B5%8B%E7%BB%98.md#%E8%AF%AD%E6%96%99%E6%94%B6%E9%9B%86</a></p>
 </li>
 <li><p><strong>历史遗留后门文件</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 关键词查找</span><br><span class="line">site:example.com intext:剑眉大侠|不灭之魂|仗剑孤行|通杀版|法客论坛|上传的口令|&quot;导出DLL文件出错&quot;|&quot;token虚拟机管理&quot;|老子的绝对路径|免杀版</span><br><span class="line">site:example.com intext:法克|后门|木马|小马|大马|脱库|黑客|一句话后门|挂马|清马|&quot;扫描IP&quot;|开放端口|提权|执行命令|设置密码|提升权限</span><br><span class="line">site:example.com intext:一句话木马|过狗|安全狗|&quot;K8飞刀&quot;|&quot;K8拉登哥哥&quot;|&quot;K8搞基大队&quot;|反弹端口|&quot;hacked by&quot;...</span><br><span class="line"># 木马文件名查找</span><br><span class="line">site:example.com inurl:phpspy|udf|JFolder|JspSpyJDK5|AspxSpy2014Final...</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext"># 关键词查找<br>site:example.com intext:剑眉大侠|不灭之魂|仗剑孤行|通杀版|法客论坛|上传的口令|&quot;导出DLL文件出错&quot;|&quot;token虚拟机管理&quot;|老子的绝对路径|免杀版<br>site:example.com intext:法克|后门|木马|小马|大马|脱库|黑客|一句话后门|挂马|清马|&quot;扫描IP&quot;|开放端口|提权|执行命令|设置密码|提升权限<br>site:example.com intext:一句话木马|过狗|安全狗|&quot;K8飞刀&quot;|&quot;K8拉登哥哥&quot;|&quot;K8搞基大队&quot;|反弹端口|&quot;hacked by&quot;...<br># 木马文件名查找<br>site:example.com inurl:phpspy|udf|JFolder|JspSpyJDK5|AspxSpy2014Final...<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
-<h4 id="Github信息搜集"><a href="#Github信息搜集" class="headerlink" title="Github信息搜集"></a>Github信息搜集</h4><p><img src="/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230102170512288.png" alt="image-20230102170512288"></p>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E6%B5%8B%E7%BB%98%E6%BA%AF%E6%BA%90%E6%8A%80%E6%9C%AF"><span class="toc-number">2.</span> <span class="toc-text">网络空间测绘溯源技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fofa%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">Fofa的简单使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Google-Hack"><span class="toc-number">4.</span> <span class="toc-text">Google Hack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Github%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">5.</span> <span class="toc-text">Github信息搜集</span></a></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&text=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&title=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&is_video=false&description=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=渗透的艺术——信息收集—-善用搜索引擎&body=Check out this article: https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&title=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&title=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&title=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&title=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&name=渗透的艺术——信息收集—-善用搜索引擎&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/&t=渗透的艺术——信息收集—-善用搜索引擎"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<h4 id="Github信息搜集"><a href="#Github信息搜集" class="headerlink" title="Github信息搜集"></a>Github信息搜集</h4><p class='item-img' data-src='/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230102170512288.png'><img src="/2023/01/12/%E6%90%9C%E7%B4%A2%E5%BC%95%E6%93%8E%E7%9A%84%E5%AD%A6%E4%B9%A0/image-20230102170512288.png" alt="image-20230102170512288"></p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2023/01/12/Yakit/">← Next Yakit单兵作战武器文档速查</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/01/11/JNDI/">JNDI注入浅析 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C%E7%A9%BA%E9%97%B4%E6%B5%8B%E7%BB%98%E6%BA%AF%E6%BA%90%E6%8A%80%E6%9C%AF"><span class="toc-number">2.</span> <span class="toc-text">网络空间测绘溯源技术</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fofa%E7%9A%84%E7%AE%80%E5%8D%95%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">Fofa的简单使用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Google-Hack"><span class="toc-number">4.</span> <span class="toc-text">Google Hack</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Github%E4%BF%A1%E6%81%AF%E6%90%9C%E9%9B%86"><span class="toc-number">5.</span> <span class="toc-text">Github信息搜集</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>

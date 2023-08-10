@@ -1,187 +1,38 @@
-<!DOCTYPE html>
-<html lang=en>
-<head>
-    <!-- so meta -->
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="HandheldFriendly" content="True">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="写在前面记录一下跟着文档学习neo4j，里面会牵涉到一些在扫链子当中需要用的重要概念 MATCH用于去匹配指定的模式 以下图中的样本图为例   基本的结点搜寻  获取所有结点 12MATCH (n)RETURN n  获取所有带标签的结点 12MATCH (movie:Movie)RETURN movie.title  相关结点 标志--代表中一种关联，但是忽视关联的方向和类型 12MATCH (">
-<meta property="og:type" content="article">
-<meta property="og:title" content="neo4j部分文档学习">
-<meta property="og:url" content="https://racerz-fighting.github.io/2022/11/05/neo4j/index.html">
-<meta property="og:site_name" content="RacerZ">
-<meta property="og:description" content="写在前面记录一下跟着文档学习neo4j，里面会牵涉到一些在扫链子当中需要用的重要概念 MATCH用于去匹配指定的模式 以下图中的样本图为例   基本的结点搜寻  获取所有结点 12MATCH (n)RETURN n  获取所有带标签的结点 12MATCH (movie:Movie)RETURN movie.title  相关结点 标志--代表中一种关联，但是忽视关联的方向和类型 12MATCH (">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/neo4j/image-20221108112228266.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/neo4j/image-20221108114733640.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/neo4j/image-20221108151557440.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/neo4j/image-20221108162123160.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/neo4j/image-20221108164909403.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/neo4j/image-20221108210808878.png">
-<meta property="og:image" content="https://racerz-fighting.github.io/2022/11/05/neo4j/image-20221108211021627.png">
-<meta property="article:published_time" content="2022-11-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-11-25T16:02:13.742Z">
-<meta property="article:author" content="RacerZ">
-<meta property="article:tag" content="database">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://racerz-fighting.github.io/2022/11/05/neo4j/image-20221108112228266.png">
-    
-    
-      
-        
-          <link rel="shortcut icon" href="/images/favicon.ico">
-        
-      
-      
-        
-          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
-        
-      
-      
-        
-          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-        
-      
-    
-    <!-- title -->
-    <title>neo4j部分文档学习</title>
-    <!-- styles -->
-    
-<link rel="stylesheet" href="/css/style.css">
-
-    <!-- persian styles -->
-    
-    <!-- rss -->
-    
-    
-	<!-- mathjax -->
-	
-<!-- hexo injector head_end start -->
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>neo4j部分文档学习 | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
 
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
-<!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.2"></head>
-
-<body class="max-width mx-auto px3 ltr">
-    
-      <div id="header-post">
-  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
-  <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
-  <span id="menu">
-    <span id="nav">
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </span>
-    <br/>
-    <span id="actions">
-      <ul>
-        
-        <li><a class="icon" aria-label="Previous post" href="/2022/11/06/2022%E9%95%BF%E5%AE%89%E6%9D%AF%E7%94%B5%E5%AD%90%E6%95%B0%E6%8D%AE%E5%8F%96%E8%AF%81%E5%A4%8D%E7%9B%98/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
-        
-        
-        <li><a class="icon" aria-label="Next post" href="/2022/11/05/RSA/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
-        
-        <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
-        <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-      </ul>
-      <span id="i-prev" class="info" style="display:none;">Previous post</span>
-      <span id="i-next" class="info" style="display:none;">Next post</span>
-      <span id="i-top" class="info" style="display:none;">Back to top</span>
-      <span id="i-share" class="info" style="display:none;">Share post</span>
-    </span>
-    <br/>
-    <div id="share" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/05/neo4j/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&text=neo4j部分文档学习"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&title=neo4j部分文档学习"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&is_video=false&description=neo4j部分文档学习"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=neo4j部分文档学习&body=Check out this article: https://racerz-fighting.github.io/2022/11/05/neo4j/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&title=neo4j部分文档学习"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&title=neo4j部分文档学习"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&title=neo4j部分文档学习"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&title=neo4j部分文档学习"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&name=neo4j部分文档学习&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/05/neo4j/&t=neo4j部分文档学习"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-    <div id="toc">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MATCH"><span class="toc-number">2.</span> <span class="toc-text">MATCH</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RETURN"><span class="toc-number">3.</span> <span class="toc-text">RETURN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WHERE"><span class="toc-number">4.</span> <span class="toc-text">WHERE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CALL-procedure"><span class="toc-number">5.</span> <span class="toc-text">CALL procedure</span></a></li></ol>
-    </div>
-  </span>
-</div>
-
-    
-    <div class="content index py4">
-        
-        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
-  <header>
-    
-    <h1 class="posttitle" itemprop="name headline">
-        neo4j部分文档学习
-    </h1>
-
-
-
-    <div class="meta">
-      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <span itemprop="name">RacerZ</span>
-      </span>
-      
-    <div class="postdate">
-      
-        <time datetime="2022-11-04T16:00:00.000Z" itemprop="datePublished">2022-11-05</time>
-        
-      
-    </div>
-
-
-      
-
-      
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/database/" rel="tag">database</a>
-    </div>
-
-
-    </div>
-  </header>
-  
-
-  <div class="content" itemprop="articleBody">
-    <h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>记录一下跟着文档学习neo4j，里面会牵涉到一些在扫链子当中需要用的重要概念</p>
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>neo4j部分文档学习</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2022-11-04T16:00:00.000Z" id="date"> 2022-11-05</time></div></span><br><span>Last Update: <div class="control"><time datetime="2022-11-25T16:02:13.742Z" id="updated"> 2022-11-26</time></div></span></div></div><hr><div id="post-content"><h4 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h4><p>记录一下跟着文档学习neo4j，里面会牵涉到一些在扫链子当中需要用的重要概念</p>
 <h4 id="MATCH"><a href="#MATCH" class="headerlink" title="MATCH"></a>MATCH</h4><p>用于去匹配指定的<strong>模式</strong></p>
 <p>以下图中的样本图为例</p>
-<p><img src="/2022/11/05/neo4j/image-20221108112228266.png" alt="image-20221108112228266"></p>
+<p class='item-img' data-src='/2022/11/05/neo4j/image-20221108112228266.png'><img src="/2022/11/05/neo4j/image-20221108112228266.png" alt="image-20221108112228266"></p>
 <ul>
 <li><p>基本的结点搜寻</p>
 <ul>
 <li><p>获取所有结点</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs neo4j">MATCH (n)<br>RETURN n<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>获取所有带标签的结点</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (movie:Movie)</span><br><span class="line">RETURN movie.title</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (movie:Movie)<br>RETURN movie.title<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>相关结点</p>
 <p>标志<code>--</code>代表中一种关联，但是忽视关联的<strong>方向</strong>和<strong>类型</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (director &#123;name: &#x27;Oliver Stone&#x27;&#125;) -- (movie)</span><br><span class="line">RETURN movie.title</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (director &#123;name: &#x27;Oliver Stone&#x27;&#125;) -- (movie)<br>RETURN movie.title<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>匹配标签</p>
 <p>为了利用<strong>标签</strong>模式来限制结点，在模式结点上加入标签语法</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (:Person &#123;name: &#x27;Oliver Stone&#x27;&#125;) -- (movie:Movie)</span><br><span class="line">RETURN movie.title</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (:Person &#123;name: &#x27;Oliver Stone&#x27;&#125;) -- (movie:Movie)<br>RETURN movie.title<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -189,24 +40,24 @@
 <ul>
 <li><p>外向关系</p>
 <p>当关系表现出倾向性，通过<code>--&gt;</code>或<code>&lt;--</code>来表示</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (:Person &#123;name: &#x27;Oliver Stone&#x27;&#125;) --&gt; (movie)</span><br><span class="line">RETURN movie.title</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (:Person &#123;name: &#x27;Oliver Stone&#x27;&#125;) --&gt; (movie)<br>RETURN movie.title<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>直接关系和变量</p>
 <p>可以通过一个变量来过滤关系的属性或者返回关系</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (:Person &#123;name: &#x27;Oliver Stone&#x27;&#125;) -[r]-&gt; (movie)</span><br><span class="line">RETURN type(r)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (:Person &#123;name: &#x27;Oliver Stone&#x27;&#125;) -[r]-&gt; (movie)<br>RETURN type(r)<br></code></pre></td></tr></table></figure>
 <p>该语句可以返回所有从Oliver发出的<strong>有向关系</strong>的类型</p>
 </li>
 <li><p>匹配关系类型</p>
 <p>当你知道想要匹配的关系类型时，通过<code>:关系类型</code>来指定</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (wallstreet:Movie &#123;title: &#x27;Wall Street&#x27;&#125;)&lt;-[:ACTED_IN]-(actor)</span><br><span class="line">RETURN actor.name</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (wallstreet:Movie &#123;title: &#x27;Wall Street&#x27;&#125;)&lt;-[:ACTED_IN]-(actor)<br>RETURN actor.name<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>匹配多种关系类型</p>
 <p>可以将多种关系类型用<code>|</code>连接起来，表示匹配多种关系类型之一</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (wallstreet:Movie &#123;title: &#x27;Wall Street&#x27;&#125;)&lt;-[:ACTED_IN|DIRECTED]-(actor)</span><br><span class="line">RETURN actor.name</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (wallstreet:Movie &#123;title: &#x27;Wall Street&#x27;&#125;)&lt;-[:ACTED_IN|DIRECTED]-(actor)<br>RETURN actor.name<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>匹配关系类型并使用变量</p>
 <p>如果想要用变量来表示关系，且想指定想要的关系类型，都加上去即可</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (wallstreet &#123;title: &#x27;Wall Street&#x27;&#125;)&lt;-[r:ACTED_IN]-(actor)</span><br><span class="line">RETURN r.role</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (wallstreet &#123;title: &#x27;Wall Street&#x27;&#125;)&lt;-[r:ACTED_IN]-(actor)<br>RETURN r.role<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -215,43 +66,43 @@
 <ul>
 <li><p>关系类型中包含非常见字符</p>
 <p>有时数据库关系类型中包含非常见类型，比如空格。这时可以通过反引号`来引用</p>
-<p><img src="/2022/11/05/neo4j/image-20221108114733640.png" alt="image-20221108114733640"></p>
+<p class='item-img' data-src='/2022/11/05/neo4j/image-20221108114733640.png'><img src="/2022/11/05/neo4j/image-20221108114733640.png" alt="image-20221108114733640"></p>
 <p>例如上图中的红线，可以如下查询</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n &#123;name: &#x27;Rob Reiner&#x27;&#125;)-[r:`TYPE INCLUDING A SPACE`]-&gt;  ()</span><br><span class="line">RETURN type(r)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n &#123;name: &#x27;Rob Reiner&#x27;&#125;)-[r:`TYPE INCLUDING A SPACE`]-&gt;  ()<br>RETURN type(r)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>多重关系</p>
 <p>多个关系可以通过使用多个<code>()--()</code>形式的表达式来表示，或者直接连起来</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (chalie &#123;name: &#x27;Charlie Sheen&#x27;&#125;)-[:ACTED_IN]-&gt;(movie)&lt;-[:DIRECTED]-(direcotr)</span><br><span class="line">RETURN movie.title, director.name</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (chalie &#123;name: &#x27;Charlie Sheen&#x27;&#125;)-[:ACTED_IN]-&gt;(movie)&lt;-[:DIRECTED]-(direcotr)<br>RETURN movie.title, director.name<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>变长关系</p>
 <p>需要多个<code>relationship-&gt;node</code>模式表示的结点可以通过<code>-[:TYPE*minHops..maxHops]-&gt;</code>来表示，其中<code>minHops</code>和<code>maxHops</code>是可选的，默认分别是1和无穷大。当没有给定界限时，点号可以忽略。当只有一个界限时点好也可以忽略，表示的是一个固定长度的模式</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (charlie &#123;name: &#x27;Charlie Sheen&#x27;&#125;) -[:ACTED_IN*1..3]-(movie:Movie)</span><br><span class="line">RETURN movie.title</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (charlie &#123;name: &#x27;Charlie Sheen&#x27;&#125;) -[:ACTED_IN*1..3]-(movie:Movie)<br>RETURN movie.title<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>变长多种关系</p>
 <p>变长关系和多种关系可组合。这样的话变长范围适用于所有<strong>结合的关系类型</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (charlie &#123;name: &#x27;Charlie Sheen&#x27;&#125;)-[:ACTED_IN||DIRECTED*2]-(person:Person)</span><br><span class="line">RETURN person.name</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (charlie &#123;name: &#x27;Charlie Sheen&#x27;&#125;)-[:ACTED_IN||DIRECTED*2]-(person:Person)<br>RETURN person.name<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>可变长度关系的关系变量</p>
 <p>当在两节点之间的连接是可变长度时，返回的构成连接的<strong>关系列表</strong>可以如下语法表示</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH p = (actor &#123;name: &#x27;Charlie Sheen&#x27;&#125;)-[:ACTED_IN*2]-(co_actor)</span><br><span class="line">RETURN relationships(p)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH p = (actor &#123;name: &#x27;Charlie Sheen&#x27;&#125;)-[:ACTED_IN*2]-(co_actor)<br>RETURN relationships(p)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>匹配可变长路径上的属性</p>
 <p>变长关系上的属性意味着在路径上的所有关系都必须拥有指定的属性值。例如下图所示</p>
-<p><img src="/2022/11/05/neo4j/image-20221108151557440.png" alt="image-20221108151557440"></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH p = (charlie:Person)-[* &#123;blocked:false&#125;]-(martin:Person)</span><br><span class="line">WHERE charlie.name = &#x27;Charlie Sheen&#x27; AND martin.name = &#x27;Martin Sheen&#x27;</span><br><span class="line">RETURN p</span><br></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/05/neo4j/image-20221108151557440.png'><img src="/2022/11/05/neo4j/image-20221108151557440.png" alt="image-20221108151557440"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH p = (charlie:Person)-[* &#123;blocked:false&#125;]-(martin:Person)<br>WHERE charlie.name = &#x27;Charlie Sheen&#x27; AND martin.name = &#x27;Martin Sheen&#x27;<br>RETURN p<br></code></pre></td></tr></table></figure>
 <p>这将返回所有在 <strong>‘Charlie Sheen’</strong> 和 <strong>‘Martin Sheen’</strong>之前的路径且满足属性<code>blocked</code>为<code>false</code></p>
 </li>
 <li><p>零长路径</p>
 <p>使用下限为0的变长路径意味着两个变量可以指向同一结点。如果两节点之间的路径长度为0的话，它们就被定义为同一结点。注意到当匹配零长路径时结果即使未使用关系类型也能匹配到一个结果（即自身？）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (wallstreet:Movie &#123;title: &#x27;Wall Street&#x27;&#125;)-[*0..1]-(x)</span><br><span class="line">RETURN x</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (wallstreet:Movie &#123;title: &#x27;Wall Street&#x27;&#125;)-[*0..1]-(x)<br>RETURN x<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>命名路径</p>
 <p>当想要在模式图中返回或过滤一条路径，可以引入命名路径</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH p = (michael &#123;name: &#x27;Michael Douglas&#x27;&#125;)--&gt;()</span><br><span class="line">RETURN p</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH p = (michael &#123;name: &#x27;Michael Douglas&#x27;&#125;)--&gt;()<br>RETURN p<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>匹配有界关系</p>
 <p>当你的模式包含有界关系，而关系中并没有明确方向，Cypher会尝试双向匹配关系</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a)-[r]-(b)</span><br><span class="line">WHERE id(r) = 0</span><br><span class="line">RETURN a,b</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (a)-[r]-(b)<br>WHERE id(r) = 0<br>RETURN a,b<br></code></pre></td></tr></table></figure>
 <p>该语句会返回两个连接节点，一个是开始结点，另一个是终止结点</p>
 </li>
 </ul>
@@ -260,17 +111,17 @@
 <ul>
 <li><p>单一最短路径</p>
 <p>使用函数<code>shortestPath</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MATCH </span><br><span class="line">	(martin:Person &#123;name: &#x27;Martin Sheen&#x27;&#125;)</span><br><span class="line">	(oliver:Person &#123;name: &#x27;Oliver Stone&#x27;&#125;)</span><br><span class="line">	p = shortestPath((martin)-[*..15]-(oliver))</span><br><span class="line">RETURN p</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH <br>	(martin:Person &#123;name: &#x27;Martin Sheen&#x27;&#125;)<br>	(oliver:Person &#123;name: &#x27;Oliver Stone&#x27;&#125;)<br>	p = shortestPath((martin)-[*..15]-(oliver))<br>RETURN p<br></code></pre></td></tr></table></figure>
 <p>这意味着：只要路径长度最大不超过15，就会在其中寻找满足的最短路径。在括号中定义了开始结点，连接关系和终止结点。在寻找最短路径时典型的描述关系的条件如关系类型，最大跳数和方向都会用上。如果在<code>shortestPath</code>匹配之后跟着<code>where</code>语句，相应的限定都会包含在寻找过程中。如果谓词是<code>none()</code>或<code>all()</code>，同理。</p>
 </li>
 <li><p>单一最短路径，带上谓词</p>
 <p>在最短路径模式中用上谓词<code>WHERE</code>也会在决定最短路径前进行评估</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MATCH </span><br><span class="line">	(charlie:Person &#123;name: &#x27;Charlie Sheen&#x27;&#125;),</span><br><span class="line">	(martin:Person &#123;name: &#x27;Martin Sheen&#x27;&#125;),</span><br><span class="line">	p = shortestPath((charlie)-[*]-(martin))</span><br><span class="line">WHERE none(r IN relationships(p) WHERE type(r) = &#x27;FATHER&#x27;)</span><br><span class="line">RETURN p</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH <br>	(charlie:Person &#123;name: &#x27;Charlie Sheen&#x27;&#125;),<br>	(martin:Person &#123;name: &#x27;Martin Sheen&#x27;&#125;),<br>	p = shortestPath((charlie)-[*]-(martin))<br>WHERE none(r IN relationships(p) WHERE type(r) = &#x27;FATHER&#x27;)<br>RETURN p<br></code></pre></td></tr></table></figure>
 <p>不考虑父子关系</p>
 </li>
 <li><p>所有最短路径</p>
 <p>寻找两节点间所有最短路径</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MATCH</span><br><span class="line">  (martin:Person &#123;name: &#x27;Martin Sheen&#x27;&#125; ),</span><br><span class="line">  (michael:Person &#123;name: &#x27;Michael Douglas&#x27;&#125;),</span><br><span class="line">  p = allShortestPaths((martin)-[*]-(michael))</span><br><span class="line"> RETURN p</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH<br>  (martin:Person &#123;name: &#x27;Martin Sheen&#x27;&#125; ),<br>  (michael:Person &#123;name: &#x27;Michael Douglas&#x27;&#125;),<br>  p = allShortestPaths((martin)-[*]-(michael))<br> RETURN p<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -278,90 +129,90 @@
 <ul>
 <li><p>id寻找节点</p>
 <p>在谓词中使用<code>id()</code>函数可以通过id来寻找节点</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE id(n) = 0</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n)<br>WHERE id(n) = 0<br>RETURN n<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>id获取关系</p>
 <p>在谓词中使用<code>id()</code>函数可以通过id来寻找关系</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH ()-[r]-&gt;()</span><br><span class="line">WHERE id(r) = 0</span><br><span class="line">RETURN r</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH ()-[r]-&gt;()<br>WHERE id(r) = 0<br>RETURN r<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>id寻找多个节点</p>
 <p>通过利用<code>IN</code>可以指定选择多个节点</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE id(n) IN [0,3,5]</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n)<br>WHERE id(n) IN [0,3,5]<br>RETURN n<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
 </ul>
 <h4 id="RETURN"><a href="#RETURN" class="headerlink" title="RETURN"></a>RETURN</h4><p>定义查询结果集都有什么</p>
-<p><img src="/2022/11/05/neo4j/image-20221108162123160.png" alt="image-20221108162123160"></p>
+<p class='item-img' data-src='/2022/11/05/neo4j/image-20221108162123160.png'><img src="/2022/11/05/neo4j/image-20221108162123160.png" alt="image-20221108162123160"></p>
 <ul>
 <li><p>返回节点</p>
 <p>直接列举在<code>RETURN</code>陈述句当中即可</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n &#123;name: &#x27;B&#x27;&#125;)</span><br><span class="line">RETURN n</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n &#123;name: &#x27;B&#x27;&#125;)<br>RETURN n<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>返回关系</p>
 <p>同理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n &#123;name: &#x27;A&#x27;&#125;)-[r:KNOWS]-&gt;(c)</span><br><span class="line">RETURN r</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n &#123;name: &#x27;A&#x27;&#125;)-[r:KNOWS]-&gt;(c)<br>RETURN r<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>返回属性</p>
 <p>利用点分隔符</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n &#123;name: &#x27;A&#x27;&#125;)</span><br><span class="line">RETURN n.name</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n &#123;name: &#x27;A&#x27;&#125;)<br>RETURN n.name<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>返回所有元素</p>
 <p>同样支持统配符<code>*</code>来返回    所有结点、关系和路径</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH p = (a &#123;name: &#x27;A&#x27;&#125;)-[r]-&gt;(b)</span><br><span class="line">RETURN *</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH p = (a &#123;name: &#x27;A&#x27;&#125;)-[r]-&gt;(b)<br>RETURN *<br></code></pre></td></tr></table></figure>
 <p>这将返回p a r b</p>
 </li>
 <li><p>非常见字符变量</p>
 <p>为了引进并不是由英文字母表中元素构成的占位符（变量），可以利用`来闭合</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (`This isn\&#x27;t a common variable`)</span><br><span class="line">WHERE `This isn\&#x27;t a common variable`.name = &#x27;A&#x27;</span><br><span class="line">RETURN `This isn\&#x27;t a common variable`.happy</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (`This isn\&#x27;t a common variable`)<br>WHERE `This isn\&#x27;t a common variable`.name = &#x27;A&#x27;<br>RETURN `This isn\&#x27;t a common variable`.happy<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>字段别名</p>
 <p>如果字段名需要和表达式所使用的区分，可以使用<code>AS &lt;new name&gt;</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a &#123;name: &#x27;A&#x27;&#125;)</span><br><span class="line">RETURN a.age AS SomethingTotallyDifferent</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (a &#123;name: &#x27;A&#x27;&#125;)<br>RETURN a.age AS SomethingTotallyDifferent<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>可选属性</p>
 <p>如果所指定输出的属性不存在，会返回<code>null</code></p>
 </li>
 <li><p>其他表达式</p>
 <p>任何表达式都可以作为返回项</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a &#123;name: &#x27;A&#x27;&#125;)</span><br><span class="line">RETURN a.age &gt; 30, &quot;I&#x27;m a literal&quot;, [p=(a)--&gt;() | p] AS `(a)--&gt;()`</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (a &#123;name: &#x27;A&#x27;&#125;)<br>RETURN a.age &gt; 30, &quot;I&#x27;m a literal&quot;, [p=(a)--&gt;() | p] AS `(a)--&gt;()`<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>唯一结果</p>
 <p><code>DISTINCT</code> 限制了相应字段的输出结果不能重复</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a &#123;name: &#x27;A&#x27;&#125;)--&gt;(b)</span><br><span class="line">RETURN DISTINCT b</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (a &#123;name: &#x27;A&#x27;&#125;)--&gt;(b)<br>RETURN DISTINCT b<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
-<h4 id="WHERE"><a href="#WHERE" class="headerlink" title="WHERE"></a>WHERE</h4><p><img src="/2022/11/05/neo4j/image-20221108164909403.png" alt="image-20221108164909403"></p>
+<h4 id="WHERE"><a href="#WHERE" class="headerlink" title="WHERE"></a>WHERE</h4><p class='item-img' data-src='/2022/11/05/neo4j/image-20221108164909403.png'><img src="/2022/11/05/neo4j/image-20221108164909403.png" alt="image-20221108164909403"></p>
 <ul>
 <li><p>基本使用</p>
 <ul>
 <li><p>布尔操作</p>
 <p>可以利用逻辑连接符<code>AND OR XOR NOT</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">MATCH(n:Person)</span><br><span class="line">WHERE n.name = &#x27;Peter&#x27; XOR (n.age &lt; 30 AND n.name = &#x27;Timothy&#x27;) OR NOT (n.name = &#x27;Timothy&#x27; OR n.name = &#x27;Peter&#x27;)</span><br><span class="line">RETURN </span><br><span class="line">	n.name AS name,</span><br><span class="line">	n.age AS age</span><br><span class="line">ORDER BY name</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH(n:Person)<br>WHERE n.name = &#x27;Peter&#x27; XOR (n.age &lt; 30 AND n.name = &#x27;Timothy&#x27;) OR NOT (n.name = &#x27;Timothy&#x27; OR n.name = &#x27;Peter&#x27;)<br>RETURN <br>	n.name AS name,<br>	n.age AS age<br>ORDER BY name<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>过滤结点标签</p>
 <p>在<code>WHERE</code>后写上标签谓词<code>n:foo</code>， 可以过滤结点</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n)</span><br><span class="line">WHERE n:Swedish</span><br><span class="line">RETURN n.name, n.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n)<br>WHERE n:Swedish<br>RETURN n.name, n.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>过滤结点属性</p>
 <p>同理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE n.age &lt; 30</span><br><span class="line">RETURN n.name, n.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE n.age &lt; 30<br>RETURN n.name, n.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>过滤关系属性</p>
 <p>同理</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)-[k:KNOWS]-&gt;(f)</span><br><span class="line">WHERE k.since &lt; 2000 </span><br><span class="line">RETURN f.name, f.age, f.email</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)-[k:KNOWS]-&gt;(f)<br>WHERE k.since &lt; 2000 <br>RETURN f.name, f.age, f.email<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>过滤动态计算属性</p>
 <p>当需要动态计算来过滤属性，使用<strong>方括号</strong></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">WITH &#x27;AGE&#x27; AS propname</span><br><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE n[toLower(propname)] &lt; 30</span><br><span class="line">RETURN n.name, n.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">WITH &#x27;AGE&#x27; AS propname<br>MATCH (n:Person)<br>WHERE n[toLower(propname)] &lt; 30<br>RETURN n.name, n.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>属性存在性检查</p>
 <p>使用<code>IS NOT NULL</code>谓词来只包含属性存在的结点或关系</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE n.belt IS NOT NULL</span><br><span class="line">RETURN n.name, n.belt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE n.belt IS NOT NULL<br>RETURN n.name, n.belt<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>与<strong>WITH</strong>配合使用</p>
 <p>强调当WITH写在WHERE之前时，WHERE的作用域并不会被左右</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WITH n.name as name</span><br><span class="line">WHERE n.age = 25</span><br><span class="line">RETURN name</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WITH n.name as name<br>WHERE n.age = 25<br>RETURN name<br></code></pre></td></tr></table></figure>
 <p>WHERE仍然视为MATCH的过滤，但WITH剩余查询部分的作用范围，也就是说，<code>name</code>是RETURN 作用域中的唯一变量</p>
 </li>
 </ul>
@@ -371,19 +222,19 @@
 <ul>
 <li><p>前缀字符串搜索利用<code>START WITH</code></p>
 <p>位置：字符串开头</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE n.name STARTS WITH &#x27;Pet&#x27;</span><br><span class="line">RETURN n.name, n.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE n.name STARTS WITH &#x27;Pet&#x27;<br>RETURN n.name, n.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>后缀字符串搜索利用<code>ENDS WITH</code></p>
 <p>位置：字符串结尾</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE n.name ENDS WITH &#x27;ter&#x27;</span><br><span class="line">RETURN n.name, n.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE n.name ENDS WITH &#x27;ter&#x27;<br>RETURN n.name, n.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>子串搜索利用 <code>CONTAINS</code></p>
 <p>不管位置</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE n.name CONTAINS &#x27;ete&#x27;</span><br><span class="line">RETURN n.name, n.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE n.name CONTAINS &#x27;ete&#x27;<br>RETURN n.name, n.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>反向匹配字符串</p>
 <p><code>NOT</code>关键字排除掉所有匹配的字符串</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE NOT n.name ENDS WITH &#x27;y&#x27;</span><br><span class="line">RETURN n.name, n.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE NOT n.name ENDS WITH &#x27;y&#x27;<br>RETURN n.name, n.age<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -392,15 +243,15 @@
 <ul>
 <li><p>使用正规表达式进行匹配</p>
 <p>语法：<code>=~ &#39;regexp&#39;</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE n.name =~ &#x27;Tim.*&#x27;</span><br><span class="line">RETURN n.name, n.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE n.name =~ &#x27;Tim.*&#x27;<br>RETURN n.name, n.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>正规表达式转义使用</p>
 <p>转义特殊字符<code>. *</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE n.email =~ &#x27;.*\\.com&#x27;</span><br><span class="line">RETURN n.name, n.age, n.email</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE n.email =~ &#x27;.*\\.com&#x27;<br>RETURN n.name, n.age, n.email<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>大小写不敏感</p>
 <p>开头加<code>?i</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE n.name =~ &#x27;(?i)AND.*&#x27;</span><br><span class="line">RETURN n.name, n.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE n.name =~ &#x27;(?i)AND.*&#x27;<br>RETURN n.name, n.age<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -409,18 +260,18 @@
 <li><p>模式过滤</p>
 <p>模式不仅是表达式，也是谓词。模式的唯一限制是必须能够用它来表示单一路径。不能在像用MATCH中一样用逗号分隔多种路径，可以用<code>AND</code>来结合。</p>
 <p>注意这里不能引入新的变量。WHERE字段作用是排除匹配路径。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MATCH </span><br><span class="line">	(timothy:Person &#123;name:&#x27;Timothy&#x27;&#125;),</span><br><span class="line">	(other:Person)</span><br><span class="line">WHERE other.name IN [&#x27;Andy&#x27;, &#x27;Peter&#x27;] AND (other)--&gt;(timothy)</span><br><span class="line">RETURN other.name, other.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH <br>	(timothy:Person &#123;name:&#x27;Timothy&#x27;&#125;),<br>	(other:Person)<br>WHERE other.name IN [&#x27;Andy&#x27;, &#x27;Peter&#x27;] AND (other)--&gt;(timothy)<br>RETURN other.name, other.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>模式过滤使用NOT</p>
 <p>作用就是排除路径</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">MATCH</span><br><span class="line">  (person:Person),</span><br><span class="line">  (peter:Person &#123;name: &#x27;Peter&#x27;&#125;)</span><br><span class="line"> WHERE NOT (person)--&gt;(peter)</span><br><span class="line"> RETURN person.name, person.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH<br>  (person:Person),<br>  (peter:Person &#123;name: &#x27;Peter&#x27;&#125;)<br> WHERE NOT (person)--&gt;(peter)<br> RETURN person.name, person.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>模式过滤带上属性</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE (n)-[:KNOWS]-(&#123;name: &#x27;Timothy&#x27;&#125;)</span><br><span class="line">RETURN n.name, n.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE (n)-[:KNOWS]-(&#123;name: &#x27;Timothy&#x27;&#125;)<br>RETURN n.name, n.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>关系类型过滤</p>
 <p>可以使用特殊属性<code>type</code>来比较，支持正轨表达式</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)-[r]-&gt;()</span><br><span class="line">WHERE n.name=&#x27;Andy&#x27; AND type(r) =~ &#x27;K.*&#x27;</span><br><span class="line">RETURN type(r), r.since</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)-[r]-&gt;()<br>WHERE n.name=&#x27;Andy&#x27; AND type(r) =~ &#x27;K.*&#x27;<br>RETURN type(r), r.since<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -431,12 +282,12 @@
 <ul>
 <li><p>IN 操作符</p>
 <p>检查是否有元素存在于列表中</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a:Person)</span><br><span class="line">WHERE a.name IN [&#x27;Peter&#x27;, &#x27;Timothy&#x27;]</span><br><span class="line">RETURN a.name, a.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (a:Person)<br>WHERE a.name IN [&#x27;Peter&#x27;, &#x27;Timothy&#x27;]<br>RETURN a.name, a.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>错误的属性和值</p>
 <p>当匹配一个不存在的值时，默认为false</p>
 <p>如果想排除掉不存在的值，加上条件</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">MATCH (n:Person)</span><br><span class="line">WHERE n.belt = &#x27;white&#x27; OR n.belt IS NULL</span><br><span class="line">RETURN n.name, n.age, n.belt</span><br><span class="line">ORDER BY n.name</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (n:Person)<br>WHERE n.belt = &#x27;white&#x27; OR n.belt IS NULL<br>RETURN n.name, n.age, n.belt<br>ORDER BY n.name<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -444,17 +295,17 @@
 <ul>
 <li><p>简单的范围</p>
 <p>支持<code>&lt; &lt;= &gt;= &gt;</code></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a:Person)</span><br><span class="line">WHERE a.name &gt;= &#x27;Peter&#x27;</span><br><span class="line">RETURN a.name, a.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (a:Person)<br>WHERE a.name &gt;= &#x27;Peter&#x27;<br>RETURN a.name, a.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>复合范围</p>
 <p>几个不等式的组合</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a:Person)</span><br><span class="line">WHERE a.name &gt; &#x27;Andy&#x27; AND a.name &lt; &#x27;Timothy&#x27;</span><br><span class="line">RETURN a.name, a.age</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (a:Person)<br>WHERE a.name &gt; &#x27;Andy&#x27; AND a.name &lt; &#x27;Timothy&#x27;<br>RETURN a.name, a.age<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>结点模式谓词</p>
 <p>WHERE 也可以出现在结点模式里面（MATCH语句内或模式构成当中）</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">WITH 30 AS minAge</span><br><span class="line">MATCH (a:Person WHERE a.name = &#x27;Andy&#x27;)-[:KNOWS]-&gt;(b:Person WHERE b.age &gt; minAge)</span><br><span class="line">RETURN b.name</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">WITH 30 AS minAge<br>MATCH (a:Person WHERE a.name = &#x27;Andy&#x27;)-[:KNOWS]-&gt;(b:Person WHERE b.age &gt; minAge)<br>RETURN b.name<br></code></pre></td></tr></table></figure>
 <p>注意 WHERE可以引用它所属于的结点的变量，但无法引用其他MATCH模式的变量</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">MATCH (a:Persom &#123;name: &#x27;Andy&#x27;&#125;)</span><br><span class="line">RETURN [(a)--&gt;(b WHERE b:Person) | b.name] AS friends</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MATCH (a:Persom &#123;name: &#x27;Andy&#x27;&#125;)<br>RETURN [(a)--&gt;(b WHERE b:Person) | b.name] AS friends<br></code></pre></td></tr></table></figure>
 </li>
 </ul>
 </li>
@@ -466,17 +317,17 @@
 <ul>
 <li><p>查看一个程序的特征</p>
 <p>当去调用一个程序时，输入参数需要知道；使用<code>YIELD</code>子句时，输出参数也需要知道。内置程序<code>dbms.procedures</code>可以返回所有程序的名字，特征和描述。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CALL dbms.procedures() YIELD name, signature</span><br><span class="line">WHERE name=&#x27;dbms.listConfig&#x27;</span><br><span class="line">RETURN signature</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/05/neo4j/image-20221108210808878.png" alt="image-20221108210808878"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">CALL dbms.procedures() YIELD name, signature<br>WHERE name=&#x27;dbms.listConfig&#x27;<br>RETURN signature<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/05/neo4j/image-20221108210808878.png'><img src="/2022/11/05/neo4j/image-20221108210808878.png" alt="image-20221108210808878"></p>
 </li>
 <li><p>使用引用命名空间和名字调用程序</p>
 <p>调用内置程序<code>db.labels</code>可以列出数据库中的所有标签</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL `db`.`labels`</span><br></pre></td></tr></table></figure>
-<p><img src="/2022/11/05/neo4j/image-20221108211021627.png" alt="image-20221108211021627"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">CALL `db`.`labels`<br></code></pre></td></tr></table></figure>
+<p class='item-img' data-src='/2022/11/05/neo4j/image-20221108211021627.png'><img src="/2022/11/05/neo4j/image-20221108211021627.png" alt="image-20221108211021627"></p>
 </li>
 <li><p>字面量参数调用程序</p>
 <p>直接在陈述句中写出即可</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CALL dbms.security.createUser(&#x27;example_username&#x27;, &#x27;example_password&#x27;, false)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">CALL dbms.security.createUser(&#x27;example_username&#x27;, &#x27;example_password&#x27;, false)<br></code></pre></td></tr></table></figure>
 </li>
 <li><p>使用参数来调用程序</p>
 <p>程序参数的值与对应传递的同名参数相一致 （没有给出的就是Null）</p>
@@ -484,143 +335,20 @@
 </li>
 <li></li>
 </ul>
-
-  </div>
-</article>
-
-
-
-        
-          <div id="footer-post-container">
-  <div id="footer-post">
-
-    <div id="nav-footer" style="display: none">
-      <ul>
-         
-          <li><a href="/">Home</a></li>
-         
-          <li><a href="/about/">About</a></li>
-         
-          <li><a href="/archives/">Writing</a></li>
-         
-          <li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li>
-        
-      </ul>
-    </div>
-
-    <div id="toc-footer" style="display: none">
-      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MATCH"><span class="toc-number">2.</span> <span class="toc-text">MATCH</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RETURN"><span class="toc-number">3.</span> <span class="toc-text">RETURN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WHERE"><span class="toc-number">4.</span> <span class="toc-text">WHERE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CALL-procedure"><span class="toc-number">5.</span> <span class="toc-text">CALL procedure</span></a></li></ol>
-    </div>
-
-    <div id="share-footer" style="display: none">
-      <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://racerz-fighting.github.io/2022/11/05/neo4j/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&text=neo4j部分文档学习"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&title=neo4j部分文档学习"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&is_video=false&description=neo4j部分文档学习"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=neo4j部分文档学习&body=Check out this article: https://racerz-fighting.github.io/2022/11/05/neo4j/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&title=neo4j部分文档学习"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&title=neo4j部分文档学习"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&title=neo4j部分文档学习"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&title=neo4j部分文档学习"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://racerz-fighting.github.io/2022/11/05/neo4j/&name=neo4j部分文档学习&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://racerz-fighting.github.io/2022/11/05/neo4j/&t=neo4j部分文档学习"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
-</ul>
-
-    </div>
-
-    <div id="actions-footer">
-        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> Menu</a>
-        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> TOC</a>
-        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
-        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
-    </div>
-
-  </div>
-</div>
-
-        
-        <footer id="footer">
-  <div class="footer-left">
-    Copyright &copy;
-    
-    
-    2016-2023
-    RacerZ
-  </div>
-  <div class="footer-right">
-    <nav>
-      <ul>
-        <!--
-       --><li><a href="/">Home</a></li><!--
-     --><!--
-       --><li><a href="/about/">About</a></li><!--
-     --><!--
-       --><li><a href="/archives/">Writing</a></li><!--
-     --><!--
-       --><li><a target="_blank" rel="noopener" href="http://github.com/probberechts">Projects</a></li><!--
-     -->
-      </ul>
-    </nav>
-  </div>
-</footer>
-
-    </div>
-    <!-- styles -->
-
-
-
-  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
-
-
-    <!-- jquery -->
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
-
-
-
-
-<!-- clipboard -->
-
-  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
-  
-  <script type="text/javascript">
-  $(function() {
-    // copy-btn HTML
-    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
-    btn += '<i class="far fa-clone"></i>';
-    btn += '</span>'; 
-    // mount it!
-    $(".highlight table").before(btn);
-    var clip = new ClipboardJS('.btn-copy', {
-      text: function(trigger) {
-        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
-      }
-    });
-    clip.on('success', function(e) {
-      e.trigger.setAttribute('aria-label', "Copied!");
-      e.clearSelection();
-    })
-  })
-  </script>
-
-
-<script src="/js/main.js"></script>
-
-<!-- search -->
-
-<!-- Google Analytics -->
-
-<!-- Baidu Analytics -->
-
-<!-- Cloudflare Analytics -->
-
-<!-- Umami Analytics -->
-
-<!-- Disqus Comments -->
-
-<!-- utterances Comments -->
-
-</body>
-</html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2022/11/05/RSA/">← Next Twenty Years of Attacks on the RSA Cryptosystem</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2022/10/27/20%E5%B9%B4%E7%BE%8E%E4%BA%9A%E6%9D%AF%E5%9B%A2%E9%98%9F%E8%B5%9B%E5%A4%8D%E7%8E%B0/">20年美亚杯电子数据取证团队赛复现 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="To Catalog">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">写在前面</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#MATCH"><span class="toc-number">2.</span> <span class="toc-text">MATCH</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#RETURN"><span class="toc-number">3.</span> <span class="toc-text">RETURN</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#WHERE"><span class="toc-number">4.</span> <span class="toc-text">WHERE</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#CALL-procedure"><span class="toc-number">5.</span> <span class="toc-text">CALL procedure</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>
