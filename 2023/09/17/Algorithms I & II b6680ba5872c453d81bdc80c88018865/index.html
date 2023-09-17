@@ -1,0 +1,864 @@
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Algorithms I &amp; II | RacerZ</title><link rel="icon" type="image/x-icon" href="/favicon.ico"><script>var config = {"root":"/","search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"code.copy","copyFinish":"code.copyFinish","expand":"code.expand"}}</script><script src="//unpkg.com/mermaid@9.2.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><link rel="stylesheet" href="/css/arknights.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches) document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches) document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.ttf");
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+  --light-background: url('/img/bk.jpg');
+}</style><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.1.0"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><nav><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><div id="shadow-header"></div><article><div id="post-bg"><div id="post-title"><h1>Algorithms I &amp; II</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2023-09-16T16:00:00.000Z" id="date"> 2023-09-17</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2023-09-17T10:53:24.789Z" id="updated"> 2023-09-17</time></div></span></div></div><hr><div id="post-content"><h1 id="Algorithms-I-amp-II"><a href="#Algorithms-I-amp-II" class="headerlink" title="Algorithms I &amp; II"></a>Algorithms I &amp; II</h1><h2 id="Ch1-Union-Find"><a href="#Ch1-Union-Find" class="headerlink" title="Ch1 Union-Find"></a>Ch1 Union-Find</h2><ul>
+<li><p>非优化版本</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled.png" alt="Untitled"></p>
+</li>
+<li><p>优化1 quick find</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%201.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%201.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%202.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%202.png" alt="Untitled"></p>
+</li>
+<li><p>优化2 weighted quick find</p>
+<p>  总体思想即维护并查树不要过高，每次合并时让小的在下面</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%203.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%203.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%204.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%204.png" alt="Untitled"></p>
+</li>
+<li><p>优化3 path compression</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%205.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%205.png" alt="Untitled"></p>
+</li>
+</ul>
+<h3 id="Project1-Precolation"><a href="#Project1-Precolation" class="headerlink" title="Project1: Precolation"></a>Project1: Precolation</h3><p>题目链接：<a target="_blank" rel="noopener" href="https://coursera.cs.princeton.edu/algs4/assignments/percolation/specification.php">Programming Assignment 1: Percolation</a></p>
+<ul>
+<li><p>写在前面</p>
+<p>  本来觉得这门课就是单纯再学一遍算法，但是真正做了项目才知道自己在算法与如何应用之间还存在着不小的差距。这门课从如何去设计计算机模型、如何去使用算法、如何去规范编写程序以及测试程序上都给出了练习。相信练完之后对工程化代码的能力能有不小提升。</p>
+</li>
+<li><p>题面简介</p>
+<p>  题目本身不难，主要是以并查集搜索为背景的物理渗透模型，需要学生去模拟寻找阈值，即能使得整个系统渗透（从最上部流到最下部）的最小连通数。并以此计算均值、方差和置信区间。</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%206.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%206.png" alt="Untitled"></p>
+</li>
+<li><p>拟解决的问题</p>
+<ol>
+<li>题目已给出了可用来快速并查的集合对象，怎么应用到此物理渗透系统上？即如何设计数据结构？</li>
+<li>根据题意，整个系统联通的意思是最上端与最下端联通，如何表示？</li>
+<li>对于测试某一个站点的联通性，如何表示？</li>
+</ol>
+</li>
+<li><p>解决思路：</p>
+<ol>
+<li><p>先来分析一下题目给的 <code>WeightedQuickUnionUF</code> 类，可以看到内部为一维数组结构，对于我们的 n x n 网络，是无法直接表示的，因此这里需要作二维到一维的映射（注意看题目说了编号从 1 开始）</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%207.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%207.png" alt="Untitled"></p>
+</li>
+<li><p>根据 tips，我们可以在最上端和最下端增设两个虚拟站点 0 和 n + 1, 一旦有最上端或最下端的站点开放，就将其与虚拟站点合并。</p>
+<p> 这样整个系统的连通性就可以转换为判断上下两个虚拟站点是否连通</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%208.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%208.png" alt="Untitled"></p>
+</li>
+<li><p>根据题意：</p>
+<blockquote>
+<p>A <em>full</em> site is an open site that can be connected to an open site in the top row via a chain of neighboring (left, right, up, down) open sites.</p>
+</blockquote>
+<p> 可知只需要判断指定站点和上面虚拟站点的连通性即可。这里会遇到的一个问题是：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://github.com/PKUFlyingPig/Princeton-Algorithm">https://github.com/PKUFlyingPig/Princeton-Algorithm</a></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%209.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%209.png" alt="Untitled"></p>
+</blockquote>
+<p> 因此可以再单独维护一个只连通上面虚拟结点的并查集即可。</p>
+</li>
+</ol>
+</li>
+<li><p>总体</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2010.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2010.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2011.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2011.png" alt="Untitled"></p>
+</li>
+</ul>
+<h3 id="Analysis-of-Algorithms"><a href="#Analysis-of-Algorithms" class="headerlink" title="Analysis of Algorithms"></a><strong>Analysis of Algorithms</strong></h3><p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2012.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2012.png" alt="Untitled"></p>
+<h2 id="Ch2-Stacks-and-Queues"><a href="#Ch2-Stacks-and-Queues" class="headerlink" title="Ch2 Stacks and Queues"></a>Ch2 Stacks and Queues</h2><ul>
+<li><p>generics</p>
+<p>  不需强制类型转换；避免运行时错误；</p>
+<p>  注：Java 不支持泛型数组</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2013.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2013.png" alt="Untitled"></p>
+<ul>
+<li><p>wrapper type. autoboxing</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2014.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2014.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+<li><p>Iterators</p>
+<p>  遍历机制：实现 Iterable 接口（返回 Iterator 类方法的接口，后者是包含 <code>hasNext()</code> 和 <code>next()</code> 方法的类）</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2015.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2015.png" alt="Untitled"></p>
+</li>
+</ul>
+<h3 id="Project2-Deques-and-Randomized-Queues"><a href="#Project2-Deques-and-Randomized-Queues" class="headerlink" title="Project2: Deques and Randomized Queues"></a>Project2: <strong>Deques and Randomized Queues</strong></h3><ul>
+<li><p>第一部分要求实现双端队列，并在常数时间内在头尾实现增删元素功能</p>
+<p>  为了能在尾部也实现常数时间增删，采用循环双链表结构（对于单链表，增可以利用 last 指针，但是删只能遍历），将头尾相接，不需额外设立 first 和 last 指针就可以快速索引至头尾元素处</p>
+<p>  同时为了避免判断边界条件，增加 dummy 结点，使得第一个元素可以当做普通元素来用</p>
+</li>
+<li><p>第二部分要求实现随机数据结构（用队列或栈都可），在迭代和弹出元素时均要求满足随机性，入队出队均常数时间，迭代器的构造函数可以线性时间</p>
+<p>  由于这部分对于元素的检索（随机访存）要求较高，因此内部采用数组结构</p>
+<p>  首先对于随机性，<code>StdRandom.uniformInt</code> **可以很好的获得指定区间的随机数，但是这里面临的挑战时，如何保证弹出时也是随机的同时比较好维护数组空间；另外，在实现迭代器时如何保证只会获取一次数组中的元素</p>
+<p>  对于第一个问题，结合栈思想每次在栈顶删除元素，可以每次将制定删除的随机元素交换至栈顶再出去，这样仍然可以保证数组内部的连续性；</p>
+<p>  对于第二个问题，题目给出了提示迭代器的构造函数可以在线性时间内完成，因此可以额外开辟一个待遍历的数组，数组元素内容与原空间一致，利用 <code>StdRandom.shuffle</code> 来以数组为单位打乱顺序，这样可以保证每创建一个迭代器，其内部元素顺序均不同</p>
+<p>  bugs 修复：测试样例中 deque API 爆错：<code>java.lang.ArrayIndexOutOfBoundsException: Index 0 out of bounds for length 0</code></p>
+<p>  这是由于在实现 <code>resize</code> 缩容时并未对大小作限制，使得 capacity 可以降到 0</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2016.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2016.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2017.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2017.png" alt="Untitled"></p>
+</li>
+</ul>
+<h3 id="Elementary-Sorts"><a href="#Elementary-Sorts" class="headerlink" title="Elementary Sorts"></a><strong>Elementary Sorts</strong></h3><ul>
+<li><p>选择排序</p>
+<p>  特点：即使元素已排好序，仍会遍历从左向右扫描，时间复杂度稳定在 <code>O(n^2)</code></p>
+</li>
+<li><p>插入排序</p>
+<p>  由于待排序元素左边均有序，所以只需要依次和左边的元素比较即可</p>
+<p>  其时间复杂度取决于输入元素的状态</p>
+<p>  最优情况是已排好序状态，线性时间比较；最坏情况是降序排序，平方时间比较+排序</p>
+<ul>
+<li><p>逆序对 ⇒ 引出部分排序性质的定义</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2018.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2018.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+<li><p>希尔排序</p>
+<p>  按照步长 h 划分子序列，子序列内部<strong>插入排序</strong></p>
+<p>  每轮 h 逐步减少（不一定是每次减少1）</p>
+<p>  为什么选择？</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2019.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2019.png" alt="Untitled"></p>
+<p>  h 如何选择？</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2020.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2020.png" alt="Untitled"></p>
+<ul>
+<li><p>Java Code</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2021.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2021.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+<li><p>Application</p>
+<ul>
+<li><p>Knuth shuffle</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2022.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2022.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2023.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2023.png" alt="Untitled"></p>
+</li>
+<li><p>Convex Hull</p>
+<ul>
+<li><p>凸包的定义</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2024.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2024.png" alt="Untitled"></p>
+</li>
+<li><p>两个几何性质</p>
+<ol>
+<li>逆时针遍历凸包点可以回到起点</li>
+<li>按照 y 轴最低的包点作为参照，其他的凸包点相对之的极角度<strong>顺序递增</strong></li>
+</ol>
+</li>
+<li><p>Graham scan algorithm</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2025.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2025.png" alt="Untitled"></p>
+<p>  第三步指的是如果无法构成逆时针路径就排除上一个选择的凸包点</p>
+<ul>
+<li><p>实现如何判断逆时针？</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2026.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2026.png" alt="Untitled"></p>
+<p>  其数学知识基于下面：</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2027.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2027.png" alt="Untitled"></p>
+</li>
+<li><p>整体实现</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2028.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2028.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch3-Mergesort"><a href="#Ch3-Mergesort" class="headerlink" title="Ch3 Mergesort"></a>Ch3 <strong>Mergesort</strong></h2><ul>
+<li><p><em>mergesort</em></p>
+<p>  相应改进：</p>
+<ol>
+<li><p>划分成小数组时可以选择插入排序</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2029.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2029.png" alt="Untitled"></p>
+</li>
+<li><p>在对子数组排序后，判断左边数组的最大值是否已经小于右边数组的最小值，如果是的话可以直接返回，不再进行归并操作</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2030.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2030.png" alt="Untitled"></p>
+</li>
+</ol>
+<ul>
+<li><p>自下而上非递归实现归并排序</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2031.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2031.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2032.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2032.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+<li><p><em>comparators</em></p>
+<p>  针对同一类型的数据，也可以支持不同的比较原则</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2033.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2033.png" alt="Untitled"></p>
+</li>
+<li><p>稳定性</p>
+<ul>
+<li><p>插入排序</p>
+<p>  当比较元素相等时，不再发生元素交换，因此是稳定的</p>
+</li>
+<li><p>选择排序</p>
+<p>  元素交换存在跨间隔，因此会引发不稳定</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2034.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2034.png" alt="Untitled"></p>
+</li>
+<li><p>归并排序</p>
+<p>  取决于合并子数组时，两个相等元素如何合并的情况，如果是优先左数组的话则是稳定的</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Project3-Collinear-Points"><a href="#Project3-Collinear-Points" class="headerlink" title="Project3: Collinear Points"></a>Project3: <strong>Collinear Points</strong></h3><ul>
+<li>感觉自己还是对于 API 的使用以及各种算法的应用比较生，需要多加练习才会知道怎么综合运用才能省时省力，同时减少冗余代码</li>
+<li><p>题面：</p>
+<p>  题目给定了点和线段的定义，需要我们在诸多点的集合当中寻找所有的共线点出来</p>
+<p>  同时题目给出了两种求解思路：暴力法和排序搜索法</p>
+</li>
+<li><p>求解思路1：暴力法</p>
+<p>  这个比较好说，也就是根据定义（此时共线定义是满足4个点，两两之间斜率相等即可），4次方遍历结点，找到所有满足条件的点放入结果集当中。</p>
+<p>  需要注意结果集中不能有重复的线段出现（即线段中四个点只能出现一次，最好就是放两端的点）</p>
+<p>  因此根据这个要求，我们可以进一步做一些优化，通过提前将点按照大小规则排好序，再去遍历，即可相对快速方便的把两端点找出</p>
+</li>
+<li><p>排序搜索法</p>
+<p>  观察到性质：共线的点满足斜率相等。那么我们就可以依次枚举每一个点作为参考点，对其他点求相对其的斜率，排序后会发现斜率相等的点将会集中起来（如果斜率相等点满足共线点个数要求，那么就对应一个线段），这样可以更快速地找出所有共线来</p>
+<p>  拟解决的问题及对应方案：</p>
+<ul>
+<li><p>如何判断共线条件</p>
+<p>  这里共线条件已经变成了 4 个点及以上满足斜率相等。因此每次排好序后，第一个点当然是参照点本身，因此从第二个点开始搜索，往后遍历判断当前斜率相等的点是否大于等于3，是则符合一对线段。否则继续判断下一个斜率的线段</p>
+<p>  <strong>注</strong>：对于排序，因为我们在 Point 类中已经实现了一个针对斜率比较的比较器，因此可以直接调用 <code>Arrays.sort(tmp, origin.slopeOrder());</code> 而无需自己再重复写一遍</p>
+</li>
+<li><p>如何解决重复问题</p>
+<p>  由于我们会将所有点作为参照进行遍历，那么势必会出现重复判断的情况，如何保证结果集中的元素唯一呢？</p>
+<p>  这就要求对存储数据作要求，即每次存入的点左端点是最小值，右端点是最大值，这样一定就不会有重复的点出现（因为 point 集元素唯一，因此最小值点只会出现一次，我们可以等参考点遍历到最小点时再放入结果集中）</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>**bug fix**：为了快速遍历到最小点，我们也依照暴力法优化，先对 point 集按照大小作排序，然后再依次作参考点遍历。这里由于又会排序一遍，如果两次排序用同一数组原地操作，那么会出现死循环的情况，所以一定要额外建立一个备份数组
+
+![Untitled](Algorithms%20I%20&amp;%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2035.png)
+</code></pre><h3 id="QuickSort"><a href="#QuickSort" class="headerlink" title="QuickSort"></a>QuickSort</h3><ul>
+<li><p>qucik sort</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2036.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2036.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2037.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2037.png" alt="Untitled"></p>
+<p>  实现性能保障的前提：数组在排序之前应先 shuffle 一下，这样可以使得每次 partiton 之后，左右子数组的顺序仍然是随机的</p>
+<ul>
+<li><p>算法实现改进1</p>
+<p>  与归并排序一样，针对划分之后的小数组可以直接插入排序</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2038.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2038.png" alt="Untitled"></p>
+</li>
+<li><p>算法实现改进2</p>
+<p>  采样中间值</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2039.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2039.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+<li><p>Dijkstra 3-way partitioning</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2040.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2040.png" alt="Untitled"></p>
+<p>  这样可保证 lt 左边的均小于 v；gt 右边的均大于 v，lt 和 i 之间的相等</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2041.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2041.png" alt="Untitled"></p>
+<p>  代码实现:</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2042.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2042.png" alt="Untitled"></p>
+</li>
+</ul>
+<h2 id="Ch4-Priority-Queues"><a href="#Ch4-Priority-Queues" class="headerlink" title="Ch4 Priority Queues"></a>Ch4 <strong>Priority Queues</strong></h2><ul>
+<li><p>数据的不变性</p>
+<p>  Immutable: 诸如 String 以及一些包装类都是不可变数据类型</p>
+<p>  mutable: StringBuilder, Stack</p>
+</li>
+<li><p>堆排序</p>
+<p>  只需要上浮操作即可，</p>
+<p>  与其他排序算法相比，其具有稳定的时间复杂度以及支持原地操作</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2043.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2043.png" alt="Untitled"></p>
+<p>  但是不具有稳定性，且不适用于缓存结构系统，（其数组索引涉及整个大数组）</p>
+</li>
+</ul>
+<h3 id="Project4-8-Puzzle"><a href="#Project4-8-Puzzle" class="headerlink" title="Project4: 8 Puzzle"></a>Project4: <strong>8 Puzzle</strong></h3><ul>
+<li>题目理解： 以启发式搜索为背景，解决 puzzle 移动问题。其中每一步的权重由曼哈顿距离（或汉明距离）与当前搜索步数的和决定。本质上是利用优先级队列作 BFS 探索最短路径问题</li>
+<li>这道题整体设计上并不难，主要在一些细节的地方上需要注意，同时自己对于面向对象编程、封装意识还是薄弱，多加练习</li>
+<li><p>需要注意的细节：</p>
+<ul>
+<li><p>不可求解的情况，题面中也给出了提示，即 twin 可以达到目标状态，而初始状态不可到达的情况，所以这里需要在作 BFS 时判断避免死循环</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (minBoard.manhattan() == <span class="hljs-number">2</span> &amp;&amp; minBoard.twin().isGoal()) &#123;<br>                solvable = <span class="hljs-literal">false</span>;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>这里保存状态是在初始化 solver 时即进行，否则 API <code>moves</code> 以及 <code>isSolvable</code> 结果是不可知的，按照这个思路加题面提示每次记录当前搜索状态以及前一搜索状态，我们在<code>solution</code> 上可以反向溯源至初始状态，返回 <code>Iterable&lt;Board&gt;</code></p>
+<p>  为此，可以进一步封装一层 Board 类，同时记录其前一节点、当前步数以及优先级值以便作优化</p>
+</li>
+<li><p>注意在作启发式搜索时，对于 neighborhoods 我们不能全部放入队列当中，需要考虑到前一状态是否已经探索的情况</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (preBoard != <span class="hljs-literal">null</span> &amp;&amp; preBoard.board.equals(neighbor)) &#123;<br>                    <span class="hljs-keyword">continue</span>;<br>                &#125;<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>![Untitled](Algorithms%20I%20&amp;%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2044.png)
+
+![Untitled](Algorithms%20I%20&amp;%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2045.png)
+</code></pre><h3 id="Elementary-Symbol-Tables"><a href="#Elementary-Symbol-Tables" class="headerlink" title="Elementary Symbol Tables"></a><strong>Elementary Symbol Tables</strong></h3><ul>
+<li><p>如何实现类的 equals 方法？</p>
+<p>  不仅要考虑字段的值大小，还要比较类型是否一样、是否为空的情况</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2046.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2046.png" alt="Untitled"></p>
+</li>
+<li><p>递归实现二叉树插入操作</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2047.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2047.png" alt="Untitled"></p>
+<p>  注意返回后赋值操作的 left operand 是什么</p>
+<p>  如果插入元素大小随机，那么类比与快速排序之前的 shuffling ，将会有 <code>2lnN</code> 的平均时间复杂度以及 <code>4.311lnN</code> 的最坏时间复杂度</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2048.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2048.png" alt="Untitled"></p>
+</li>
+<li><p>二叉搜索树实现符号表 floor 操作</p>
+<p>  即找到第一个最大的小于元素的 node，如果指定元素比当前节点小，则一定在其左子树中；如果比当前元素大，则需进一步筛查右子树中是否还有比指定元素小的，若没有则当前元素就是结果，否则仍需递归右子树</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2049.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2049.png" alt="Untitled"></p>
+</li>
+<li><p>二叉搜索树实现符号表 deletion 操作</p>
+<ul>
+<li><p>deleMin 左下节点元素值最小</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2050.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2050.png" alt="Untitled"></p>
+</li>
+<li><p>Hibbard deletion 删除指定元素</p>
+<p>  寻找并与指定元素的后继节点替换，之后删除掉指定元素节点</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2051.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2051.png" alt="Untitled"></p>
+<p>  <strong>缺点</strong>：这种删除方式在大量随机插入和删除节点之后会导致二叉树平衡性降低，复杂度由 logN 增至 sqrt(N)</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch5-Balanced-Search-Trees"><a href="#Ch5-Balanced-Search-Trees" class="headerlink" title="Ch5 Balanced Search Trees"></a>Ch5 <strong>Balanced Search Trees</strong></h2><ul>
+<li><p>2-3 tree</p>
+<p>  definition: </p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2052.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2052.png" alt="Untitled"></p>
+<p>  insert operation:</p>
+<ul>
+<li>for 2 node point: 直接插入到 2node 点上即可，变为 3node point</li>
+<li><p>for 3 node point: 直接插入将会变为 4node 点，因此需要将中间节点递归上移至父节点中直至符合定义</p>
+<p>  注：根节点的分裂将导致树的高度 +1</p>
+<p>  变换的操作只是先创建一个临时的4node，再将其分裂为2个2node，中间节点上移</p>
+</li>
+</ul>
+</li>
+<li><p>Red-Black BSTS</p>
+<ul>
+<li><p>left-leaning red-black BSTs</p>
+<p>  基于 2-3 BSTS 所作改进：</p>
+<ul>
+<li>将 2-3tree 视作 BST</li>
+<li><p>use a internal link in the 3node，which larger point to smaller</p>
+<p>properties: 与 2-3 tree 对应，实际上将每一个 red links 水平化并节点合并后就对应为了 2-3 tree</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2053.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2053.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+<li><p>search op code：as same as the BST</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2054.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2054.png" alt="Untitled"></p>
+</li>
+<li><p>how to represent a red-black tree</p>
+<p>  color 指示的是当前节点的入边 color</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2055.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2055.png" alt="Untitled"></p>
+<p>  对于所有空节点，其 color 也是 black</p>
+</li>
+<li><p>Left rotation operation</p>
+<p>  当 red link 不满足左倾条件时，需要进行左旋调整</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2056.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2056.png" alt="Untitled"></p>
+<p>  of course, 有时需要临时作右倾操作，code 是对称的</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2057.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2057.png" alt="Untitled"></p>
+</li>
+<li><p>color flip operation</p>
+<p>  当出现 red link 相连的情况，对应 2-3 tree 中的 4node </p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2058.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2058.png" alt="Untitled"></p>
+</li>
+<li><p>basic strategy: 与2-3 tree insert node 节点对应一致，并调整 red links 的倾向</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2059.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2059.png" alt="Untitled"></p>
+</li>
+<li><p>summer: 3 cases for insert a node</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2060.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2060.png" alt="Untitled"></p>
+<p>  递归实现：</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2061.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2061.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+<li><p>B-tree</p>
+<p>  definition:</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2062.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2062.png" alt="Untitled"></p>
+<p>  注解：每个内部节点标识了指向目标节点的下一链接位置应该在哪里</p>
+<p>  insert a node: 当节点数量达到 M 时，需要分割节点，并将索引键上移</p>
+<p>  也就是说，每个节点中元素数量在 M - 1 ~ M / 2 之间</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2063.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2063.png" alt="Untitled"></p>
+</li>
+</ul>
+<h3 id="Geometric-Applications-of-BSTs"><a href="#Geometric-Applications-of-BSTs" class="headerlink" title="Geometric Applications of BSTs"></a><strong>Geometric Applications of BSTs</strong></h3><ul>
+<li><p>1d Range count</p>
+<p>  要求：在 logN 时间内，找到指定 key 之间在表中所包含的元素数量</p>
+<p>  转化为从树底到树根搜索指定 key 的 rank 问题</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2064.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2064.png" alt="Untitled"></p>
+<p>  1d range search</p>
+<p>  递归搜索，遇到边界时注意判断是否左子树和右子树已不满足条件</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2065.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2065.png" alt="Untitled"></p>
+</li>
+<li><p><strong>Line Segment Intersection</strong></p>
+<p>  扫描线算法：</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2066.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2066.png" alt="Untitled"></p>
+<p>  进而可以利用 <code>logN</code> 时间的 1d range count 来实现 <code>NlogN</code> 的二维线段正交搜索算法</p>
+</li>
+<li><p><strong>Kd-Trees</strong></p>
+<p>  Idea: Space-partitioning trees</p>
+<p>  利用树来递归表示二维空间的划分情况</p>
+<ul>
+<li><p>数据机构表示<br>交替使用 x 和 y 坐标来表示键</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2067.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2067.png" alt="Untitled"></p>
+</li>
+<li><p>范围搜索，即指定二维区间中所包含的元素（数量）</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2068.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2068.png" alt="Untitled"></p>
+</li>
+<li><p>最邻近搜索</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2069.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2069.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+<li><p>Interval Search Trees</p>
+<p>  节点表示：所有区间的左端点</p>
+<p>  在搜索时，首先比较左子树中的最大值与指定搜索区间的左端点进行比较，如果小的话则只搜索右子树</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2070.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2070.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2071.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2071.png" alt="Untitled"></p>
+<ol>
+<li>如果搜索左子树没有返回值的话，则右子树中也没有交集区间存在</li>
+<li>如果搜索向右子树前进的话，则左子树没有满足条件的区间</li>
+</ol>
+</li>
+</ul>
+<h3 id="Project5-Kd-Trees"><a href="#Project5-Kd-Trees" class="headerlink" title="Project5: Kd-Trees"></a>Project5: <strong>Kd-Trees</strong></h3><ul>
+<li><p>题意是通过暴力搜索和构建 kd 树的方式在二维空间搜索指定范围内的点以及最近距离的点</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2072.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2072.png" alt="Untitled"></p>
+<p>  暴力搜索比较简单，可以作为后续检验 KD tree 作区间搜索算法正确性的参考，难点在于 kd-tree 树的构建，题面给出了提示可以参考 BST 相关 API 的实现</p>
+<ul>
+<li><p>拟解决的问题</p>
+<p>  题目提示给出了 kd tree 节点的表示</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">Node</span> &#123;<br>   <span class="hljs-keyword">private</span> Point2D p;      <span class="hljs-comment">// the point</span><br>   <span class="hljs-keyword">private</span> RectHV rect;    <span class="hljs-comment">// the axis-aligned rectangle corresponding to this node</span><br>   <span class="hljs-keyword">private</span> Node lb;        <span class="hljs-comment">// the left/bottom subtree</span><br>   <span class="hljs-keyword">private</span> Node rt;        <span class="hljs-comment">// the right/top subtree</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<ol>
+<li><p>“using the <em>x</em>- and <em>y</em>-coordinates of the points as keys in strictly alternating sequence” </p>
+<p> 如何根据当前轮次来确定下一轮空间的划分是垂直划分还是水平划分呢？</p>
+</li>
+<li><p>插入节点时，如何来依据父节点构建新的 rect？</p>
+</li>
+<li>如何画图？</li>
+<li>如何作 range 搜索？</li>
+<li>如何作 nearest 搜索？</li>
+</ol>
+</li>
+<li><p>解决思路：</p>
+<ol>
+<li>我们知道 0 2 4 6 … 轮次构建新的节点时，是按照垂直划分 line, 奇数轮次水平划分，那么这样的话首先一个思路就是可以添加一个字段判断当前节点位于奇数轮次还是偶数轮次；或者直接声明当前节点划分 line 是水平的还是垂直的 （利用 enum 枚举类）</li>
+<li>依照前一问题得到的水平线，我们可以进一步添加方法  <code>nextSp</code> <code>nextLB</code> <code>nextRT</code> 来利用父节点找寻下一节点水平线的方向以及 rect 的坐标，在插入新节点的时候便可以依次构建</li>
+<li><p>根据题意：“all the points to the left of the root go in the left subtree; all those to the right go in the right subtree; and so forth, recursively”。首先根据当前节点的水平线方向以及 rect 的区间范围 + point  的坐标来画出分割线，然后参考先序遍历，先画当前 point，然后一次便利左子树和右子树。</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2073.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2073.png" alt="Untitled"></p>
+</li>
+<li><p>“if the query rectangle does not intersect the rectangle corresponding to a node, there is no need to explore that node (or its subtrees)”</p>
+<p> 这一点对于优化很重要，只有当前 rect 与目标 rect 存在交集才会进一步遍历，否则没有必要，作剪枝处理。实际实现时分三种情况处理：</p>
+<ul>
+<li>当前 point 正包含在指定 rect 中，那么左右子树的 rect 也一定与指定 rect 存在交集，继续遍历两边节点即可</li>
+<li>若当前 point 不包含在指定 rect 中，那么就需要判断左子树以及右子树中哪一边有与指定 rect 交集的：<ul>
+<li>左子树中的 rect 有存在交集的：<code>rect.xmin &lt; node.p.x</code></li>
+<li>右子树中的 rect 有存在交集的: <code>!(rect.xmax &lt; node.p.x)</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>“if the closest point discovered so far is <strong>closer than</strong> the distance <strong>between the query point and the rectangle corresponding to a node</strong>, there is no need to explore that node (or its subtrees)”</p>
+<p> 首先要去判断当前最近点距离同目标点与当前搜索点所在矩阵的距离哪个更小，如果前者更小，则当前遍历点及其子树中一定不存在更近的点；进一步按照这个比较思路，往往与目标点同侧的子树更容易出现最近点，所以每次优先同侧子树进行遍历 “you always choose <em>the subtree that is on the same side of the splitting line</em>”</p>
+<p> 那么如何判断目标点在当前点的哪一侧呢，可以通过坐标直接判断</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>    ![Untitled](Algorithms%20I%20&amp;%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2074.png)
+
+    ![Untitled](Algorithms%20I%20&amp;%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2075.png)
+</code></pre><h2 id="Ch5-Undirected-Graphs"><a href="#Ch5-Undirected-Graphs" class="headerlink" title="Ch5 Undirected Graphs"></a>Ch5 <strong>Undirected Graphs</strong></h2><ul>
+<li><p>DFS</p>
+<p>  key thing: not going anyway twice </p>
+<ul>
+<li><p>API: 将图数据结构解耦，抽离出一个寻找路径的图处理接口，方便客户端查询相关信息</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2076.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2076.png" alt="Untitled"></p>
+</li>
+<li><p>DFS 算法流程以及所需的数据结构</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2077.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2077.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2078.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2078.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+<li><p>BFS</p>
+<p>  代码实现</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2079.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2079.png" alt="Untitled"></p>
+</li>
+<li><p>Connected Components</p>
+<p>  目标：经过预处理之后，可以在常数时间内快速判断两个节点之间的连通性</p>
+<p>  idea: 利用 DFS 搜索节点，同时做好 mark 以及记录所有联通的节点</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2080.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2080.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2081.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2081.png" alt="Untitled"></p>
+</li>
+<li><p>Challenges</p>
+<ul>
+<li>二分图问题</li>
+<li>图环路问题<ul>
+<li>欧拉回路</li>
+<li>汉密尔顿回路</li>
+</ul>
+</li>
+<li>图相似性问题</li>
+</ul>
+</li>
+</ul>
+<h3 id="有向图相关"><a href="#有向图相关" class="headerlink" title="有向图相关"></a>有向图相关</h3><ul>
+<li><p>以 DFS 的方式进行拓扑排序</p>
+<p>  只需要在深度遍历的基础上维护一个栈结构保存访问顺序即可</p>
+</li>
+</ul>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2082.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2082.png" alt="Untitled"></p>
+<ul>
+<li><p>强连通子图构造</p>
+<p>  「Kernel DAG」：</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2083.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2083.png" alt="Untitled"></p>
+<p>  整体思路：首先做一遍拓扑排序，然后整理保存逆序结果；接着按照逆序的顺序做类似无向图的 DFS 遍历，将所有可达的元素标记为相同的序号，直至所有元素均遍历一遍</p>
+</li>
+</ul>
+<h3 id="Project6-WordNet"><a href="#Project6-WordNet" class="headerlink" title="Project6: WordNet"></a>Project6: WordNet</h3><ul>
+<li><p>题面</p>
+<p>  建立同义词集作为节点元素的类树结构（有向无环有跟图，但是根似乎不重要），边集反应同义词之间概念大小的关系，我们可以在图上通过计算最短距离、最短公共祖先来衡量同义词之间的相对距离关系</p>
+</li>
+<li><p>难点以及 trick</p>
+<p>  这次总算体会到了一些输出测试的 idea，以及如何构建数据结构，以及在其上搭积木综合运用。一开始上来从 wordNet 开始做直接懵了，有很多复杂的数据结构（映射）不知道怎么构建起来的，但是如果按照 tips 做的话实际是水到渠成的。</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2084.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2084.png" alt="Untitled"></p>
+<p>  从 SAP 开始编写代码，图的建立后面再说，第一个需要解决的问题是如何计算两点之间的最短距离，课程为我们提供了 BFS 的实现，偷懒一点就直接调用即可。对于最短公共祖先的计算，相对暴力的方式就是枚举图中所有节点，分别计算目标两点到其之间的距离之和，距离最短的对应的枚举点就是最短公共祖先，对应的距离就是最短距离（当然也需要考虑不可达的情况）</p>
+<p>  对于点集的情况，BFS 的实现中也考虑到了多源最短路径计算</p>
+<p>  这里我们可以发现调用时传递的参数都是 int 类型，但是在 WordNet 中的<code>distance</code> API 是传入的字符串参数，因此接下来写 WordNet 的时候，首先需要维护一个单词字符串到对应整数编号的映射，考虑到单词可能出现在多个集合当中，因此使用 <code>Map&lt;String,Set&lt;Integer&gt;&gt;</code> 来实现；同理，这里返回值也需要返回 <code>synset</code> 数据集当中的第二字段，因此还需要 ArrayList 来维护数据（下标对应编号）。同时根据 tips 中给出的测试结果，我们还要记录所有单词的数量（即<code>synset</code> 数据集当中第二字段存在空格分隔，进一步拆分）</p>
+<p>  弄清需要维护的数据结构，后面就按照对应的字段从文件中按照格式读取即可，灵活使用 </p>
+<p>  <code>readLine()</code> <code>split()</code> <code>Integer.parseInt()</code> 来处理数据</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2085.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2085.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2086.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2086.png" alt="Untitled"></p>
+</li>
+</ul>
+<h2 id="Ch6-Minimum-Spanning-Trees"><a href="#Ch6-Minimum-Spanning-Trees" class="headerlink" title="Ch6 Minimum Spanning Trees"></a>Ch6 <strong>Minimum Spanning Trees</strong></h2><ul>
+<li><p><em>greedy algorithm</em></p>
+<p>  利用到的一个关键性质： Cut Property</p>
+<p>  反证法证明：</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2087.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2087.png" alt="Untitled"></p>
+<p>  利用 <em>greedy algorithm</em> 可生成 MST</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2088.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2088.png" alt="Untitled"></p>
+</li>
+<li><p>如何实现？</p>
+<p>  需要解决的问题：</p>
+<ol>
+<li>how to choose the cut? </li>
+<li><p>how to find the minimum weight edge in the cut?</p>
+<p><strong>Kruskal’s Algorithm</strong></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2089.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2089.png" alt="Untitled"></p>
+<p>running time: ElogE</p>
+<p><strong>Prim’s Algorithm</strong></p>
+<p>算法流程：</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2090.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2090.png" alt="Untitled"></p>
+<p>实现有多种：</p>
+</li>
+</ol>
+<ul>
+<li><p>lazy implementation</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2091.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2091.png" alt="Untitled"></p>
+<p>  总体上思想就是每次选择不在 MST 上的点和在 MST 上点构成边的最小值，将该端点加入 MST，并将其不再 MST 上的邻边点也加入到优先级队列当中，在出队入队过程中，可能以前加入的边已经变成两端点都在 MST 中的情况，这时忽略即可，更新直至 V - 1 条边</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2092.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2092.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2093.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2093.png" alt="Untitled"></p>
+<p>  <strong>注</strong>：放入优先级队列当中的 Edge，每个元素至少有一个端点位于 MST 中</p>
+<p>  Running time: ElogE</p>
+</li>
+<li><p>eager implementation</p>
+<p>  也就是优先级队列不再出现冗余的边，而维护的是点到 MST 的最短距离</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2094.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2094.png" alt="Untitled"></p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Shortest-Paths"><a href="#Shortest-Paths" class="headerlink" title="Shortest Paths"></a><strong>Shortest Paths</strong></h3><ul>
+<li><p><strong><em>shortest-paths properties</em></strong></p>
+<p>  最短路径的终止条件：</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2095.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2095.png" alt="Untitled"></p>
+<p>  计算最短生成树的通用算法模型：</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2096.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2096.png" alt="Untitled"></p>
+</li>
+<li><p>Dijkstra’s Algorithm</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2097.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2097.png" alt="Untitled"></p>
+<p>  implementation</p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2098.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2098.png" alt="Untitled"></p>
+<p class='item-img' data-src='/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2099.png'><img src="/2023/09/17/Algorithms%20I%20&%20II%20b6680ba5872c453d81bdc80c88018865/Untitled%2099.png" alt="Untitled"></p>
+</li>
+<li><p><strong>Edge-Weighted DAGs</strong></p>
+<p>  另一种最短路径算法：先做一遍拓扑排序，再按照拓扑顺序访问节点并 relax 所有邻边；拓扑排序可以保证即使出现负权边依然可以更新 edge 至停止</p>
+</li>
+<li><p><strong>Negative Weights</strong></p>
+<p>  Bellman-Ford Algorithm 前提：无负环（但可以处理正环）</p>
+<p>  进一步优化：观察到如果 distTo[v] 在第 i 轮未更新的话，则第 i + 1 轮也无需考虑所有 v 的邻边</p>
+<p>  如何来找以及记录负环？</p>
+<p>  观察到负环会导致边的更新出现死循环（Bellman-Ford)</p>
+</li>
+</ul>
+<h3 id="Project7-Seam-carving"><a href="#Project7-Seam-carving" class="headerlink" title="Project7 Seam-carving"></a>Project7 Seam-carving</h3><ul>
+<li><p>题面</p>
+<p>  菜得抠脚。。。写代码还是一坨答辩，很难整理出一个比较好的结构模块，方便在各个地方调用。这道题是利用图的最短路径算法来处理图像高质量放缩问题，对于每一像素点，都可以利用 <em>dual-gradient energy</em> 公式计算得到一个权重，通过最短路径搜索算法来找到一个自上至下（自左至右）最小权重和路径，去除之后仍然能得到一个高质量的防缩图。</p>
+</li>
+<li><p>拟解决的问题</p>
+<p>  问题实际上真的多的一，如果数据结构涉及好，对于二维数组的处理一顿双层遍历，真的就是时间加空间全都爆炸，自己写的也就能过50分。。</p>
+<p>  参考某不知名大神的代码：<a target="_blank" rel="noopener" href="https://github.com/KarahanS/Coursera-Princeton-Algorithm-II-Projects/">https://github.com/KarahanS/Coursera-Princeton-Algorithm-II-Projects/</a></p>
+<ul>
+<li>对于每个像素点，计算得到的权重如何处置？题面给了提示（“you can save the energies in a local variable <code>energy[][]</code> and access the information directly from the 2D array”）</li>
+<li>有了权重值，那么就可以做最短路径算法了，题目建议的是利用拓扑排序 + relax <em>vertical</em> 的方式，注意到这里的权重不在是边上，而是直接在节点上，并且每个节点都向下分叉三个边（也就是似乎按层遍历的话就已构成了拓扑排序），如何做最短路径搜索，同时还能记录下来路径序列？（题目也给了提示，构建额外的局部数据结构：“the <code>distTo[][]</code> and <code>edgeTo[][]</code> arrays should be local variables, not instance variables”</li>
+<li>垂直方向的最短路径序列已出，如何处理水平方向的？题目给出了提示是先将原图像得到的信息二维数组进行转置，然后利用垂直方向的求解之后，再转置回来。由于转置需要双层遍历信息二维数组，如果多次求解水平方向的序列则会多次转置，怎么减少时间的消耗？（“if you perform a sequence of 50 consecutive horizontal seam removals, you should need only two transposes (not 100).”, “<strong>until you need to do so</strong>”）</li>
+<li>有了最短路径序列 seam，如何进行 remove 操作，题目说明了可以通过 <code>System.arraycopy()</code> 来复制原来的信息数组到新的copy中，这时还需要重新更新 energy 的权重值，但是为了节省时间，我们只需要更新沿着 seam 两侧的节点权重即可，其余都未收到影响，这里如何处理？</li>
+</ul>
+</li>
+<li><p>解决思路：</p>
+<ul>
+<li>图片为了方便返回，我们预设 RGB 数组和 energy 数组来保存信息，以后对图片信息的修改和访问就通过这两个数组即可实现。在调用 picture() 方法时创建新图片并按照信息数组中的内容赋予相应值即可</li>
+<li><p>我们按照公式以及给定的坐标计算好 energy 将其存储到实例变量数组当中即可，需要的时候直接取即可，这里有个细节问题在于，我们再在测试客户端代码以及 energy 的注释上都可以发现，参数的顺序是先 col 后 row，需要注意访问数组时的下标顺序。</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// energy of pixel at column x and row y</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-type">double</span> <span class="hljs-title function_">energy</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span> &#123; <span class="hljs-comment">// col x row y</span><br><span class="hljs-comment">//////</span><br>StdOut.printf(<span class="hljs-string">&quot;%9.2f &quot;</span>, sc.energy(col, row));<br></code></pre></td></tr></table></figure>
+<p>  这里为了方便我们单独抽离一个 API <code>computeEnergy</code> 专门用于计算能量权重（这时下标顺序与存储顺序一致）</p>
+<p>  这里遗留一个 bug 需要特别注意，就是在判断边界的时候，如果按照当前 energy 边界来计算的话会出错，因为我们在去除 seam 更新 energy 数组时边界是会 -1 的，因此不能用更新之前的 energy 数组作边界判定</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 这里如果仍调用会出错</span><br>        <span class="hljs-keyword">if</span> (x == <span class="hljs-number">0</span> || y == <span class="hljs-number">0</span> || x == RGB.length - <span class="hljs-number">1</span> || y == RGB[<span class="hljs-number">0</span>].length - <span class="hljs-number">1</span>) &#123;<br>	            <span class="hljs-keyword">return</span> BORDER_ENERGY;  <span class="hljs-comment">// 1000.0</span><br>        &#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>对于最短路径的搜索，我们直接按行枚举，保存好对于每一个节点其 distTo 和 edgeTo 的状态值（对于第一行，distTo 就是其本身，edgeTo 设置为无效值）；每一个值由于可以拓扑序列到向下的三个节点，因此逐一判断由当前节点向下是否会使得对应点的 distTo 减小，如果可以则更新。最终在最后一行通过枚举即可找到由上至下权重和的最小值，并通过 edgeTo 反向搜索找到这条路径</p>
+</li>
+<li>首先对于转置，我们需要新创建 RGB和 energy 数组并存储原数组转置之后的值，并更新。如果频繁调用的话一定会导致时间复杂度上去。为了解决该问题，我们应该在需要的时候才转置，什么是需要的时候？即当需要处理水平方向的最短路径问题，而我们处于垂直方向状态时（或者需要处理垂直方向而当前处于水平方向的时候），才会去调用 transpose 转置方法。为此，我们设置一个全局布尔值来表示当前是处于水平状态还是垂直状态，这样当找寻路径以及后续移除路径时，先去判断方向是否正确再去完成任务。（这样重复任务时就不需要频繁的转置）</li>
+<li>对于 remove seam 操作，也是用 <code>System.arraycopy()</code> 来复制原 RGB 和 energy 到新的宽度x高度数组中去，RGB 直接更新即可（并且后面 energy 更新时需要用到）；energy 再更新后还需要更新 seam 两侧的能量权重值，当然这里需要特殊判断一下 seam 所在列是否处于左边界和右边界</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch7-Maximum-Flow-and-Minimum-Cut"><a href="#Ch7-Maximum-Flow-and-Minimum-Cut" class="headerlink" title="Ch7 Maximum Flow and Minimum Cut"></a>Ch7 <strong>Maximum Flow and Minimum Cut</strong></h2><details>
+    <summary>图片失效</summary>
+    <p>
+        PS: 图片好像失效了，详见课程 slides 
+    </p>
+</details>
+
+<ul>
+<li><p>Mincut problem</p>
+</li>
+<li><p>最大流问题</p>
+<p>  st-流需要满足两个性质，基于流引出最大流问题</p>
+</li>
+<li><p><strong>Ford–Fulkerson Algorithm</strong></p>
+<p>  运行模式：参数化路径，存在正向和反向两种边，为了保证 equilibrium 性质</p>
+<p>  终止条件：</p>
+<ul>
+<li>空值反向边</li>
+<li><p>全值正向边</p>
+<blockquote>
+<p>The algorithm is to find all of the vertices reachable from <em>s</em> using only forward edges that aren’t full or backwards edges that aren’t empty</p>
+</blockquote>
+<p>==相关理论定理及证明：==</p>
+</li>
+<li><p><strong>Flow-value lemma</strong></p>
+</li>
+<li><p><strong>weak duality</strong></p>
+</li>
+<li><p><strong>Maxflow-mincut theorem</strong></p>
+</li>
+</ul>
+</li>
+<li><p>Java Implementation</p>
+<p>  构建 residual network，方便 argumenting 时选择 forward edge/ backward edge</p>
+<blockquote>
+<p>Augmenting path in original network is equivalent to directed path in residual network</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="Project8-Baseball-Elimination"><a href="#Project8-Baseball-Elimination" class="headerlink" title="Project8 Baseball Elimination"></a>Project8 <strong>Baseball Elimination</strong></h3><ul>
+<li>题意：利用最大流算法来解决体育竞技当中冠军排除问题</li>
+<li>思路：整体难度不高，均有封装完善的数据结构API可供使用，整体从读入文件开始，分别设置到对应的数据存储数组当中，适当构建队伍名称到下标的索引映射；按照平凡和非平方情况分别求解给定队伍是否会被排除，对于非平凡情况，需要构建网络图，按照指定结构构建，并作最大流计算。注意是否仍有剩余的比赛未比完该如何判断呢？结合最大流的判定可知，只需判定当前是否仍存在 augmentingPath 即可</li>
+</ul>
+<h3 id="STRING-SORTS"><a href="#STRING-SORTS" class="headerlink" title="STRING SORTS"></a><strong>STRING SORTS</strong></h3><ul>
+<li><p>Alphabets</p>
+</li>
+<li><p><strong>Key-Indexed Counting</strong></p>
+<p>  前提条件：keys 需要携带关联数据信息</p>
+<p>  算法流程与实现：</p>
+<p>  (假设 a~f 代表 0~6)</p>
+<p>  时空复杂度 O(N+R); 具有稳定性</p>
+</li>
+<li><p><strong>LSD Radix Sort</strong></p>
+<p>  证明这种排序方法使得固定长度的字符串呈升序：</p>
+<p>  前提：<strong>Key-Indexed Counting</strong> 排序操作具有稳定性</p>
+</li>
+<li><p><strong>MSD Radix Sort</strong></p>
+<p>  与 LSD Radix Sort 类似，只不过比较顺序是从 left 到 right</p>
+<p>  递归的实现方式：注意到 counter 数组不可以重复使用，但是 aux 可以</p>
+<p>  优缺点：递归过程空间复杂度爆炸; </p>
+</li>
+<li><p><strong>3-way string quicksort</strong></p>
+<p>  quick sort 与 MSD 的结合</p>
+</li>
+<li><p><strong>Suffix Arrays</strong></p>
+<p>  Idea: </p>
+<p>  整理出数组的所有后缀子串，并作排序，可以将重复的序列值靠近</p>
+</li>
+</ul>
+<h2 id="Ch8-Tries"><a href="#Ch8-Tries" class="headerlink" title="Ch8 Tries"></a>Ch8 <strong>Tries</strong></h2><ul>
+<li><p><em>R-way tries</em></p>
+<p>  R 取决于 Radix 大小</p>
+<p>  how to search in tries?</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>Ternary Search Tries</strong></p>
+<p>  PS: 注意 deep 的变化</p>
+</li>
+<li><p><strong>Character-Based Operations</strong></p>
+<p>  support operation:</p>
+<ol>
+<li>Prefix match</li>
+<li>WildCard match</li>
+<li><p>Longest prefix</p>
+<p>==「Warm up」==:采用先序遍历访问并添加 Tries 上的所有 String key（包括所有 prefix） 到 queue 中</p>
+<p>==「Prefix match」==：直接先找到前缀节点，然后调用 collect API 即可</p>
+<p>==「Longest prefix」==：记录最后一次匹配到的 string key 即可</p>
+</li>
+</ol>
+</li>
+</ul>
+<h3 id="Substring-Search"><a href="#Substring-Search" class="headerlink" title="Substring Search"></a><strong>Substring Search</strong></h3><ul>
+<li><p>朴素做法</p>
+<p>  backup version</p>
+</li>
+<li><p><strong>Knuth–Morris–Pratt</strong></p>
+<p>  intuition: 我们已知模式串的前缀了，因此在匹配主串时需要充分利用这个信息</p>
+<p>  基于有限状态机的实现：其中一维表示匹配主串的字符，二维j代表当前状态</p>
+<p>  可以看到这里 i 是不会自减的，时间复杂度 O(n)</p>
+<p>  如何构建 DFA？</p>
+<p>  如何 maintain state X ?</p>
+<p>  时间复杂度 O(RM) （R 指 radix）</p>
+</li>
+</ul>
+<h3 id="Boyer–Moore"><a href="#Boyer–Moore" class="headerlink" title="Boyer–Moore"></a><strong>Boyer–Moore</strong></h3><ul>
+<li><p>基本思路</p>
+<p>  跳过多少字符呢？</p>
+<p>  如果主串 mismatch 的字符未出现在 pattern 中，则直接跳过改字符；</p>
+<p>  否则匹配 pattern 中最右侧的对应字符</p>
+<p>  时间复杂度：O(M/N) （最坏情况，第一个字符均匹配失败，O(MN)）</p>
+</li>
+<li><p><strong>Rabin–Karp</strong></p>
+<p>  basic idea</p>
+<p>  如何有限次计算 hash 并快速 search pattern ?</p>
+<ul>
+<li><p>线性计算 hash：</p>
+</li>
+<li><p>Xi 之间计算 hash:</p>
+</li>
+</ul>
+</li>
+</ul>
+<pre><code>search ⇒ Monte Carlo version 
+
+该版本的 search 可以保证速度，但不能保证准确性，因为随机素数 Q 易出现碰撞；
+</code></pre><h3 id="Project9-Boggle"><a href="#Project9-Boggle" class="headerlink" title="Project9: Boggle"></a>Project9: <strong>Boggle</strong></h3><p>参考：<a target="_blank" rel="noopener" href="https://www.jxtxzzw.com/archives/5672">Princeton Algorithms, Boggle – 凝神长老和他的朋友们 (jxtxzzw.com)</a></p>
+<ul>
+<li><p>题面比较易懂，在一个 4x4 的格子上可以上下左右+对角线6个方向作 dfs，并判断得到的单词序列是否位于字典当中，讲得到的单词按照长度进行量化分数并输出最终的总和</p>
+</li>
+<li><p>拟解决的问题</p>
+<p>  题目思路乍一看非常好求，直接暴力 dfs 拿到所有可能的单词及其前缀，然后判断是否位于字典中即可，但是随着数据量增大，时间复杂度如果不对 dfs 作减枝处理势必会很高。</p>
+<p>  主要影响时间效率的几大问题：</p>
+<ul>
+<li><p>dfs 如何作减枝，tips 中说明了可以在 dfs 过程得到的字符序列作为前缀，预先判断是否是字典中某个单词的前缀，如果不是则没必要继续 dfs</p>
+<p>  刚开始我直接使用 alsg4 自带的 trie 字典树进行操作，其判断前缀的方式通过递归处理，一定程度上效率较低，同时每 dfs 一层实际上字符序列仅仅多加了一位，但是频繁进行前缀判断，时间复杂度并未有效降低</p>
+</li>
+<li><p>另一个主要影响因素在于 dfs 过程中，无论是通过 String 还是 StringBuilder 来记录路径上的字符，都极大的影响时间性能</p>
+<p>解决思路：</p>
+<p>充分深入运用字典树的特性</p>
+</li>
+<li><p>对于第一个问题，首先我们是可以递归处理该换成循环处理的，在构建存储字典中单词的数据结构时，就将其插入到字典树当中，并在尾节点处设置单词字面量值，其余中间节点的字面量值为 null；</p>
+<p>  另外，对于频繁判断前缀的问题，我们已经有了一个 Observation：dfs 每次只会更新1位字符，因此我们可以维护一个 cache，表示上一层 dfs 字典树节点的状态，这样判断是否会前缀只需简单的 if 判断：</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">if</span> (cache.contains(c)) &#123;<br>            <span class="hljs-comment">// prefix is true, update the cache to the current dfs node</span><br>            cache = cache.get(c);<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            cache = <span class="hljs-literal">null</span>;<br>        &#125;<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>因为 String 操作上带来的时间影响，因此我们可以将所有的字面值预先存储在字典树中，当 dfs 完整达到尾节点时，就可以直接拿到对应的值。</p>
+<p>  这里题目有个特殊的 case 在于，u 字符总是紧随 Q 字符之后，因此所有字典当中不符合这种特征的单词都可以直接忽略，因为 board 中不会产生，少去了一部分探索 Trie 时间消耗</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="Ch9-Regular-Expressions"><a href="#Ch9-Regular-Expressions" class="headerlink" title="Ch9 Regular Expressions"></a>Ch9 Regular Expressions</h2><ul>
+<li><p>概念</p>
+<p>  符号表示一组字符串集合（集合可以是无限的）</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>REs and NFAs</strong></p>
+<p>  ==「NFA」==规则</p>
+<p>  NFA 模拟：</p>
+<ul>
+<li><p>基本 idea</p>
+<p>  已维护的 i 符号读后的状态，经过读入第 i+1 个符号后的状态转移 + null 转移后得到的状态，成为 i+1 符号读后的总状态</p>
+<p>  对于给定状态集合，获取其所有可转移到的状态，可以通过图深搜可达性实现</p>
+</li>
+<li><p>Java Implementation</p>
+<p>  最坏时间复杂度: O(MN)</p>
+</li>
+<li><p>构建 NFA</p>
+<p>  从基本操作模块开始，包括：闭包、或操作</p>
+<p>  因此需要通过 stack 来维护符号 <code>(</code> 和 <code>|</code> ，遇到 <code>)</code> 时弹出并构建上述基础操作模块的 NFA</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="Data-Compression"><a href="#Data-Compression" class="headerlink" title="Data Compression"></a><strong>Data Compression</strong></h3><ul>
+<li><p>哈夫曼编码</p>
+<p>  前提：要求编码是自由前缀的，即任何一个字符的编码不能是其他字符编码的前缀，避免歧义</p>
+<p>  构建表示：二进制字典树 trie</p>
+</li>
+<li><p>LZW</p>
+<p>  可以看到这里经常需要匹配输入序列的前缀，因此 trie 数据结构比较合适存储</p>
+<p>  expansion 操作：与压缩操作时一致，构建相同的 trie</p>
+<p>  不过构建的一个区别点在于将编码转换回字符序列的时候，仍需要记录新的字符前缀</p>
+<p>  tricky case: 会出现扩展时编码值比前缀 trie 构建先出现的情况</p>
+</li>
+</ul>
+<h3 id="Project10-Burrows–Wheeler"><a href="#Project10-Burrows–Wheeler" class="headerlink" title="Project10: Burrows–Wheeler"></a>Project10: <strong>Burrows–Wheeler</strong></h3><ul>
+<li>题意：通过实现三个模块来构建压缩函数，这次算是独立完成了大部分的工作，虽然最后空间消耗比较大，但总体时间和正确率还不错</li>
+<li><p>记录困难点</p>
+<ul>
+<li><p><strong>Circular suffix array 输出 sorted suffixes 最后一列的字符</strong></p>
+<p>  这里刚开始直接调用的 <strong>sorted suffixes 字段、</strong>取出元素的指针字段并输出指向字符串的字符，但是 <strong>sorted suffixes</strong> 字段必须得是 private 修饰才行，因此这个思路不同。观察到 index 方法的作用：返回 sorted suffixes 中元素对应在 original suffixes 中的位置，可以看到 original suffixes 下标实际就对应着字符顺序，因此用 index 也可以达到上述取指针字段的效果</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p><strong>Burrows–Wheeler transform 方法，难点实际在于构造 next 数组部分</strong></p>
+<p>  tips 中给出，可以参考 key-indexed counting algorithm 部分，实际上这里就是在按照字符频率进行排序，利用 key-indexed counting algorithm 即可达到 O(N+R) 的时间复杂度，并且 next 的获取可以直接一行得到</p>
+  <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs java">next[count[s.charAt(i)]] = i;<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2077/07/07/paper/">← 下一篇 paper梳理</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2023/09/16/Java%20%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94RMI%203ca75d88fc8d4a1b9988a56475a5b265/">Java Sec —— RMI 上一篇 →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧</a><a class="i-index" id="to-index" href="#toc-div" title="文章目录">≡</a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Logo"></a><h1 id="Dr"><a href="/">RacerZ</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/RacerZ-fighting"><i class="fab fa-github" alt="GitHub"></i></a><a class="social" href="qiyizhang2002@foxmail.com"><i class="fa fa-envelope" alt="E-Mail"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Algorithms-I-amp-II"><span class="toc-number">1.</span> <span class="toc-text">Algorithms I &amp; II</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch1-Union-Find"><span class="toc-number">1.1.</span> <span class="toc-text">Ch1 Union-Find</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Project1-Precolation"><span class="toc-number">1.1.1.</span> <span class="toc-text">Project1: Precolation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Analysis-of-Algorithms"><span class="toc-number">1.1.2.</span> <span class="toc-text">Analysis of Algorithms</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch2-Stacks-and-Queues"><span class="toc-number">1.2.</span> <span class="toc-text">Ch2 Stacks and Queues</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Project2-Deques-and-Randomized-Queues"><span class="toc-number">1.2.1.</span> <span class="toc-text">Project2: Deques and Randomized Queues</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Elementary-Sorts"><span class="toc-number">1.2.2.</span> <span class="toc-text">Elementary Sorts</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch3-Mergesort"><span class="toc-number">1.3.</span> <span class="toc-text">Ch3 Mergesort</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Project3-Collinear-Points"><span class="toc-number">1.3.1.</span> <span class="toc-text">Project3: Collinear Points</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#QuickSort"><span class="toc-number">1.3.2.</span> <span class="toc-text">QuickSort</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch4-Priority-Queues"><span class="toc-number">1.4.</span> <span class="toc-text">Ch4 Priority Queues</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Project4-8-Puzzle"><span class="toc-number">1.4.1.</span> <span class="toc-text">Project4: 8 Puzzle</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Elementary-Symbol-Tables"><span class="toc-number">1.4.2.</span> <span class="toc-text">Elementary Symbol Tables</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch5-Balanced-Search-Trees"><span class="toc-number">1.5.</span> <span class="toc-text">Ch5 Balanced Search Trees</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Geometric-Applications-of-BSTs"><span class="toc-number">1.5.1.</span> <span class="toc-text">Geometric Applications of BSTs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Project5-Kd-Trees"><span class="toc-number">1.5.2.</span> <span class="toc-text">Project5: Kd-Trees</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch5-Undirected-Graphs"><span class="toc-number">1.6.</span> <span class="toc-text">Ch5 Undirected Graphs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%89%E5%90%91%E5%9B%BE%E7%9B%B8%E5%85%B3"><span class="toc-number">1.6.1.</span> <span class="toc-text">有向图相关</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Project6-WordNet"><span class="toc-number">1.6.2.</span> <span class="toc-text">Project6: WordNet</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch6-Minimum-Spanning-Trees"><span class="toc-number">1.7.</span> <span class="toc-text">Ch6 Minimum Spanning Trees</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Shortest-Paths"><span class="toc-number">1.7.1.</span> <span class="toc-text">Shortest Paths</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Project7-Seam-carving"><span class="toc-number">1.7.2.</span> <span class="toc-text">Project7 Seam-carving</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch7-Maximum-Flow-and-Minimum-Cut"><span class="toc-number">1.8.</span> <span class="toc-text">Ch7 Maximum Flow and Minimum Cut</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Project8-Baseball-Elimination"><span class="toc-number">1.8.1.</span> <span class="toc-text">Project8 Baseball Elimination</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#STRING-SORTS"><span class="toc-number">1.8.2.</span> <span class="toc-text">STRING SORTS</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch8-Tries"><span class="toc-number">1.9.</span> <span class="toc-text">Ch8 Tries</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Substring-Search"><span class="toc-number">1.9.1.</span> <span class="toc-text">Substring Search</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Boyer%E2%80%93Moore"><span class="toc-number">1.9.2.</span> <span class="toc-text">Boyer–Moore</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Project9-Boggle"><span class="toc-number">1.9.3.</span> <span class="toc-text">Project9: Boggle</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Ch9-Regular-Expressions"><span class="toc-number">1.10.</span> <span class="toc-text">Ch9 Regular Expressions</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data-Compression"><span class="toc-number">1.10.1.</span> <span class="toc-text">Data Compression</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Project10-Burrows%E2%80%93Wheeler"><span class="toc-number">1.10.2.</span> <span class="toc-text">Project10: Burrows–Wheeler</span></a></li></ol></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr>主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside><div id="shadow-aside"></div></main><canvas id="canvas-dust"></canvas><script src="/js/search.js"></script><script src="/js/arknights.js"></script><script src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script></body></html>
